@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+#Retorna o ultimo commit
+commits=(`git log -1 --pretty=%s`)
+
+#Verifica em cada palavra para encontrar os padrões abaixo e executar ações especificas de acordo com cada padrão
+for commit in "${commits[@]}"
+do
+    #Se houver a palavra --build-testing ele atualiza a versão, altera no arquivo de configurações antes de gerar o build o ENV: 'testing'
+    if [ $commit == "--merge-and-push" ]; then
+
+        git pull;
+        wait;
+
+        git checkout master;
+        git merge dev;
+        git push;
+        wait;
+
+        git checkout dev;
+        git push;
+
+        echo "******************************************";
+        echo "...Merge feito com sucesso...";
+    fi
+done
+

@@ -1,0 +1,58 @@
+/*
+* Tooltips
+*/
+
+.tooltip .tooltip-inner { background: #88c657; color: #fff; }
+
+.tooltip {
+    display: block !important;
+    padding: 4px;
+    z-index: 10000;
+}
+
+.tooltip .tooltip-inner {
+    background: #FFFFFF;
+    color: #383938;
+    border-radius: 3px;
+    padding: 5px 10px 4px;
+}
+
+.tooltip-primary .tooltip-inner {
+    background: #383938;
+    color: #fff;
+}
+
+.tooltip-success .tooltip-inner {
+    background: #18bc9c;
+    color: #fff;
+}
+
+.tooltip-info .tooltip-inner {
+    background: #3498db;
+    color: #fff;
+}
+
+.tooltip-danger .tooltip-inner {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.tooltip-warning .tooltip-inner {
+    background: #f39c12;
+    color: #fff;
+}
+
+.tooltip tooltip-arrow{
+    display: none;
+}
+
+.tooltip[aria-hidden='true'] {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .15s, visibility .15s;
+}
+.tooltip[aria-hidden='false'] {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity .15s;
+}

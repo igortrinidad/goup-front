@@ -1,0 +1,12 @@
+Generating key tool
+
+//Para gerar a senha
+keytool -genkey -v -keystore isaudavel.keystore -alias isaudavel -keyalg RSA -keysize 2048 -validity 10000
+//Senha gerada
+wp-isaudavel-21
+
+//Para assinar
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore isaudavel.keystore android-release-unsigned.apk isaudavel
+
+//Para assinar
+zipalign -v 4 android-release-unsigned.apk APP-ISAUDAVEL-SIGNED.apk

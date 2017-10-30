@@ -1,0 +1,87 @@
+
+
+
+
+
+/*
+* Login
+*/
+
+#wrapper {
+    width: 100%;
+}
+
+.login-box {
+    background: #fff;
+    width: 400px;
+    margin: 10% auto 0;
+}
+
+.login-sidebar {
+    position: absolute;
+    right: 0;
+    margin-top: 0;
+    height: 100%;
+}
+
+.white-box {
+    background: #fff;
+    padding: 25px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 767px) {
+    #msform fieldset, .login-register, .step-register {
+        position: relative;
+    }
+}
+
+@media (max-width:480px) {
+    .login-box {
+        width: 100%
+    }
+}
+
+.edit-pic-list {
+    display: block;
+    width: 40%;
+    padding: 50%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Avatar Container */
+.avatar-container {
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 10px;
+    margin-top: -25px;
+}
+
+/* Button To Control Card Status */
+.control-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(56, 57, 56, 0.1);
+    width: 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 4px 4px 0;
+}
+
+.border-inside-card{
+    border: 1px solid rgba(56, 57, 56, 0.1);
+    padding:10px;
+    border-radius: 4px;
+}
+
+
+.border-inside-card.gray    { background-color: #f7f7f7 }
+.border-inside-card.white   { background-color: #ffffff }

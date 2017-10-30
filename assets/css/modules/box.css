@@ -1,0 +1,55 @@
+/* Box List & Gallery View*/
+.box {
+    width: 100%;
+    padding: 10px;
+    background: #fff;
+    margin: 15px 0;
+    display: flex;
+    flex-flow: row wrap;
+    position: relative;
+    border-radius: 4px;
+}
+
+.box-header {
+    width: 100%;
+    /*border: 1px solid rgba(56, 57, 56, 0.14);*/
+    border-radius: 4px;
+    padding: 5px;
+    background: #f4f5f5;
+    position: relative;
+}
+
+.box-grid {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+    margin: 10px -5px 10px -5px;
+}
+
+.box-col {
+    width: 100%;
+    padding: 5px;
+}
+
+.box-grid-item {
+    background: #f4f5f5;
+    width: 100%;
+    padding: 10px 5px;
+    border-radius: 4px;
+    position: relative;
+    min-height: 60px;
+}
+
+.box .thumbnail {
+    display: block;
+    width: 100%;
+    height: 150px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    padding: 0;
+}

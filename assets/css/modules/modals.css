@@ -1,0 +1,101 @@
+/*
+ * WE PLANNER MODAL
+ */
+
+ /* Modal */
+.modal { z-index: 99999; }
+
+.modal-content {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 4px;
+}
+
+.modal-content .btn { font-weight: 300; }
+
+.modal .modal-title { font-weight: 300; text-align: center; }
+.modal .modal-footer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    position: relative;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.modal .modal-footer:before {
+    content: "";
+    position: absolute;
+    top: 0; left: 50%; right: auto; bottom: 0;
+    height: 65px; width: 1px;
+    background: #e5e5e5;
+}
+
+.modal .modal-footer.borderless:before{ display: none; }
+.modal .modal-footer .btn {
+    font-weight: 300;
+    display: block;
+    width: 45%;
+    margin: 0 !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    padding: 0 !important;
+}
+
+.modal .modal-footer .btn.btn-default   { color: #383938; }
+.modal .modal-footer .btn.btn-primary   { color: #88C657; }
+.modal .modal-footer .btn.btn-success   { color: #00A369; }
+.modal .modal-footer .btn.btn-danger    { color: #E14A45; }
+.modal .modal-footer .btn.btn-warning   { color: #FFCC5F; }
+.modal .modal-footer .btn.btn-info      { color: #488FEE; }
+
+.modal-wp-wrapper { z-index: 9999 !important; }
+
+
+.modal-wp-wrapper{
+    overflow-y: auto;
+    max-height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    padding: 20px;
+}
+
+.modal-wp{
+    border-radius: 0px;
+    background-color: #fff;
+    height: auto;
+    z-index: 10;
+    -webkit-box-shadow: 6px 6px 20px -7px rgba(0,0,0,0.61);
+    -moz-box-shadow: 6px 6px 20px -7px rgba(0,0,0,0.61);
+    box-shadow: 0 19px 60px rgba(0,0,0,.3), 0 15px 20px rgba(0,0,0,.22);
+    margin-bottom: 100px;
+    margin-top: 10%;
+}
+
+.modal-wp-dialog{
+    padding: 20px;
+}
+
+.close {
+    float: right;
+    font-size: 19.5px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000000;
+    text-shadow: 0 1px 0 #ffffff;
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+}
+
+.close:hover,
+.close:focus {
+    color: #000000;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}

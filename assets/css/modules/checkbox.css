@@ -1,0 +1,65 @@
+/* CHECKBOX FROM MAILCHIMP */
+
+.checkbox-group label:last-child {
+    margin-bottom: 12px;
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.checkbox-group label {
+    padding-top: 4px;
+    padding-bottom: 0;
+    cursor: pointer;
+}
+
+.radio, .checkbox {
+    max-width: 635px;
+    margin-bottom: 15px;
+    padding-bottom: 0;
+    padding-left: 36px;
+    text-indent: -36px;
+
+}
+
+.wp-checkbox {
+    background-position: 0 0;
+}
+
+.wp-checkbox {
+    margin-right: 12px;
+}
+
+.wp-checkbox, .wp-checkbox-input{
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    background-image: url(../../../src/assets/img/checkmarks-sprite-2x_interno.png);
+    background-size: 24px 384px;
+}
+
+.wp-checkbox-inline {
+    display: inline-table;
+    vertical-align: middle;
+}
+
+input:checked + .wp-checkbox{
+  background-position: 0 -144px;
+}
+
+input:disabled + .wp-checkbox, input:disabled > .wp-checkbox-text{
+    cursor: not-allowed;
+}
+
+.wp-checkbox-reset {
+    border: 0;
+    line-height: unset;
+    outline: 0 none;
+}
+
+.wp-checkbox-text{
+    margin-top: 10px;
+}

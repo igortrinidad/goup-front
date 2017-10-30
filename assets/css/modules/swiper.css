@@ -1,0 +1,18 @@
+/* Swiper Pagination */
+.swiper-pagination-bullet {
+    background-color: transparent !important;
+    opacity: 1 !important;
+    width: 12px !important; height: 12px !important;
+    border: 2px solid #fff;
+}
+.swiper-pagination-bullet-active { background-color: #fff !important; opacity: 1 !important; }
+
+
+/* Swiper Pagination PRIMARY COLOR */
+.swiper-pagination.primary .swiper-pagination-bullet {
+    background-color: transparent !important;
+    opacity: 1 !important;
+    width: 8px !important; height: 8px !important;
+    border: 2px solid #88C657;
+}
+.swiper-pagination.primary .swiper-pagination-bullet-active { background-color: #88C657 !important; opacity: 1 !important; }

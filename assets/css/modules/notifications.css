@@ -1,0 +1,57 @@
+/* Notifications  */
+
+
+.iziToast>.iziToast-cover {
+    background-color: transparent;
+    margin-left: 20px;
+}
+
+.btn-notification{
+    background-color: #6EC058 !important;
+    color: #fff !important;
+    font-size: 12px;
+
+}
+
+.iziToast>.iziToast-body>.iziToast-buttons {
+   display: table-cell;
+}
+
+    
+.notification {
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: 300;
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+
+.notification.notification-white{
+    background-color: #FFFFFF !important;
+    color: #383938 !important;
+}
+.notification.notification-default{
+    background-color: #F4F5F5 !important;
+    color: #383938 !important;
+}
+.notification.notification-primary{
+    background-color: #88C657 !important;
+    color: #FFFFFF !important;
+}
+.notification.notification-success{
+    background-color: #00A369 !important;
+    color: #FFFFFF !important;
+}
+.notification.notification-info{
+    background-color: #337AB7 !important;
+    color: #FFFFFF !important;
+}
+.notification.notification-warning{
+    background-color: #FFCC5F !important;
+    color: #383938 !important;
+}
+.notification.notification-danger{
+    background-color: #E14A45 !important;
+    color: #FFFFFF !important;
+}

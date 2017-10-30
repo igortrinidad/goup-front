@@ -1,0 +1,18 @@
+/* Text Colors */
+.f-default  { color: #F4F5F5 !important; }
+.f-primary  { color: #88C657 !important; }
+.f-success  { color: #00A369 !important; }
+.f-danger   { color: #E14A45 !important; }
+.f-warning  { color: #FFCC5F !important; }
+.f-info     { color: #337AB7 !important; }
+.f-white    { color: #FFFFFF !important; }
+.f-dark    { color: #383938 !important; }
+
+/* LINKS */
+a { color: #88C657 !important; }
+a:active { text-decoration: none !important; }
+a:hover { text-decoration: none; }
+
+p{
+   word-break: keep-all;
+}

@@ -1,0 +1,129 @@
+/* Buttons */
+.btn{ box-sizing: border-box; }
+.btn:focus { outline: none !important; }
+
+.btn.btn-transparent,
+.btn.btn-transparent:hover {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: #383938;
+}
+
+.btn-fab.btn-default,
+.btn.btn-default,
+.btn.btn-default:hover{
+  background-color: #F4F5F5 !important;
+  border-color: #F4F5F5 !important;
+  color: #383938;
+}
+
+.btn-fab.btn-dark,
+.btn.btn-dark,
+.btn.btn-dark:hover{
+  background-color: #383838;
+  border-color: #383938;
+  color: #88C657 !important;
+}
+
+.btn-fab.btn-light,
+.btn.btn-light,
+.btn.btn-light:hover{
+  background-color: #FFFFFF;
+  border-color: #FFFFFF;
+  color: #88C657 !important;
+}
+
+.btn-fab.btn-primary,
+.btn.btn-primary,
+.btn.btn-primary:hover{
+  background-color: #88C657;
+  border-color: #88C657;
+  color: #FFFFFF !important;
+}
+
+.btn-fab.btn-primary-bordered,
+.btn.btn-primary-bordered,
+.btn.btn-primary-bordered:hover{
+  background-color: transparent;
+  border-color: #88C657;
+  color: #88C657 !important;
+}
+
+.btn-fab.btn-primary-inverse,
+.btn.btn-primary-inverse,
+.btn.btn-primary-inverse:hover{
+  background-color: transparent;
+  border-color: #FFFFFF;
+  color: #FFFFFF !important;
+}
+
+.btn-fab.btn-info,
+.btn.btn-info,
+.btn.btn-info:hover{
+    background-color: #337AB7;
+    border-color: #337AB7;
+    color: #FFFFFF;
+}
+.btn-fab.btn-success,
+.btn.btn-success,
+.btn.btn-success:hover{
+  background-color: #00A369;
+  border-color: transparent;
+  color: #FFFFFF !important;
+}
+.btn-fab.btn-danger,
+.btn.btn-danger,
+.btn.btn-danger:hover{
+  background-color: #E14A45;
+  border-color: #E14A45;
+  color: #FFFFFF;
+}
+
+.btn-fab.btn-warning,
+.btn.btn-warning,
+.btn.btn-warning:hover{
+  background-color: #FFCC5F;
+  border-color: #FFCC5F;
+  color: #383938;
+}
+
+.btn-fab.btn-whatsapp,
+.btn.btn-whatsapp,
+.btn.btn-whatsapp:hover{
+    background-color: #1ebea5;
+    border-color: transparent;
+    color: #f2f2f2;
+}
+
+.btn-fab.btn-facebook,
+.btn.btn-facebook,
+.btn.btn-facebook:hover{
+    background-color: #3b5998;
+    border-color: transparent;
+    color: #f2f2f2;
+}
+
+.btn-fab.btn-instagram,
+.btn.btn-instagram,
+.btn.btn-instagram:hover{
+    background-color: #CD486B;
+    border-color: transparent;
+    color: #f2f2f2;
+}
+
+/* Btn Fab Format */
+.btn.btn-fab {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    display: flex;
+    padding: 0;
+    justify-content: center;
+}
+.btn.btn-fab i {
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}

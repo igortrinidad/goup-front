@@ -1,0 +1,5 @@
+export const SET_LOADING = 'Main//SET_LOADING'
+export const SET_ENV = 'Main//SET_ENV'
+export const DISABLE_LOADER = 'Main//DISABLE_LOADER'
+export const SET_FCM_TOKEN_MOBILE = 'Main//SET_FCM_TOKEN_MOBILE'
+export const SET_FCM_TOKEN_BROWSER = 'Main//SET_FCM_TOKEN_BROWSER'

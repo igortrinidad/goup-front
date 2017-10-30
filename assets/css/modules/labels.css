@@ -1,0 +1,41 @@
+/* Labels  */
+.label { padding: .3rem .6rem !important; display: inline-block; }
+
+.label-block{
+    width: 100%;
+}
+
+.label.label-black{
+    background-color: #383938 !important;
+    color: #F4F5F5 !important;
+}
+
+.label.label-default{
+    background-color: #CCCCCC !important;
+    color: #383938 !important;
+}
+.label.label-primary{
+    background-color: #88C657 !important;
+    color: #FFFFFF !important;
+}
+.label.label-success{
+    background-color: #00A369 !important;
+    color: #FFFFFF !important;
+}
+.label.label-info{
+    background-color: #337AB7 !important;
+    color: #FFFFFF !important;
+}
+.label.label-warning{
+    background-color: #FFCC5F !important;
+    color: #383938 !important;
+}
+.label.label-danger{
+    background-color: #E14A45 !important;
+    color: #FFFFFF !important;
+}
+
+.label.label-light{
+    background-color: #FFF !important;
+    color: #88C657 !important;
+}

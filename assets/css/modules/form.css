@@ -1,0 +1,14 @@
+/* Form Inputs */
+
+
+.has-error .form-control,
+.has-error .form-control:focus,
+.has-error .multiselect {
+    border: 1px solid #E14A45 !important;
+    border-radius: 4px;
+}
+
+.has-error .ql-toolbar.ql-snow,
+.has-error .ql-container.ql-snow {
+    border: 1px solid #E14A45 !important;
+}

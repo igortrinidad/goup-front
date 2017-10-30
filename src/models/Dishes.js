@@ -1,0 +1,15 @@
+export default {
+	id: '',
+	name: '',
+	is_active: '',
+	price: '',
+	cal: '',
+	protein: '',
+	carb: '',
+	fat: '',
+	fiber: '',
+	rating: 5,
+	rating_count: '',
+	created_at: '',
+	updated_at: '',
+}
