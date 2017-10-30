@@ -29,7 +29,7 @@ mkdir ../apk_versions/$version;
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore isaudavel.keystore ../platforms/android/build/outputs/apk/android-release-unsigned.apk isaudavel -storepass wp-isaudavel-21 -keypass wp-isaudavel-21;
 wait;
 
-zipalign -v 4 ../platforms/android/build/outputs/apk/android-release-unsigned.apk ../apk_versions/$version/APP-ISAUDAVEL-SIGNED.apk;
+zipalign -v 4 ../platforms/android/build/outputs/apk/android-release-unsigned.apk ../apk_versions/$version/GOUP-APP-SIGNED.apk;
 
 echo "TASK FINISHED.";
 echo "*****************************************";
