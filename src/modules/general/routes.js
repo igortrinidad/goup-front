@@ -1,26 +1,13 @@
 import Index from './pages/index.vue'
 import About from './pages/about.vue'
-import NewInvite from './pages/new-invite.vue'
 import appLayout from './layout/main'
 import notFound from './pages/404.vue'
 import Forbidden from './pages/403.vue'
-import SignupChooser from './pages/signup-chooser.vue'
 
-import Contact from './pages/contact.vue'
-import Privacy from './pages/privacy.vue'
-import InviteCheck from './pages/invite-check.vue'
 import Terms from './pages/terms.vue'
-import Plans from './pages/plans.vue'
 import Errors from './pages/errors.vue'
-import ResetPass from './pages/reset-pass.vue'
-import ArticleShow from './articles/show.vue'
 
-//Landing Modules
-import {routes as companies} from './companies'
-import {routes as professionals} from './professionals'
-import {routes as clients} from './clients'
-import {routes as events} from './events'
-import {routes as mealRecipes} from './meal-recipes'
+
 
 // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/Spread_operator
 // Thus a new array is created, containing all objects that match the routes.
@@ -33,11 +20,6 @@ export default [
         component: appLayout,
         meta: {requiresAuth: false},
         children: [
-            ...companies,
-            ...professionals,
-            ...clients,
-            ...events,
-            ...mealRecipes,
             {
                 name: 'landing.index',
                 path: '',
@@ -51,34 +33,10 @@ export default [
                 meta: { requiresAuth: false },
             },
             {
-                name: 'landing.new-invite',
-                path: '/convidar',
-                component: NewInvite,
-                meta: { requiresAuth: false },
-            },
-            {
-                name: 'landing.signup.chooser',
-                path: '/cadastrar',
-                component: SignupChooser,
-                meta: { requiresAuth: false },
-            },
-            {
                 name: 'landing.invite.check',
                 path: '/convite/:email',
                 component: InviteCheck,
                 meta: { requiresAuth: false },
-            },
-            {
-                name: 'landing.contact',
-                path: '/contato',
-                component: Contact,
-                meta: { requiresAuth: false }
-            },
-            {
-                name: 'landing.privacy',
-                path: '/privacidade',
-                component: Privacy,
-                meta: { requiresAuth: false }
             },
             {
                 name: 'landing.errors',
@@ -90,24 +48,6 @@ export default [
                 name: 'landing.terms',
                 path: '/termos-de-uso',
                 component: Terms,
-                meta: { requiresAuth: false }
-            },
-            {
-                name: 'landing.plans',
-                path: '/planos',
-                component: Plans,
-                meta: { requiresAuth: false }
-            },
-            {
-                name: 'landing.reset-pass',
-                path: '/:usertype/recuperar-senha',
-                component: ResetPass,
-                meta: { requiresAuth: false }
-            },
-            {
-                name: 'landing.article.show',
-                path: '/article/show/:slug',
-                component: ArticleShow,
                 meta: { requiresAuth: false }
             },
         ]

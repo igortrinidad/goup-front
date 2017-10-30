@@ -4,7 +4,7 @@
 
             <!-- MENU HEADER -->
             <div class="header text-center">
-                <img class="logo" src="../assets/logos/LOGO-1-01.png" />
+                <!-- <img class="logo" src="../assets/logos/LOGO-1-01.png" /> -->
                 <button
                     type="button"
                     id="close-menu"

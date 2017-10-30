@@ -30,7 +30,6 @@
 
                 <div v-if="type === 'logo'">
                     <router-link tag="div" class="logo" to="/">
-                        <img src="../assets/logos/LOGO-1-04.png" style="width: 100%;" alt="Places Weplanner">
                     </router-link>
                 </div>
 

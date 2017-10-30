@@ -37,7 +37,7 @@ input[type="checkbox"] {
     height: 24px;
     background-repeat: no-repeat;
     overflow: hidden;
-    background-image: url(../../../src/assets/img/checkmarks-sprite-2x_interno.png);
+    /*background-image: url(../../../src/assets/img/checkmarks-sprite-2x_interno.png);*/
     background-size: 24px 384px;
 }
 

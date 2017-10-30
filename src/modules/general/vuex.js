@@ -1,9 +1,6 @@
 import { isFunction } from 'lodash'
-import * as General  from './module-store'
-import { vuex as MealRecipes } from './meal-recipes'
 
 // start extraction data from vuex modules
-const vuex = { General, MealRecipes };
 const keys = Object.keys(vuex)
 // process and extract data (modules and plugins)
 /**
