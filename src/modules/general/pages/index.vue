@@ -1,14 +1,12 @@
 <template>
     <div class="first-container">
 
-        <main-header
-            :type="'logo'"
-            :title="'Home'"
-            :cursor="false"
-            :action="function(){ return false}"
-            :hasback="true"
-        >
-        </main-header>
+        <div class="container">
+            <button type="button" class="btn btn-primary">Primary</button>
+            <button type="button" class="btn btn-primary">Primary</button>
+            <button type="button" class="btn btn-primary">Primary</button>
+            <button type="button" class="btn btn-primary">Primary</button>
+        </div>
 
     </div>
 </template>

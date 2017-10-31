@@ -67,14 +67,14 @@
 .btn-fab.btn-success,
 .btn.btn-success,
 .btn.btn-success:hover{
-  background-color: #00A369;
+  background-color: #561F9F;
   border-color: transparent;
   color: #FFFFFF !important;
 }
 .btn-fab.btn-danger,
 .btn.btn-danger,
 .btn.btn-danger:hover{
-  background-color: #E14A45;
+  background-color: #561F9F;
   border-color: #E14A45;
   color: #FFFFFF;
 }
@@ -82,7 +82,7 @@
 .btn-fab.btn-warning,
 .btn.btn-warning,
 .btn.btn-warning:hover{
-  background-color: #FFCC5F;
+  background-color: #561F9F;
   border-color: #FFCC5F;
   color: #383938;
 }
@@ -90,7 +90,7 @@
 .btn-fab.btn-whatsapp,
 .btn.btn-whatsapp,
 .btn.btn-whatsapp:hover{
-    background-color: #1ebea5;
+    background-color: #561F9F;
     border-color: transparent;
     color: #f2f2f2;
 }
@@ -98,7 +98,7 @@
 .btn-fab.btn-facebook,
 .btn.btn-facebook,
 .btn.btn-facebook:hover{
-    background-color: #3b5998;
+    background-color: #561F9F;
     border-color: transparent;
     color: #f2f2f2;
 }
@@ -106,24 +106,7 @@
 .btn-fab.btn-instagram,
 .btn.btn-instagram,
 .btn.btn-instagram:hover{
-    background-color: #CD486B;
+    background-color: #561F9F;
     border-color: transparent;
     color: #f2f2f2;
-}
-
-/* Btn Fab Format */
-.btn.btn-fab {
-    height: 45px;
-    width: 45px;
-    border-radius: 50%;
-    display: flex;
-    padding: 0;
-    justify-content: center;
-}
-.btn.btn-fab i {
-    display: table-cell;
-    vertical-align: middle;
-    height: 100%;
-    width: 100%;
-    text-align: center;
 }
