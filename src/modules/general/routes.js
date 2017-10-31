@@ -33,7 +33,7 @@ export default [
                 meta: { requiresAuth: false },
             },
             {
-                name: 'general.errors',
+                name: 'landing.errors',
                 path: '/erros',
                 component: Errors,
                 meta: { requiresAuth: false }
