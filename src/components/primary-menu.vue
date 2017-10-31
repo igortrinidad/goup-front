@@ -15,17 +15,10 @@
         },
         data() {
             return {
-
             }
         },
 
         computed: {
-<<<<<<< HEAD
-<<<<<<< HEAD
-            ...mapGetters(['currentUser', 'isLogged','userProgress', 'checkIOS', 'currentEnv', 'userUnreadedNotifications']),
-=======
-            ...mapGetters(['currentUser', 'isLogged', 'checkRole','userProgress', 'checkIOS', 'currentEnv', 'clientUnreadedNotifications', 'professionalUnreadedNotifications']),
->>>>>>> app is working without erros again
         },
 
         mounted() {
@@ -35,26 +28,10 @@
                 this.isMobile = true
                 this.isIOS = this.checkIOS;
             }
-<<<<<<< HEAD
-            
-=======
-
-            if(this.checkRole('client')){
-                this.getCurrentXP()
-            }
-
-            if(this.checkRole('professional')){
-                this.ProfessionalNotificationsStatus()
-            }
-=======
         },
 
         mounted() {
->>>>>>> fix break files
-
->>>>>>> app is working without erros again
         },
-
         methods: {
         }
     }
