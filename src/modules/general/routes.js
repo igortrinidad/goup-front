@@ -21,31 +21,25 @@ export default [
         meta: {requiresAuth: false},
         children: [
             {
-                name: 'landing.index',
+                name: 'general.index',
                 path: '',
                 component: Index,
                 meta: { requiresAuth: false },
             },
             {
-                name: 'landing.about',
+                name: 'general.about',
                 path: 'sobre',
                 component: About,
                 meta: { requiresAuth: false },
             },
             {
-                name: 'landing.invite.check',
-                path: '/convite/:email',
-                component: InviteCheck,
-                meta: { requiresAuth: false },
-            },
-            {
-                name: 'landing.errors',
+                name: 'general.errors',
                 path: '/erros',
                 component: Errors,
                 meta: { requiresAuth: false }
             },
             {
-                name: 'landing.terms',
+                name: 'general.terms',
                 path: '/termos-de-uso',
                 component: Terms,
                 meta: { requiresAuth: false }
@@ -57,12 +51,12 @@ export default [
         component: notFound
     },
     {
-        name: 'landing.404',
+        name: 'general.404',
         path: '/not-found',
         component: notFound
     },
     {
-        name: 'landing.403',
+        name: 'general.403',
         path: '/403',
         component: Forbidden
     }
