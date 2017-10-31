@@ -34,6 +34,11 @@
                 <input type="text" class="form-control" placeholder="Qualquer valor">
             </div>
 
+            <h1 class="title m-b-30">Interact.js</h1>
+
+            <div class="card">
+            </div>
+
         </div>
     </div>
 </template>

@@ -3217,6 +3217,10 @@ install@^0.9.5:
   version "0.9.6"
   resolved "https://registry.yarnpkg.com/install/-/install-0.9.6.tgz#bee16a742d72b9b4a1f750b1952c0f43be1e3b80"
 
+interactjs@^1.2.9:
+  version "1.2.9"
+  resolved "https://registry.yarnpkg.com/interactjs/-/interactjs-1.2.9.tgz#ae5a3e5bc4b174b7fe2a432df9ef4ef9cbacbdb6"
+
 interpret@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.3.tgz#cbc35c62eeee73f19ab7b10a801511401afc0f90"
@@ -3895,10 +3899,6 @@ lodash.templatesettings@^3.0.0:
     lodash._reinterpolate "^3.0.0"
     lodash.escape "^3.0.0"
 
-lodash.throttle@^4.0.0:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
-
 lodash.uniq@^4.3.0, lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
@@ -3996,10 +3996,6 @@ marked@^0.3.6:
 marker-clusterer-plus@^2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/marker-clusterer-plus/-/marker-clusterer-plus-2.1.4.tgz#f8eff74d599dab3b7d0e3fed5264ea0e704f5d67"
-
-material-colors@^1.0.0:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/material-colors/-/material-colors-1.2.5.tgz#5292593e6754cb1bcc2b98030e4e0d6a3afc9ea1"
 
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
@@ -5907,10 +5903,6 @@ timers-browserify@^2.0.2:
   dependencies:
     setimmediate "^1.0.4"
 
-tinycolor2@^1.1.2:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
-
 to-arraybuffer@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/to-arraybuffer/-/to-arraybuffer-1.0.1.tgz#7d229b1fcc637e466ca081180836a7aabff83f43"
@@ -6098,10 +6090,6 @@ uuid@3.0.1, uuid@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
 
-v-mask@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/v-mask/-/v-mask-1.2.0.tgz#36e280ffbb3d77fb42bd16857e34a6085cba37de"
-
 v-tooltip@^2.0.0-beta.4:
   version "2.0.0-beta.4"
   resolved "https://registry.yarnpkg.com/v-tooltip/-/v-tooltip-2.0.0-beta.4.tgz#0759306f3b668276f9160d11241ad7c8a3b34ffb"
@@ -6230,23 +6218,11 @@ vue-axios@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/vue-axios/-/vue-axios-2.0.2.tgz#0fe5a69f1edb09a1cd6c4a7f88c74d2fb7fe1778"
 
-vue-breadcrumbs@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/vue-breadcrumbs/-/vue-breadcrumbs-1.0.0.tgz#c1fa333d49211e547885521ce5f453fc554e1225"
-
 vue-clickaway@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/vue-clickaway/-/vue-clickaway-2.1.0.tgz#392de764751f31cd20787e8fb3a6e319825f8d4f"
   dependencies:
     loose-envify "^1.2.0"
-
-vue-color@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/vue-color/-/vue-color-2.0.9.tgz#cc12feed91b464c25b9dc865c422b0181f481cd2"
-  dependencies:
-    lodash.throttle "^4.0.0"
-    material-colors "^1.0.0"
-    tinycolor2 "^1.1.2"
 
 vue-form-wizard@^0.4.0:
   version "0.4.0"
@@ -6320,10 +6296,6 @@ vue-select@^2.2.0:
 vue-slider-component@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/vue-slider-component/-/vue-slider-component-2.4.1.tgz#ad0c215c2bb56f96015244dc02fda3063aa38666"
-
-vue-slugify@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/vue-slugify/-/vue-slugify-0.1.0.tgz#4ee33c8fb99c784e1408f92eae0ccf6bac1d7bcb"
 
 vue-spinner@^1.0.2:
   version "1.0.2"

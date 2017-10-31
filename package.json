@@ -39,6 +39,7 @@
     "font-awesome-filetypes": "^1.0.1",
     "fs": "0.0.1-security",
     "install": "^0.9.5",
+    "interactjs": "^1.2.9",
     "ionicons": "^2.0.1",
     "izitoast": "^1.1.1",
     "jquery": "^3.2.1",
