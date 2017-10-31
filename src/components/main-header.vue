@@ -93,13 +93,12 @@
             }
         },
         computed: {
-            ...mapGetters(['currentUser', 'isLogged', 'checkRole', 'checkIOS']),
         },
 
         mounted: function(){
 
             bus.$on('close-menu', () => this.sideMenuStatus = false);
-            
+
         },
 
         methods:{

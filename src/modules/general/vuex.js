@@ -1,10 +1,9 @@
-import { isFunction } from 'lodash'
-import { vuex as Auth } from './auth'
-import   * as General   from './store'
+// import { isFunction } from 'lodash'
+// import * as General  from './module-store'
 
 // start extraction data from vuex modules
-const vuex = { General };
-const keys = Object.keys(vuex)
+// const vuex = { General };
+// const keys = Object.keys(vuex)
 // process and extract data (modules and plugins)
 /**
  * this is a full functional approach
@@ -19,7 +18,7 @@ const keys = Object.keys(vuex)
  *
  * plugins have additional treatment, with `.filter`, because not every module has plugins
  */
-const modules = keys.reduce((acc, key) => ({ ...acc, [key]: vuex[key].module }), {})
+// const modules = keys.reduce((acc, key) => ({ ...acc, [key]: vuex[key].module }), {})
 /**
  * semi-functional version
  * const modules = keys.reduce((acc, key) => {
@@ -37,4 +36,4 @@ const modules = keys.reduce((acc, key) => ({ ...acc, [key]: vuex[key].module }),
 // end of extraction
 
 // Shorthand for ‘modules: modules’
-export default { modules }
+// export default { modules }

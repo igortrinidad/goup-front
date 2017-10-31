@@ -5,8 +5,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
     name: 'plans',
     components: {
@@ -18,7 +16,6 @@ export default {
     },
 
     computed: {
-        ...mapGetters(['isLogged', 'checkRole']),
     },
 
     methods: {

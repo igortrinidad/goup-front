@@ -23,9 +23,6 @@ if(process.env.NODE_ENV != 'development'){
     changeConsole()
 }
 
-import {initFcmPushNotifications} from './utils/push-notifications'
-initFcmPushNotifications()
-
  store.dispatch('setEnv', process.env.NODE_ENV);
 
 

@@ -14,7 +14,6 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
     export default{
@@ -29,10 +28,6 @@
 
         },
         computed: {
-            /**
-             * Map the getters from Vuex to this component.
-             */
-            ...mapGetters(['loader']),
         },
     }
 </script>

@@ -41,12 +41,10 @@ const beforeEach = (to, from, next) => {
         }
     }
 
-
-
     //prevents user to access login / signup routes
-    if ( store.getters.isLogged && preventsLogged(prevents)) {
-        next('/')
-    }
+    // if ( store.getters.isLogged && preventsLogged(prevents)) {
+    //     next('/')
+    // }
 
     //check user role
     if(needRole && store.getters.userRole != role){
