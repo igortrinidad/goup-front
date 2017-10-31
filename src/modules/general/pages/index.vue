@@ -80,7 +80,7 @@
                             elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
                         },
                         // enable autoScroll
-                        autoScroll: false,
+                        autoScroll: true,
                         // call this function on every dragmove event
                         onmove: dragMoveListener,
                         // call this function on every dragend event
@@ -118,11 +118,9 @@
 </script>
 
 <style scoped>
-    #drag-1, #drag-2 {
-        width: 25%;
+    #drag-1{
+        width: 100%;
         height: 100%;
-        min-height: 6.5em;
-        margin: 10%;
 
         background-color: #29e;
         color: white;
