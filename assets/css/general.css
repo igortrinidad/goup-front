@@ -346,7 +346,6 @@ button:focus { outline: none; }
 
 body {
     min-height: 1200px;
-    background-image: url("https://s3.amazonaws.com/isaudavel-assets/img/pattern-isaudavel-5-300.png");
     background-repeat: repeat;
 }
 
