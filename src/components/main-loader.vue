@@ -16,6 +16,7 @@
 <script>
     import {mapGetters} from 'vuex'
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+
     export default{
         name: 'main-loader',
         components: {
@@ -25,6 +26,7 @@
             return {}
         },
         mounted(){
+
         },
         computed: {
             /**
@@ -36,6 +38,7 @@
 </script>
 
 <style>
+
     /*
     Loader
      */
@@ -48,6 +51,7 @@
         z-index: 100000;
         background-color: rgba(255, 255, 255, .9);
     }
+
     .loading-spinner {
         width: 100%;
         height: 100%;
@@ -56,8 +60,10 @@
         align-items: center;
         justify-content: center;
     }
+
     .loader{
         width: 159px;
         text-align: center;
     }
+
 </style>

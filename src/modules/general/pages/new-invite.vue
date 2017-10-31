@@ -13,7 +13,7 @@
         <div class="container">
             <div class="col-sm-12">
                 <h3 class="text-center" style="max-width: 200px; margin: 0 auto;">
-                    <!-- <img src="../../../assets/logos/LOGO-1-01.png" width="100%" class="d-block m-t--10"> -->
+                    <img src="../../../assets/logos/LOGO-1-01.png" width="100%" class="d-block m-t--10">
                 </h3>
             </div>
         </div>

@@ -13,6 +13,14 @@ import Terms from './pages/terms.vue'
 import Plans from './pages/plans.vue'
 import Errors from './pages/errors.vue'
 import ResetPass from './pages/reset-pass.vue'
+import ArticleShow from './articles/show.vue'
+
+//Landing Modules
+import {routes as companies} from './companies'
+import {routes as professionals} from './professionals'
+import {routes as clients} from './clients'
+import {routes as events} from './events'
+import {routes as mealRecipes} from './meal-recipes'
 
 // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/Spread_operator
 // Thus a new array is created, containing all objects that match the routes.
@@ -25,6 +33,11 @@ export default [
         component: appLayout,
         meta: {requiresAuth: false},
         children: [
+            ...companies,
+            ...professionals,
+            ...clients,
+            ...events,
+            ...mealRecipes,
             {
                 name: 'general.index',
                 path: '',
@@ -89,6 +102,12 @@ export default [
                 name: 'landing.reset-pass',
                 path: '/:usertype/recuperar-senha',
                 component: ResetPass,
+                meta: { requiresAuth: false }
+            },
+            {
+                name: 'landing.article.show',
+                path: '/article/show/:slug',
+                component: ArticleShow,
                 meta: { requiresAuth: false }
             },
         ]

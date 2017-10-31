@@ -30,6 +30,7 @@
 
                 <div v-if="type === 'logo'">
                     <router-link tag="div" class="logo" to="/">
+                        <img src="../assets/logos/LOGO-1-04.png" style="width: 100%;" alt="Places Weplanner">
                     </router-link>
                 </div>
 
@@ -59,6 +60,7 @@
     import PrimaryMenu from '@/components/primary-menu.vue'
     import { mapGetters } from 'vuex'
     import bus from '@/utils/event-bus'
+
     export default{
         name: 'landing-header',
         props: {
@@ -93,20 +95,26 @@
         computed: {
             ...mapGetters(['currentUser', 'isLogged', 'checkRole', 'checkIOS']),
         },
-        mounted: function(){
-            bus.$on('close-menu', () => this.sideMenuStatus = false);
 
+        mounted: function(){
+
+            bus.$on('close-menu', () => this.sideMenuStatus = false);
+            
         },
+
         methods:{
             handleMenu() {
                 this.sideMenuStatus = !this.sideMenuStatus
             },
+
             handleMenuIOS() {
                 $('#side-menu-global-id').addClass('active')
             },
+
             back: function(){
                 window.history.back()
             },
+
         }
     }
 </script>
@@ -122,23 +130,28 @@
         align-items: center;
         color: #fff;
     }
+
     .title-header-center{
         height: 50px;
         margin-top: 33px;
     }
+
     .title-prop {
         font-size: 20px;
         color: #fff;
     }
+
     .back-button{
         position: absolute;
         left: 15px;
     }
+
     .navbar-button-ios{
         height: 40px !important;
         padding: 2px 10px !important;
         top: 10px !important;
     }
+
     /* Menu Hamburger */
     .hamburger-menu {
         background: transparent;
@@ -169,4 +182,5 @@
     .hamburger-menu.is-opened .burger:nth-child(1) { transform: rotate(45deg); top: 4px; }
     .hamburger-menu.is-opened .burger:nth-child(2) { display: none; }
     .hamburger-menu.is-opened .burger:nth-child(3) { transform: rotate(-45deg); top: -4px; }
+
 </style>

@@ -14,7 +14,7 @@
 
 	        <div class="container">
                 <h3 style="max-width: 200px; margin: 0 auto;">
-                    <!-- <img src="../../../assets/logos/LOGO-1-01.png" alt="" width="100%"> -->
+                    <img src="../../../assets/logos/LOGO-1-01.png" alt="" width="100%">
                 </h3>
 
 		        <span class="notification notification-primary m-t-10">
@@ -74,7 +74,7 @@
 	    name: 'about',
 	    components: {
 	    	mainHeader,
-
+            
 	    },
         data(){
             return {

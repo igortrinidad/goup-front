@@ -67,6 +67,7 @@ Vue.use(VTooltip, {
     defaultContainer: 'body',
 })
 
+
 // Router
 Vue.router = router
 
@@ -173,6 +174,7 @@ Vue.use(VueGoogleMaps, {
         libraries: 'places',
     }
 });
+
 
 //Disable production tip
 Vue.config.productionTip = false
