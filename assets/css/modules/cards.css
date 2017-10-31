@@ -5,13 +5,18 @@
   background: #fff;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   margin-bottom: 30px;
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 4px;
 }
 
 .card .card-header {
   position: relative;
   border-radius: 4px;
+}
+
+.card .card-header .title {
+    margin-bottom: 0;
+    color: #393838 !important;
 }
 
 @media screen and (min-width: 768px) {
@@ -76,6 +81,10 @@
   right: 25px;
   bottom: -23px;
   z-index: 1;
+}
+
+.card .card-body {
+    font-weight: 300;
 }
 
 @media screen and (min-width: 768px) {

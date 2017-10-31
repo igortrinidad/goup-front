@@ -1,5 +1,19 @@
 /* Form Inputs */
 
+.form-group .form-control {
+    position: relative;
+    transform: scale(.9);
+    transition: ease .3s;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+.form-group .form-control:focus {
+    transform: scale(1);
+    transition: ease .3s;
+}
+
+.form-group .form-control::-webkit-input-placeholder { color: #393838; }
 
 .has-error .form-control,
 .has-error .form-control:focus,
