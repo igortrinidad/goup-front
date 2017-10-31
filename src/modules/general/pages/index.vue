@@ -1,18 +1,21 @@
 <template>
     <div class="first-container">
 
-        <div class="container">
-            <button type="button" class="btn btn-primary">Primary</button>
-            <button type="button" class="btn btn-primary">Primary</button>
-            <button type="button" class="btn btn-primary">Primary</button>
-            <button type="button" class="btn btn-primary">Primary</button>
-        </div>
+        <main-header
+            :type="'logo'"
+            :title="'Home'"
+            :cursor="false"
+            :action="function(){ return false}"
+            :hasback="true"
+        ></main-header>
+
+
 
     </div>
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     import mainHeader from '@/components/main-header.vue'
 
     export default {
@@ -22,16 +25,6 @@
         },
         data () {
             return {
-                interactions: {
-                    lat: 0,
-                    lng: 0,
-                },
-                placeholder: {
-                },
-                inviteEmail: '',
-                lastEvents: [],
-                lastMealRecipes: [],
-                lastArticles: []
             }
         },
         computed: {

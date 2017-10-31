@@ -12,6 +12,7 @@
     import mainHeader from '@/components/main-header'
     import mainLoader from '@/components/main-loader'
     import { mapGetters } from 'vuex'
+
     export default{
         name: 'landing-layout',
         components:{
@@ -20,6 +21,7 @@
         },
         data(){
             return{
+
             }
         }
     }
