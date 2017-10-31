@@ -1,4 +1,9 @@
 import { isFunction } from 'lodash'
+import { vuex as Auth } from './auth'
+import   * as General   from './store'
+
+// start extraction data from vuex modules
+const vuex = { Auth, General };
 
 // start extraction data from vuex modules
 const keys = Object.keys(vuex)

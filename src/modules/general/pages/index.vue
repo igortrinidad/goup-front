@@ -29,9 +29,6 @@
                     lng: 0,
                 },
                 placeholder: {
-                    events: true,
-                    recipes: true,
-                    articles: true
                 },
                 inviteEmail: '',
                 lastEvents: [],
@@ -46,7 +43,6 @@
             ...mapGetters(['currentUser', 'isLogged']),
         },
         mounted(){
-            this.getMealRecipes()
         },
         methods: {
             ...mapActions(['setLoading']),

@@ -46,7 +46,7 @@
             }
         },
         computed: {
-            ...mapGetters(['currentUser', 'isLogged', 'checkRole','userProgress', 'checkIOS', 'currentEnv', 'clientUnreadedNotifications']),
+            ...mapGetters(['currentUser', 'isLogged','userProgress', 'checkIOS', 'currentEnv', 'userUnreadedNotifications']),
         },
         mounted() {
             //this.checkAppVersion();
@@ -54,9 +54,7 @@
                 this.isMobile = true
                 this.isIOS = this.checkIOS;
             }
-            if(this.checkRole('client')){
-                this.getCurrentXP()
-            }
+            
         },
         methods: {
             ...mapActions(['setClientTotalXp', 'setClientUnreadNotifications']),
