@@ -333,7 +333,7 @@ button:focus { outline: none; }
 .swal2-container { z-index: 99999 !important; }
 
 body {
-    min-height: 1200px;
+    min-height: 100vh;
     background-repeat: repeat;
 }
 
