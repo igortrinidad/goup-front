@@ -3217,10 +3217,6 @@ install@^0.9.5:
   version "0.9.6"
   resolved "https://registry.yarnpkg.com/install/-/install-0.9.6.tgz#bee16a742d72b9b4a1f750b1952c0f43be1e3b80"
 
-interactjs@^1.2.9:
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/interactjs/-/interactjs-1.2.9.tgz#ae5a3e5bc4b174b7fe2a432df9ef4ef9cbacbdb6"
-
 interpret@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.3.tgz#cbc35c62eeee73f19ab7b10a801511401afc0f90"
