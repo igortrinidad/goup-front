@@ -2,7 +2,13 @@ h1, h2, h3,
 h4, h5, h6,
 h1.title, h2.title, h3.title,
 h4.title, h5.title, h6.title {
-    font-weight:300 !important;
     color: #fff;
     text-align: center;
+}
+
+
+.card .card-body h1, .card .card-body h2, .card .card-body h3,
+.card .card-body h4, .card .card-body h5, .card .card-body h6 {
+    color: #393838;
+    text-align: left;
 }

@@ -1,11 +1,17 @@
 <template>
     <div class="main">
-        <h1 class="title m-t-30 m-b-30">{{ company.name }}</h1>
-        <div
-            class="picture-circle picture-circle-xl bordered-primary"
-            :style="{ backgroundImage: `url(${ company.avatar  })`}"
-        >
+        <div class="container">
+            <div class="card">
+                <div class="card-header cover" :style="{ backgroundImage: `url(${ company.avatar })` }">
+                </div>
+                <div class="card-body">
+                    <h4 class="title f-600">{{ company.name }}</h4>
+                    <span class="label label-info">{{ company.city }} - {{ company.state }}</span>
+                    <p>{{ company.description }}</p>
+                </div>
+            </div>
         </div>
+
     </div>
 </template>
 
