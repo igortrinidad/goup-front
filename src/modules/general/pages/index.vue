@@ -6,8 +6,8 @@
                 </div>
                 <div class="card-body">
                     <h4 class="title f-600">{{ company.name }}</h4>
-                    <span class="label label-info">{{ company.city }} - {{ company.state }}</span>
-                    <p>{{ company.description }}</p>
+                    <span class="label label-default">{{ company.city }} - {{ company.state }}</span>
+                    <p class="m-t-10">{{ company.description }}</p>
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@ export const pt = {
     orText:'Ou',
 }
 
-// Apenas para teste
+// Apenas se quiser
 export const es = {
     login: 'Iniciar sesión',
     loginFacebook: 'Iniciar sesión con Facebook',
