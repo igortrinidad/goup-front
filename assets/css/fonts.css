@@ -1,23 +1,31 @@
 /* LIGHT = 300 */
 @font-face {
-  font-family: 'Lato';
+  font-family: 'Open sans';
   font-style: normal;
   font-weight: 300;
-  src: local('Lato Light'), local('Lato-Light'), url('../fonts/lato/lato-light.ttf');
+  src: local('Open Sans Light'), local('OpenSans-Light'), url('../fonts/opensans/light.ttf');
 }
 
 /* REGULAR = 400 */
 @font-face {
-  font-family: 'Lato';
+  font-family: 'Open sans';
   font-style: normal;
   font-weight: 400;
-  src: local('Lato Regular'), local('Lato-Regular'), url('../fonts/lato/lato-regular.ttf');
+  src: local('Open Sans Regular'), local('OpenSans-Regular'), url('../fonts/opensans/regular.ttf');
+}
+
+/* SEMI BOLD = 600 */
+@font-face {
+  font-family: 'Open sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans SemiBold'), local('OpenSans-SemiBold'), url('../fonts/opensans/semibold.ttf');
 }
 
 /* BOLD = 700 */
 @font-face {
-  font-family: 'Lato';
+  font-family: 'Open sans';
   font-style: normal;
   font-weight: 700;
-  src: local('Lato Bold'), local('Lato-Bold'), url('../fonts/lato/lato-bold.ttf');
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url('../fonts/opensans/bold.ttf');
 }
