@@ -1,7 +1,7 @@
 /* Buttons */
 .btn{
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: 30px;
 }
 .btn:focus { outline: none !important; }
 
@@ -21,20 +21,13 @@
 
 .btn.btn-success,
 .btn.btn-success:hover{
-  background-color: #561F9F;
-  border-color: #29F39F;
-  color: #29F39F !important;
-}
-
-.btn.btn-info,
-.btn.btn-info:hover{
     background-color: #561F9F;
     border-color: #8BF3FB;
     color: #8BF3FB;
 }
 
-.btn.btn-warning,
-.btn.btn-warning:hover{
+.btn.btn-info,
+.btn.btn-info:hover{
   background-color: #561F9F;
   border-color: #FFFD7B;
   color: #FFFD7B;
