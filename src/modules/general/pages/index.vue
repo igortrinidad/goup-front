@@ -1,17 +1,17 @@
 <template>
     <div class="main">
-
+        <h1 class="title m-t-30 m-b-30">{{ company.name }}</h1>
         <div
             class="picture-circle picture-circle-xl bordered"
-            style="background-image: url(https://cdn0.casamentos.com.br/emp/fotos/8/2/0/8/apple-martini-mb_13_128208.png)"
+            :style="{ backgroundImage: `url(${ company.avatar  })`}"
         >
         </div>
-
-
     </div>
 </template>
 
 <script>
+    import CompanyModel from '@/models/Company'
+
     export default {
         name: 'landing',
 
@@ -20,6 +20,8 @@
 
         data () {
             return {
+                placeholder: true,
+                company: {}
             }
         },
 
@@ -28,10 +30,13 @@
         },
 
         mounted(){
+            this.nextCompany()
         },
 
         methods: {
-
+            nextCompany() {
+                this.company = CompanyModel
+            }
         }
     }
 </script>
