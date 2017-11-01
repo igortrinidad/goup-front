@@ -87,6 +87,8 @@ hr { border-top: 1px solid rgba(255, 255, 255, .6); }
     height: 68px;
 }
 
+.picture-circle.bordered { border: 4px solid #fff; }
+
 .picture-circle-xs{ width: 58px; height: 58px; }
 .picture-circle-m{ width: 86px;  height: 86px; }
 .picture-circle-l{ width: 100px; height: 100px; }

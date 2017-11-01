@@ -1,4 +1,6 @@
 /* Default Fixes */
+* { box-sizing: border-box; }
+
 html,
 body {
     width: 100vw;
@@ -6,7 +8,6 @@ body {
     overflow-x: hidden;
     background: #561F9F;
 }
-
 
 label {
     font-weight: 300;

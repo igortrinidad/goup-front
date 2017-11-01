@@ -1,10 +1,13 @@
 <template>
     <div class="main">
-        <div class="container">
 
-
-
+        <div
+            class="picture-circle picture-circle-xl bordered"
+            style="background-image: url(https://cdn0.casamentos.com.br/emp/fotos/8/2/0/8/apple-martini-mb_13_128208.png)"
+        >
         </div>
+
+
     </div>
 </template>
 
@@ -34,5 +37,8 @@
 </script>
 
 <style scoped>
+    .main {
+
+    }
 
 </style>
