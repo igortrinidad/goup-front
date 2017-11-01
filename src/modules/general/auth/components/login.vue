@@ -1,7 +1,24 @@
 <template lang="html">
     <div class="main">
         <div class="container">
-            <h1 class="title">{{ translations.title }}</h1>
+
+            <img class="logo" src="../../../../assets/logos/LOGOS-05.png" alt="">
+
+            <form class="m-t-30 text-center">
+                <div class="form-group">
+                    <input type="text" class="form-control" :placeholder="translations.inputEmail">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" :placeholder="translations.inputPassword">
+                </div>
+                <button type="button" class="btn btn-primary">{{ translations.login }}</button>
+
+                <span class="or">{{ translations.orText }}</span>
+
+                <button type="button" class="btn btn-facebook">
+                    <i class="ion-social-facebook m-r-10"></i>{{ translations.loginFacebook }}
+                </button>
+            </form>
         </div>
     </div>
 </template>
@@ -14,7 +31,7 @@
 
         data() {
             return{
-                language: 'es',
+                language: 'en',
                 translations: {}
             }
         },
@@ -40,4 +57,16 @@
 </script>
 
 <style scoped>
+    .logo {
+        max-width: 150px;
+        margin: 0 auto;
+        display: block
+    }
+
+    .or {
+        margin: 10px 0;
+        display: block;
+        color: #fff;
+        text-align: center;
+    }
 </style>

@@ -2,6 +2,8 @@
 .btn{
     box-sizing: border-box;
     border-radius: 30px;
+    border-width: 2px !important;
+    padding: 10px 25px
 }
 .btn:focus { outline: none !important; }
 
@@ -40,15 +42,15 @@
   color: #FE0022;
 }
 
-/*.btn.btn-whatsapp,
-.btn.btn-whatsapp:hover{
-    background-color: #561F9F;
-    border-color: transparent;
-    color: #f2f2f2;
-}
-
 .btn.btn-facebook,
 .btn.btn-facebook:hover{
+    background-color: #561F9F;
+    border-color: #4267b2;
+    color: #FFF;
+}
+/*
+.btn.btn-whatsapp,
+.btn.btn-whatsapp:hover{
     background-color: #561F9F;
     border-color: transparent;
     color: #f2f2f2;
