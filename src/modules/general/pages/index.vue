@@ -6,20 +6,6 @@
             :style="{ backgroundImage: `url(${ company.avatar  })`}"
         >
         </div>
-
-        <hr>
-            <div class="container">
-                <elements></elements>
-            </div>
-        <hr>
-        <router-link
-            type="button"
-            class="btn btn-primary"
-            :to="{ name: 'general.auth.login' }"
-            exact
-        >
-        Login
-        </router-link>
     </div>
 </template>
 
