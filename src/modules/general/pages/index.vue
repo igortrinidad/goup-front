@@ -2,7 +2,7 @@
     <div class="main">
         <h1 class="title m-t-30 m-b-30">{{ company.name }}</h1>
         <div
-            class="picture-circle picture-circle-xl bordered"
+            class="picture-circle picture-circle-xl bordered-primary"
             :style="{ backgroundImage: `url(${ company.avatar  })`}"
         >
         </div>

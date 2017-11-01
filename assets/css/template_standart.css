@@ -87,6 +87,14 @@ hr { border-top: 1px solid rgba(255, 255, 255, .6); }
     height: 68px;
 }
 
+
+.picture-circle.bordered-default { border: 3px solid #F7F5FA; }
+.picture-circle.bordered-primary { border: 3px solid #FF4B89; }
+.picture-circle.bordered-success { border: 3px solid #29F39F; }
+.picture-circle.bordered-danger { border: 3px solid #FE0022; }
+.picture-circle.bordered-warning { border: 3px solid #FFFD7B; }
+.picture-circle.bordered-info { border: 3px solid #8BF3FB; }
+
 .picture-circle-xs{ width: 58px; height: 58px; }
 .picture-circle-m{ width: 86px;  height: 86px; }
 .picture-circle-l{ width: 100px; height: 100px; }
