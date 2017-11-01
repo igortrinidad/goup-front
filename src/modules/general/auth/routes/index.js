@@ -23,21 +23,21 @@ const Signup = (resolve) => {
 
 export default [
     {
-        name: 'client.auth.login',
-        path: '/cliente/login',
+        name: 'general.auth.login',
+        path: '/login',
         component: Login,
         meta: { requiresAuth: false, preventsLogged: true },
     },
     {
-        name: 'client.auth.signup',
-        path: '/cliente/cadastro',
+        name: 'general.auth.signup',
+        path: '/cadastro',
         component: Signup,
         meta: { requiresAuth: false, preventsLogged: true },
     },
     {
-        name: 'client.auth.logout',
-        path: '/cliente/logout',
+        name: 'general.auth.logout',
+        path: '/logout',
         component: Logout,
-        meta: { requiresAuth: true, needRole: true, role: 'client' },
+        meta: { requiresAuth: true, needRole: true, role: 'general' },
     },
 ]
