@@ -7,6 +7,11 @@
         >
         </div>
 
+        <hr>
+            <div class="container">
+                <elements></elements>
+            </div>
+        <hr>
         <router-link
             type="button"
             class="btn btn-primary"
@@ -20,6 +25,7 @@
 
 <script>
     import interact from 'interactjs'
+    import elements from '@/components/elements.vue'
 
     import CompanyModel from '@/models/Company'
 
@@ -27,6 +33,7 @@
         name: 'landing',
 
         components: {
+            elements
         },
 
         data () {
