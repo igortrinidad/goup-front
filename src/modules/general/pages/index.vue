@@ -66,16 +66,18 @@
         methods: {
 
             animateCurrentCard(e) {
+                console.log(e);
                 if (!e.isFinal) {
                     $('.card.animated').css({ top: e.deltaY })
-                } else if(e.deltaY < -1) {
-                    this.companies.splice(1, 0)
-                    $('.card.animated').addClass('leave')
-                    $('não gostou')
-                } else {
-                    this.companies.splice(1, 0)
-                    console.log('gostou');
                 }
+                // else if(e.deltaY < -1) {
+                //     $('.card.animated').addClass('leave')
+                //     $('não gostou')
+                // } else {
+                //     this.companies.splice(0, 1)
+                //     console.log(this.companies);
+                //     console.log('gostou');
+                // }
             },
 
             getCompanies() {
