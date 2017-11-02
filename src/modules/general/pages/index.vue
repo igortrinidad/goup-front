@@ -1,22 +1,23 @@
 <template>
     <div class="main">
         <div class="container">
-            <div class="cards">
 
+            <h1 v-show="!companies.length">A lista acabou</h1>
+
+            <div class="cards">
                 <div
                     v-for="(company, index) in companies"
                     ref="card"
-                    :class="{ 'card': true, 'animated': index === 0 }"
+                    :class="{ 'card m-0': true, 'animated': index === 0 }"
                 >
                     <div class="card-header cover" :style="{ backgroundImage: `url(${ company.avatar })` }">
                     </div>
                     <div class="card-body">
-                        <h4 class="title f-600">{{ company.name }} - {{ index }}</h4>
+                        <h4 class="title f-600 t-overflow">{{ company.name }}</h4>
                         <span class="label label-default">{{ company.city }} - {{ company.state }}</span>
                         <p class="m-t-10">{{ company.description }}</p>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -62,20 +63,27 @@
                 let that = this
 
                 if (that.hammerCards) {
-                    that.hammerCards = null
+                    that.hammerCards = false
                 }
 
-                setTimeout(() => {
-                    that.hammerCards = new Hammer(that.$refs.card[0]);
-                    that.hammerCards.get('pan').set({ direction: Hammer.DIRECTION_ALL });
-                    that.hammerCards.on('panup pandown tap press', function(ev) {
-                        that.animateCurrentCard(ev)
-                    });
-                }, 200);
+                if (this.companies.length) {
+                    setTimeout(() => {
+                        console.log(this.$refs.card);
+                        that.hammerCards = new Hammer(that.$refs.card[0]);
+                        that.hammerCards.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+                        that.hammerCards.on('panleft panright panup pandown tap press', function(ev) {
+                            that.animateCurrentCard(ev)
+                        });
+                    }, 200);
+                }
+            },
+
+            resetPosition() {
+                $('.card').css({ top: 0 })
+                $('.card.animated').removeClass('leave')
             },
 
             animateCurrentCard(e) {
-                console.log(e.isFinal);
                 // Altera o valor top do elemento .card
                 if (!e.isFinal) {
                     $('.card.animated').css({ top: e.deltaY })
@@ -86,7 +94,7 @@
                     // remove a primeira empresa da lista de empresa
                     $('.card.animated').addClass('leave')
                     this.companies.splice(0, 1)
-                    console.log(this.companies);
+                    this.resetPosition()
 
                     this.mountHammer()
 
@@ -102,11 +110,6 @@
                 this.companies = CompanyModel
                 this.mountHammer()
             },
-
-            handleCards(ev) {
-                ev.preventDefault()
-                console.log(ev);
-            }
         }
     }
 </script>
@@ -114,12 +117,10 @@
 <style scoped>
     .cards {
         position: relative;
-        top: 0;
     }
     .card {
         position: absolute;
         width: 100%;
-        top: 0;
         left: 0;
     }
 
