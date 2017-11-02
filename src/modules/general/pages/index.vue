@@ -41,10 +41,10 @@
                 placeholder: true,
                 companies: CompanyModel,
                 active: false,
-                hammerOptions: {
-                    dragLockToAxis: true,
-                    dragBlockHorizontal: true
+                transform: {
+                    translate: { x: 0, y: 0 }
                 }
+
             }
         },
 
@@ -54,16 +54,30 @@
 
         mounted(){
             let that = this
-            console.log(that.$refs);
+
             that.hammerCards = new Hammer(that.$refs.card[0]);
             that.hammerCards.get('pan').set({ direction: Hammer.DIRECTION_ALL });
             that.hammerCards.on('panup pandown tap press', function(ev) {
-                console.log(ev);
+                that.animateCurrentCard(ev)
             });
 
         },
 
         methods: {
+
+            animateCurrentCard(e) {
+                if (!e.isFinal) {
+                    $('.card.animated').css({ top: e.deltaY })
+                } else if(e.deltaY < -1) {
+                    this.companies.splice(1, 0)
+                    $('.card.animated').addClass('leave')
+                    $('não gostou')
+                } else {
+                    this.companies.splice(1, 0)
+                    console.log('gostou');
+                }
+            },
+
             getCompanies() {
                 let that = this
                 that.companies = CompanyModel
@@ -90,5 +104,9 @@
         z-index: 1
     }
     .card.animated { z-index: 10; }
+    .card.animated.leave {
+        opacity: 0;
+        transition: ease .4s;
+    }
 
 </style>
