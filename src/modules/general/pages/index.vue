@@ -39,7 +39,7 @@
         data () {
             return {
                 placeholder: true,
-                companies: CompanyModel,
+                companies: [],
                 active: false,
                 transform: {
                     translate: { x: 0, y: 0 }
@@ -53,36 +53,52 @@
         },
 
         mounted(){
-            let that = this
-
-            that.hammerCards = new Hammer(that.$refs.card[0]);
-            that.hammerCards.get('pan').set({ direction: Hammer.DIRECTION_ALL });
-            that.hammerCards.on('panup pandown tap press', function(ev) {
-                that.animateCurrentCard(ev)
-            });
-
+            this.getCompanies()
         },
 
         methods: {
 
+            mountHammer() {
+                let that = this
+
+                if (that.hammerCards) {
+                    that.hammerCards = null
+                }
+
+                setTimeout(() => {
+                    that.hammerCards = new Hammer(that.$refs.card[0]);
+                    that.hammerCards.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+                    that.hammerCards.on('panup pandown tap press', function(ev) {
+                        that.animateCurrentCard(ev)
+                    });
+                }, 200);
+            },
+
             animateCurrentCard(e) {
-                console.log(e);
+                console.log(e.isFinal);
+                // Altera o valor top do elemento .card
                 if (!e.isFinal) {
                     $('.card.animated').css({ top: e.deltaY })
                 }
-                // else if(e.deltaY < -1) {
-                //     $('.card.animated').addClass('leave')
-                //     $('não gostou')
-                // } else {
-                //     this.companies.splice(0, 1)
-                //     console.log(this.companies);
-                //     console.log('gostou');
-                // }
+                // tem que realmente jogar o item para finalizar
+                if (e.isFinal) {
+
+                    // remove a primeira empresa da lista de empresa
+                    $('.card.animated').addClass('leave')
+                    this.companies.splice(0, 1)
+                    this.mountHammer()
+
+                    if (e.deltaY < -1) {
+                        console.log('Gostou!')
+                    } else {
+                        console.log('Não gostou!')
+                    }
+                }
             },
 
             getCompanies() {
-                let that = this
-                that.companies = CompanyModel
+                this.companies = CompanyModel
+                this.mountHammer()
             },
 
             handleCards(ev) {
@@ -103,7 +119,6 @@
         width: 100%;
         top: 0;
         left: 0;
-        z-index: 1
     }
     .card.animated { z-index: 10; }
     .card.animated.leave {
