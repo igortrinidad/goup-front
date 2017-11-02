@@ -1,20 +1,22 @@
 <template>
     <div class="main">
         <div class="container">
-            <div class="cards" ref="cards">
+            <div class="cards">
+
                 <div
-                    class="card"
                     v-for="(company, index) in companies"
                     ref="card"
+                    :class="{ 'card': true, 'animated': index === 0 }"
                 >
                     <div class="card-header cover" :style="{ backgroundImage: `url(${ company.avatar })` }">
                     </div>
                     <div class="card-body">
-                        <h4 class="title f-600">{{ company.name }}</h4>
+                        <h4 class="title f-600">{{ company.name }} - {{ index }}</h4>
                         <span class="label label-default">{{ company.city }} - {{ company.state }}</span>
                         <p class="m-t-10">{{ company.description }}</p>
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -37,7 +39,7 @@
         data () {
             return {
                 placeholder: true,
-                companies: [],
+                companies: CompanyModel,
                 active: false,
                 hammerOptions: {
                     dragLockToAxis: true,
@@ -52,19 +54,19 @@
 
         mounted(){
             let that = this
-
-            that.getCompanies()
-
-            that.hammerCards = new Hammer(that.$refs.cards, this.hammerOptions);
+            console.log(that.$refs);
+            that.hammerCards = new Hammer(that.$refs.card[0]);
             that.hammerCards.get('pan').set({ direction: Hammer.DIRECTION_ALL });
-            that.hammerCards.on("panup pandown tap press", function(ev) {
+            that.hammerCards.on('panup pandown tap press', function(ev) {
                 console.log(ev);
             });
+
         },
 
         methods: {
             getCompanies() {
-                this.companies = CompanyModel
+                let that = this
+                that.companies = CompanyModel
             },
 
             handleCards(ev) {
@@ -85,6 +87,8 @@
         width: 100%;
         top: 0;
         left: 0;
+        z-index: 1
     }
+    .card.animated { z-index: 10; }
 
 </style>
