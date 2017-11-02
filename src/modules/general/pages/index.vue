@@ -68,7 +68,6 @@
 
                 if (this.companies.length) {
                     setTimeout(() => {
-                        console.log(this.$refs.card);
                         that.hammerCards = new Hammer(that.$refs.card[0]);
                         that.hammerCards.get('pan').set({ direction: Hammer.DIRECTION_ALL });
                         that.hammerCards.on('panleft panright panup pandown tap press', function(ev) {
@@ -89,13 +88,14 @@
                     $('.card.animated').css({ top: e.deltaY })
                 }
                 // tem que realmente jogar o item para finalizar
-                if (e.isFinal) {
-
+                else {
+                    console.log('pq esta passando varias vezes aqui ?');
                     // remove a primeira empresa da lista de empresa
                     $('.card.animated').addClass('leave')
                     this.companies.splice(0, 1)
-                    this.resetPosition()
+                    console.log(this.companies);
 
+                    this.resetPosition()
                     this.mountHammer()
 
                     if (e.deltaY < -1) {
