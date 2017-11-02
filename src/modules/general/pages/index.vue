@@ -86,6 +86,8 @@
                     // remove a primeira empresa da lista de empresa
                     $('.card.animated').addClass('leave')
                     this.companies.splice(0, 1)
+                    console.log(this.companies);
+
                     this.mountHammer()
 
                     if (e.deltaY < -1) {
@@ -120,10 +122,21 @@
         top: 0;
         left: 0;
     }
-    .card.animated { z-index: 10; }
+
     .card.animated.leave {
         opacity: 0;
         transition: ease .4s;
     }
+
+    .cards .card:nth-child(1)   { z-index: 10; }
+    .cards .card:nth-child(2)   { z-index: 9; }
+    .cards .card:nth-child(3)   { z-index: 8; }
+    .cards .card:nth-child(4)   { z-index: 7; }
+    .cards .card:nth-child(5)   { z-index: 6; }
+    .cards .card:nth-child(6)   { z-index: 5; }
+    .cards .card:nth-child(7)   { z-index: 4; }
+    .cards .card:nth-child(8)   { z-index: 3; }
+    .cards .card:nth-child(9)   { z-index: 2; }
+    .cards .card:nth-child(10)  { z-index: 1; }
 
 </style>
