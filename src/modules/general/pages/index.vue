@@ -5,6 +5,7 @@
                 <div
                     class="card"
                     v-for="(company, index) in companies"
+                    ref="card"
                 >
                     <div class="card-header cover" :style="{ backgroundImage: `url(${ company.avatar })` }">
                     </div>
@@ -55,9 +56,10 @@
             that.getCompanies()
 
             that.hammerCards = new Hammer(that.$refs.cards, this.hammerOptions);
-            that.hammerCards.on('pan', function(ev) {
-                that.handleCards(ev)
-            })
+            that.hammerCards.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+            that.hammerCards.on("panup pandown tap press", function(ev) {
+                console.log(ev);
+            });
         },
 
         methods: {
