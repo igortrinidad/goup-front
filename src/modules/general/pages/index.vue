@@ -5,8 +5,6 @@
             :type="'logo'"
             :title="'Home'"
             :cursor="false"
-            :action="function(){ return false}"
-            :hasback="true"
         ></main-header>
 
         <div class="main">

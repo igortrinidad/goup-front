@@ -48,6 +48,13 @@
     border-color: #4267b2;
     color: #FFF;
 }
+
+.btn.btn-transparent,
+.btn.btn-transparent:hover{
+    background-color: transparent;
+    border-color: transparent;
+    color: #FFF;
+}
 /*
 .btn.btn-whatsapp,
 .btn.btn-whatsapp:hover{
