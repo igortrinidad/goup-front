@@ -1,5 +1,6 @@
 export default {
 	env: '',
+	language: 'en',
     loader:{
         is_loading: false,
         message: '',

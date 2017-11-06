@@ -7,6 +7,10 @@ export default {
         state.loader = payload.options
     },
 
+    [TYPES.SET_LANGUAGE](state, payload) {
+        state.language = payload.language
+    },
+
     [TYPES.SET_ENV](state, payload) {
         state.env = payload
     },

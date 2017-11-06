@@ -25,13 +25,10 @@ legend + .form-group{
     position: relative;
 }
 
-    .nav-tabs a{
-        color: #383938 !important;
-        font-size: 16px;
-    }
-
-button { cursor: pointer; }
-button:focus { outline: none; }
+.nav-tabs a{
+    color: #383938 !important;
+    font-size: 16px;
+}
 
 .full { width: 100%; }
 

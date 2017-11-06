@@ -2,9 +2,9 @@
 
 .form-group .form-control {
     position: relative;
-    transform: scale(.9);
+    transform: scale(.95);
     transition: ease .3s;
-    border-radius: 10px;
+    border-radius: 30px;
     padding: 10px 20px;
 }
 

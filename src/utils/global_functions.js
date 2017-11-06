@@ -1,15 +1,12 @@
 
-const accounting = require('accounting');
-
 export default function(){
-    //Submenu
+
+    //Submenu toggle
     $('body').on('click', '.sub-menu > a', function(e){
         e.preventDefault();
         $(this).next().slideToggle(200);
         $(this).parent().toggleClass('toggled');
     });
-
-    var accounting = accounting;
 
     //Retorna o index de um array baseado em um identificador (ex. 1 *id) e uma ancora (ex. ID)
     Array.prototype.toggleSelected = function arrayObjectIndexOf(id) {

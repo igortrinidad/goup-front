@@ -9,6 +9,13 @@
   padding: 4px;
 }
 
+.container-para-teste-do-phraseapp {
+    border-radius: 6px;
+    padding: 20px;
+    -webkit-box-shadow: 0 2px 8px 0 rgba(35,47,53,.09);
+    box-shadow: 0 2px 8px 0 rgba(35,47,53,.09);
+}
+
 .card .card-header {
   position: relative;
   border-radius: 4px;

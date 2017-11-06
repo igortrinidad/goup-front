@@ -22,5 +22,19 @@ export const checkIOS = () => {
 
 }
 
+//check language defined
+export const checkLanguage = () => {
+
+    var language = localStorage.getItem('language');
+
+    if(!language){
+    	localStorage.setItem('language', 'en')
+        return 'en';
+    } else {
+    	return language
+    }
+
+}
+
 // get current token
 export const AuthToken = ({ Auth }) => Auth.token.token

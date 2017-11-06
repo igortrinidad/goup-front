@@ -1,4 +1,5 @@
 export const SET_LOADING = 'Main//SET_LOADING'
+export const SET_LANGUAGE = 'Main//SET_LANGUAGE'
 export const SET_ENV = 'Main//SET_ENV'
 export const DISABLE_LOADER = 'Main//DISABLE_LOADER'
 export const SET_FCM_TOKEN_MOBILE = 'Main//SET_FCM_TOKEN_MOBILE'
