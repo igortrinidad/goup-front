@@ -1,2 +1,0 @@
-webpackJsonp([52],{1045:function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default={name:"landing-meal-recipes-main"}},1421:function(e,n){e.exports={render:function(){var e=this,n=e.$createElement;return(e._self._c||n)("router-view")},staticRenderFns:[]}},401:function(e,n,t){var r=t(2)(t(1045),t(1421),null,null);e.exports=r.exports}});
-//# sourceMappingURL=52.0de5e3fcd4007e6e34c7.js.map
