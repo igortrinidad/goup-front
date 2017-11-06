@@ -1,24 +1,48 @@
 <template lang="html">
     <div class="main">
         <div class="container">
-
             <img class="logo" src="../../../../assets/logos/LOGOS-05.png" alt="">
 
-            <form class="m-t-30 text-center">
-                <div class="form-group">
-                    <input type="text" class="form-control" :placeholder="translations.inputEmail">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" :placeholder="translations.inputPassword">
-                </div>
-                <button type="button" class="btn btn-primary">{{ translations.login }}</button>
+            <div v-if="!interactions.loginWithEmail">
+                <button
+                    type="button"
+                    class="btn btn-block btn-primary m-t-10"
+                    @click="interactions.loginWithEmail = true"
+                >
+                    {{ translations.loginEmail }}
+                </button>
 
-                <span class="or">{{ translations.orText }}</span>
-
-                <button type="button" class="btn btn-facebook">
+                <button type="button" class="btn btn-block btn-facebook m-t-10">
                     <i class="ion-social-facebook m-r-10"></i>{{ translations.loginFacebook }}
                 </button>
-            </form>
+            </div>
+
+            <div v-if="interactions.loginWithEmail">
+                <form class="m-t-30 text-center" >
+                    <div class="form-group">
+                        <input type="text" class="form-control" :placeholder="translations.inputEmail">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" :placeholder="translations.inputPassword">
+                    </div>
+
+                    <button type="button" class="btn btn-block btn-primary">{{ translations.login }}</button>
+
+                    <button type="button" class="btn btn-block btn-facebook m-t-10">
+                        <i class="ion-social-facebook m-r-10"></i>{{ translations.loginFacebook }}
+                    </button>
+                </form>
+            </div>
+
+            <div class="m-t-30">
+                <small class="f-300">
+                    {{ translations.acceptTerms }}
+                    <a href="#" class="f-primary">{{ translations.terms }}</a>
+                    &
+                    <a href="#" class="f-primary">{{ translations.privacy }}</a>
+                </small>
+            </div>
+
         </div>
     </div>
 </template>
@@ -32,7 +56,10 @@
         data() {
             return{
                 language: 'en',
-                translations: {}
+                translations: {},
+                interactions: {
+                    loginWithEmail: false
+                }
             }
         },
 
@@ -47,9 +74,6 @@
                 }
                 if (this.language === 'pt') {
                     this.translations = translations.pt
-                }
-                if (this.language === 'es') {
-                    this.translations = translations.es
                 }
             }
         }

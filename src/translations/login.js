@@ -1,24 +1,21 @@
 export const en = {
     login: 'Login',
+    loginEmail: 'Login with Email',
     loginFacebook: 'Login with Facebook',
     inputEmail: 'Enter your e-mail',
     inputPassword: 'Enter your password',
-    orText:'Or',
+    acceptTerms: 'Continuing you agree to our',
+    terms: 'Security terms',
+    privacy: 'Privacy policy',
 }
 
 export const pt = {
     login: 'Entrar',
+    loginEmail: 'Entrar com E-mail',
     loginFacebook: 'Entrar com Facebook',
     inputEmail: 'Informe seu email',
     inputPassword: 'Informe sua senha',
-    orText:'Ou',
-}
-
-// Apenas se quiser
-export const es = {
-    login: 'Iniciar sesión',
-    loginFacebook: 'Iniciar sesión con Facebook',
-    inputEmail: 'Introduce tu correo electrónico',
-    inputPassword: 'Introduce tu contraseña',
-    orText:'O',
+    acceptTerms: 'Ao continuar você concorda com nossos',
+    terms: 'Termos de segurança',
+    privacy: 'Política de privadede',
 }
