@@ -30,6 +30,7 @@
 
                 <div v-if="type === 'logo'">
                     <router-link tag="div" class="logo" to="/">
+                        <img src="../assets/logos/LOGOS-04.png" alt="" style="width: 100%">
                     </router-link>
                 </div>
 
@@ -39,7 +40,6 @@
                         <h1 class="title-prop m-0">{{ title }}</h1>
                     </div>
                 </div>
-
                 <div v-if="type === 'center'" @click="action()">
                     <div class="title-header-center" :class="{'cursor-pointer': cursor}">
                         <h1 class="title-prop text-center">
