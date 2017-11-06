@@ -10,14 +10,6 @@
                     <i class="ion-person"></i>
                 </router-link>
 
-                <router-link
-                    tag="button"
-                    :to="{ name: 'general.user.settings' }"
-                    :class="{ 'circle-profile right': true, 'active': title === 'search' }"
-                >
-                    <i class="ion-ios-search-strong"></i>
-                </router-link>
-
                 <!-- Logo -->
                 <div>
                     <router-link tag="div" class="logo" to="/">
@@ -26,6 +18,16 @@
                     </router-link>
                 </div>
                 <!-- / Logo -->
+
+                <!-- Search -->
+                <router-link
+                    tag="button"
+                    :to="{ name: 'general.search' }"
+                    :class="{ 'circle-profile right': true, 'active': title === 'search' }"
+                >
+                    <i class="ion-ios-search-strong"></i>
+                </router-link>
+                <!-- / Search -->
             </div>
         </nav>
     </div>
