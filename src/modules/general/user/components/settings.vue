@@ -8,7 +8,23 @@
         ></main-header>
 
         <div class="main">
+            <div class="container">
+                <div class="picture-circle picture-circle-xl" :style="{ backgroundImage: `url(${ user.avatar })` }"></div>
+                <h4 class="f-700">{{ user.name }}</h4>
 
+                <div class="row m-t-30 text-center">
+                    <div class="col-xs-6">
+                        <button type="button" class="btn btn-primary">
+                            <i class="ion-ios-gear"></i> {{ translations.buttons.config }}
+                        </button>
+                    </div>
+                    <div class="col-xs-6">
+                        <button type="button" class="btn btn-primary">
+                            <i class="ion-edit"></i> {{ translations.buttons.edit }}
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -16,6 +32,9 @@
 
 <script>
     import mainHeader from '@/components/main-header'
+
+    import User from '@/models/User'
+    import * as translations from '@/translations/settings'
 
     export default {
         name: 'general-user-settings',
@@ -26,19 +45,32 @@
 
         data () {
             return {
-                placeholder: true,
-                interactions: {}
+                language: 'pt',
+                interactions: {},
+                user: {}
             }
         },
 
         computed: {
+            'translations': function() {
+                if (this.language === 'en') {
+                    return translations.en
+                }
+                if (this.language === 'pt') {
+                    return translations.pt
+                }
+            }
         },
 
         mounted(){
+            this.getUser()
         },
 
         methods: {
 
+            getUser() {
+                this.user = User
+            },
         }
     }
 </script>

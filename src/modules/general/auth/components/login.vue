@@ -74,7 +74,7 @@
         <!-- / Login -->
 
         <!-- Terms And Privacy -->
-        <div class="container">
+        <div class="container text-center">
             <div class="m-t-30">
                 <small class="f-300">
                     {{ translations.acceptTerms }}
@@ -98,16 +98,24 @@
         data() {
             return{
                 language: 'pt',
-                translations: {},
                 interactions: {
                     loginWithEmail: false
+                }
+            }
+        },
+        computed: {
+            'translations': function() {
+                if (this.language === 'en') {
+                    return translations.en
+                }
+                if (this.language === 'pt') {
+                    return translations.pt
                 }
             }
         },
 
         mounted() {
             this.initSwiper()
-            this.setCurrentLanguage()
         },
 
         methods: {
@@ -126,15 +134,6 @@
                     })
                 }, 200);
             },
-
-            setCurrentLanguage() {
-                if (this.language === 'en') {
-                    this.translations = translations.en
-                }
-                if (this.language === 'pt') {
-                    this.translations = translations.pt
-                }
-            }
         }
     }
 </script>
