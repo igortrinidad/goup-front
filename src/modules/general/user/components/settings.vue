@@ -15,12 +15,12 @@
                 <div class="row m-t-30 text-center">
                     <div class="col-xs-6">
                         <button type="button" class="btn btn-primary">
-                            <i class="ion-ios-gear"></i> {{ translations.buttons.config }}
+                            <i class="ion-ios-gear m-r-5"></i> {{ translations.buttons.config }}
                         </button>
                     </div>
                     <div class="col-xs-6">
                         <button type="button" class="btn btn-primary">
-                            <i class="ion-edit"></i> {{ translations.buttons.edit }}
+                            <i class="ion-edit m-r-5"></i> {{ translations.buttons.edit }}
                         </button>
                     </div>
                 </div>
