@@ -104,10 +104,11 @@
 
 .navbar-default {
     /*background-color: #88C657 !important;*/
-    background: linear-gradient(to bottom, #6EC058 0%, #88C657 100%);
+    background: transparent;
     border: none !important;
     font-family: "Open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, .1) !important
 }
 
 /* text */

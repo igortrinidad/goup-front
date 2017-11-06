@@ -1,9 +1,9 @@
 <template>
     <div>
 
-        <primary-menu :isOpened="sideMenuStatus"></primary-menu>
+        <!-- <primary-menu :isOpened="sideMenuStatus"></primary-menu> -->
 
-        <button
+        <!-- <button
             type="button"
             id="navbar-menu-button"
             class="hamburger-menu"
@@ -14,11 +14,11 @@
             <div class="burger"></div>
             <div class="burger"></div>
             <div class="burger"></div>
-        </button>
+        </button> -->
 
-        <nav class="navbar navbar-default navbar-fixed-top">
+        <nav class="navbar navbar-default">
             <div class="container-fluid">
-                <div class="navbar-header" v-if="checkIOS">
+                <!-- <div class="navbar-header" v-if="checkIOS">
                     <button
                         type="button"
                         id="navbar-menu-button"
@@ -26,7 +26,7 @@
                         @click="handleMenuIOS()"
                     ><span class="sr-only">Toggle navigation</span><i class="ion-navicon f-26 m-r-5 m-l-5"></i>
                     </button>
-                </div>
+                </div> -->
 
                 <div v-if="type === 'logo'">
                     <router-link tag="div" class="logo" to="/">
