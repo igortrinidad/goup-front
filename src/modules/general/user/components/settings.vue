@@ -10,7 +10,7 @@
         <div class="main">
             <div class="container">
                 <div class="picture-circle picture-circle-xl" :style="{ backgroundImage: `url(${ user.avatar })` }"></div>
-                <h4 class="f-700">{{ user.name }}</h4>
+                <h4 class="f-700 text-center">{{ user.name }}</h4>
 
                 <div class="row m-t-30 text-center">
                     <div class="col-xs-6">

@@ -20,11 +20,10 @@
                         :class="{ 'card m-0': true, 'animated': index === 0 }"
                     >
                         <div class="card-header cover" :style="{ backgroundImage: `url(${ company.avatar })` }">
-                        </div>
-                        <div class="card-body">
-                            <h4 class="title f-600 t-overflow">{{ company.name }}</h4>
-                            <span class="label label-default">{{ company.city }} - {{ company.state }}</span>
-                            <p class="m-t-10">{{ company.description }}</p>
+
+                            <div class="card-header-title">
+                                <h4 class="title f-700 t-overflow">{{ company.name }}</h4>
+                            </div>
                         </div>
                     </div>
                 </div>
