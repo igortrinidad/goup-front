@@ -1,24 +1,31 @@
 <template>
     <div>
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default" v-if="type === 'main'">
             <div class="container-fluid">
-                <button type="button" class="circle-profile">
-                    <i class="fa fa-user-circle"></i>
-                </button>
+                <router-link
+                    tag="button"
+                    :to="{ name: 'general.user.settings' }"
+                    :class="{ 'circle-profile left': true, 'active': title === 'settings' }"
+                >
+                    <i class="ion-person"></i>
+                </router-link>
 
-                <div v-if="type === 'logo'">
+                <router-link
+                    tag="button"
+                    :to="{ name: 'general.user.settings' }"
+                    :class="{ 'circle-profile right': true, 'active': title === 'search' }"
+                >
+                    <i class="ion-ios-search-strong"></i>
+                </router-link>
+
+                <!-- Logo -->
+                <div>
                     <router-link tag="div" class="logo" to="/">
-                        <img v-if="type === 'logo'" src="../assets/logos/LOGOS-06.png" alt="" style="width: 100%">
-                        <img v-if="type !== 'logo'" src="../assets/logos/LOGOS-07.png" alt="" style="width: 100%">
+                        <img v-if="title === 'home'" src="../assets/logos/LOGOS-06.png" alt="" style="width: 100%">
+                        <img v-if="title !== 'home'" src="../assets/logos/LOGOS-07.png" alt="" style="width: 100%">
                     </router-link>
                 </div>
-
-                <div v-if="type === 'left'" @click="action()">
-                    <div class="title-header-left" :class="{'cursor-pointer': cursor}">
-                        <i class="fa fa-chevron-left m-r-10"></i>
-                        <h1 class="title-prop m-0">{{ title }}</h1>
-                    </div>
-                </div>
+                <!-- / Logo -->
             </div>
         </nav>
     </div>
@@ -88,7 +95,9 @@
 
 <style scoped>
     .navbar { margin-bottom: 0; }
+
     .container-fluid { position: relative; }
+
     .logo {
         width: 120px; margin: 0 auto; padding: 7px 10px 5px 10px;
     }
@@ -96,12 +105,15 @@
     .circle-profile {
         position: absolute;
         top: 50%;
-        left: 10px;
         margin-top: -22px;
         background-color: transparent;
         border: 0;
         font-size: 30px;
         color: rgba(255, 255, 255, .8);
-
     }
+
+    .circle-profile.left { left: 10px; }
+    .circle-profile.right { right: 10px; }
+
+    .circle-profile.active { color: rgba(236, 63, 129, .8); }
 </style>

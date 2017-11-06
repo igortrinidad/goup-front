@@ -2,8 +2,8 @@
     <div class="">
 
         <main-header
-            :type="'logo'"
-            :title="'Home'"
+            :title="'home'"
+            :type="'main'"
             :cursor="false"
         ></main-header>
 

@@ -15,6 +15,7 @@ import Errors from './pages/errors.vue'
 import ResetPass from './pages/reset-pass.vue'
 
 import { routes as auth } from './auth'
+import { routes as user } from './user'
 
 // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/Spread_operator
 // Thus a new array is created, containing all objects that match the routes.
@@ -28,6 +29,7 @@ export default [
         meta: {requiresAuth: false},
         children: [
             ...auth,
+            ...user,
             {
                 name: 'general.index',
                 path: '',
