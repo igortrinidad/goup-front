@@ -2,8 +2,8 @@
     <div class="">
 
         <main-header
-            :title="'settings'"
-            :type="'main'"
+            :title="'Configurações'"
+            :type="'back'"
             :cursor="false"
         ></main-header>
 

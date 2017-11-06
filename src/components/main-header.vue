@@ -1,33 +1,55 @@
 <template>
     <div>
-        <nav class="navbar navbar-default" v-if="type === 'main'">
+        <nav class="navbar navbar-default">
             <div class="container-fluid">
-                <router-link
-                    tag="button"
-                    :to="{ name: 'general.user.settings' }"
-                    :class="{ 'circle-profile left': true, 'active': title === 'settings' }"
-                >
-                    <i class="ion-person"></i>
-                </router-link>
 
-                <!-- Logo -->
-                <div>
-                    <router-link tag="div" class="logo" to="/">
-                        <img v-if="title === 'home'" src="../assets/logos/LOGOS-06.png" alt="" style="width: 100%">
-                        <img v-if="title !== 'home'" src="../assets/logos/LOGOS-07.png" alt="" style="width: 100%">
-                    </router-link>
+                <!-- Header Type === Back -->
+                <div v-if="type === 'back'">
+                    <button
+                        type="button"
+                        class="circle-profile left active back"
+                        @click="back()"
+                    >
+                        <i class="ion-ios-arrow-back"></i>
+                    </button>
+                    <div class="logo full">
+                        {{ title }}
+                    </div>
                 </div>
-                <!-- / Logo -->
+                <!-- Header Type === Back -->
 
-                <!-- Search -->
-                <router-link
-                    tag="button"
-                    :to="{ name: 'general.search' }"
-                    :class="{ 'circle-profile right': true, 'active': title === 'search' }"
-                >
-                    <i class="ion-search"></i>
-                </router-link>
-                <!-- / Search -->
+                <!-- Header Type === Main -->
+                <div v-if="type === 'main'">
+                    <!-- Settings & Profile -->
+                    <router-link
+                        tag="button"
+                        :to="{ name: 'general.user.settings' }"
+                        :class="{ 'circle-profile left': true, 'active': title === 'settings' }"
+                    >
+                        <i class="ion-person"></i>
+                    </router-link>
+                    <!-- / Settings & Profile -->
+
+                    <!-- Logo -->
+                    <div>
+                        <router-link tag="div" class="logo" to="/">
+                            <img v-if="title === 'home'" src="../assets/logos/LOGOS-06.png" alt="" style="width: 100%">
+                            <img v-if="title !== 'home'" src="../assets/logos/LOGOS-07.png" alt="" style="width: 100%">
+                        </router-link>
+                    </div>
+                    <!-- / Logo -->
+
+                    <!-- Search -->
+                    <router-link
+                        tag="button"
+                        :to="{ name: 'general.search' }"
+                        :class="{ 'circle-profile right': true, 'active': title === 'search' }"
+                    >
+                        <i class="ion-search"></i>
+                    </router-link>
+                    <!-- / Search -->
+                </div>
+                <!-- / Header Type === Main -->
             </div>
         </nav>
     </div>
@@ -79,14 +101,6 @@
         },
 
         methods:{
-            handleMenu() {
-                this.sideMenuStatus = !this.sideMenuStatus
-            },
-
-            handleMenuIOS() {
-                $('#side-menu-global-id').addClass('active')
-            },
-
             back: function(){
                 window.history.back()
             },
@@ -104,6 +118,7 @@
         width: 120px; margin: 0 auto; padding: 7px 10px 5px 10px;
     }
 
+    .logo.full { width: 100%; padding-left: 50px; padding-top: 20px; }
     .circle-profile {
         position: absolute;
         top: 50%;
@@ -124,6 +139,9 @@
 
     .circle-profile.left { left: 10px; }
     .circle-profile.right { right: 10px; }
+
+    .circle-profile.left.back{ top: 10px; margin: 0 }
+
 
     .circle-profile.active {
         color: rgba(236, 63, 129, .8);

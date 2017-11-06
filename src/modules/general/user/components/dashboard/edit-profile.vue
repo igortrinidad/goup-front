@@ -2,8 +2,8 @@
     <div class="">
 
         <main-header
-            :title="'settings'"
-            :type="'main'"
+            :title="'Editar perfil'"
+            :type="'back'"
             :cursor="false"
         ></main-header>
 
