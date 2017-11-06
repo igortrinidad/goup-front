@@ -108,12 +108,23 @@
         margin-top: -22px;
         background-color: transparent;
         border: 0;
-        font-size: 30px;
         color: rgba(255, 255, 255, .8);
+        width: 40px; height: 40px;
+        border-radius: 50%;
+        background: transparent;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: 2px solid rgba(255, 255, 255, .8);
     }
 
     .circle-profile.left { left: 10px; }
     .circle-profile.right { right: 10px; }
 
-    .circle-profile.active { color: rgba(236, 63, 129, .8); }
+    .circle-profile.active {
+        color: rgba(236, 63, 129, .8);
+        border-color: rgba(236, 63, 129, .8);
+    }
 </style>
