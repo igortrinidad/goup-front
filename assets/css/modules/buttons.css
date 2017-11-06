@@ -49,8 +49,12 @@
     color: #FFF;
 }
 
-button { cursor: pointer; }
-button:focus { outline: none; }
+.btn.btn-transparent,
+.btn.btn-transparent:hover{
+    background-color: transparent;
+    border-color: transparent;
+    color: #FFF;
+}
 
 /*
 .btn.btn-whatsapp,

@@ -1,4 +1,5 @@
 import Index from './pages/index.vue'
+import Search from './pages/search.vue'
 import About from './pages/about.vue'
 import NewInvite from './pages/new-invite.vue'
 import appLayout from './layout/main'
@@ -15,6 +16,7 @@ import Errors from './pages/errors.vue'
 import ResetPass from './pages/reset-pass.vue'
 
 import { routes as auth } from './auth'
+import { routes as user } from './user'
 
 // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/Spread_operator
 // Thus a new array is created, containing all objects that match the routes.
@@ -28,10 +30,17 @@ export default [
         meta: {requiresAuth: false},
         children: [
             ...auth,
+            ...user,
             {
                 name: 'general.index',
                 path: '',
                 component: Index,
+                meta: { requiresAuth: false },
+            },
+            {
+                name: 'general.search',
+                path: '/search',
+                component: Search,
                 meta: { requiresAuth: false },
             },
             {

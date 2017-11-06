@@ -1,55 +1,55 @@
 <template>
     <div>
-
-        <primary-menu :isOpened="sideMenuStatus"></primary-menu>
-
-        <button
-            type="button"
-            id="navbar-menu-button"
-            class="hamburger-menu"
-            :class="{ 'is-opened' : sideMenuStatus }"
-            @click="handleMenu()"
-            v-if="!checkIOS"
-        >
-            <div class="burger"></div>
-            <div class="burger"></div>
-            <div class="burger"></div>
-        </button>
-
-        <nav class="navbar navbar-default navbar-fixed-top">
+        <nav class="navbar navbar-default">
             <div class="container-fluid">
-                <div class="navbar-header" v-if="checkIOS">
+
+                <!-- Header Type === Back -->
+                <div v-if="type === 'back'">
                     <button
                         type="button"
-                        id="navbar-menu-button"
-                        class="navbar-toggle navbar-button-ios"
-                        @click="handleMenuIOS()"
-                    ><span class="sr-only">Toggle navigation</span><i class="ion-navicon f-26 m-r-5 m-l-5"></i>
+                        class="circle-profile left active back"
+                        @click="back()"
+                    >
+                        <i class="ion-ios-arrow-back"></i>
                     </button>
+                    <div class="logo full">
+                        {{ title }}
+                    </div>
                 </div>
+                <!-- Header Type === Back -->
 
-                <div v-if="type === 'logo'">
-                    <router-link tag="div" class="logo" to="/">
+                <!-- Header Type === Main -->
+                <div v-if="type === 'main'">
+                    <!-- Settings & Profile -->
+                    <router-link
+                        tag="button"
+                        :to="{ name: 'general.user.settings' }"
+                        :class="{ 'circle-profile left': true, 'active': title === 'settings' }"
+                    >
+                        <i class="ion-person"></i>
                     </router-link>
-                </div>
+                    <!-- / Settings & Profile -->
 
-                <div v-if="type === 'left'" @click="action()">
-                    <div class="title-header-left" :class="{'cursor-pointer': cursor}">
-                        <i class="fa fa-chevron-left m-r-10"></i>
-                        <h1 class="title-prop m-0">{{ title }}</h1>
+                    <!-- Logo -->
+                    <div>
+                        <router-link tag="div" class="logo" to="/">
+                            <img v-if="title === 'home'" src="../assets/logos/LOGOS-06.png" alt="" style="width: 100%">
+                            <img v-if="title !== 'home'" src="../assets/logos/LOGOS-07.png" alt="" style="width: 100%">
+                        </router-link>
                     </div>
-                </div>
+                    <!-- / Logo -->
 
-                <div v-if="type === 'center'" @click="action()">
-                    <div class="title-header-center" :class="{'cursor-pointer': cursor}">
-                        <h1 class="title-prop text-center">
-                            <i class="fa fa-chevron-left back-button cursor-pointer" v-if="hasback" @click="back()"></i>
-                            <span class="text-center f-300 m-0 m-b-10">
-                                {{ title }}
-                            </span>
-                        </h1>
-                    </div>
+                    <!-- Search -->
+                    <router-link
+                        tag="button"
+                        :to="{ name: 'general.search' }"
+                        :class="{ 'circle-profile right': true, 'active': title === 'search' }"
+                    >
+                        <i class="ion-search"></i>
+                    </router-link>
+                    <!-- / Search -->
                 </div>
+                <!-- / Header Type === Main -->
             </div>
         </nav>
     </div>
@@ -101,14 +101,6 @@
         },
 
         methods:{
-            handleMenu() {
-                this.sideMenuStatus = !this.sideMenuStatus
-            },
-
-            handleMenuIOS() {
-                $('#side-menu-global-id').addClass('active')
-            },
-
             back: function(){
                 window.history.back()
             },
@@ -118,67 +110,41 @@
 </script>
 
 <style scoped>
+    .navbar { margin-bottom: 0; }
+
+    .container-fluid { position: relative; }
+
     .logo {
-        width: 120px; margin: 0 auto; padding: 22px 0 20px 0;
+        width: 120px; margin: 0 auto; padding: 7px 10px 5px 10px;
     }
-    .title-header-left {
-        width: 100%; height: 40px;
-        margin: 22px 0 20px 0;
+
+    .logo.full { width: 100%; padding-left: 50px; padding-top: 20px; }
+    .circle-profile {
+        position: absolute;
+        top: 50%;
+        margin-top: -22px;
+        background-color: transparent;
+        border: 0;
+        color: rgba(255, 255, 255, .8);
+        width: 40px; height: 40px;
+        border-radius: 50%;
+        background: transparent;
+        font-size: 18px;
         display: flex;
         align-items: center;
-        color: #fff;
+        justify-content: center;
+        padding: 0;
+        border: 2px solid rgba(255, 255, 255, .8);
     }
 
-    .title-header-center{
-        height: 50px;
-        margin-top: 33px;
-    }
+    .circle-profile.left { left: 10px; }
+    .circle-profile.right { right: 10px; }
 
-    .title-prop {
-        font-size: 20px;
-        color: #fff;
-    }
+    .circle-profile.left.back{ top: 10px; margin: 0 }
 
-    .back-button{
-        position: absolute;
-        left: 15px;
-    }
 
-    .navbar-button-ios{
-        height: 40px !important;
-        padding: 2px 10px !important;
-        top: 10px !important;
+    .circle-profile.active {
+        color: rgba(236, 63, 129, .8);
+        border-color: rgba(236, 63, 129, .8);
     }
-
-    /* Menu Hamburger */
-    .hamburger-menu {
-        background: transparent;
-        border: none;
-        display: flex;
-        flex-flow: row wrap;
-        width: 40px; height: 40px;
-        position: fixed;
-        top: 23px; right: 15px;
-        justify-content: flex-end;
-        font-size: 25px;
-        overflow: hidden;
-        z-index: 88888;
-    }
-    .hamburger-menu .burger {
-        display: block;
-        width: 100%;
-        height: 2px;
-        margin: 3px 0;
-        border-radius: 6px;
-        transition: ease .3s;
-        transform: rotate(0deg);
-        background: #fff;
-        position: relative;
-    }
-    /* Is Opened */
-    .hamburger-menu.is-opened .burger { transition: ease .3s; background-color: #88C657; }
-    .hamburger-menu.is-opened .burger:nth-child(1) { transform: rotate(45deg); top: 4px; }
-    .hamburger-menu.is-opened .burger:nth-child(2) { display: none; }
-    .hamburger-menu.is-opened .burger:nth-child(3) { transform: rotate(-45deg); top: -4px; }
-
 </style>

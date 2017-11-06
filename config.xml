@@ -33,7 +33,7 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="StatusBarOverlaysWebView" value="true" />
-    <preference name="StatusBarBackgroundColor" value="#6EC058" />
+    <preference name="StatusBarBackgroundColor" value="#561F9F" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="DisallowOverscroll" value="true" />
     <platform name="android">

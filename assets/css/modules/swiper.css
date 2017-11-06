@@ -2,10 +2,10 @@
 .swiper-pagination-bullet {
     background-color: transparent !important;
     opacity: 1 !important;
-    width: 12px !important; height: 12px !important;
-    border: 2px solid #fff;
+    width: 9px !important; height: 9px !important;
+    border: 1px solid #FF4B89;
 }
-.swiper-pagination-bullet-active { background-color: #fff !important; opacity: 1 !important; }
+.swiper-pagination-bullet-active { background-color: #FF4B89 !important; opacity: 1 !important; }
 
 
 /* Swiper Pagination PRIMARY COLOR */

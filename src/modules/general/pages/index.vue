@@ -1,25 +1,50 @@
 <template>
-    <div class="main">
-        <div class="container">
+    <div class="">
 
-            <h1 v-show="!companies.length">A lista acabou</h1>
+        <main-header
+            :title="'home'"
+            :type="'main'"
+            :cursor="false"
+        ></main-header>
 
-            <div class="cards">
-                <div
-                    v-for="(company, index) in companies"
-                    ref="card"
-                    :class="{ 'card m-0': true, 'animated': index === 0 }"
-                >
-                    <div class="card-header cover" :style="{ backgroundImage: `url(${ company.avatar })` }">
-                    </div>
-                    <div class="card-body">
-                        <h4 class="title f-600 t-overflow">{{ company.name }}</h4>
-                        <span class="label label-default">{{ company.city }} - {{ company.state }}</span>
-                        <p class="m-t-10">{{ company.description }}</p>
+        <div class="main">
+
+            <!-- Cards -->
+            <div class="container">
+                <h1 v-show="!companies.length">A lista acabou</h1>
+
+                <div class="cards">
+                    <div
+                        v-for="(company, index) in companies"
+                        ref="card"
+                        :class="{ 'card m-0': true, 'animated': index === 0 }"
+                    >
+                        <div class="card-header cover" :style="{ backgroundImage: `url(${ company.avatar })` }">
+
+                            <div class="card-header-title">
+                                <h4 class="title f-700 t-overflow">{{ company.name }}</h4>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- / Cards -->
+
         </div>
+
+        <!-- Actions -->
+        <div class="actions">
+            <span class="action">
+                <span class="ion-refresh f-default"></span>
+            </span>
+            <span class="action xl">
+                <span class="ion-ios-heart f-primary"></span>
+            </span>
+            <span class="action">
+                <span class="ion-close-round f-danger"></span>
+            </span>
+        </div>
+        <!-- / Actions -->
 
     </div>
 </template>
@@ -27,6 +52,7 @@
 <script>
     import Hammer from 'hammerjs'
 
+    import mainHeader from '@/components/main-header.vue'
     import elements from '@/components/elements.vue'
     import CompanyModel from '@/models/Company'
 
@@ -34,6 +60,7 @@
         name: 'landing',
 
         components: {
+            mainHeader,
             elements
         },
 
@@ -133,6 +160,7 @@
 <style scoped>
     .cards {
         position: relative;
+        height: 400px;
     }
     .card {
         position: absolute;
