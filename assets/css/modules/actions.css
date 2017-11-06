@@ -1,0 +1,26 @@
+.actions {
+    width: 100%;
+    text-align: center;
+}
+
+.actions .action {
+    width: 50px; height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    display: inline-flex;
+    margin: 0 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 1px 3px 3px rgba(0, 0, 0, .3);
+}
+
+.actions .action.xl {
+    width: 70px; height: 70px;
+    font-size: 34px;
+}
+
+.actions .action span {
+    display: inline-block;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
+}

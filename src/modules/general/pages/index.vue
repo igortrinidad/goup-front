@@ -9,8 +9,8 @@
 
         <div class="main">
 
+            <!-- Cards -->
             <div class="container">
-
                 <h1 v-show="!companies.length">A lista acabou</h1>
 
                 <div class="cards">
@@ -29,8 +29,23 @@
                     </div>
                 </div>
             </div>
+            <!-- / Cards -->
 
         </div>
+
+        <!-- Actions -->
+        <div class="actions">
+            <span class="action">
+                <span class="ion-refresh f-default"></span>
+            </span>
+            <span class="action xl">
+                <span class="ion-ios-heart f-primary"></span>
+            </span>
+            <span class="action">
+                <span class="ion-close-round f-danger"></span>
+            </span>
+        </div>
+        <!-- / Actions -->
 
     </div>
 </template>
@@ -146,6 +161,7 @@
 <style scoped>
     .cards {
         position: relative;
+        height: 400px;
     }
     .card {
         position: absolute;

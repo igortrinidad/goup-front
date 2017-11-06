@@ -25,7 +25,7 @@
                     :to="{ name: 'general.search' }"
                     :class="{ 'circle-profile right': true, 'active': title === 'search' }"
                 >
-                    <i class="ion-ios-search-strong"></i>
+                    <i class="ion-search"></i>
                 </router-link>
                 <!-- / Search -->
             </div>

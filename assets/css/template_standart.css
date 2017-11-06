@@ -14,8 +14,9 @@
 @import './modules/navbar.css';
 @import './modules/texts.css';
 @import './modules/tooltip.css';
+@import './modules/actions.css';
 
-.text-muted{ color: #4A5464; }
+.text-muted { color: #4A5464; }
 
 ::selection {
     color: #fff;
