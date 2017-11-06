@@ -10,6 +10,18 @@ const Settings = (resolve) => {
     })
 }
 
+const UserConfig = (resolve) => {
+    require.ensure(['../components/dashboard/config'], () => {
+        resolve(require('../components/dashboard/config')) // eslint-disable-line global-require
+    })
+}
+
+const UserEditProfile = (resolve) => {
+    require.ensure(['../components/dashboard/edit-profile'], () => {
+        resolve(require('../components/dashboard/edit-profile')) // eslint-disable-line global-require
+    })
+}
+
 export default [
     {
         path: 'user',
@@ -20,6 +32,18 @@ export default [
                 name: 'general.user.settings',
                 path: '/settings',
                 component: Settings,
+                meta: {requiresAuth: false}
+            },
+            {
+                name: 'general.user.settings.configs',
+                path: '/settings/configs',
+                component: UserConfig,
+                meta: {requiresAuth: false}
+            },
+            {
+                name: 'general.user.settings.edit',
+                path: '/settings/edit-profile',
+                component: UserEditProfile,
                 meta: {requiresAuth: false}
             }
         ]
