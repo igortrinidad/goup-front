@@ -77,33 +77,49 @@
                 }
             },
 
-            resetPosition() {
-                $('.card').css({ top: 0 })
-                $('.card.animated').removeClass('leave')
+            resetPosition(leave) {
+                $('.card').css({left: 0, top: 0 })
+                if (leave) {
+                    $('.card.animated').removeClass('leave')
+                } else {
+                    $('.card.animated').addClass('transition')
+                    setTimeout(function () {
+                        $('.card.animated').removeClass('transition')
+                    }, 200);
+                }
             },
 
             animateCurrentCard(e) {
-                // Altera o valor top do elemento .card
-                if (!e.isFinal) {
-                    $('.card.animated').css({ top: e.deltaY })
-                }
-                // tem que realmente jogar o item para finalizar
-                else {
-                    console.log('pq esta passando varias vezes aqui ?');
-                    // remove a primeira empresa da lista de empresa
-                    $('.card.animated').addClass('leave')
-                    this.companies.splice(0, 1)
-                    console.log(this.companies);
-
-                    this.resetPosition()
-                    this.mountHammer()
-
-                    if (e.deltaY < -1) {
-                        console.log('Gostou!')
+                if (e.isFinal) {
+                    console.log(e.deltaY);
+                    if (e.deltaY < -100 || e.deltaY > 100) {
+                        this.resetPosition(true)
                     } else {
-                        console.log('Não gostou!')
+                        this.resetPosition(false)
                     }
                 }
+                if (!e.isFinal){
+                    $('.card.animated').css({ left: e.deltaX, top: e.deltaY })
+                }
+
+                // if (!e.isFinal) {
+                //     $('.card.animated').css({ left: e.deltaX, top: e.deltaY })
+                // }
+                // else {
+                //     console.log('pq esta passando varias vezes aqui ?');
+                //     // remove a primeira empresa da lista de empresa
+                //     $('.card.animated').addClass('leave')
+                //     this.companies.splice(0, 1)
+                //     console.log(this.companies);
+                //
+                //     this.mountHammer()
+                //     console.log(e.deltaY);
+                //     if (e.deltaY < -100) {
+                //         console.log('Gostou!')
+                //     } else {
+                //         console.log('Não gostou!')
+                //     }
+                // }
             },
 
             getCompanies() {
@@ -128,6 +144,8 @@
         opacity: 0;
         transition: ease .4s;
     }
+
+    .card.animated.transition { transition: ease .3s; }
 
     .cards .card:nth-child(1)   { z-index: 10; }
     .cards .card:nth-child(2)   { z-index: 9; }
