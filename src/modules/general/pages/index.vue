@@ -88,23 +88,23 @@
                     liked: false,
                     ignored: false,
                 },
-                language: 'pt',
                 placeholder: true,
                 companies: [],
                 active: false,
                 transform: {
                     translate: { x: 0, y: 0 }
                 }
-
             }
         },
 
         computed: {
             'translations': function() {
-                if (this.language === 'en') {
+                const language = localStorage.getItem('language')
+
+                if (language === 'en' || !language) {
                     return translations.en
                 }
-                if (this.language === 'pt') {
+                if (language === 'pt') {
                     return translations.pt
                 }
             }

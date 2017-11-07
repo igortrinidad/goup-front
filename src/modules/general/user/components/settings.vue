@@ -61,7 +61,6 @@
 
         data () {
             return {
-                language: 'pt',
                 interactions: {},
                 user: {}
             }
@@ -69,10 +68,12 @@
 
         computed: {
             'translations': function() {
-                if (this.language === 'en') {
+                const language = localStorage.getItem('language')
+
+                if (language === 'en' || !language) {
                     return translations.en
                 }
-                if (this.language === 'pt') {
+                if (language === 'pt') {
                     return translations.pt
                 }
             }
