@@ -72,7 +72,7 @@
     import elements from '@/components/elements.vue'
     import CompanyModel from '@/models/Company'
 
-    import * as translations from '@/translations/list-cards'
+    import * as translations from '@/translations/pages/index'
 
     export default {
         name: 'landing',
