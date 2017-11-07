@@ -1,52 +1,60 @@
 <template>
-    <div class="">
+    
+        <div class="">
 
-        <main-header
-            :title="'home'"
-            :type="'main'"
-            :cursor="false"
-        ></main-header>
+            <main-header
+                :title="'home'"
+                :type="'main'"
+                :cursor="false"
+            ></main-header>
 
-        <div class="main">
+                <transition  class="main m-t-30" appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 
-            <!-- Cards -->
-            <div class="container">
-                <h1 v-show="!companies.length">A lista acabou</h1>
+                    
+                    <div class="container m-t-30">
+                        <h1 v-show="!companies.length">A lista acabou</h1>
 
-                <div class="cards">
-                    <div
-                        v-for="(company, index) in companies"
-                        ref="card"
-                        :class="{ 'card m-0': true, 'animated': index === 0 }"
-                    >
-                        <div class="card-header cover" :style="{ backgroundImage: `url(${ company.avatar })` }">
 
-                            <div class="card-header-title">
-                                <h4 class="title f-700 t-overflow">{{ company.name }}</h4>
+                        <!-- Cards -->
+                        <div class="cards">
+                            <div
+                                v-for="(company, index) in companies"
+                                ref="card"
+                                :class="{ 'card m-0': true, 'animated': index === 0 }"
+                            >
+                                <div class="card-header cover c-2" :style="{ backgroundImage: `url(${ company.avatar })` }">
+
+                                    <div class="card-header-title">
+                                        <h4 class="title f-700 t-overflow">{{ company.name }}</h4>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <!-- Cards -->
+
+
+                        <!-- Actions -->
+                        <div class="actions">
+                            <span class="action">
+                                <span class="ion-refresh f-default"></span>
+                            </span>
+                            <span class="action xl">
+                                <span class="ion-ios-heart f-primary"></span>
+                            </span>
+                            <span class="action">
+                                <span class="ion-close-round f-danger"></span>
+                            </span>
+                        </div>
+                        <!-- / Actions -->
+
                     </div>
-                </div>
-            </div>
-            <!-- / Cards -->
+
+                </transition>
+
+
 
         </div>
-
-        <!-- Actions -->
-        <div class="actions">
-            <span class="action">
-                <span class="ion-refresh f-default"></span>
-            </span>
-            <span class="action xl">
-                <span class="ion-ios-heart f-primary"></span>
-            </span>
-            <span class="action">
-                <span class="ion-close-round f-danger"></span>
-            </span>
-        </div>
-        <!-- / Actions -->
-
-    </div>
+   
 </template>
 
 <script>
@@ -166,6 +174,11 @@
         position: absolute;
         width: 100%;
         left: 0;
+        border-radius: 35px;
+    }
+
+    .c-2{
+        border-radius: 35px;
     }
 
     .card.animated.leave {
@@ -186,4 +199,7 @@
     .cards .card:nth-child(9)   { z-index: 2; }
     .cards .card:nth-child(10)  { z-index: 1; }
 
+    .fadeInLeft{
+        transition: 0.1s;
+    }
 </style>

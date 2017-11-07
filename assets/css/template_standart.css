@@ -101,6 +101,7 @@ hr { border-top: 1px solid rgba(255, 255, 255, .6); }
 .picture-circle-m{ width: 86px;  height: 86px; }
 .picture-circle-l{ width: 100px; height: 100px; }
 .picture-circle-xl{ width: 124px; height: 124px; }
+.picture-circle-xxl{ width: 168px; height: 168px; }
 
 /*
 * Table
