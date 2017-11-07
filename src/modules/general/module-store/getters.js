@@ -1,4 +1,3 @@
-export const selectedCompany = (state) => {
-
-    return state.selectedCompany
+export const language = (state) => {
+    return state.language
 }

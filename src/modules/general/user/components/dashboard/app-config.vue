@@ -2,14 +2,55 @@
     <div>
 
         <main-header
-            :title="'Configurações'"
+            :title="translations.title"
             :type="'back'"
             :cursor="false"
         ></main-header>
 
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main">
-                <h1 class="text-center">Configurações do aplicativo, como idioma, etc...</h1>
+
+                <div class="container">
+
+                    <!-- Select Language -->
+                    <div class="card">
+                        <div class="card-body">
+                            <legend>{{ translations.language.title }}</legend>
+
+                            <ul class="list-group m-t-10 m-0">
+                                <li class="list-group-item" @click="toggleLang('en')">
+                                    {{ translations.language.english }}
+                                    <i
+                                        :class="{
+                                            'icon-select m-l-10 f-20': true,
+                                            'ion-ios-circle-filled': languages.en,
+                                            'ion-ios-circle-outline': !languages.en
+                                        }"
+                                    >
+                                    </i>
+                                </li>
+                                <li class="list-group-item" @click="toggleLang('pt')">
+                                    {{ translations.language.portuguese }}
+                                    <i
+                                        :class="{
+                                            'icon-select m-l-10 f-20': true,
+                                            'ion-ios-circle-filled': languages.pt,
+                                            'ion-ios-circle-outline': !languages.pt
+                                        }"
+                                    >
+                                    </i>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- / Select Language -->
+
+                    <button type="button" class="btn btn-primary btn-block" @click="saveSettings()">
+                        {{ translations.save }}
+                    </button>
+
+                </div>
+
             </div>
         </transition>
     </div>
@@ -19,7 +60,7 @@
     import mainHeader from '@/components/main-header'
 
     import User from '@/models/User'
-    import * as translations from '@/translations//user/components/app-config'
+    import * as translations from '@/translations/user/components/app-config'
 
     export default {
         name: 'general-user-settings-app-config',
@@ -31,7 +72,11 @@
         data () {
             return {
                 interactions: {},
-                user: {}
+                user: {},
+                languages: {
+                    pt: false,
+                    en: false
+                }
             }
         },
 
@@ -40,9 +85,13 @@
                 const language = localStorage.getItem('language')
 
                 if (language === 'en' || !language) {
+                    this.languages.en = true
+                    this.languages.pt = false
                     return translations.en
                 }
                 if (language === 'pt') {
+                    this.languages.en = false
+                    this.languages.pt = true
                     return translations.pt
                 }
             }
@@ -57,6 +106,42 @@
             getUser() {
                 this.user = User
             },
+
+            saveSettings() {
+                this.setLanguage()
+                this.$router.push({
+                    name: 'general.user.settings',
+                    params: {
+                        settings_saved: true
+                    }
+                })
+            },
+
+            toggleLang(lang) {
+                if (lang === 'en') {
+                    this.languages.en = true
+                    this.languages.pt = false
+                }
+
+                if (lang === 'pt') {
+                    this.languages.en = false
+                    this.languages.pt = true
+                }
+            },
+
+            setLanguage() {
+                if (localStorage.getItem('language')) {
+                    localStorage.removeItem('language')
+                }
+                localStorage.setItem('language', this.languages.en ? 'en' : 'pt')
+            },
         }
     }
 </script>
+
+<style scoped>
+    .icon-select {
+        color: #561F9F;
+        float: right
+    }
+</style>

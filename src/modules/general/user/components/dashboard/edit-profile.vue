@@ -2,7 +2,7 @@
     <div>
 
         <main-header
-            :title="'Editar perfil'"
+            :title="translations.title"
             :type="'back'"
             :cursor="false"
         ></main-header>

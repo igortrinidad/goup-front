@@ -81,6 +81,9 @@
 
         mounted(){
             this.getUser()
+            if (this.$route.params.settings_saved) {
+                successNotify('', this.translations.save_success)
+            }
         },
 
         methods: {

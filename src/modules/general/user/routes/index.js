@@ -30,7 +30,7 @@ export default [
         children: [
             {
                 name: 'general.user.settings',
-                path: '/settings',
+                path: '/settings/:settings_saved?',
                 component: Settings,
                 meta: {requiresAuth: false}
             },
