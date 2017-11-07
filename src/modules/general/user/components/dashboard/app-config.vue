@@ -19,10 +19,10 @@
     import mainHeader from '@/components/main-header'
 
     import User from '@/models/User'
-    import * as translations from '@/translations/settings'
+    import * as translations from '@/translations//user/components/app-config'
 
     export default {
-        name: 'general-user-settings-config',
+        name: 'general-user-settings-app-config',
 
         components: {
             mainHeader,
@@ -30,7 +30,6 @@
 
         data () {
             return {
-                language: 'pt',
                 interactions: {},
                 user: {}
             }
@@ -38,10 +37,12 @@
 
         computed: {
             'translations': function() {
-                if (this.language === 'en') {
+                const language = localStorage.getItem('language')
+
+                if (language === 'en' || !language) {
                     return translations.en
                 }
-                if (this.language === 'pt') {
+                if (language === 'pt') {
                     return translations.pt
                 }
             }

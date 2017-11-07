@@ -90,7 +90,7 @@
 </template>
 
 <script>
-    import * as translations from '@/translations/login'
+    import * as translations from '@/translations/auth/login'
 
     export default {
         name: 'login',

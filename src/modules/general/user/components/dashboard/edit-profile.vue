@@ -20,7 +20,7 @@
     import mainHeader from '@/components/main-header'
 
     import User from '@/models/User'
-    import * as translations from '@/translations/settings'
+    import * as translations from '@/translations/user/components/edit-profile'
 
     export default {
         name: 'general-user-settings-edit-profile',
@@ -31,7 +31,6 @@
 
         data () {
             return {
-                language: 'pt',
                 interactions: {},
                 user: {}
             }
@@ -39,10 +38,12 @@
 
         computed: {
             'translations': function() {
-                if (this.language === 'en') {
+                const language = localStorage.getItem('language')
+
+                if (language === 'en' || !language) {
                     return translations.en
                 }
-                if (this.language === 'pt') {
+                if (language === 'pt') {
                     return translations.pt
                 }
             }

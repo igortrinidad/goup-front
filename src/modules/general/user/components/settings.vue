@@ -50,7 +50,7 @@
     import mainHeader from '@/components/main-header'
 
     import User from '@/models/User'
-    import * as translations from '@/translations/settings'
+    import * as translations from '@/translations/user/settings'
 
     export default {
         name: 'general-user-settings',

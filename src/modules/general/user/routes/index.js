@@ -11,8 +11,8 @@ const Settings = (resolve) => {
 }
 
 const UserConfig = (resolve) => {
-    require.ensure(['../components/dashboard/config'], () => {
-        resolve(require('../components/dashboard/config')) // eslint-disable-line global-require
+    require.ensure(['../components/dashboard/app-config'], () => {
+        resolve(require('../components/dashboard/app-config')) // eslint-disable-line global-require
     })
 }
 
