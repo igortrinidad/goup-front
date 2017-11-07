@@ -5,6 +5,7 @@
     border-width: 1px !important;
     padding: 10px 25px
 }
+button, a,
 .btn:focus { outline: none !important; }
 
 .btn.btn-default,

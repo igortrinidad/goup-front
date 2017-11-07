@@ -7,7 +7,7 @@
             :cursor="false"
         ></main-header>
 
-        <transition  class="main m-t-30" appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+        <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main">
 
                 <div class="container m-t-30">
@@ -30,9 +30,9 @@
 
 
                 <div class="container m-t-30">
-                    
+
                     <div class="card card-rounded">
-                    
+
                         <div class="card-body">
                             <h1>Teste de lugares</h1>
                             <h1>Teste de lugares</h1>

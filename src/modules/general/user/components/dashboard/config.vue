@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div>
 
         <main-header
             :title="'Configurações'"
@@ -7,10 +7,11 @@
             :cursor="false"
         ></main-header>
 
-        <div class="main">
-            <h1 class="text-center">Configurações do aplicativo, como idioma, etc...</h1>
-        </div>
-
+        <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+            <div class="main">
+                <h1 class="text-center">Configurações do aplicativo, como idioma, etc...</h1>
+            </div>
+        </transition>
     </div>
 </template>
 
