@@ -11,7 +11,14 @@
             <div class="main">
 
                 <div class="container bg">
-                    <div class="picture-circle picture-circle-xxl border-picture-eletric-blue" :style="{ backgroundImage: `url(${ user.avatar })` }"></div>
+
+                    <router-link
+                        tag="div"
+                        class="picture-circle picture-circle-xxl border-picture-eletric-blue"
+                        :to="{ name: 'general.user.settings.edit' }"
+                        :style="{ backgroundImage: `url(${ user.avatar })` }"
+                    >
+                    </router-link>
                     <h4 class="f-300 text-center m-t-20">{{ user.full_name }}</h4>
 
                     <div class="row m-t-30 text-center">
