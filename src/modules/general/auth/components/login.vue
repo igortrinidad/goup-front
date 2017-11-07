@@ -126,12 +126,11 @@
                     that.swiperTour = new Swiper(that.$refs.swiperTour, {
                         spaceBetween: 15,
                         slidesPerView: 1,
-                        pagination: {
-                            el: '.swiper-pagination',
-                            type: 'bullets',
-                            clickable: true,
-                        },
+                        paginationClickable: true,
+                        pagination: '.swiper-pagination'
                     })
+
+                    console.log(that.swiperTour);
                 }, 200);
             },
         }
