@@ -166,6 +166,7 @@
     .cards {
         position: relative;
         height: 400px;
+        margin-top: 30px
     }
     .card {
         position: absolute;
@@ -182,17 +183,12 @@
 
     .cards .card {
         box-shadow: none;
+        transform:
     }
+
     .cards .card:nth-child(1)   { z-index: 10; box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.23); }
-    .cards .card:nth-child(2)   { z-index: 9; }
-    .cards .card:nth-child(3)   { z-index: 8; }
-    .cards .card:nth-child(4)   { z-index: 7; }
-    .cards .card:nth-child(5)   { z-index: 6; }
-    .cards .card:nth-child(6)   { z-index: 5; }
-    .cards .card:nth-child(7)   { z-index: 4; }
-    .cards .card:nth-child(8)   { z-index: 3; }
-    .cards .card:nth-child(9)   { z-index: 2; }
-    .cards .card:nth-child(10)  { z-index: 1; }
+    .cards .card:nth-child(2)   { z-index: 9; transform: translateY(-10px); }
+    .cards .card:nth-child(3)   { z-index: 8; transform: translateY(-20px); }
 
     .fadeInLeft{
         transition: 0.1s;
