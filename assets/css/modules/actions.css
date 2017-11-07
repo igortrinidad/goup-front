@@ -1,6 +1,7 @@
 .actions {
     width: 100%;
     text-align: center;
+    margin-top: 40px;
 }
 
 .actions .action {
@@ -19,6 +20,19 @@
     width: 60px; height: 60px;
     font-size: 28px;
 }
+
+.actions .action.like {
+    border-radius: 10px 50% 50% 50%;
+    transform: rotate(45deg);
+}
+
+.actions .action.unlike {
+    border-radius: 50% 50% 10px 50%;
+    transform: rotate(45deg);
+}
+
+.actions .action.like span { transform: rotate(-45deg) }
+.actions .action.unlike span { transform: rotate(-45deg) }
 
 .actions .action span {
     display: inline-block;

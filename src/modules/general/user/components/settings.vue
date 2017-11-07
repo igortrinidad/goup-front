@@ -10,11 +10,9 @@
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main">
 
-                <div class="container-oval">
-                    <div class="container">
-                        <div class="picture-circle picture-circle-xxl border-picture-eletric-blue" :style="{ backgroundImage: `url(${ user.avatar })` }"></div>
-                        <h4 class="f-300 text-center m-t-20">{{ user.full_name }}</h4>
-                    </div>
+                <div class="container">
+                    <div class="picture-circle picture-circle-xxl border-picture-eletric-blue" :style="{ backgroundImage: `url(${ user.avatar })` }"></div>
+                    <h4 class="f-300 text-center m-t-20">{{ user.full_name }}</h4>
 
                     <div class="row m-t-30 text-center">
                         <div class="col-xs-12 m-t-10">
@@ -30,10 +28,9 @@
                     </div>
                 </div>
 
-                <div class="container m-t-30">
 
+                <div class="container m-t-15">
                     <div class="card card-rounded">
-
                         <div class="card-body">
                             <h1>Teste de lugares</h1>
                             <h1>Teste de lugares</h1>
@@ -41,8 +38,8 @@
                             <h1>Teste de lugares</h1>
                         </div>
                     </div>
-
                 </div>
+
             </div>
         </transition>
 
@@ -98,16 +95,6 @@
 
     .border-picture-eletric-blue{
         border: 2px solid #8BF3FB;
-    }
-
-    .container-oval {
-        display: block;
-        border-bottom: 2px solid #FF4B89;
-        border-bottom-left-radius: 40%;
-        border-bottom-right-radius: 40%;
-        box-shadow: 0px 1px 1px rgba(86, 31, 159, .3);
-        padding-bottom: 30px;
-        background: transparent;
     }
 
  </style>
