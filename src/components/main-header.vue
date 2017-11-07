@@ -118,7 +118,7 @@
         width: 120px; margin: 0 auto; padding: 7px 10px 5px 10px;
     }
 
-    .logo.full { width: 100%; padding-left: 50px; padding-top: 20px; }
+    .logo.full { width: 100%; padding: 32px 50px; }
     .circle-profile {
         position: absolute;
         top: 55%;
@@ -139,9 +139,6 @@
 
     .circle-profile.left { left: 10px; }
     .circle-profile.right { right: 10px; }
-
-    .circle-profile.left.back{ top: 10px; margin: 0 }
-
 
     .circle-profile.active {
         color: rgba(236, 63, 129, .8);
