@@ -11,10 +11,10 @@
             <transition  class="main m-t-30" appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 
                 <div class="container m-t-30">
-                    <h1 v-show="!companies.length">A lista acabou</h1>
+                    <h1 class="text-center m-b-30" v-show="!companies.length">A lista acabou</h1>
 
                     <!-- Cards -->
-                    <div class="cards">
+                    <div class="cards" v-if="companies.length">
                         <div
                             v-for="(company, index) in companies"
                             ref="card"
@@ -43,13 +43,13 @@
 
                     <!-- Actions -->
                     <div class="actions">
-                        <span class="action xl unlike"  @click="ignore()">
+                        <span class="action xl unlike"  @click="ignore()" v-if="companies.length">
                             <span class="ion-close-round f-danger"></span>
                         </span>
                         <span class="action" @click="getCompanies()">
                             <span class="ion-refresh f-default"></span>
                         </span>
-                        <span class="action xl like" @click="like()">
+                        <span class="action xl like" @click="like()" v-if="companies.length">
                             <span class="ion-ios-heart f-primary"></span>
                         </span>
                     </div>
@@ -105,11 +105,33 @@
         methods: {
 
             like() {
+                let that = this
 
+                const el = $(that.$refs.card[0])
+                el.addClass('leave top')
+                that.interactions.liked = true
+
+                setTimeout(function () {
+                    that.interactions.liked = false
+                    el.removeClass('leave top')
+                    that.companies.splice(0, 1)
+
+                }, 1000);
             },
 
             ignore() {
+                let that = this
 
+                const el = $(that.$refs.card[0])
+                el.addClass('leave bottom')
+                that.interactions.ignored = true
+
+                setTimeout(function () {
+                    that.interactions.ignored = false
+                    el.removeClass('leave bottom')
+                    that.companies.splice(0, 1)
+
+                }, 1000);
             },
 
             mountHammer() {
@@ -190,8 +212,11 @@
 
     .card.animated.leave {
         opacity: 0;
-        transition: ease .4s;
+        transition: ease .7s;
     }
+
+    .card.animated.leave.top{ transform: translateY(-75px); }
+    .card.animated.leave.bottom{ transform: translateY(75px); }
 
     .card.animated.transition { transition: ease .3s; }
 
