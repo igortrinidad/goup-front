@@ -8,7 +8,6 @@
         ></main-header>
 
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
-
             <div class="main">
                 <h1 class="text-center">Editar o perfil do usuario</h1>
             </div>
