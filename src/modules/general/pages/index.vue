@@ -27,10 +27,10 @@
                                 <!-- Current Action -->
                                 <div v-if="index === 0">
                                     <span class="card-action liked" v-show="interactions.liked">
-                                        <i class="ion-ios-heart m-r-5"></i>Gostei
+                                        <i class="ion-ios-heart m-r-5"></i>{{ translations.liked }}
                                     </span>
                                     <span class="card-action ignored" v-show="interactions.ignored">
-                                        <i class="ion-close-round m-r-5"></i>Ignorar
+                                        <i class="ion-close-round m-r-5"></i>{{ translations.ignored }}
                                     </span>
                                 </div>
                                 <!-- / Current Action -->
