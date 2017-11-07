@@ -8,13 +8,15 @@
                 :cursor="false"
             ></main-header>
 
-            <transition  class="main m-t-30" appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 
-                <div class="container m-t-30">
-                    <h1 class="text-center m-b-30" v-show="!companies.length">A lista acabou</h1>
+                <div class="container">
+                    <h1 class="text-center m-b-30" v-show="!companies.length">
+                        {{ translations.end_list }}
+                    </h1>
 
                     <!-- Cards -->
-                    <div class="cards" v-if="companies.length">
+                    <div class="cards m-t-30" v-if="companies.length">
                         <div
                             v-for="(company, index) in companies"
                             ref="card"
@@ -70,6 +72,8 @@
     import elements from '@/components/elements.vue'
     import CompanyModel from '@/models/Company'
 
+    import * as translations from '@/translations/list-cards'
+
     export default {
         name: 'landing',
 
@@ -84,6 +88,7 @@
                     liked: false,
                     ignored: false,
                 },
+                language: 'pt',
                 placeholder: true,
                 companies: [],
                 active: false,
@@ -95,7 +100,14 @@
         },
 
         computed: {
-
+            'translations': function() {
+                if (this.language === 'en') {
+                    return translations.en
+                }
+                if (this.language === 'pt') {
+                    return translations.pt
+                }
+            }
         },
 
         mounted(){
