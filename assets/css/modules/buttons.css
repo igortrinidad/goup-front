@@ -2,7 +2,7 @@
 .btn{
     box-sizing: border-box;
     border-radius: 30px;
-    border-width: 2px !important;
+    border-width: 1px !important;
     padding: 10px 25px
 }
 .btn:focus { outline: none !important; }

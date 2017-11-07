@@ -9,22 +9,38 @@
 
         <transition  class="main m-t-30" appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main">
-                <div class="container">
-                    <div class="picture-circle picture-circle-xxl" :style="{ backgroundImage: `url(${ user.avatar })` }"></div>
-                    <h4 class="f-700 text-center">{{ user.name }}</h4>
+
+                <div class="container m-t-30">
+                    <div class="picture-circle picture-circle-xxl border-picture-eletric-blue" :style="{ backgroundImage: `url(${ user.avatar })` }"></div>
+                    <h4 class="f-300 text-center m-t-20">{{ user.full_name }}</h4>
 
                     <div class="row m-t-30 text-center">
-                        <div class="col-xs-6">
-                            <router-link :to="{ name: 'general.user.settings.configs' }" tag="button" class="btn btn-primary">
-                                <i class="ion-ios-gear m-r-5"></i> {{ translations.buttons.config }}
-                            </router-link>
-                        </div>
-                        <div class="col-xs-6">
+                        <div class="col-xs-12 m-t-10">
                             <router-link :to="{ name: 'general.user.settings.edit' }" tag="button" class="btn btn-primary">
                                 <i class="ion-edit m-r-5"></i> {{ translations.buttons.edit }}
                             </router-link>
                         </div>
+                        <div class="col-xs-12 m-t-20">
+                            <router-link :to="{ name: 'general.user.settings.configs' }" tag="button" class="btn btn-primary">
+                                <i class="ion-ios-gear m-r-5"></i> {{ translations.buttons.config }}
+                            </router-link>
+                        </div>
                     </div>
+                </div>
+
+
+                <div class="container m-t-30">
+                    
+                    <div class="card card-rounded">
+                    
+                        <div class="card-body">
+                            <h1>Teste de lugares</h1>
+                            <h1>Teste de lugares</h1>
+                            <h1>Teste de lugares</h1>
+                            <h1>Teste de lugares</h1>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </transition>
@@ -76,3 +92,10 @@
         }
     }
 </script>
+
+<style>
+
+ .border-picture-eletric-blue{
+    border: 2px solid #8BF3FB;
+ }
+</style>

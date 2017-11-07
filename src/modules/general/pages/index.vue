@@ -20,9 +20,9 @@
                             <div
                                 v-for="(company, index) in companies"
                                 ref="card"
-                                :class="{ 'card m-0': true, 'animated': index === 0 }"
+                                :class="{ 'card card-rounded m-0': true, 'animated': index === 0 }"
                             >
-                                <div class="card-header cover c-2" :style="{ backgroundImage: `url(${ company.avatar })` }">
+                                <div class="card-header cover" :style="{ backgroundImage: `url(${ company.avatar })` }">
 
                                     <div class="card-header-title">
                                         <h4 class="title f-700 t-overflow">{{ company.name }}</h4>
@@ -174,11 +174,6 @@
         position: absolute;
         width: 100%;
         left: 0;
-        border-radius: 35px;
-    }
-
-    .c-2{
-        border-radius: 35px;
     }
 
     .card.animated.leave {

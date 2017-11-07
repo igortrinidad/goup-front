@@ -121,7 +121,7 @@
     .logo.full { width: 100%; padding-left: 50px; padding-top: 20px; }
     .circle-profile {
         position: absolute;
-        top: 50%;
+        top: 55%;
         margin-top: -22px;
         background-color: transparent;
         border: 0;
@@ -146,5 +146,9 @@
     .circle-profile.active {
         color: rgba(236, 63, 129, .8);
         border-color: rgba(236, 63, 129, .8);
+    }
+
+    .container-fluid{
+        height: 80px;
     }
 </style>

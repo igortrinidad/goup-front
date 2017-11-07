@@ -152,4 +152,8 @@
     display: none;
 }
 
+.card-rounded{
+  border-radius: 20px;
+}
+
 /* / CARD */

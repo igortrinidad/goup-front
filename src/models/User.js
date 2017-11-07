@@ -1,8 +1,10 @@
 export default {
-    id: 'user01',
-    name: 'Davidson',
-    last_name: 'Da Silva',
-    slug: 'davidson-da-silva',
+    id: '123123',
+    name: 'John',
+    last_name: 'Doe',
+    slug: 'john-doe',
     age: '23',
     avatar: 'https://maisbartenders.com.br/img/portfolio/My_garden_Mais_Bartenders.png',
+
+    full_name: 'John Doe'
 }
