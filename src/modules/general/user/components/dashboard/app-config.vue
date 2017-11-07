@@ -49,6 +49,64 @@
                         {{ translations.save }}
                     </button>
 
+                    <!-- Contact Section -->
+                    <div class="card m-t-30">
+                        <div class="card-body">
+                            <legend>{{ translations.contact.title }}</legend>
+                            <ul class="list-group m-t-10 m-0">
+                                <li class="list-group-item">
+                                    {{ translations.contact.help }}
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <!-- / Contact Section -->
+
+                    <!-- Share Section -->
+                    <div class="card m-t-30">
+                        <div class="card-body">
+                            <legend>{{ translations.share.title }}</legend>
+                            <ul class="list-group m-t-10 m-0">
+                                <li class="list-group-item">
+                                    {{ translations.share.facebook }}
+                                </li>
+                                <li class="list-group-item">
+                                    {{ translations.share.whatsapp }}
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <!-- / Share Section -->
+
+                    <!-- Legal Section -->
+                    <div class="card m-t-30">
+                        <div class="card-body">
+                            <legend>{{ translations.legal.title }}</legend>
+                            <ul class="list-group m-t-10 m-0">
+                                <li class="list-group-item">
+                                    {{ translations.legal.terms }}
+                                </li>
+                                <li class="list-group-item">
+                                    {{ translations.legal.privacy }}
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <!-- / Legal Section -->
+
+                    <button type="button" class="btn btn-default btn-block m-t-20">
+                        {{ translations.logout }}
+                    </button>
+
+                    <button type="button" class="btn btn-danger btn-block m-t-20">
+                        {{ translations.remove_account }}
+                    </button>
+
+                    <!--  -->
+
                 </div>
 
             </div>

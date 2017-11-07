@@ -382,3 +382,5 @@ body {
 @media (max-width: 325px) {
     .vdp-datepicker__calendar { left: -23px; }
 }
+
+.list-group-item { border-color: rgba(57, 56, 56, .2) }

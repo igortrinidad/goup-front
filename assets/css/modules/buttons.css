@@ -55,6 +55,12 @@ button:active{
 }
 
 /* Transparent */
+.btn.btn-default.transparent,
+.btn.btn-default.transparent:hover{
+  background-color: transparent;
+  border-color: #383938 !important;
+  color: #383938;
+}
 
 .btn.btn-transparent,
 .btn.btn-transparent:hover{
