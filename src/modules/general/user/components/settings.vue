@@ -10,7 +10,7 @@
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main">
 
-                <div class="container">
+                <div class="container bg">
                     <div class="picture-circle picture-circle-xxl border-picture-eletric-blue" :style="{ backgroundImage: `url(${ user.avatar })` }"></div>
                     <h4 class="f-300 text-center m-t-20">{{ user.full_name }}</h4>
 
@@ -95,6 +95,12 @@
 
     .border-picture-eletric-blue{
         border: 2px solid #8BF3FB;
+    }
+
+    .container.bg{
+        background: #561f9f;
+        padding-bottom: 30px;
+        border-radius: 0 0 20px 20px;
     }
 
  </style>

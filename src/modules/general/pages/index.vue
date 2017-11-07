@@ -8,52 +8,47 @@
                 :cursor="false"
             ></main-header>
 
-                <transition  class="main m-t-30" appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <transition  class="main m-t-30" appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 
+                <div class="container m-t-30">
+                    <h1 v-show="!companies.length">A lista acabou</h1>
 
-                    <div class="container m-t-30">
-                        <h1 v-show="!companies.length">A lista acabou</h1>
-
-
-                        <!-- Cards -->
-                        <div class="cards">
-                            <div
-                                v-for="(company, index) in companies"
-                                ref="card"
-                                :class="{ 'card card-rounded m-0': true, 'animated': index === 0 }"
-                            >
-                                <div class="card-header cover" :style="{ backgroundImage: `url(${ company.avatar })` }">
-
-                                </div>
-
-                                <div class="card-body card-padding">
-                                    <h3 class="title f-700 t-overflow text-center">{{ company.name }}</h3>
-                                </div>
+                    <!-- Cards -->
+                    <div class="cards">
+                        <div
+                            v-for="(company, index) in companies"
+                            ref="card"
+                            :class="{ 'card card-rounded m-0': true, 'animated': index === 0 }"
+                        >
+                            <div class="card-header cover" :style="{ backgroundImage: `url(${ company.avatar })` }">
 
                             </div>
+
+                            <div class="card-body card-padding">
+                                <h3 class="title f-700 t-overflow text-center">{{ company.name }}</h3>
+                            </div>
+
                         </div>
-                        <!-- Cards -->
-
-
-                        <!-- Actions -->
-                        <div class="actions">
-                            <!-- <span class="action">
-                                <span class="ion-refresh f-default"></span>
-                            </span> -->
-                            <span class="action xl like">
-                                <span class="ion-ios-heart f-primary"></span>
-                            </span>
-                            <span class="action xl unlike">
-                                <span class="ion-close-round f-danger"></span>
-                            </span>
-                        </div>
-                        <!-- / Actions -->
-
                     </div>
+                    <!-- Cards -->
 
-                </transition>
+                    <!-- Actions -->
+                    <div class="actions">
+                        <span class="action xl unlike">
+                            <span class="ion-close-round f-danger"></span>
+                        </span>
+                        <span class="action">
+                            <span class="ion-refresh f-default"></span>
+                        </span>
+                        <span class="action xl like">
+                            <span class="ion-ios-heart f-primary"></span>
+                        </span>
+                    </div>
+                    <!-- / Actions -->
 
+                </div>
 
+            </transition>
 
         </div>
 
