@@ -1,12 +1,12 @@
 <template lang="html">
-    <div class="main">
+    <div class="main login">
         <!-- <div class="container">
             <img class="logo" src="../../../../assets/logos/LOGOS-05.png" alt="">
         </div> -->
 
         <!-- Tour -->
         <div class="container">
-            <div class="swiper-container" ref="swiperTour">
+            <div class="swiper-container text-center" ref="swiperTour">
                 <div class="swiper-wrapper m-b-10">
                     <div class="swiper-slide">
                         <h4 class="tour-title">{{ translations.tourTitle }}</h4>
@@ -147,5 +147,11 @@
 
     .tour-title {
         height: 65px;
+    }
+
+    .main.login {
+        background: #561F9F;
+        height: 100vh;
+        overflow: scroll;
     }
 </style>

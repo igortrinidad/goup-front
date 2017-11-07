@@ -16,12 +16,12 @@
 
                     <div class="row m-t-30 text-center">
                         <div class="col-xs-12 m-t-10">
-                            <router-link :to="{ name: 'general.user.settings.edit' }" tag="button" class="btn btn-primary">
+                            <router-link :to="{ name: 'general.user.settings.edit' }" tag="button" class="btn btn-primary btn-block transparent">
                                 <i class="ion-edit m-r-5"></i> {{ translations.buttons.edit }}
                             </router-link>
                         </div>
                         <div class="col-xs-12 m-t-20">
-                            <router-link :to="{ name: 'general.user.settings.configs' }" tag="button" class="btn btn-primary">
+                            <router-link :to="{ name: 'general.user.settings.configs' }" tag="button" class="btn btn-primary btn-block transparent">
                                 <i class="ion-ios-gear m-r-5"></i> {{ translations.buttons.config }}
                             </router-link>
                         </div>
@@ -98,7 +98,6 @@
     }
 
     .container.bg{
-        background: #561f9f;
         padding-bottom: 30px;
         border-radius: 0 0 20px 20px;
     }
