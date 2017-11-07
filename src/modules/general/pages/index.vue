@@ -20,27 +20,36 @@
                             ref="card"
                             :class="{ 'card card-rounded m-0': true, 'animated': index === 0 }"
                         >
+                            <!-- Card Header -->
                             <div class="card-header cover" :style="{ backgroundImage: `url(${ company.avatar })` }">
-
+                                <!-- Current Action -->
+                                <div v-if="index === 0">
+                                    <span class="card-action liked" v-show="interactions.liked">
+                                        <i class="ion-ios-heart m-r-5"></i>Gostei
+                                    </span>
+                                    <span class="card-action ignored" v-show="interactions.ignored">
+                                        <i class="ion-close-round m-r-5"></i>Ignorar
+                                    </span>
+                                </div>
+                                <!-- / Current Action -->
                             </div>
-
+                            <!-- / Card Header -->
                             <div class="card-body card-padding">
                                 <h3 class="title f-700 t-overflow text-center">{{ company.name }}</h3>
                             </div>
-
                         </div>
                     </div>
                     <!-- Cards -->
 
                     <!-- Actions -->
                     <div class="actions">
-                        <span class="action xl unlike">
+                        <span class="action xl unlike"  @click="ignore()">
                             <span class="ion-close-round f-danger"></span>
                         </span>
-                        <span class="action">
+                        <span class="action" @click="getCompanies()">
                             <span class="ion-refresh f-default"></span>
                         </span>
-                        <span class="action xl like">
+                        <span class="action xl like" @click="like()">
                             <span class="ion-ios-heart f-primary"></span>
                         </span>
                     </div>
@@ -71,6 +80,10 @@
 
         data () {
             return {
+                interactions: {
+                    liked: false,
+                    ignored: false,
+                },
                 placeholder: true,
                 companies: [],
                 active: false,
@@ -90,6 +103,14 @@
         },
 
         methods: {
+
+            like() {
+
+            },
+
+            ignore() {
+
+            },
 
             mountHammer() {
                 let that = this
@@ -124,7 +145,7 @@
             animateCurrentCard(e) {
                 if (e.isFinal) {
                     console.log(e.deltaY);
-                    if (e.deltaY < -100 || e.deltaY > 100) {
+                    if (e.deltaY < -75 || e.deltaY > 75) {
                         this.resetPosition(true)
                     } else {
                         this.resetPosition(false)
@@ -132,26 +153,19 @@
                 }
                 if (!e.isFinal){
                     $('.card.animated').css({ left: e.deltaX, top: e.deltaY })
+
+                    if (e.deltaY < -75) {
+                        this.interactions.liked = true
+                        this.interactions.ignored = false
+                    } else if(e.deltaY > 75) {
+                        this.interactions.liked = false
+                        this.interactions.ignored = true
+                    } else {
+                        this.interactions.liked = false
+                        this.interactions.ignored = false
+                    }
                 }
 
-                // if (!e.isFinal) {
-                //     $('.card.animated').css({ left: e.deltaX, top: e.deltaY })
-                // }
-                // else {
-                //     console.log('pq esta passando varias vezes aqui ?');
-                //     // remove a primeira empresa da lista de empresa
-                //     $('.card.animated').addClass('leave')
-                //     this.companies.splice(0, 1)
-                //     console.log(this.companies);
-                //
-                //     this.mountHammer()
-                //     console.log(e.deltaY);
-                //     if (e.deltaY < -100) {
-                //         console.log('Gostou!')
-                //     } else {
-                //         console.log('Não gostou!')
-                //     }
-                // }
             },
 
             getCompanies() {
