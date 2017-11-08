@@ -23,7 +23,11 @@
     background: #FF4B89;
 }
 
-hr { border-top: 1px solid rgba(255, 255, 255, .6); }
+hr { 
+    border-color: rgba(57, 56, 56, .2); 
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
 /* Wrapper */
 .wrapper-profile-background {

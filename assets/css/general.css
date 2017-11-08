@@ -31,6 +31,10 @@ legend + .form-group{
     font-size: 16px;
 }
 
+.first-container{
+    margin-top: 65px;
+}
+
 .full { width: 100%; }
 
 /* Btn Group */

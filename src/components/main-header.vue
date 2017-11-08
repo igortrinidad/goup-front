@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
 
                 <!-- Header Type === Back -->
@@ -110,7 +110,11 @@
 </script>
 
 <style scoped>
-    .navbar { margin-bottom: 0; }
+    .navbar { 
+        margin-bottom: 0; 
+        background-color: #5B2992;
+        box-shadow: 0px 10px 12px -12px rgba(0,0,0,0.75);
+    }
 
     .container-fluid { position: relative; }
 

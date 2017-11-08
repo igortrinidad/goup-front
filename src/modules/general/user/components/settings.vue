@@ -8,9 +8,9 @@
         ></main-header>
 
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
-            <div class="main">
+            <div class="main first-container">
 
-                <div class="container bg">
+                <div class="container bg m-t-20">
 
                     <router-link
                         tag="div"

@@ -8,7 +8,7 @@
         ></main-header>
 
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
-            <div class="main">
+            <div class="main first-container">
 
             <!-- Photos -->
             <div class="p-relative">

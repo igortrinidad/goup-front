@@ -1,11 +1,11 @@
 export const en = {
     end_list: 'Has no companies in nearby',
-    liked: 'Liked',
-    ignored: 'Ignored'
+    liked: 'Up',
+    ignored: 'Down'
 }
 
 export const pt = {
     end_list: 'Não tem empresas nas proximidades',
-    liked: 'Gostei',
-    ignored: 'Ignorar'
+    liked: 'Up',
+    ignored: 'Down'
 }

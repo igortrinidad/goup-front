@@ -10,7 +10,7 @@
 
             <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 
-                <div class="container">
+                <div class="container first-container">
                     <h1 class="text-center m-b-30" v-show="!companies.length">
                         {{ translations.end_list }}
                     </h1>
@@ -27,32 +27,39 @@
                                 <!-- Current Action -->
                                 <div v-if="index === 0">
                                     <span class="card-action liked" v-show="interactions.liked">
-                                        <i class="ion-ios-heart m-r-5"></i>{{ translations.liked }}
+                                        <i class="ion-chevron-up m-r-5"></i>{{ translations.liked }}
                                     </span>
                                     <span class="card-action ignored" v-show="interactions.ignored">
-                                        <i class="ion-close-round m-r-5"></i>{{ translations.ignored }}
+                                        <i class="ion-chevron-down m-r-5"></i>{{ translations.ignored }}
                                     </span>
                                 </div>
                                 <!-- / Current Action -->
                             </div>
                             <!-- / Card Header -->
                             <div class="card-body card-padding">
-                                <h3 class="title f-700 t-overflow text-center">{{ company.name }}</h3>
+                                <h3 class="title f-700 t-overflow text-center m-b-5">{{ company.name }}</h3>
+                                <p class="title f-700 t-overflow m-t-0 m-b-0"><i class="ion-ios-location m-r-5"></i> {{ company.city }} - {{company.state}}</p>
+                                <p class="title f-700 t-overflow m-t-0"><i class="ion-android-calendar m-r-5"></i> Quarta-feira</p>
                             </div>
                         </div>
                     </div>
                     <!-- Cards -->
 
+                    <div class="text-center m-t-30">
+                        <button class="btn btn-default m-t-10">Filtros</button>
+                    </div>
+
+
                     <!-- Actions -->
                     <div class="actions">
-                        <span class="action xl unlike"  @click="ignore()" v-if="companies.length">
-                            <span class="ion-close-round f-danger"></span>
+                        <span class="action xl waves"  @click="ignore()" v-if="companies.length">
+                            <span class="ion-chevron-down f-red "></span>
                         </span>
-                        <span class="action" @click="getCompanies()">
+                        <span class="action waves" @click="getCompanies()">
                             <span class="ion-refresh f-default"></span>
                         </span>
-                        <span class="action xl like" @click="like()" v-if="companies.length">
-                            <span class="ion-ios-heart f-primary"></span>
+                        <span class="action xl waves" @click="like()" v-if="companies.length">
+                            <span class="ion-chevron-up f-green"></span>
                         </span>
                     </div>
                     <!-- / Actions -->
@@ -112,6 +119,9 @@
 
         mounted(){
             this.getCompanies()
+
+                Waves.attach('.actions .action', ['waves-circle', 'waves-float']);
+                Waves.init();
         },
 
         methods: {
@@ -233,13 +243,12 @@
     .card.animated.transition { transition: ease .3s; }
 
     .cards .card {
-        box-shadow: none;
         transform:
     }
 
-    .cards .card:nth-child(1)   { z-index: 10; box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.23); }
-    .cards .card:nth-child(2)   { z-index: 9; transform: translateY(-10px); }
-    .cards .card:nth-child(3)   { z-index: 8; transform: translateY(-20px); }
+    .cards .card:nth-child(1)   { z-index: 10; }
+    .cards .card:nth-child(2)   { z-index: 9; }
+    .cards .card:nth-child(3)   { z-index: 8; }
 
     .fadeInLeft{
         transition: 0.1s;

@@ -8,16 +8,16 @@
         ></main-header>
 
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
-            <div class="main">
+            <div class="main first-container">
 
-                <div class="container">
+                <div class="container m-t-20">
 
                     <!-- Select Language -->
-                    <div class="card">
-                        <div class="card-body">
-                            <legend>{{ translations.language.title }}</legend>
+                    <div class="card card-rounded">
+                        <div class="card-body card-padding text-center">
+                            <p class=" f-22 f-400">{{ translations.language.title }}</p>
 
-                            <ul class="list-group m-t-10 m-0">
+                            <ul class="list-group m-t-10 m-0 text-left">
                                 <li class="list-group-item" @click="toggleLang('en')">
                                     {{ translations.language.english }}
                                     <i
@@ -41,6 +41,7 @@
                                     </i>
                                 </li>
                             </ul>
+
                         </div>
                     </div>
                     <!-- / Select Language -->
@@ -50,60 +51,36 @@
                     </button>
 
                     <!-- Contact Section -->
-                    <div class="card m-t-30">
-                        <div class="card-body">
-                            <legend>{{ translations.contact.title }}</legend>
-                            <ul class="list-group m-t-10 m-0">
-                                <li class="list-group-item">
-                                    {{ translations.contact.help }}
-                                </li>
-                            </ul>
+                    <div class="card m-t-30 card-rounded text-center">
+                        <div class="card-body card-padding">
+
+                            <p class=" f-22 f-400">{{ translations.contact.title }}</p>
+                            <button class="btn btn-default transparent">{{ translations.contact.help }}</button>
+
+                            <hr>
+
+                            <p class=" f-22 f-400">{{ translations.share.title }}</p>
+                            <button class="btn btn-default transparent">{{ translations.share.facebook }}</button>
+                            <br>
+                            <button class="btn btn-default transparent m-t-10">{{ translations.share.whatsapp }}</button>
+
+                            <hr>
+
+                            <p class=" f-22 f-400">{{ translations.legal.title }}</p>
+                            <button class="btn btn-default transparent">{{ translations.legal.terms }}</button>
+                            <br>
+                            <button class="btn btn-default transparent m-t-10">{{ translations.legal.privacy }}</button>
+
 
                         </div>
                     </div>
                     <!-- / Contact Section -->
 
-                    <!-- Share Section -->
-                    <div class="card m-t-30">
-                        <div class="card-body">
-                            <legend>{{ translations.share.title }}</legend>
-                            <ul class="list-group m-t-10 m-0">
-                                <li class="list-group-item">
-                                    {{ translations.share.facebook }}
-                                </li>
-                                <li class="list-group-item">
-                                    {{ translations.share.whatsapp }}
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div>
-                    <!-- / Share Section -->
-
-                    <!-- Legal Section -->
-                    <div class="card m-t-30">
-                        <div class="card-body">
-                            <legend>{{ translations.legal.title }}</legend>
-                            <ul class="list-group m-t-10 m-0">
-                                <li class="list-group-item">
-                                    {{ translations.legal.terms }}
-                                </li>
-                                <li class="list-group-item">
-                                    {{ translations.legal.privacy }}
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div>
-                    <!-- / Legal Section -->
 
                     <button type="button" class="btn btn-default btn-block m-t-20">
                         {{ translations.logout }}
                     </button>
 
-                    <button type="button" class="btn btn-danger btn-block m-t-20">
-                        {{ translations.remove_account }}
-                    </button>
 
                     <!--  -->
 

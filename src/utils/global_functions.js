@@ -8,6 +8,10 @@ export default function(){
         $(this).parent().toggleClass('toggled');
     });
 
+    //Waves effect
+    Waves.attach('.waves', ['waves-button', 'waves-float']);
+    Waves.init();
+
     //Retorna o index de um array baseado em um identificador (ex. 1 *id) e uma ancora (ex. ID)
     Array.prototype.toggleSelected = function arrayObjectIndexOf(id) {
 

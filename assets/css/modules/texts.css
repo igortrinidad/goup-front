@@ -1,9 +1,12 @@
 /* Text Colors */
-.f-default  { color: #561F9F !important; }
+.f-default  { color: #383938 !important; }
 .f-primary  { color: #FF4B89 !important; }
 .f-success  { color: #8BF3FB !important; }
 .f-danger   { color: #FE0022 !important; }
 .f-info     { color: #FFFD7B !important; }
+
+.f-green  { color: #5FBE71 !important; }
+.f-red  { color: #FE0022 !important; }
 
 /* LINKS */
 a { color: #fff !important; }

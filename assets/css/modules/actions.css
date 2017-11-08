@@ -11,15 +11,17 @@
     font-weight: 700;
 }
 
-.card-action.liked { color: #FF4B89; border: 4px solid #FF4B89; float: left; }
-.card-action.ignored { color: #FE0022; border: 4px solid #FE0022; float: right; }
+.card-action.liked { color: #5FBE71; border: 4px solid #5FBE71; float: right; }
+.card-action.ignored { color: #FE0022; border: 4px solid #FE0022; float: left; }
 
 /* Actions */
 .actions {
     width: 100%;
     text-align: center;
     margin-top: 20px;
+    cursor: pointer;
 }
+
 
 .actions .action {
     width: 50px; height: 50px;
@@ -35,7 +37,7 @@
 
 .actions .action.xl {
     width: 60px; height: 60px;
-    font-size: 30px;
+    font-size: 32px;
 }
 
 .actions .action.like {
