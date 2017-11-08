@@ -35,8 +35,12 @@
                                 </div>
                                 <!-- / Current Action -->
 
-                                <span class="icon-information ion-ios-information">
-                                </span>
+                                <router-link
+                                    tag="span"
+                                    class="icon-information ion-ios-information"
+                                    :to="{ name: 'general.places.show', params: { place_slug: company.slug } }"
+                                >
+                                </router-link>
                             </div>
                             <!-- / Card Header -->
                             <div class="card-body card-padding">

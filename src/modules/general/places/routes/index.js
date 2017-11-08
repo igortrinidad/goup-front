@@ -10,6 +10,12 @@ const List = (resolve) => {
     })
 }
 
+const Show = (resolve) => {
+    require.ensure(['../components/show'], () => {
+        resolve(require('../components/show')) // eslint-disable-line global-require
+    })
+}
+
 export default [
     {
         path: 'user',
@@ -19,6 +25,12 @@ export default [
             {
                 name: 'general.places.list',
                 path: '/ranking',
+                component: List,
+                meta: {requiresAuth: false}
+            },
+            {
+                name: 'general.places.show',
+                path: '/:place_slug',
                 component: List,
                 meta: {requiresAuth: false}
             },
