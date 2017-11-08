@@ -69,6 +69,7 @@
 
 <script>
     import Hammer from 'hammerjs'
+    import { transition } from 'jquery.transit'
 
     import mainHeader from '@/components/main-header.vue'
     import elements from '@/components/elements.vue'
@@ -93,9 +94,7 @@
                 placeholder: true,
                 companies: [],
                 active: false,
-                transform: {
-                    translate: { x: 0, y: 0 }
-                }
+                top: 0,
             }
         },
 
@@ -115,8 +114,9 @@
         mounted(){
             this.getCompanies()
 
-                Waves.attach('.actions .action', ['waves-circle', 'waves-float']);
-                Waves.init();
+            Waves.attach('.actions .action', ['waves-circle', 'waves-float']);
+            Waves.init();
+
         },
 
 
@@ -136,67 +136,65 @@
                         that.hammerCards.on('panleft panright panup pandown tap press', function(ev) {
                             that.animateCurrentCard(ev)
                         })
-
                         $(that.$refs.card[0]).bind('touchend', function(ev) {
                             that.touchend()
                         })
-
                     }, 200)
                 }
             },
 
-            touchend() {
-
+            touchend(top) {
                 let that = this
-                const top = parseInt($(that.$refs.card[0])[0].style.top)
-
-                console.log(top);
 
                 // Não passou da distancia minima para nenhum lado. Volta a posição inicial
-                if (top > -75 && top < 75) {
-                    $('.card.animated').animate({ left: 0, top: 0 }, 300, 'linear')
+                if (that.top > -75 && that.top < 75) {
+                    $('.card.animated').transition({ x: 0, y: 0 }, 300)
                 } else {
 
                     // Like
-                    if (top < -75) {
+                    if (that.top < -75) {
                         // Chamar a funcao para dar like aqui
-                        $('.card.animated').animate({ top: -200, opacity: 0 }, 300, 'linear', () => that.resetPosition())
+                        $('.card.animated').transition({ y: -200, opacity: 0 }, 300, () => that.resetPosition())
                     }
 
                     // Ignore
-                    if (top > 75) {
+                    if (that.top > 75) {
                         // Chamar a funcao para dar ignore aqui
-                        $('.card.animated').animate({ top: 200, opacity: 0 }, 300, 'linear', () => that.resetPosition())
+                        $('.card.animated').transition({ y: 200, opacity: 0 }, 300, () => that.resetPosition())
                     }
-
                 }
             },
 
             resetPosition() {
+                this.top = 0
                 this.interactions.liked = false
                 this.interactions.ignored = false
                 this.companies.splice(0, 1)
-                $(this.$refs.card[0]).animate({ left: 0, top: 0, opacity: 1 }, 0, 'linear')
+                $(this.$refs.card[0]).transition({ x: 0, y: 0, opacity: 1 }, 0)
             },
 
             animateCurrentCard(e) {
+
+                let that = this
+
                 if (!e.isFinal) {
                     const top = e.deltaY
                     const left = e.deltaX
 
-                    $('.card.animated').animate({ left: left, top: top }, 0, 'linear')
+                    this.top = top
+                    $('.card.animated').transition({ x: left, y: top }, 1)
 
                     if (top > -75 && top < 75) {
-                        this.interactions.liked = false
-                        this.interactions.ignored = false
+                        that.interactions.liked = false
+                        that.interactions.ignored = false
                     } else {
                         if (e.deltaY < -75) {
-                            this.interactions.liked = true
-                            this.interactions.ignored = false
+                            that.interactions.liked = true
+                            that.interactions.ignored = false
                         }
                         if(e.deltaY > 75) {
-                            this.interactions.liked = false
-                            this.interactions.ignored = true
+                            that.interactions.liked = false
+                            that.interactions.ignored = true
                         }
                     }
                 }
@@ -205,13 +203,13 @@
             goUp() {
                 this.interactions.liked = true
                 this.interactions.ignored = false
-                $('.card.animated').animate({ left: 0, top: -100, opacity: 0 }, 300, 'linear', () => this.resetPosition())
+                $('.card.animated').transition({ x: 0, y: -100, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
             goDown() {
                 this.interactions.liked = false
                 this.interactions.ignored = true
-                $('.card.animated').animate({ left: 0, top: 100, opacity: 0 }, 300, 'linear', () => this.resetPosition())
+                $('.card.animated').transition({ x: 0, y: 100, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
             getCompanies() {
