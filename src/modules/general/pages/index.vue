@@ -224,20 +224,29 @@
 
             animateCurrentCard(e) {
                 if (!e.isFinal) {
-                    $('.card.animated').css({ left: e.deltaX, top: e.deltaY })
+                    const top = e.deltaY
+                    const left = e.deltaX
 
-                    if (e.deltaY < -75) {
-                        this.interactions.liked = true
-                        this.interactions.ignored = false
-                    } else if(e.deltaY > 75) {
+                    $('.card.animated').animate({ left: left, top: top }, 0)
+
+                    if (top > -75 && top < 75) {
                         this.interactions.liked = false
-                        this.interactions.ignored = true
+                        this.interactions.ignored = false
+                    } else {
+                        if (e.deltaY < -75) {
+                            this.interactions.liked = true
+                            this.interactions.ignored = false
+                        }
+                        if(e.deltaY > 75) {
+                            this.interactions.liked = false
+                            this.interactions.ignored = true
+                        }
                     }
                 }
             },
 
             getCompanies() {
-                this.companies = CompanyModel
+                this.companies = [CompanyModel, CompanyModel, CompanyModel]
                 this.mountHammer()
             },
         }
