@@ -1,15 +1,19 @@
 <template>
-    <div class="">
+    <div class="first-container">
 
         <main-header
-            :title="'search'"
+            :title="'ranking'"
             :type="'main'"
             :cursor="false"
         ></main-header>
 
-        <div class="main">
-
-        </div>
+        <transition appear mode="in-out" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
+            <div class="main">
+                <div class="container">
+                    <h1>RANKING DE EMPRESAS</h1>
+                </div>
+            </div>
+        </transition>
 
     </div>
 </template>
@@ -18,7 +22,7 @@
     import mainHeader from '@/components/main-header.vue'
 
     export default {
-        name: 'general-search',
+        name: 'general-ranking',
 
         components: {
             mainHeader,

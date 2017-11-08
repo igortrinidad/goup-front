@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div class="first-container">
 
         <main-header
             :title="'settings'"
@@ -8,7 +8,7 @@
         ></main-header>
 
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
-            <div class="main first-container">
+            <div class="main">
 
                 <div class="container bg m-t-20">
 

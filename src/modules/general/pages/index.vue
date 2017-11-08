@@ -1,6 +1,6 @@
 <template>
 
-        <div class="">
+        <div class="main">
 
             <main-header
                 :title="'home'"

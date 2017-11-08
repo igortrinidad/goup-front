@@ -42,10 +42,11 @@
                     <!-- Search -->
                     <router-link
                         tag="button"
-                        :to="{ name: 'general.search' }"
-                        :class="{ 'circle-profile right': true, 'active': title === 'search' }"
+                        :to="{ name: 'general.ranking' }"
+                        :class="{ 'circle-profile right': true, 'active': title === 'ranking' }"
                     >
-                        <i class="ion-funnel"></i>
+                        <i class="ion-star"></i>
+                        <i class="ion-podium"></i>
                     </router-link>
                     <!-- / Search -->
                 </div>
@@ -139,6 +140,7 @@
         justify-content: center;
         padding: 0;
         border: 2px solid rgba(255, 255, 255, .8);
+        flex-flow: row wrap;
     }
 
     .circle-profile.left { left: 10px; }
@@ -152,4 +154,15 @@
     .container-fluid{
         height: 80px;
     }
+
+    /* Gamb Icon */
+    .ion-star{ font-size: 12px; }
+    .ion-podium {
+        display: block;
+        width: 100%;
+        position: relative;
+        top: -10px;
+        font-size: 20px;
+    }
+
 </style>
