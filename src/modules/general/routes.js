@@ -1,5 +1,4 @@
 import Index from './pages/index.vue'
-import Ranking from './pages/ranking.vue'
 import About from './pages/about.vue'
 import NewInvite from './pages/new-invite.vue'
 import appLayout from './layout/main'
@@ -37,12 +36,6 @@ export default [
                 name: 'general.index',
                 path: '',
                 component: Index,
-                meta: { requiresAuth: false },
-            },
-            {
-                name: 'general.ranking',
-                path: '/ranking',
-                component: Ranking,
                 meta: { requiresAuth: false },
             },
             {
