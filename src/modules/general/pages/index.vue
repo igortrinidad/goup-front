@@ -1,22 +1,22 @@
 <template>
 
-        <div class="">
+    <div class="first-container">
 
-            <main-header
-                :title="'home'"
-                :type="'main'"
-                :cursor="false"
-            ></main-header>
+        <main-header
+            :title="'home'"
+            :type="'main'"
+            :cursor="false"
+        ></main-header>
 
-            <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-
-                <div class="container first-container">
+        <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <div class="main">
+                <div class="container">
                     <h1 class="text-center m-b-30" v-show="!companies.length">
                         {{ translations.end_list }}
                     </h1>
 
                     <!-- Cards -->
-                    <div class="cards m-t-30" v-if="companies.length">
+                    <div class="cards" v-if="companies.length">
                         <div
                             v-for="(company, index) in companies"
                             ref="card"
@@ -34,6 +34,13 @@
                                     </span>
                                 </div>
                                 <!-- / Current Action -->
+
+                                <router-link
+                                    tag="span"
+                                    class="icon-information ion-ios-information"
+                                    :to="{ name: 'general.places.show', params: { place_slug: company.slug } }"
+                                >
+                                </router-link>
                             </div>
                             <!-- / Card Header -->
                             <div class="card-body card-padding">
@@ -45,35 +52,38 @@
                     </div>
                     <!-- Cards -->
 
-                    <div class="text-center m-t-30">
-                        <button class="btn btn-default m-t-10">Filtros</button>
-                    </div>
-
-
                     <!-- Actions -->
-                    <div class="actions">
-                        <span class="action xl waves"  @click="ignore()" v-if="companies.length">
-                            <span class="ion-chevron-down f-red "></span>
-                        </span>
-                        <span class="action waves" @click="getCompanies()">
-                            <span class="ion-refresh f-default"></span>
-                        </span>
-                        <span class="action xl waves" @click="like()" v-if="companies.length">
-                            <span class="ion-chevron-up f-green"></span>
-                        </span>
+                    <div class="row">
+                        <div class="col-sm-12 m-t-30 text-center">
+                            <button type="button" class="btn btn-default">{{ translations.filter }}</button>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="actions">
+                                <span class="action xl waves"  @click="goDown()" v-if="companies.length">
+                                    <span class="ion-chevron-down f-red "></span>
+                                </span>
+                                <span class="action waves" @click="getCompanies()">
+                                    <span class="ion-refresh f-default"></span>
+                                </span>
+                                <span class="action xl waves" @click="goUp()" v-if="companies.length">
+                                    <span class="ion-chevron-up f-green"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <!-- / Actions -->
 
                 </div>
+            </div>
+        </transition>
 
-            </transition>
-
-        </div>
+    </div>
 
 </template>
 
 <script>
     import Hammer from 'hammerjs'
+    import { transition } from 'jquery.transit'
 
     import mainHeader from '@/components/main-header.vue'
     import elements from '@/components/elements.vue'
@@ -98,9 +108,7 @@
                 placeholder: true,
                 companies: [],
                 active: false,
-                transform: {
-                    translate: { x: 0, y: 0 }
-                }
+                top: 0,
             }
         },
 
@@ -119,51 +127,10 @@
 
         mounted(){
             this.getCompanies()
-
-                Waves.attach('.actions .action', ['waves-circle', 'waves-float']);
-                Waves.init();
         },
 
 
         methods: {
-
-            throwout() {
-                console.log('throw');
-            },
-
-            throwin() {
-                console.log('throw');
-            },
-
-            like() {
-                let that = this
-
-                const el = $(that.$refs.card[0])
-                el.addClass('leave top')
-                that.interactions.liked = true
-
-                setTimeout(function () {
-                    that.interactions.liked = false
-                    el.removeClass('leave top')
-                    that.companies.splice(0, 1)
-
-                }, 1000);
-            },
-
-            ignore() {
-                let that = this
-
-                const el = $(that.$refs.card[0])
-                el.addClass('leave bottom')
-                that.interactions.ignored = true
-
-                setTimeout(function () {
-                    that.interactions.ignored = false
-                    el.removeClass('leave bottom')
-                    that.companies.splice(0, 1)
-
-                }, 1000);
-            },
 
             mountHammer() {
                 let that = this
@@ -179,65 +146,84 @@
                         that.hammerCards.on('panleft panright panup pandown tap press', function(ev) {
                             that.animateCurrentCard(ev)
                         })
-
                         $(that.$refs.card[0]).bind('touchend', function(ev) {
                             that.touchend()
                         })
-
                     }, 200)
                 }
             },
 
-            touchend() {
-
+            touchend(top) {
                 let that = this
-                const top = parseInt($(that.$refs.card[0])[0].style.top)
-
-                console.log(top);
 
                 // Não passou da distancia minima para nenhum lado. Volta a posição inicial
-                if (top > -75 && top < 75) {
-                    $('.card.animated').animate({ left: 0, top: 0 }, 300)
+                if (that.top > -75 && that.top < 75) {
+                    $('.card.animated').transition({ x: 0, y: 0 }, 300)
                 } else {
 
                     // Like
-                    if (top < -75) {
+                    if (that.top < -75) {
                         // Chamar a funcao para dar like aqui
-                        $('.card.animated').animate({ top: -200, opacity: 0 }, 300, () => that.resetPosition())
+                        $('.card.animated').transition({ y: -200, opacity: 0 }, 300, () => that.resetPosition())
                     }
 
                     // Ignore
-                    if (top > 75) {
+                    if (that.top > 75) {
                         // Chamar a funcao para dar ignore aqui
-                        $('.card.animated').animate({ top: 200, opacity: 0 }, 300, () => that.resetPosition())
+                        $('.card.animated').transition({ y: 200, opacity: 0 }, 300, () => that.resetPosition())
                     }
-
-                    that.interactions.liked = false
-                    that.interactions.ignored = false
                 }
             },
 
             resetPosition() {
+                this.top = 0
+                this.interactions.liked = false
+                this.interactions.ignored = false
                 this.companies.splice(0, 1)
-                $(this.$refs.card[0]).css({ left: 0, top: 0, opacity: 1 })
+                $(this.$refs.card[0]).transition({ x: 0, y: 0, opacity: 1 }, 0)
             },
 
             animateCurrentCard(e) {
-                if (!e.isFinal) {
-                    $('.card.animated').css({ left: e.deltaX, top: e.deltaY })
 
-                    if (e.deltaY < -75) {
-                        this.interactions.liked = true
-                        this.interactions.ignored = false
-                    } else if(e.deltaY > 75) {
-                        this.interactions.liked = false
-                        this.interactions.ignored = true
+                let that = this
+
+                if (!e.isFinal) {
+                    const top = e.deltaY
+                    const left = e.deltaX
+
+                    this.top = top
+                    $('.card.animated').transition({ x: left, y: top }, 1)
+
+                    if (top > -75 && top < 75) {
+                        that.interactions.liked = false
+                        that.interactions.ignored = false
+                    } else {
+                        if (e.deltaY < -75) {
+                            that.interactions.liked = true
+                            that.interactions.ignored = false
+                        }
+                        if(e.deltaY > 75) {
+                            that.interactions.liked = false
+                            that.interactions.ignored = true
+                        }
                     }
                 }
             },
 
+            goUp() {
+                this.interactions.liked = true
+                this.interactions.ignored = false
+                $('.card.animated').transition({ x: 0, y: -100, opacity: 0 }, 1000, () => this.resetPosition())
+            },
+
+            goDown() {
+                this.interactions.liked = false
+                this.interactions.ignored = true
+                $('.card.animated').transition({ x: 0, y: 100, opacity: 0 }, 1000, () => this.resetPosition())
+            },
+
             getCompanies() {
-                this.companies = CompanyModel
+                this.companies = [CompanyModel, CompanyModel, CompanyModel]
                 this.mountHammer()
             },
         }
@@ -247,8 +233,11 @@
 <style scoped>
     .cards {
         position: relative;
-        height: 400px;
-        margin-top: 30px
+        height: 388px;
+    }
+
+    @media (max-width: 340px) {
+        .cards{ height: 300px}
     }
 
     .card {
@@ -257,11 +246,20 @@
         left: 0;
     }
 
+    .card .card-header.cover { position: relative; }
+
     .cards .card:nth-child(1)   { z-index: 9999; }
     .cards .card:nth-child(2)   { z-index: 9; }
-    .cards .card:nth-child(3)   { z-index: 8; }
 
     .fadeInLeft{
         transition: 0.1s;
+    }
+
+    .icon-information {
+        position: absolute;
+        bottom: 0px;
+        right: 10px;
+        font-size: 30px;
+        color: #fff;
     }
 </style>

@@ -28,6 +28,7 @@ export default {
     .first-container{
         background-color: #F2F2F2;
     }
+
     /* Slick Settings */
     .slick {
         margin-left: -15px;

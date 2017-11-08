@@ -42,10 +42,11 @@
                     <!-- Search -->
                     <router-link
                         tag="button"
-                        :to="{ name: 'general.search' }"
-                        :class="{ 'circle-profile right': true, 'active': title === 'search' }"
+                        :to="{ name: 'general.places.list' }"
+                        :class="{ 'circle-profile right': true, 'active': title === 'ranking' }"
                     >
-                        <i class="ion-search"></i>
+                        <i class="ion-star"></i>
+                        <i class="ion-podium"></i>
                     </router-link>
                     <!-- / Search -->
                 </div>
@@ -110,8 +111,8 @@
 </script>
 
 <style scoped>
-    .navbar { 
-        margin-bottom: 0; 
+    .navbar {
+        margin-bottom: 0;
         background-color: #5B2992;
         box-shadow: 0px 10px 12px -12px rgba(0,0,0,0.75);
     }
@@ -139,6 +140,7 @@
         justify-content: center;
         padding: 0;
         border: 2px solid rgba(255, 255, 255, .8);
+        flex-flow: row wrap;
     }
 
     .circle-profile.left { left: 10px; }
@@ -152,4 +154,15 @@
     .container-fluid{
         height: 80px;
     }
+
+    /* Gamb Icon */
+    .ion-star{ font-size: 12px; }
+    .ion-podium {
+        display: block;
+        width: 100%;
+        position: relative;
+        top: -10px;
+        font-size: 20px;
+    }
+
 </style>

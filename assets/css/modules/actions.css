@@ -40,19 +40,6 @@
     font-size: 32px;
 }
 
-.actions .action.like {
-    border-radius: 10px 50% 50% 50%;
-    transform: rotate(45deg);
-}
-
-.actions .action.unlike {
-    border-radius: 50% 50% 10px 50%;
-    transform: rotate(45deg);
-}
-
-.actions .action.like span { transform: rotate(-45deg) }
-.actions .action.unlike span { transform: rotate(-45deg) }
-
 .actions .action span {
     display: inline-block;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
