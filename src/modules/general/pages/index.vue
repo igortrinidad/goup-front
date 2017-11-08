@@ -86,7 +86,7 @@
 
         components: {
             mainHeader,
-            elements
+            elements,
         },
 
         data () {
@@ -124,7 +124,16 @@
                 Waves.init();
         },
 
+
         methods: {
+
+            throwout() {
+                console.log('throw');
+            },
+
+            throwin() {
+                console.log('throw');
+            },
 
             like() {
                 let that = this
@@ -165,37 +174,56 @@
 
                 if (this.companies.length) {
                     setTimeout(() => {
-                        that.hammerCards = new Hammer(that.$refs.card[0]);
-                        that.hammerCards.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+                        that.hammerCards = new Hammer(that.$refs.card[0])
+                        that.hammerCards.get('pan').set({ direction: Hammer.DIRECTION_ALL })
                         that.hammerCards.on('panleft panright panup pandown tap press', function(ev) {
                             that.animateCurrentCard(ev)
-                        });
-                    }, 200);
+                        })
+
+                        $(that.$refs.card[0]).bind('touchend', function(ev) {
+                            that.touchend()
+                        })
+
+                    }, 200)
                 }
             },
 
-            resetPosition(leave) {
-                $('.card').css({left: 0, top: 0 })
-                if (leave) {
-                    $('.card.animated').removeClass('leave')
+            touchend() {
+
+                let that = this
+                const top = parseInt($(that.$refs.card[0])[0].style.top)
+
+                console.log(top);
+
+                // Não passou da distancia minima para nenhum lado. Volta a posição inicial
+                if (top > -75 && top < 75) {
+                    $('.card.animated').animate({ left: 0, top: 0 }, 300)
                 } else {
-                    $('.card.animated').addClass('transition')
-                    setTimeout(function () {
-                        $('.card.animated').removeClass('transition')
-                    }, 200);
+
+                    // Like
+                    if (top < -75) {
+                        // Chamar a funcao para dar like aqui
+                        $('.card.animated').animate({ top: -200, opacity: 0 }, 300, () => that.resetPosition())
+                    }
+
+                    // Ignore
+                    if (top > 75) {
+                        // Chamar a funcao para dar ignore aqui
+                        $('.card.animated').animate({ top: 200, opacity: 0 }, 300, () => that.resetPosition())
+                    }
+
+                    that.interactions.liked = false
+                    that.interactions.ignored = false
                 }
+            },
+
+            resetPosition() {
+                this.companies.splice(0, 1)
+                $(this.$refs.card[0]).css({ left: 0, top: 0, opacity: 1 })
             },
 
             animateCurrentCard(e) {
-                if (e.isFinal) {
-                    console.log(e.deltaY);
-                    if (e.deltaY < -75 || e.deltaY > 75) {
-                        this.resetPosition(true)
-                    } else {
-                        this.resetPosition(false)
-                    }
-                }
-                if (!e.isFinal){
+                if (!e.isFinal) {
                     $('.card.animated').css({ left: e.deltaX, top: e.deltaY })
 
                     if (e.deltaY < -75) {
@@ -204,12 +232,8 @@
                     } else if(e.deltaY > 75) {
                         this.interactions.liked = false
                         this.interactions.ignored = true
-                    } else {
-                        this.interactions.liked = false
-                        this.interactions.ignored = false
                     }
                 }
-
             },
 
             getCompanies() {
@@ -226,27 +250,14 @@
         height: 400px;
         margin-top: 30px
     }
+
     .card {
         position: absolute;
         width: 100%;
         left: 0;
     }
 
-    .card.animated.leave {
-        opacity: 0;
-        transition: ease .7s;
-    }
-
-    .card.animated.leave.top{ transform: translateY(-75px); }
-    .card.animated.leave.bottom{ transform: translateY(75px); }
-
-    .card.animated.transition { transition: ease .3s; }
-
-    .cards .card {
-        transform:
-    }
-
-    .cards .card:nth-child(1)   { z-index: 10; }
+    .cards .card:nth-child(1)   { z-index: 9999; }
     .cards .card:nth-child(2)   { z-index: 9; }
     .cards .card:nth-child(3)   { z-index: 8; }
 
