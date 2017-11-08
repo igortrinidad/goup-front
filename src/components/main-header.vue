@@ -45,7 +45,7 @@
                         :to="{ name: 'general.search' }"
                         :class="{ 'circle-profile right': true, 'active': title === 'search' }"
                     >
-                        <i class="ion-search"></i>
+                        <i class="ion-funnel"></i>
                     </router-link>
                     <!-- / Search -->
                 </div>
@@ -110,8 +110,8 @@
 </script>
 
 <style scoped>
-    .navbar { 
-        margin-bottom: 0; 
+    .navbar {
+        margin-bottom: 0;
         background-color: #5B2992;
         box-shadow: 0px 10px 12px -12px rgba(0,0,0,0.75);
     }

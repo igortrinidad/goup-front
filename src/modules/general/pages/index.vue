@@ -45,11 +45,6 @@
                     </div>
                     <!-- Cards -->
 
-                    <div class="text-center m-t-30">
-                        <button class="btn btn-default m-t-10">Filtros</button>
-                    </div>
-
-
                     <!-- Actions -->
                     <div class="actions">
                         <span class="action xl waves"  @click="goDown()" v-if="companies.length">
@@ -159,19 +154,19 @@
 
                 // Não passou da distancia minima para nenhum lado. Volta a posição inicial
                 if (top > -75 && top < 75) {
-                    $('.card.animated').animate({ left: 0, top: 0 }, 300)
+                    $('.card.animated').animate({ left: 0, top: 0 }, 300, 'linear')
                 } else {
 
                     // Like
                     if (top < -75) {
                         // Chamar a funcao para dar like aqui
-                        $('.card.animated').animate({ top: -200, opacity: 0 }, 300, () => that.resetPosition())
+                        $('.card.animated').animate({ top: -200, opacity: 0 }, 300, 'linear', () => that.resetPosition())
                     }
 
                     // Ignore
                     if (top > 75) {
                         // Chamar a funcao para dar ignore aqui
-                        $('.card.animated').animate({ top: 200, opacity: 0 }, 300, () => that.resetPosition())
+                        $('.card.animated').animate({ top: 200, opacity: 0 }, 300, 'linear', () => that.resetPosition())
                     }
 
                 }
@@ -181,7 +176,7 @@
                 this.interactions.liked = false
                 this.interactions.ignored = false
                 this.companies.splice(0, 1)
-                $(this.$refs.card[0]).animate({ left: 0, top: 0, opacity: 1 }, 0)
+                $(this.$refs.card[0]).animate({ left: 0, top: 0, opacity: 1 }, 0, 'linear')
             },
 
             animateCurrentCard(e) {
@@ -189,7 +184,7 @@
                     const top = e.deltaY
                     const left = e.deltaX
 
-                    $('.card.animated').animate({ left: left, top: top }, 0)
+                    $('.card.animated').animate({ left: left, top: top }, 0, 'linear')
 
                     if (top > -75 && top < 75) {
                         this.interactions.liked = false
@@ -210,13 +205,13 @@
             goUp() {
                 this.interactions.liked = true
                 this.interactions.ignored = false
-                $('.card.animated').animate({ left: 0, top: -100, opacity: 0 }, 700, () => this.resetPosition())
+                $('.card.animated').animate({ left: 0, top: -100, opacity: 0 }, 300, 'linear', () => this.resetPosition())
             },
 
             goDown() {
                 this.interactions.liked = false
                 this.interactions.ignored = true
-                $('.card.animated').animate({ left: 0, top: 100, opacity: 0 }, 700, () => this.resetPosition())
+                $('.card.animated').animate({ left: 0, top: 100, opacity: 0 }, 300, 'linear', () => this.resetPosition())
             },
 
             getCompanies() {
