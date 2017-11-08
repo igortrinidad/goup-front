@@ -1,22 +1,22 @@
 <template>
 
-        <div class="main">
+    <div class="first-container">
 
-            <main-header
-                :title="'home'"
-                :type="'main'"
-                :cursor="false"
-            ></main-header>
+        <main-header
+            :title="'home'"
+            :type="'main'"
+            :cursor="false"
+        ></main-header>
 
-            <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-
-                <div class="container first-container">
+        <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <div class="main">
+                <div class="container">
                     <h1 class="text-center m-b-30" v-show="!companies.length">
                         {{ translations.end_list }}
                     </h1>
 
                     <!-- Cards -->
-                    <div class="cards m-t-30" v-if="companies.length">
+                    <div class="cards" v-if="companies.length">
                         <div
                             v-for="(company, index) in companies"
                             ref="card"
@@ -34,6 +34,9 @@
                                     </span>
                                 </div>
                                 <!-- / Current Action -->
+
+                                <span class="icon-information ion-ios-information">
+                                </span>
                             </div>
                             <!-- / Card Header -->
                             <div class="card-body card-padding">
@@ -46,24 +49,31 @@
                     <!-- Cards -->
 
                     <!-- Actions -->
-                    <div class="actions">
-                        <span class="action xl waves"  @click="goDown()" v-if="companies.length">
-                            <span class="ion-chevron-down f-red "></span>
-                        </span>
-                        <span class="action waves" @click="getCompanies()">
-                            <span class="ion-refresh f-default"></span>
-                        </span>
-                        <span class="action xl waves" @click="goUp()" v-if="companies.length">
-                            <span class="ion-chevron-up f-green"></span>
-                        </span>
+                    <div class="row">
+                        <div class="col-sm-12 m-t-30 text-center">
+                            <button type="button" class="btn btn-default">{{ translations.filter }}</button>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="actions">
+                                <span class="action xl waves"  @click="goDown()" v-if="companies.length">
+                                    <span class="ion-chevron-down f-red "></span>
+                                </span>
+                                <span class="action waves" @click="getCompanies()">
+                                    <span class="ion-refresh f-default"></span>
+                                </span>
+                                <span class="action xl waves" @click="goUp()" v-if="companies.length">
+                                    <span class="ion-chevron-up f-green"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <!-- / Actions -->
 
                 </div>
+            </div>
+        </transition>
 
-            </transition>
-
-        </div>
+    </div>
 
 </template>
 
@@ -113,10 +123,6 @@
 
         mounted(){
             this.getCompanies()
-
-            Waves.attach('.actions .action', ['waves-circle', 'waves-float']);
-            Waves.init();
-
         },
 
 
@@ -223,8 +229,11 @@
 <style scoped>
     .cards {
         position: relative;
-        height: 400px;
-        margin-top: 30px
+        height: 388px;
+    }
+
+    @media (max-width: 340px) {
+        .cards{ height: 300px}
     }
 
     .card {
@@ -233,11 +242,20 @@
         left: 0;
     }
 
+    .card .card-header.cover { position: relative; }
+
     .cards .card:nth-child(1)   { z-index: 9999; }
     .cards .card:nth-child(2)   { z-index: 9; }
-    .cards .card:nth-child(3)   { z-index: 8; }
 
     .fadeInLeft{
         transition: 0.1s;
+    }
+
+    .icon-information {
+        position: absolute;
+        bottom: 0px;
+        right: 10px;
+        font-size: 30px;
+        color: #fff;
     }
 </style>
