@@ -52,13 +52,13 @@
 
                     <!-- Actions -->
                     <div class="actions">
-                        <span class="action xl waves"  @click="ignore()" v-if="companies.length">
+                        <span class="action xl waves"  @click="goDown()" v-if="companies.length">
                             <span class="ion-chevron-down f-red "></span>
                         </span>
                         <span class="action waves" @click="getCompanies()">
                             <span class="ion-refresh f-default"></span>
                         </span>
-                        <span class="action xl waves" @click="like()" v-if="companies.length">
+                        <span class="action xl waves" @click="goUp()" v-if="companies.length">
                             <span class="ion-chevron-up f-green"></span>
                         </span>
                     </div>
@@ -127,44 +127,6 @@
 
         methods: {
 
-            throwout() {
-                console.log('throw');
-            },
-
-            throwin() {
-                console.log('throw');
-            },
-
-            like() {
-                let that = this
-
-                const el = $(that.$refs.card[0])
-                el.addClass('leave top')
-                that.interactions.liked = true
-
-                setTimeout(function () {
-                    that.interactions.liked = false
-                    el.removeClass('leave top')
-                    that.companies.splice(0, 1)
-
-                }, 1000);
-            },
-
-            ignore() {
-                let that = this
-
-                const el = $(that.$refs.card[0])
-                el.addClass('leave bottom')
-                that.interactions.ignored = true
-
-                setTimeout(function () {
-                    that.interactions.ignored = false
-                    el.removeClass('leave bottom')
-                    that.companies.splice(0, 1)
-
-                }, 1000);
-            },
-
             mountHammer() {
                 let that = this
 
@@ -212,14 +174,14 @@
                         $('.card.animated').animate({ top: 200, opacity: 0 }, 300, () => that.resetPosition())
                     }
 
-                    that.interactions.liked = false
-                    that.interactions.ignored = false
                 }
             },
 
             resetPosition() {
+                this.interactions.liked = false
+                this.interactions.ignored = false
                 this.companies.splice(0, 1)
-                $(this.$refs.card[0]).css({ left: 0, top: 0, opacity: 1 })
+                $(this.$refs.card[0]).animate({ left: 0, top: 0, opacity: 1 }, 0)
             },
 
             animateCurrentCard(e) {
@@ -243,6 +205,18 @@
                         }
                     }
                 }
+            },
+
+            goUp() {
+                this.interactions.liked = true
+                this.interactions.ignored = false
+                $('.card.animated').animate({ left: 0, top: -100, opacity: 0 }, 700, () => this.resetPosition())
+            },
+
+            goDown() {
+                this.interactions.liked = false
+                this.interactions.ignored = true
+                $('.card.animated').animate({ left: 0, top: 100, opacity: 0 }, 700, () => this.resetPosition())
             },
 
             getCompanies() {
