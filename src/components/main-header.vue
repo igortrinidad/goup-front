@@ -42,7 +42,7 @@
                     <!-- Search -->
                     <router-link
                         tag="button"
-                        :to="{ name: 'general.ranking' }"
+                        :to="{ name: 'general.places.list' }"
                         :class="{ 'circle-profile right': true, 'active': title === 'ranking' }"
                     >
                         <i class="ion-star"></i>

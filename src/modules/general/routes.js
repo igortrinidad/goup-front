@@ -17,6 +17,7 @@ import ResetPass from './pages/reset-pass.vue'
 
 import { routes as auth } from './auth'
 import { routes as user } from './user'
+import { routes as places } from './places'
 
 // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/Spread_operator
 // Thus a new array is created, containing all objects that match the routes.
@@ -31,6 +32,7 @@ export default [
         children: [
             ...auth,
             ...user,
+            ...places,
             {
                 name: 'general.index',
                 path: '',
