@@ -25,6 +25,7 @@
                             <!-- Card Header -->
                             <div class="card-header cover">
 
+                                <!-- Swiper Photos -->
                                 <div class="swiper-container swiper-card-cover" ref="swiperCardCover">
                                     <div class="swiper-wrapper">
                                         <div
@@ -37,8 +38,10 @@
                                     </div>
                                     <div class="swiper-scrollbar"></div>
                                 </div>
+
                                 <div class="swiper-button-prev transparent"></div>
                                 <div class="swiper-button-next transparent"></div>
+                                <!-- Swiper Photos -->
 
                                 <div class="card-header-container">
 
@@ -61,20 +64,9 @@
                                         </p>
                                     </div>
 
-                                    <router-link
-                                        tag="span"
-                                        class="icon-information ion-ios-information"
-                                        :to="{ name: 'general.places.show', params: { place_slug: company.slug } }"
-                                    >
-                                    </router-link>
                                 </div>
                             </div>
                             <!-- / Card Header -->
-                            <!-- <div class="card-body card-padding">
-                                <h3 class="title f-700 t-overflow text-center m-b-5">{{ company.name }}</h3>
-                                <p class="title f-700 t-overflow m-t-0 m-b-0"><i class="ion-ios-location m-r-5"></i> {{ company.city }} - {{company.state}}</p>
-                                <p class="title f-700 t-overflow m-t-0"><i class="ion-android-calendar m-r-5"></i> Quarta-feira</p>
-                            </div> -->
                         </div>
                     </div>
                     <!-- Cards -->
@@ -272,6 +264,11 @@
 
             getCompanies() {
                 this.companies = [CompanyModel, CompanyModel, CompanyModel]
+
+                this.companies.forEach((company) => {
+                    company.photos = _.orderBy(company.photos, ['is_cover'], ['desc'])
+                })
+
                 this.mountHammer()
                 this.initSwiper()
             },
