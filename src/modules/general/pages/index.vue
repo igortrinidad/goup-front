@@ -192,7 +192,7 @@
                     const left = e.deltaX
 
                     this.top = top
-                    $('.card.animated').transition({ x: left, y: top }, 1)
+                    $('.card.animated').transition({ x: left, y: top }, 0)
 
                     if (top > -75 && top < 75) {
                         that.interactions.liked = false
