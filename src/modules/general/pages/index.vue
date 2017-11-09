@@ -54,19 +54,22 @@
 
                     <!-- Actions -->
                     <div class="row">
-                        <div class="col-sm-12 m-t-30 text-center">
-                            <button type="button" class="btn btn-default">{{ translations.filter }}</button>
-                        </div>
                         <div class="col-sm-12">
                             <div class="actions">
-                                <span class="action xl waves"  @click="goDown()" v-if="companies.length">
-                                    <span class="ion-chevron-down f-red "></span>
-                                </span>
-                                <span class="action waves" @click="getCompanies()">
+                                <span class="action" @click="getCompanies()">
                                     <span class="ion-refresh f-default"></span>
                                 </span>
-                                <span class="action xl waves" @click="goUp()" v-if="companies.length">
+
+                                <span class="action xl"  @click="goDown()" v-if="companies.length">
+                                    <span class="ion-chevron-down f-red "></span>
+                                </span>
+
+                                <span class="action xl" @click="goUp()" v-if="companies.length">
                                     <span class="ion-chevron-up f-green"></span>
+                                </span>
+
+                                <span class="action" @click="getCompanies()">
+                                    <span class="ion-funnel f-default"></span>
                                 </span>
                             </div>
                         </div>
@@ -236,8 +239,8 @@
         height: 388px;
     }
 
-    @media (max-width: 340px) {
-        .cards{ height: 300px}
+    @media (max-width: 360px) {
+        .cards{ height: 330px}
     }
 
     .card {

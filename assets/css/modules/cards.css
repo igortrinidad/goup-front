@@ -38,8 +38,8 @@
     position: relative;
 }
 
-@media (max-width: 340px) {
-    .card .card-header.cover { height: 150px; }
+@media (max-width: 360px) {
+    .card .card-header.cover { height: 180px; }
 }
 
 .card .card-header .card-header-title {
@@ -133,6 +133,13 @@
   .card .card-body.card-padding {
     padding: 14px;
   }
+}
+
+
+@media (max-width: 360px) {
+    .card .card-body.card-padding {
+        padding: 10px;
+    }
 }
 
 .card .card-body.card-padding-sm {
