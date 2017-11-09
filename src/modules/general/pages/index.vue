@@ -76,7 +76,7 @@
                         <div class="col-sm-12">
                             <div class="actions">
                                 <span class="action" @click="getCompanies()">
-                                    <span class="ion-refresh f-default"></span>
+                                    <span class="ion-funnel f-default"></span>
                                 </span>
 
                                 <span class="action xl"  @click="goDown()" v-if="companies.length">
@@ -87,8 +87,8 @@
                                     <span class="ion-chevron-up f-green"></span>
                                 </span>
 
-                                <span class="action" @click="getCompanies()">
-                                    <span class="ion-funnel f-default"></span>
+                                <span class="action" @click="skip()">
+                                    <span class="ion-ios-fastforward f-default"></span>
                                 </span>
                             </div>
                         </div>
@@ -127,6 +127,7 @@
                 interactions: {
                     liked: false,
                     ignored: false,
+                    skiped: false
                 },
                 placeholder: true,
                 companies: [],
@@ -253,13 +254,22 @@
             goUp() {
                 this.interactions.liked = true
                 this.interactions.ignored = false
+                this.interactions.skiped = false
                 $('.card.animated').transition({ x: 0, y: -100, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
             goDown() {
                 this.interactions.liked = false
                 this.interactions.ignored = true
+                this.interactions.skiped = false
                 $('.card.animated').transition({ x: 0, y: 100, opacity: 0 }, 1000, () => this.resetPosition())
+            },
+
+            skip() {
+                this.interactions.liked = false
+                this.interactions.ignored = false
+                this.interactions.skiped = true
+                $('.card.animated').transition({ x: 100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
             getCompanies() {
