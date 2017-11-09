@@ -367,6 +367,6 @@
         right: 10px;
         font-size: 30px;
         color: #fff;
-        z-index: 10;
+        z-index: 100;
     }
 </style>

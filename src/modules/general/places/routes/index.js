@@ -31,7 +31,7 @@ export default [
             {
                 name: 'general.places.show',
                 path: '/:place_slug',
-                component: List,
+                component: Show,
                 meta: {requiresAuth: false}
             },
         ]

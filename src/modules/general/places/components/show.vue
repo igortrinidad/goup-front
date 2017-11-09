@@ -2,8 +2,8 @@
     <div class="first-container">
 
         <main-header
-            :title="'ranking'"
-            :type="'main'"
+            :title="'Place'"
+            :type="'back'"
             :cursor="false"
         ></main-header>
 
