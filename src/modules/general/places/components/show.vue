@@ -88,7 +88,7 @@
     import mainHeader from '@/components/main-header.vue'
 
     import * as translations from '@/translations/places/show'
-    import CompanyModel from '@/models/Company'
+    import PlaceModel from '@/models/Place'
 
     export default {
         name: 'general-places-show',
@@ -120,7 +120,7 @@
         },
 
         mounted(){
-            this.getCompany()
+            this.getPlace()
         },
 
         methods: {
@@ -147,8 +147,8 @@
                 }, 200);
             },
 
-            getCompany() {
-                this.place = CompanyModel
+            getPlace() {
+                this.place = PlaceModel
                 this.initSwiper()
             }
         }

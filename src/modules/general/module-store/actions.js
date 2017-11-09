@@ -1,17 +1,17 @@
 import * as TYPES from './mutations-types'
 
-export const setSelectedCompany = ({ commit }, company) => {
+export const setSelectedPlace = ({ commit }, place) => {
 
     /**
      * Commit the mutations
      */
     commit(TYPES.SET_SELECTED_COMPANY, {
-        company
+        place
     })
 }
 
 
-export const setSelectedCompanyRating = ({ commit }, new_ratings) => {
+export const setSelectedPlaceRating = ({ commit }, new_ratings) => {
     /**
      * Commit the mutations
      */
@@ -20,7 +20,7 @@ export const setSelectedCompanyRating = ({ commit }, new_ratings) => {
     })
 }
 
-export const addSelectedCompanyNewRating = ({ commit }, rating) => {
+export const addSelectedPlaceNewRating = ({ commit }, rating) => {
     /**
      * Commit the mutations
      */
@@ -29,7 +29,7 @@ export const addSelectedCompanyNewRating = ({ commit }, rating) => {
     })
 }
 
-export const addSelectedCompanyNewRecomendation = ({ commit }, recomendation) => {
+export const addSelectedPlaceNewRecomendation = ({ commit }, recomendation) => {
     /**
      * Commit the mutations
      */

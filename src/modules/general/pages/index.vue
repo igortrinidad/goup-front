@@ -18,7 +18,7 @@
                     <!-- Cards -->
                     <div class="cards" v-if="companies.length">
                         <div
-                            v-for="(company, index) in companies"
+                            v-for="(place, index) in companies"
                             ref="card"
                             :class="{ 'card card-rounded m-0': true, 'animated': index === 0 }"
                         >
@@ -30,7 +30,7 @@
                                     <div class="swiper-wrapper">
                                         <div
                                             class="swiper-slide"
-                                            v-for="(photo, index) in company.photos"
+                                            v-for="(photo, index) in place.photos"
                                             :key="index"
                                             :style="{ backgroundImage: `url(${ photo.photo_url })` }"
                                         >
@@ -57,10 +57,10 @@
                                     <!-- / Current Action -->
 
                                     <div class="ch-content">
-                                        <h3 class="title f-700 t-overflow m- 0m-b-5">{{ company.name }}</h3>
-                                        <p class="title f-700 t-overflow m-0"><i class="ion-ios-location m-r-5"></i> {{ company.city }} - {{company.state}}</p>
+                                        <h3 class="title f-700 t-overflow m- 0m-b-5">{{ place.name }}</h3>
+                                        <p class="title f-700 t-overflow m-0"><i class="ion-ios-location m-r-5"></i> {{ place.city }} - {{place.state}}</p>
                                         <p class="title f-700 t-overflow m-0"><i class="ion-android-calendar m-r-5"></i>
-                                            {{ checkLanguage === 'en' ? company.great_day_en : company.great_day_pt }}
+                                            {{ checkLanguage === 'en' ? place.great_day_en : place.great_day_pt }}
                                         </p>
                                     </div>
 
@@ -70,7 +70,7 @@
                                     tag="span"
                                     class="icon-information ion-ios-information"
                                     v-show="!interactions.liked && !interactions.ignored"
-                                    :to="{ name: 'general.places.show', params: { place_slug: company.slug } }"
+                                    :to="{ name: 'general.places.show', params: { place_slug: place.slug } }"
                                 >
                                 </router-link>
 
@@ -126,7 +126,7 @@
 
     import mainHeader from '@/components/main-header.vue'
     import elements from '@/components/elements.vue'
-    import CompanyModel from '@/models/Company'
+    import PlaceModel from '@/models/Place'
 
     import * as translations from '@/translations/pages/index'
 
@@ -292,10 +292,10 @@
             },
 
             getCompanies() {
-                this.companies = [CompanyModel, CompanyModel, CompanyModel, CompanyModel, CompanyModel, CompanyModel, CompanyModel, CompanyModel, CompanyModel, CompanyModel]
+                this.companies = [PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel]
 
-                this.companies.forEach((company) => {
-                    company.photos = _.orderBy(company.photos, ['is_cover'], ['desc'])
+                this.companies.forEach((place) => {
+                    place.photos = _.orderBy(place.photos, ['is_cover'], ['desc'])
                 })
 
                 this.mountHammer()
