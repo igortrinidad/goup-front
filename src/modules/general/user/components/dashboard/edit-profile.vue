@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="first-container">
 
         <main-header
             :title="translations.title"
@@ -8,11 +8,11 @@
         ></main-header>
 
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
-            <div class="main first-container">
+            <div class="main container">
 
             <!-- Photos -->
             <div class="p-relative">
-                <div class="swiper-container swiper-user-photos" ref="userPhotos">
+                <div class="swiper-container swiper-gallery" ref="galleryPhotos">
                     <div class="swiper-wrapper">
                         <div
                             class="swiper-slide"
@@ -25,9 +25,9 @@
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
 
+                    </div>
                 </div>
                 <div class="swiper-pagination"></div>
-            </div>
             <!-- / Photos -->
 
             </div>
@@ -85,7 +85,7 @@
                 let that = this
 
                 setTimeout(() => {
-                    that.swiperUserPhotos = new Swiper(that.$refs.userPhotos, {
+                    that.swiperGalleryPhotos = new Swiper(that.$refs.galleryPhotos, {
                         spaceBetween: 15,
                         slidesPerView: 1,
                         nextButton: '.swiper-button-next',
@@ -100,26 +100,5 @@
 </script>
 
 <style scoped>
-    .swiper-container.swiper-user-photos { margin-top: -15px; }
-    .swiper-container.swiper-user-photos .swiper-slide {
-        width: 100%;
-        height: 350px !important;
-        display: block;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
-    }
-
-    .swiper-container.swiper-user-photos .swiper-button-next,
-    .swiper-container.swiper-user-photos .swiper-button-prev {
-        background-image: none;
-        width: 40%;
-        top: 0;
-        height: 100%;
-        margin-top: 0;
-    }
-    .swiper-container.swiper-user-photos .swiper-button-next { right: 0; }
-    .swiper-container.swiper-user-photos .swiper-button-prev { left: 0; }
-
     .swiper-pagination { width: 100%; }
 </style>
