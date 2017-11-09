@@ -75,21 +75,28 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="actions">
-                                <span class="action" @click="getCompanies()">
-                                    <span class="ion-funnel f-default"></span>
-                                </span>
+                                <div v-if="!companies.length">
+                                    <span class="action" @click="getCompanies()">
+                                        <span class="ion-refresh f-default"></span>
+                                    </span>
+                                </div>
+                                <div v-if="companies.length">
+                                    <span class="action" @click="getCompanies()">
+                                        <span class="ion-funnel f-default"></span>
+                                    </span>
 
-                                <span class="action xl"  @click="goDown()" v-if="companies.length">
-                                    <span class="ion-chevron-down f-red "></span>
-                                </span>
+                                    <span class="action xl"  @click="goDown()">
+                                        <span class="ion-chevron-down f-red "></span>
+                                    </span>
 
-                                <span class="action xl" @click="goUp()" v-if="companies.length">
-                                    <span class="ion-chevron-up f-green"></span>
-                                </span>
+                                    <span class="action xl" @click="goUp()">
+                                        <span class="ion-chevron-up f-green"></span>
+                                    </span>
 
-                                <span class="action" @click="skip()">
-                                    <span class="ion-ios-fastforward f-default"></span>
-                                </span>
+                                    <span class="action" @click="skip()">
+                                        <span class="ion-ios-fastforward f-default"></span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -222,6 +229,9 @@
                 this.interactions.ignored = false
                 this.companies.splice(0, 1)
                 $(this.$refs.card[0]).transition({ x: 0, y: 0, opacity: 1 }, 0)
+                if (this.companies.length === 2) {
+                    this.getCompanies()
+                }
             },
 
             animateCurrentCard(e) {
@@ -273,7 +283,7 @@
             },
 
             getCompanies() {
-                this.companies = [CompanyModel, CompanyModel, CompanyModel]
+                this.companies = [CompanyModel, CompanyModel, CompanyModel, CompanyModel, CompanyModel, CompanyModel, CompanyModel, CompanyModel, CompanyModel, CompanyModel]
 
                 this.companies.forEach((company) => {
                     company.photos = _.orderBy(company.photos, ['is_cover'], ['desc'])
