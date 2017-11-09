@@ -1,3 +1,5 @@
+import Comments from './Comments'
+
 export default {
     id: 'company01',
     name: 'Mais Bartenders',
@@ -5,10 +7,11 @@ export default {
     avatar: 'https://maisbartenders.com.br/img/portfolio/My_garden_Mais_Bartenders.png',
     city: 'Belo Horizonte',
     state: 'MG',
-    description_pt: 'Os melhores drinks estão aqui!',
-    description_en: 'The best drinks are here!',
+    description: 'Os melhores drinks estão aqui!',
     great_day_pt: 'Quarta-feira',
     great_day_en: 'Wednesday',
+
+    // Photos
     photos: [
         {
             photo_url: 'https://maisbartenders.com.br/img/portfolio/Mais_Bartenders_TRINIDAD.JPG',
@@ -26,5 +29,11 @@ export default {
             photo_url: 'https://maisbartenders.com.br/img/portfolio/di_souza2.JPG',
             is_cover: false
         },
+    ],
+
+    // Comments
+    comments: [
+        Comments, Comments, Comments
     ]
+
 }

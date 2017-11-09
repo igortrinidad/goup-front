@@ -41,7 +41,7 @@
 .swiper-container.swiper-gallery { margin-top: -15px; }
 .swiper-container.swiper-gallery .swiper-slide {
     width: 100%;
-    height: 350px !important;
+    height: 40vh !important;
     display: block;
     background-size: cover;
     background-repeat: no-repeat;
