@@ -65,6 +65,15 @@
                                     </div>
 
                                 </div>
+
+                                <router-link
+                                    tag="span"
+                                    class="icon-information ion-ios-information"
+                                    v-show="!interactions.liked && !interactions.ignored"
+                                    :to="{ name: 'general.places.show', params: { place_slug: company.slug } }"
+                                >
+                                </router-link>
+
                             </div>
                             <!-- / Card Header -->
                         </div>
@@ -358,5 +367,6 @@
         right: 10px;
         font-size: 30px;
         color: #fff;
+        z-index: 10;
     }
 </style>
