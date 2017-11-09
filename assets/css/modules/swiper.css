@@ -18,3 +18,21 @@
 .swiper-pagination.primary .swiper-pagination-bullet-active { background-color: #88C657 !important; opacity: 1 !important; }
 
 .swiper-pagination-bullet { margin: 0 5px !important; }
+
+/* Navigation */
+.swiper-button-next.transparent,
+.swiper-button-prev.transparent {
+    background-image: none;
+    width: 40%;
+    top: 0;
+    height: 100%;
+    margin-top: 0;
+    z-index: 20;
+}
+.swiper-button-next.transparent { right: 0; }
+.swiper-button-prev.transparent { left: 0; }
+
+/* Scroll Bar */
+.swiper-scrollbar {
+    top: 3px !important;
+}

@@ -23,31 +23,58 @@
                             :class="{ 'card card-rounded m-0': true, 'animated': index === 0 }"
                         >
                             <!-- Card Header -->
-                            <div class="card-header cover" :style="{ backgroundImage: `url(${ company.avatar })` }">
-                                <!-- Current Action -->
-                                <div v-if="index === 0">
-                                    <span class="card-action liked" v-show="interactions.liked">
-                                        <i class="ion-chevron-up m-r-5"></i>{{ translations.liked }}
-                                    </span>
-                                    <span class="card-action ignored" v-show="interactions.ignored">
-                                        <i class="ion-chevron-down m-r-5"></i>{{ translations.ignored }}
-                                    </span>
-                                </div>
-                                <!-- / Current Action -->
+                            <div class="card-header cover">
 
-                                <router-link
-                                    tag="span"
-                                    class="icon-information ion-ios-information"
-                                    :to="{ name: 'general.places.show', params: { place_slug: company.slug } }"
-                                >
-                                </router-link>
+                                <div class="swiper-container swiper-card-cover" ref="swiperCardCover">
+                                    <div class="swiper-wrapper">
+                                        <div
+                                            class="swiper-slide"
+                                            v-for="(photo, index) in company.photos"
+                                            :key="index"
+                                            :style="{ backgroundImage: `url(${ photo.photo_url })` }"
+                                        >
+                                        </div>
+                                    </div>
+                                    <div class="swiper-scrollbar"></div>
+                                </div>
+                                <div class="swiper-button-prev transparent"></div>
+                                <div class="swiper-button-next transparent"></div>
+
+                                <div class="card-header-container">
+
+                                    <!-- Current Action -->
+                                    <div v-if="index === 0">
+                                        <span class="card-action liked" v-show="interactions.liked">
+                                            <i class="ion-chevron-up m-r-5"></i>{{ translations.liked }}
+                                        </span>
+                                        <span class="card-action ignored" v-show="interactions.ignored">
+                                            <i class="ion-chevron-down m-r-5"></i>{{ translations.ignored }}
+                                        </span>
+                                    </div>
+                                    <!-- / Current Action -->
+
+                                    <div class="ch-content">
+                                        <h3 class="title f-700 t-overflow m- 0m-b-5">{{ company.name }}</h3>
+                                        <p class="title f-700 t-overflow m-0"><i class="ion-ios-location m-r-5"></i> {{ company.city }} - {{company.state}}</p>
+                                        <p class="title f-700 t-overflow m-0"><i class="ion-android-calendar m-r-5"></i>
+                                            {{ checkLanguage === 'en' ? company.great_day_en : company.great_day_pt }}
+                                        </p>
+                                    </div>
+
+                                    <router-link
+                                        tag="span"
+                                        class="icon-information ion-ios-information"
+                                        :to="{ name: 'general.places.show', params: { place_slug: company.slug } }"
+                                    >
+                                    </router-link>
+                                </div>
                             </div>
                             <!-- / Card Header -->
-                            <div class="card-body card-padding">
+                            <!-- <div class="card-body card-padding">
                                 <h3 class="title f-700 t-overflow text-center m-b-5">{{ company.name }}</h3>
                                 <p class="title f-700 t-overflow m-t-0 m-b-0"><i class="ion-ios-location m-r-5"></i> {{ company.city }} - {{company.state}}</p>
                                 <p class="title f-700 t-overflow m-t-0"><i class="ion-android-calendar m-r-5"></i> Quarta-feira</p>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!-- Cards -->
@@ -87,6 +114,7 @@
 <script>
     import Hammer from 'hammerjs'
     import { transition } from 'jquery.transit'
+    import { mapGetters } from 'vuex'
 
     import mainHeader from '@/components/main-header.vue'
     import elements from '@/components/elements.vue'
@@ -116,6 +144,9 @@
         },
 
         computed: {
+
+            ...mapGetters(['checkLanguage']),
+
             'translations': function() {
                 const language = localStorage.getItem('language')
 
@@ -134,6 +165,20 @@
 
 
         methods: {
+
+            initSwiper() {
+                let that = this
+
+                setTimeout(() => {
+                    that.swiperCardCover = new Swiper(that.$refs.swiperCardCover, {
+                        spaceBetween: 0,
+                        slidesPerView: 1,
+                        nextButton: '.swiper-button-next',
+                        prevButton: '.swiper-button-prev',
+                        scrollbar: '.swiper-scrollbar'
+                    })
+                }, 200);
+            },
 
             mountHammer() {
                 let that = this
@@ -228,6 +273,7 @@
             getCompanies() {
                 this.companies = [CompanyModel, CompanyModel, CompanyModel]
                 this.mountHammer()
+                this.initSwiper()
             },
         }
     }
@@ -238,6 +284,37 @@
         position: relative;
         height: 388px;
     }
+    .cards .card .card-header .card-header-container {
+        position: absolute;
+        top: 0; left: 0;
+        bottom: 0; right: 0;
+        width: 100%; height: 100%;
+        z-index: 10;
+    }
+    .swiper-card-cover {
+        position: absolute;
+        top: 0; left: 0;
+        bottom: 0; right: 0;
+        width: 100%; height: 100%;
+        z-index: 1;
+        border-radius: 20px;
+    }
+    .swiper-card-cover .swiper-slide {
+        height: 100%;
+        width: 100%;
+        background-position: top center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    @media (max-width: 360px) {
+        .swiper-card-cover .swiper-slide { height: 330px; }
+    }
+
+    .swiper-pagination { width: 100%; }
 
     @media (max-width: 360px) {
         .cards{ height: 330px}
@@ -260,7 +337,7 @@
 
     .icon-information {
         position: absolute;
-        bottom: 0px;
+        top: 0px;
         right: 10px;
         font-size: 30px;
         color: #fff;
