@@ -45,7 +45,6 @@
                         :to="{ name: 'general.places.list' }"
                         :class="{ 'circle-profile right': true, 'active': title === 'ranking' }"
                     >
-                        <i class="ion-star"></i>
                         <i class="ion-podium"></i>
                     </router-link>
                     <!-- / Search -->
@@ -134,13 +133,11 @@
         width: 40px; height: 40px;
         border-radius: 50%;
         background: transparent;
-        font-size: 18px;
+        font-size: 22px;
         display: flex;
         align-items: center;
-        justify-content: center;
         padding: 0;
         border: 2px solid rgba(255, 255, 255, .8);
-        flex-flow: row wrap;
     }
 
     .circle-profile.left { left: 10px; }
@@ -151,18 +148,13 @@
         border-color: rgba(236, 63, 129, .8);
     }
 
+    .circle-profile i{
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
     .container-fluid{
         height: 80px;
     }
-
-    /* Gamb Icon */
-    .ion-star{ font-size: 12px; }
-    .ion-podium {
-        display: block;
-        width: 100%;
-        position: relative;
-        top: -10px;
-        font-size: 20px;
-    }
-
 </style>
