@@ -23,48 +23,28 @@
                             :class="{ 'card card-rounded m-0': true, 'animated': index === 0 }"
                         >
                             <!-- Card Header -->
-                            <div class="card-header cover">
+                            <div class="card-header cover" :style="{ backgroundImage: `url(${ place.avatar })` }">
 
-                                <!-- Swiper Photos -->
-                                <div class="swiper-container swiper-card-cover" ref="swiperCardCover">
-                                    <div class="swiper-wrapper">
-                                        <div
-                                            class="swiper-slide"
-                                            v-for="(photo, index) in place.photos"
-                                            :key="index"
-                                            :style="{ backgroundImage: `url(${ photo.photo_url })` }"
-                                        >
-                                        </div>
-                                    </div>
-                                    <div class="swiper-scrollbar"></div>
+
+                                <!-- Current Action -->
+                                <div v-if="index === 0">
+                                    <span class="card-action liked" v-show="interactions.liked">
+                                        <i class="ion-chevron-up m-r-5"></i>{{ translations.liked }}
+                                    </span>
+                                    <span class="card-action ignored" v-show="interactions.ignored">
+                                        <i class="ion-chevron-down m-r-5"></i>{{ translations.ignored }}
+                                    </span>
+                                </div>
+                                <!-- / Current Action -->
+
+                                <div class="ch-content">
+                                    <h3 class="title f-700 t-overflow m- 0m-b-5">{{ place.name }}</h3>
+                                    <p class="title f-700 t-overflow m-0"><i class="ion-ios-location m-r-5"></i> {{ place.city }} - {{place.state}}</p>
+                                    <p class="title f-700 t-overflow m-0"><i class="ion-android-calendar m-r-5"></i>
+                                        {{ checkLanguage === 'en' ? place.great_day_en : place.great_day_pt }}
+                                    </p>
                                 </div>
 
-                                <div class="swiper-button-prev transparent"></div>
-                                <div class="swiper-button-next transparent"></div>
-                                <!-- Swiper Photos -->
-
-                                <div class="card-header-container">
-
-                                    <!-- Current Action -->
-                                    <div v-if="index === 0">
-                                        <span class="card-action liked" v-show="interactions.liked">
-                                            <i class="ion-chevron-up m-r-5"></i>{{ translations.liked }}
-                                        </span>
-                                        <span class="card-action ignored" v-show="interactions.ignored">
-                                            <i class="ion-chevron-down m-r-5"></i>{{ translations.ignored }}
-                                        </span>
-                                    </div>
-                                    <!-- / Current Action -->
-
-                                    <div class="ch-content">
-                                        <h3 class="title f-700 t-overflow m- 0m-b-5">{{ place.name }}</h3>
-                                        <p class="title f-700 t-overflow m-0"><i class="ion-ios-location m-r-5"></i> {{ place.city }} - {{place.state}}</p>
-                                        <p class="title f-700 t-overflow m-0"><i class="ion-android-calendar m-r-5"></i>
-                                            {{ checkLanguage === 'en' ? place.great_day_en : place.great_day_pt }}
-                                        </p>
-                                    </div>
-
-                                </div>
 
                                 <router-link
                                     tag="span"
