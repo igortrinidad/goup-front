@@ -155,20 +155,6 @@
 
         methods: {
 
-            initSwiper() {
-                let that = this
-
-                setTimeout(() => {
-                    that.swiperCardCover = new Swiper(that.$refs.swiperCardCover, {
-                        spaceBetween: 0,
-                        slidesPerView: 1,
-                        nextButton: '.swiper-button-next',
-                        prevButton: '.swiper-button-prev',
-                        scrollbar: '.swiper-scrollbar'
-                    })
-                }, 200);
-            },
-
             mountHammer() {
                 let that = this
 
@@ -279,7 +265,6 @@
                 })
 
                 this.mountHammer()
-                this.initSwiper()
             },
         }
     }
@@ -297,30 +282,6 @@
         width: 100%; height: 100%;
         z-index: 10;
     }
-    .swiper-card-cover {
-        position: absolute;
-        top: 0; left: 0;
-        bottom: 0; right: 0;
-        width: 100%; height: 100%;
-        z-index: 1;
-        border-radius: 20px;
-    }
-    .swiper-card-cover .swiper-slide {
-        height: 100%;
-        width: 100%;
-        background-position: top center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        border-radius: 20px;
-        position: relative;
-        z-index: 1;
-    }
-
-    @media (max-width: 360px) {
-        .swiper-card-cover .swiper-slide { height: 330px; }
-    }
-
-    .swiper-pagination { width: 100%; }
 
     @media (max-width: 360px) {
         .cards{ height: 330px}
