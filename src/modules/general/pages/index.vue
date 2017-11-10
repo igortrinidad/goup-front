@@ -11,52 +11,64 @@
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
                 <div class="container">
-                    <h1 class="text-center m-b-30" v-show="!companies.length">
+                    <h1 class="text-center m-b-30" v-show="!places.length">
                         {{ translations.end_list }}
                     </h1>
 
                     <!-- Cards -->
-                    <div class="cards" v-if="companies.length">
-                        <div
-                            v-for="(place, index) in companies"
-                            ref="card"
-                            class="card card-rounded m-0"
-                            :id="'card-' + index"
-                        >
+                    <div class="cards" v-if="places.length">
+
+                        <!-- FIRST PLACE -->
+                        <div id="card-animated" class="card card-rounded m-0" ref="cardAnimated">
                             <!-- Card Header -->
-                            <div class="card-header cover" :style="{ backgroundImage: `url(${ place.avatar })` }">
-
-
+                            <div class="card-header cover" :style="{ backgroundImage: `url(${ places[0].avatar })` }">
                                 <!-- Current Action -->
-                                <div v-if="index === 0">
-                                    <span class="card-action liked" v-show="interactions.liked">
-                                        <i class="ion-chevron-up m-r-5"></i>{{ translations.liked }}
-                                    </span>
-                                    <span class="card-action ignored" v-show="interactions.ignored">
-                                        <i class="ion-chevron-down m-r-5"></i>{{ translations.ignored }}
-                                    </span>
-                                </div>
+                                <span class="card-action liked" v-show="interactions.liked">
+                                    <i class="ion-chevron-up m-r-5"></i>{{ translations.liked }}
+                                </span>
+                                <span class="card-action ignored" v-show="interactions.ignored">
+                                    <i class="ion-chevron-down m-r-5"></i>{{ translations.ignored }}
+                                </span>
                                 <!-- / Current Action -->
 
                                 <div class="ch-content">
-                                    <h3 class="title f-700 t-overflow m-0 m-b-5">{{ place.name }}</h3>
-                                    <p class="title f-700 t-overflow m-0"><i class="ion-ios-location m-r-5"></i> {{ place.city }} - {{place.state}}</p>
+                                    <h3 class="title f-700 t-overflow m-0 m-b-5">{{ places[0].name }}</h3>
+                                    <p class="title f-700 t-overflow m-0"><i class="ion-ios-location m-r-5"></i> {{ places[0].city }} - {{places[0].state}}</p>
                                     <p class="title f-700 t-overflow m-0"><i class="ion-android-calendar m-r-5"></i>
-                                        {{ place.best_day }}
+                                        {{ places[0].best_day }}
                                     </p>
                                 </div>
 
                                 <router-link
                                     tag="span"
                                     class="icon-information ion-ios-information"
-                                    v-if="index === 0"
-                                    :to="{ name: 'general.places.show', params: { place_slug: place.slug } }"
+                                    :to="{ name: 'general.places.show', params: { place_slug: places[0].slug } }"
                                 >
                                 </router-link>
 
                             </div>
                             <!-- / Card Header -->
                         </div>
+                        <!-- / FIRST PLACE -->
+
+                        <!-- SECOND PLACE -->
+                        <div class="card card-rounded m-0" v-if="places.length > 1">
+                            <!-- Card Header -->
+                            <div class="card-header cover" :style="{ backgroundImage: `url(${ places[1].avatar })` }">
+                                <div class="ch-content">
+                                    <h3 class="title f-700 t-overflow m-0 m-b-5">{{ places[1].name }}</h3>
+                                    <p class="title f-700 t-overflow m-0"><i class="ion-ios-location m-r-5"></i> {{ places[1].city }} - {{places[1].state}}</p>
+                                    <p class="title f-700 t-overflow m-0"><i class="ion-android-calendar m-r-5"></i>
+                                        {{ places[1].best_day }}
+                                    </p>
+                                </div>
+                                <span class="icon-information ion-ios-information">
+                                </span>
+                            </div>
+                            <!-- / Card Header -->
+                        </div>
+                        <!-- SECOND PLACE -->
+
                     </div>
                     <!-- Cards -->
 
@@ -64,13 +76,13 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="actions">
-                                <div v-if="!companies.length">
-                                    <span class="action" @click="getCompanies()">
+                                <div v-if="!places.length">
+                                    <span class="action" @click="getPlaces()">
                                         <span class="ion-refresh f-default"></span>
                                     </span>
                                 </div>
-                                <div v-if="companies.length">
-                                    <span class="action" @click="getCompanies()">
+                                <div v-if="places.length">
+                                    <span class="action" @click="getPlaces()">
                                         <span class="ion-funnel f-default"></span>
                                     </span>
 
@@ -126,7 +138,7 @@
                     skiped: false
                 },
                 placeholder: true,
-                companies: [],
+                places: [],
                 active: false,
                 top: 0,
             }
@@ -149,7 +161,7 @@
         },
 
         mounted(){
-            this.getCompanies()
+            this.getPlaces()
         },
 
 
@@ -162,14 +174,14 @@
                     that.hammerCards = false
                 }
 
-                if (this.companies.length) {
+                if (this.places.length) {
                     setTimeout(() => {
-                        that.hammerCards = new Hammer(that.$refs.card[0])
+                        that.hammerCards = new Hammer(that.$refs.cardAnimated)
                         that.hammerCards.get('pan').set({ direction: Hammer.DIRECTION_ALL })
                         that.hammerCards.on('panleft panright panup pandown tap press', function(ev) {
                             that.animateCurrentCard(ev)
                         })
-                        $(that.$refs.card[0]).bind('touchend', function(ev) {
+                        $(that.$refs.cardAnimated).bind('touchend', function(ev) {
                             that.touchend()
                         })
                     }, 200)
@@ -181,19 +193,19 @@
 
                 // Não passou da distancia minima para nenhum lado. Volta a posição inicial
                 if (that.top > -75 && that.top < 75) {
-                    $('#card-0').transition({ x: 0, y: 0 }, 300)
+                    $('#card-animated').transition({ x: 0, y: 0 }, 300)
                 } else {
 
                     // Like
                     if (that.top < -75) {
                         // Chamar a funcao para dar like aqui
-                        $('#card-0').transition({ y: -200, opacity: 0 }, 300, () => that.resetPosition())
+                        $('#card-animated').transition({ y: -200, opacity: 0 }, 300, () => that.resetPosition())
                     }
 
                     // Ignore
                     if (that.top > 75) {
                         // Chamar a funcao para dar ignore aqui
-                        $('#card-0').transition({ y: 200, opacity: 0 }, 300, () => that.resetPosition())
+                        $('#card-animated').transition({ y: 200, opacity: 0 }, 300, () => that.resetPosition())
                     }
                 }
             },
@@ -202,11 +214,11 @@
                 this.top = 0
                 this.interactions.liked = false
                 this.interactions.ignored = false
-                this.companies.splice(0, 1)
-                $(this.$refs.card[0]).transition({ x: 0, y: 0, opacity: 1 }, 0)
-                if (this.companies.length === 2) {
-                    this.getCompanies()
-                }
+                this.places.splice(0, 1)
+                $(this.$refs.cardAnimated).transition({ x: 0, y: 0, opacity: 1 }, 0)
+                // if (this.places.length === 2) {
+                //     this.getPlaces()
+                // }
             },
 
             animateCurrentCard(e) {
@@ -218,7 +230,7 @@
                     const left = e.deltaX
 
                     this.top = top
-                    $('#card-0').transition({ x: left, y: top }, 0)
+                    $('#card-animated').transition({ x: left, y: top }, 0)
 
                     if (top > -75 && top < 75) {
                         that.interactions.liked = false
@@ -242,27 +254,27 @@
                 this.interactions.liked = true
                 this.interactions.ignored = false
                 this.interactions.skiped = false
-                $('#card-0').transition({ x: 0, y: -100, opacity: 0 }, 1000, () => this.resetPosition())
+                $('#card-animated').transition({ x: 0, y: -100, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
             goDown() {
                 this.interactions.liked = false
                 this.interactions.ignored = true
                 this.interactions.skiped = false
-                $('#card-0').transition({ x: 0, y: 100, opacity: 0 }, 1000, () => this.resetPosition())
+                $('#card-animated').transition({ x: 0, y: 100, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
             skip() {
                 this.interactions.liked = false
                 this.interactions.ignored = false
                 this.interactions.skiped = true
-                $('#card-0').transition({ x: 100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
+                $('#card-animated').transition({ x: 100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
-            getCompanies() {
-                this.companies = [PlaceModel, PlaceModel, PlaceModel]
+            getPlaces() {
+                this.places = [PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel]
 
-                this.companies.forEach((place) => {
+                this.places.forEach((place) => {
                     place.photos = _.orderBy(place.photos, ['is_cover'], ['desc'])
                 })
 
@@ -297,8 +309,7 @@
 
     .card .card-header.cover { position: relative; }
 
-    .cards .card:nth-child(1)   { z-index: 8; }
-    .cards .card:nth-child(2)   { z-index: 6; }
+    .cards #card-animated{ z-index: 10; }
 
     .fadeInLeft{
         transition: 0.1s;
