@@ -45,82 +45,44 @@
                 <!-- / Card Statics -->
 
                 <!-- Tabs -->
-                <div class="container m-t-30">
-                    <div class="tabs text-center">
-                        <button type="button" :class="{ 'btn transparent tab': true, 'btn-primary': true, 'btn-default': false }">
-                            <i class="ion-quote m-r-5"></i>
-                            {{ translations.tabs.location }}
-                        </button>
-                        <button type="button" :class="{ 'btn transparent tab': true, 'btn-primary': true, 'btn-default': false }">
-                            <i class="ion-quote m-r-5"></i>
-                            {{ translations.tabs.friends }}
-                        </button>
-                        <button type="button" :class="{ 'btn transparent tab': true, 'btn-primary': true, 'btn-default': false }">
-                            <i class="ion-quote m-r-5"></i>
-                            {{ translations.tabs.comments }}
-                        </button>
+                <div class="m-t-30">
+                    <div class="swiper-container tabs text-center" ref="tabs">
+                        <div class="swiper-wrapper">
+                            <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                <i class="tab-icon ion-ios-location m-r-5"></i>
+                                {{ translations.tabs.location }}
+                            </div>
+                            <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                <i class="tab-icon ion-ios-people m-r-5"></i>
+                                {{ translations.tabs.friends }}
+                            </div>
+                            <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                <i class="tab-icon ion-quote m-r-5"></i>
+                                {{ translations.tabs.comments }}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <!-- / Tabs -->
 
-                <!-- Photos -->
-                <!-- <div class="p-relative">
-                    <div class="swiper-container swiper-gallery" ref="galleryPhotos">
-                        <div class="swiper-wrapper">
-                            <div
-                                class="swiper-slide"
-                                v-for="(photo, index) in place.photos"
-                                :style="{ backgroundImage: `url(${ photo.photo_url })` }"
-                                :key="index"
-                            >
-                            </div>
-                        </div>
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-scrollbar"></div>
-                    </div>
-                </div> -->
-                <!-- / Photos -->
-
-                <!-- Actions -->
-                <div class="actions">
-                    <span class="action xl"  @click="goDown()">
-                        <span class="ion-chevron-down f-red "></span>
-                    </span>
-
-                    <span class="action xl" @click="goUp()">
-                        <span class="ion-chevron-up f-green"></span>
-                    </span>
-                </div>
-                <!-- / Actions -->
-
-                <!-- Comments -->
-                <div class="m-t-30 text-center">
+                <!-- Tab Content -->
+                <div class="m-t-30">
                     <div class="container">
-                        <h3 class="m-t-0 m-b-30">{{ translations.comments.title }}</h3>
+                        <!-- Tab Location -->
+                        <tab-location v-if="currentTab === 0"></tab-location>
+                        <!-- Tab Location -->
 
-                        <div class="swiper-container swiper-comments" ref="swipperComments">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide" v-for="comment in place.comments" :key="comment.id">
-                                    <div class="card card-rounded">
-                                        <div class="card-header">
-                                            <i class="ion-quote"></i>
-                                            <div class="picture-circle picture-circle-m" :style="{ backgroundImage: `url(${ place.avatar })` }">
-                                            </div>
-                                            <h5 class="f-default">{{ comment.from.full_name }}</h5>
-                                        </div>
-                                        <div class="card-body card-padding">
-                                            <p>{{ comment.content }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-pagination"></div>
-                        </div>
+                        <!-- Tab Friends -->
+                        <tab-friends  v-if="currentTab === 1"></tab-friends>
+                        <!-- Tab Friends -->
 
+                        <!-- Tab Comments -->
+                        <tab-comments :comments="place.comments" v-if="currentTab === 2"></tab-comments>
+                        <!-- Tab Comments -->
                     </div>
                 </div>
-                <!-- / Comments -->
+                <!-- / Tab Content -->
 
             </div>
         </transition>
@@ -131,6 +93,9 @@
 <script>
     import { mapGetters } from 'vuex'
     import mainHeader from '@/components/main-header.vue'
+    import tabLocation from './show_partials/tab-location.vue'
+    import tabComments from './show_partials/tab-comments.vue'
+    import tabFriends from './show_partials/tab-friends.vue'
 
     import * as translations from '@/translations/places/show'
     import PlaceModel from '@/models/Place'
@@ -140,12 +105,16 @@
 
         components: {
             mainHeader,
+            tabLocation,
+            tabComments,
+            tabFriends
         },
 
         data () {
             return {
                 placeholder: true,
-                place: {}
+                place: {},
+                currentTab: 1
             }
         },
 
@@ -170,6 +139,24 @@
 
         methods: {
 
+            initSwiperTabs() {
+                let that = this
+
+                setTimeout(() => {
+                    that.swiperTabs = new Swiper(that.$refs.tabs, {
+                        initialSlide: 1,
+                        slidesPerView: 2,
+                        spaceBetween: 5,
+                        centeredSlides: true,
+                        slideActiveClass: 'active',
+                        slideToClickedSlide: true,
+                        onSlideChangeEnd: swiper => {
+                            that.currentTab = swiper.realIndex
+                        },
+                    })
+                }, 200);
+            },
+
             initSwiperGallery() {
                 let that = this
 
@@ -184,39 +171,16 @@
                 }, 200);
             },
 
-            initSwiperComments() {
-                let that = this
-
-                setTimeout(() => {
-                    that.swiperComments = new Swiper(that.$refs.swipperComments, {
-                        spaceBetween: 15,
-                        slidesPerView: 1,
-                        pagination: '.swiper-pagination',
-                        paginationClickable: true,
-                    })
-                }, 200);
-            },
-
             getPlace() {
                 this.place = PlaceModel
                 this.initSwiperGallery()
-                this.initSwiperComments()
+                this.initSwiperTabs()
             }
         }
     }
 </script>
 
 <style scoped>
-
-    .swiper-comments .ion-quote {
-        position: absolute;
-        top: -10px;
-        left: 10px;
-        font-size: 60px;
-        opacity: .2;
-        transform: rotate(0);
-    }
-
     .base-infos {
         border: 1px solid rgba(255, 255, 255, .3);
         border-radius: 20px;
@@ -226,7 +190,6 @@
     .base-infos .divider {
         border-right: 1px solid rgba(255, 255, 255, .3);
     }
-
     .base-infos i {
         display: block;
         font-size: 24px;
