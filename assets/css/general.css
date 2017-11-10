@@ -6,8 +6,9 @@ body {
     width: 100vw;
     max-width: 100vw;
     overflow-x: hidden;
-    background: linear-gradient(to bottom, rgba(87,31,159,1) 90%, rgba(255,75,138,1) 150%);
     color: #fff;
+    background-image: url("https://s3.amazonaws.com/goup-assets/img/pattern-goup.png");
+    background-repeat: repeat;
 }
 
 label {

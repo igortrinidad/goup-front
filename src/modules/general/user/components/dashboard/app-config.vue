@@ -19,7 +19,7 @@
 
                             <ul class="list-group m-t-10 m-0 text-left">
                                 <li class="list-group-item" @click="toggleLang('en')">
-                                    {{ translations.language.english }}
+                                    English
                                     <i
                                         :class="{
                                             'icon-select m-l-10 f-20': true,
@@ -30,7 +30,7 @@
                                     </i>
                                 </li>
                                 <li class="list-group-item" @click="toggleLang('pt')">
-                                    {{ translations.language.portuguese }}
+                                    Português
                                     <i
                                         :class="{
                                             'icon-select m-l-10 f-20': true,

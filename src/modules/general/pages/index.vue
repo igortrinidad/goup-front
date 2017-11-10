@@ -38,7 +38,7 @@
                                 <!-- / Current Action -->
 
                                 <div class="ch-content">
-                                    <h3 class="title f-700 t-overflow m- 0m-b-5">{{ place.name }}</h3>
+                                    <h3 class="title f-700 t-overflow m-0 m-b-5">{{ place.name }}</h3>
                                     <p class="title f-700 t-overflow m-0"><i class="ion-ios-location m-r-5"></i> {{ place.city }} - {{place.state}}</p>
                                     <p class="title f-700 t-overflow m-0"><i class="ion-android-calendar m-r-5"></i>
                                         {{ checkLanguage === 'en' ? place.great_day_en : place.great_day_pt }}
@@ -49,7 +49,7 @@
                                 <router-link
                                     tag="span"
                                     class="icon-information ion-ios-information"
-                                    v-show="!interactions.liked && !interactions.ignored"
+                                    v-if="index === 0"
                                     :to="{ name: 'general.places.show', params: { place_slug: place.slug } }"
                                 >
                                 </router-link>
@@ -227,10 +227,12 @@
                         if (e.deltaY < -75) {
                             that.interactions.liked = true
                             that.interactions.ignored = false
+                            return
                         }
                         if(e.deltaY > 75) {
                             that.interactions.liked = false
                             that.interactions.ignored = true
+                            return
                         }
                     }
                 }
@@ -295,8 +297,8 @@
 
     .card .card-header.cover { position: relative; }
 
-    .cards .card:nth-child(1)   { z-index: 9999; }
-    .cards .card:nth-child(2)   { z-index: 9; }
+    .cards .card:nth-child(1)   { z-index: 8; }
+    .cards .card:nth-child(2)   { z-index: 6; }
 
     .fadeInLeft{
         transition: 0.1s;
@@ -308,6 +310,6 @@
         right: 10px;
         font-size: 30px;
         color: #fff;
-        z-index: 100;
+        z-index: 7;
     }
 </style>
