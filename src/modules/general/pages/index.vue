@@ -260,7 +260,7 @@
             },
 
             getCompanies() {
-                this.companies = [PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel]
+                this.companies = [PlaceModel, PlaceModel, PlaceModel]
 
                 this.companies.forEach((place) => {
                     place.photos = _.orderBy(place.photos, ['is_cover'], ['desc'])
