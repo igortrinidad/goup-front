@@ -74,7 +74,7 @@
                         <!-- Tab Friends -->
 
                         <!-- Tab Comments -->
-                        <tab-comments :comments="place.comments" v-if="currentTab === 2"></tab-comments>
+                        <tab-comments :place="place" v-if="currentTab === 2"></tab-comments>
                         <!-- Tab Comments -->
                     </div>
                 </div>

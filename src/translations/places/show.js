@@ -22,7 +22,11 @@ export const en = {
 
     // Comments Section
     comments: {
-        title: 'Comments'
+        title: 'Comments',
+        newComment: 'Add new comment',
+        comment: 'Comment',
+        commentPlaceholder: 'Leave your comment about',
+        successComment: 'comment successfully submitted!'
     }
 }
 
@@ -50,6 +54,10 @@ export const pt = {
 
     // Comments Section
     comments: {
-        title: 'Comentários'
+        title: 'Comentários',
+        newComment: 'Novo comentário',
+        comment: 'Comentar',
+        commentPlaceholder: 'Deixe seu comentário sobre',
+        successComment: 'Comentários enviado com sucesso!'
     }
 }
