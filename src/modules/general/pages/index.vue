@@ -20,7 +20,8 @@
                         <div
                             v-for="(place, index) in companies"
                             ref="card"
-                            :class="{ 'card card-rounded m-0': true, 'animated': index === 0 }"
+                            class="card card-rounded m-0"
+                            :id="'card-' + index"
                         >
                             <!-- Card Header -->
                             <div class="card-header cover" :style="{ backgroundImage: `url(${ place.avatar })` }">
@@ -44,7 +45,6 @@
                                         {{ place.best_day }}
                                     </p>
                                 </div>
-
 
                                 <router-link
                                     tag="span"
@@ -181,19 +181,19 @@
 
                 // Não passou da distancia minima para nenhum lado. Volta a posição inicial
                 if (that.top > -75 && that.top < 75) {
-                    $('.card.animated').transition({ x: 0, y: 0 }, 300)
+                    $('#card-0').transition({ x: 0, y: 0 }, 300)
                 } else {
 
                     // Like
                     if (that.top < -75) {
                         // Chamar a funcao para dar like aqui
-                        $('.card.animated').transition({ y: -200, opacity: 0 }, 300, () => that.resetPosition())
+                        $('#card-0').transition({ y: -200, opacity: 0 }, 300, () => that.resetPosition())
                     }
 
                     // Ignore
                     if (that.top > 75) {
                         // Chamar a funcao para dar ignore aqui
-                        $('.card.animated').transition({ y: 200, opacity: 0 }, 300, () => that.resetPosition())
+                        $('#card-0').transition({ y: 200, opacity: 0 }, 300, () => that.resetPosition())
                     }
                 }
             },
@@ -218,7 +218,7 @@
                     const left = e.deltaX
 
                     this.top = top
-                    $('.card.animated').transition({ x: left, y: top }, 0)
+                    $('#card-0').transition({ x: left, y: top }, 0)
 
                     if (top > -75 && top < 75) {
                         that.interactions.liked = false
@@ -242,21 +242,21 @@
                 this.interactions.liked = true
                 this.interactions.ignored = false
                 this.interactions.skiped = false
-                $('.card.animated').transition({ x: 0, y: -100, opacity: 0 }, 1000, () => this.resetPosition())
+                $('#card-0').transition({ x: 0, y: -100, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
             goDown() {
                 this.interactions.liked = false
                 this.interactions.ignored = true
                 this.interactions.skiped = false
-                $('.card.animated').transition({ x: 0, y: 100, opacity: 0 }, 1000, () => this.resetPosition())
+                $('#card-0').transition({ x: 0, y: 100, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
             skip() {
                 this.interactions.liked = false
                 this.interactions.ignored = false
                 this.interactions.skiped = true
-                $('.card.animated').transition({ x: 100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
+                $('#card-0').transition({ x: 100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
             getCompanies() {
@@ -311,5 +311,15 @@
         font-size: 30px;
         color: #fff;
         z-index: 7;
+    }
+
+    .card .card-header .ch-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: left;
+        padding: 10px;
+        color: #fff !important;
     }
 </style>
