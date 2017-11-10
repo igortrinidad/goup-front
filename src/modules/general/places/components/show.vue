@@ -7,12 +7,34 @@
             :cursor="false"
         ></main-header>
 
+
+
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main" v-if="place.id">
 
+                <!-- Photos -->
+                <div class="p-relative">
+                    <div class="swiper-container swiper-gallery" ref="galleryPhotos">
+                        <div class="swiper-wrapper">
+                            <div
+                                class="swiper-slide"
+                                v-for="(photo, index) in place.photos"
+                                :style="{ backgroundImage: `url(${ photo.photo_url })` }"
+                                :key="index"
+                            >
+                            </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-scrollbar"></div>
+                    </div>
+                </div>
+                <!-- / Photos -->
+
+
                 <!-- Place Name, Description, City And State -->
                 <div class="text-center">
-                    <h3 class="m-t-10">{{ place.name }}</h3>
+                    <h3 class="m-t-30">{{ place.name }}</h3>
 
                     <p>{{ place.description }}</p>
 
