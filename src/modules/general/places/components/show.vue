@@ -125,7 +125,7 @@
 
         methods: {
 
-            initSwiper() {
+            initSwiperGallery() {
                 let that = this
 
                 setTimeout(() => {
@@ -136,20 +136,26 @@
                         prevButton: '.swiper-button-prev',
                         scrollbar: '.swiper-scrollbar',
                     })
+                }, 200);
+            },
 
+            initSwiperComments() {
+                let that = this
+
+                setTimeout(() => {
                     that.swiperComments = new Swiper(that.$refs.swipperComments, {
                         spaceBetween: 15,
                         slidesPerView: 1,
                         pagination: '.swiper-pagination',
                         paginationClickable: true,
                     })
-
                 }, 200);
             },
 
             getPlace() {
                 this.place = PlaceModel
-                this.initSwiper()
+                this.initSwiperGallery()
+                this.initSwiperComments()
             }
         }
     }
