@@ -21,7 +21,7 @@
                         {{ `${ place.city } - ${ place.state }` }}
                     </h5>
 
-                    <div class="container">
+                    <div class="container m-t-30">
                         <ul class="list-group list-rounded m-b-0 m-t-10">
                             <li class="list-group-item">
                                 <i class="icon ion-android-calendar m-r-5 f-primary"></i>
