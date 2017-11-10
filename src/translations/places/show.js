@@ -1,6 +1,11 @@
 export const en = {
     back: 'Back',
     title: 'Profile',
+    best_day: 'Best Day',
+    style: 'Style',
+    is_opened: 'Is opened now ?',
+    yes: 'Yes',
+    no: 'No',
 
     // Tabs
     tabs: {
@@ -24,6 +29,11 @@ export const en = {
 export const pt = {
     back: 'Voltar',
     title: 'Perfil',
+    best_day: 'Melhor dia',
+    style: 'Estilo',
+    is_opened: 'Esta aberto agora ?',
+    yes: 'Sim',
+    no: 'Não',
 
     // Tabs
     tabs: {

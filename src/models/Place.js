@@ -9,7 +9,7 @@ export default {
     state: 'MG',
     description: 'Os melhores drinks estão aqui!',
     best_day: 'Quarta-feira',
-    style: 'Artesanal',
+    style: 'Rustíco',
 
     // Photos
     photos: [

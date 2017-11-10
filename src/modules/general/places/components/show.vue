@@ -20,29 +20,25 @@
                         <i class="ion-ios-location m-r-5"></i>
                         {{ `${ place.city } - ${ place.state }` }}
                     </h5>
-                </div>
-                <!-- Place Name, Description, City And State -->
 
-                <!-- Card Statics -->
-                <div class="container text-center m-t-30">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="base-infos">
-                                <div class="row custom">
-                                    <div class="col-xs-6 col-custom divider">
-                                        <i class="ion-android-calendar f-primary"></i>
-                                        <span class="f-primary">{{ place.best_day }}</span>
-                                    </div>
-                                    <div class="col-xs-6 col-custom">
-                                        <i class="ion-ios-wineglass f-primary"></i>
-                                        <span class="f-primary">{{ place.style }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="container">
+                        <ul class="list-group list-rounded m-b-0 m-t-10">
+                            <li class="list-group-item">
+                                <i class="icon ion-android-calendar m-r-5 f-primary"></i>
+                                <span><strong>{{ translations.best_day }}:</strong> {{ place.best_day }}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="icon ion-wineglass m-r-5 f-primary"></i>
+                                <span><strong>{{ translations.style }}:</strong> {{ place.style }}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="icon ion-android-time m-r-5 f-primary"></i>
+                                <span><strong>{{ translations.is_opened }}</strong> {{ translations.yes }}</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <!-- / Card Statics -->
+                <!-- Place Name, Description, City And State -->
 
                 <!-- Tabs -->
                 <div class="m-t-30">
@@ -199,6 +195,34 @@
         display: block;
         text-transform: initial;
         font-size: 14px;
+    }
+
+    .list-rounded .list-group-item {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, .1);
+        font-size: 14px;
+    }
+    .list-rounded .list-group-item .icon {
+        font-size: 24px;
+        display: inline-flex;
+        width: 40px; height: 40px;
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #FF4B89;
+    }
+
+    .list-rounded .list-group-item span { display: block; margin-top: 10px; }
+
+
+    .list-rounded .list-group-item:first-child {
+        border-top-right-radius: 20px;
+        border-top-left-radius: 20px;
+    }
+
+    .list-rounded .list-group-item:last-child {
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
     }
 
 </style>
