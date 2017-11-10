@@ -9,5 +9,4 @@ h4.title, h5.title, h6.title {
 .card .card-body h1, .card .card-body h2, .card .card-body h3,
 .card .card-body h4, .card .card-body h5, .card .card-body h6 {
     color: #393838;
-    text-align: left;
 }

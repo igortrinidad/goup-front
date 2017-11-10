@@ -41,7 +41,7 @@
                                     <h3 class="title f-700 t-overflow m-0 m-b-5">{{ place.name }}</h3>
                                     <p class="title f-700 t-overflow m-0"><i class="ion-ios-location m-r-5"></i> {{ place.city }} - {{place.state}}</p>
                                     <p class="title f-700 t-overflow m-0"><i class="ion-android-calendar m-r-5"></i>
-                                        {{ checkLanguage === 'en' ? place.great_day_en : place.great_day_pt }}
+                                        {{ place.best_day }}
                                     </p>
                                 </div>
 

@@ -1,5 +1,6 @@
 export const en = {
     back: 'Back',
+    title: 'Profile',
 
     // About Section
     about: {
@@ -15,6 +16,7 @@ export const en = {
 
 export const pt = {
     back: 'Voltar',
+    title: 'Perfil',
 
     // About Section
     about: {

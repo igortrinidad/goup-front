@@ -2,15 +2,43 @@
     <div class="first-container">
 
         <main-header
-            :title="place.id ? place.name : 'Voltar'"
+            :title="translations.title"
             :type="'back'"
             :cursor="false"
         ></main-header>
 
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main" v-if="place.id">
+                <div class="text-center">
+                    <h3 class="m-t-10">{{ place.name }}</h3>
+                    <h5>
+                        <i class="ion-ios-location m-r-5"></i>
+                        {{ `${ place.city } - ${ place.state }` }}
+                    </h5>
+                </div>
+                <!-- Card Statics -->
+                <div class="container text-center m-t-30">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="base-infos">
+                                <div class="row custom">
+                                    <div class="col-xs-6 col-custom divider">
+                                        <i class="ion-android-calendar f-primary"></i>
+                                        <span class="f-primary">{{ place.best_day }}</span>
+                                    </div>
+                                    <div class="col-xs-6 col-custom">
+                                        <i class="ion-ios-wineglass f-primary"></i>
+                                        <span class="f-primary">{{ place.style }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Statics -->
+
                 <!-- Photos -->
-                <div class="p-relative">
+                <!-- <div class="p-relative">
                     <div class="swiper-container swiper-gallery" ref="galleryPhotos">
                         <div class="swiper-wrapper">
                             <div
@@ -25,7 +53,7 @@
                         <div class="swiper-button-next"></div>
                         <div class="swiper-scrollbar"></div>
                     </div>
-                </div>
+                </div> -->
                 <!-- / Photos -->
 
                 <!-- Description -->
@@ -170,6 +198,27 @@
         font-size: 60px;
         opacity: .2;
         transform: rotate(0);
+    }
+
+    .base-infos {
+        border: 1px solid rgba(255, 255, 255, .3);
+        border-radius: 20px;
+        padding: 7px 0;
+    }
+
+    .base-infos .divider {
+        border-right: 1px solid rgba(255, 255, 255, .3);
+    }
+
+    .base-infos i {
+        display: block;
+        font-size: 24px;
+    }
+
+    .base-infos span {
+        display: block;
+        text-transform: initial;
+        font-size: 14px;
     }
 
 </style>

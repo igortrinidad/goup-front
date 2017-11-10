@@ -8,8 +8,8 @@ export default {
     city: 'Belo Horizonte',
     state: 'MG',
     description: 'Os melhores drinks estão aqui!',
-    great_day_pt: 'Quarta-feira',
-    great_day_en: 'Wednesday',
+    best_day: 'Quarta-feira',
+    style: 'Artesanal',
 
     // Photos
     photos: [
