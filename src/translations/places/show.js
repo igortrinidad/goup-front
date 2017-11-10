@@ -2,6 +2,13 @@ export const en = {
     back: 'Back',
     title: 'Profile',
 
+    // Tabs
+    tabs: {
+        comments: 'Comments',
+        location: 'Location',
+        friends: 'Friends'
+    },
+
     // About Section
     about: {
         title: 'About',
@@ -17,6 +24,13 @@ export const en = {
 export const pt = {
     back: 'Voltar',
     title: 'Perfil',
+
+    // Tabs
+    tabs: {
+        comments: 'Comentários',
+        location: 'Localização',
+        friends: 'Amigos'
+    },
 
     // About Section
     about: {

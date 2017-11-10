@@ -9,13 +9,20 @@
 
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main" v-if="place.id">
+
+                <!-- Place Name, Description, City And State -->
                 <div class="text-center">
                     <h3 class="m-t-10">{{ place.name }}</h3>
+
+                    <p>{{ place.description }}</p>
+
                     <h5>
                         <i class="ion-ios-location m-r-5"></i>
                         {{ `${ place.city } - ${ place.state }` }}
                     </h5>
                 </div>
+                <!-- Place Name, Description, City And State -->
+
                 <!-- Card Statics -->
                 <div class="container text-center m-t-30">
                     <div class="row">
@@ -35,7 +42,26 @@
                         </div>
                     </div>
                 </div>
-                <!-- Card Statics -->
+                <!-- / Card Statics -->
+
+                <!-- Tabs -->
+                <div class="container m-t-30">
+                    <div class="tabs text-center">
+                        <button type="button" :class="{ 'btn transparent tab': true, 'btn-primary': true, 'btn-default': false }">
+                            <i class="ion-quote m-r-5"></i>
+                            {{ translations.tabs.location }}
+                        </button>
+                        <button type="button" :class="{ 'btn transparent tab': true, 'btn-primary': true, 'btn-default': false }">
+                            <i class="ion-quote m-r-5"></i>
+                            {{ translations.tabs.friends }}
+                        </button>
+                        <button type="button" :class="{ 'btn transparent tab': true, 'btn-primary': true, 'btn-default': false }">
+                            <i class="ion-quote m-r-5"></i>
+                            {{ translations.tabs.comments }}
+                        </button>
+                    </div>
+                </div>
+                <!-- / Tabs -->
 
                 <!-- Photos -->
                 <!-- <div class="p-relative">
@@ -55,15 +81,6 @@
                     </div>
                 </div> -->
                 <!-- / Photos -->
-
-                <!-- Description -->
-                <div class="m-t-30 text-center">
-                    <div class="container">
-                        <h3 class="m-t-0">{{ translations.about.title }}</h3>
-                        <p>{{ place.description }}</p>
-                    </div>
-                </div>
-                <!-- / Description -->
 
                 <!-- Actions -->
                 <div class="actions">

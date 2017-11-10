@@ -1,0 +1,10 @@
+/* Tabs Default */
+/* Tabs */
+.tabs {
+    position: relative;
+}
+
+.tabs .tab {
+    margin: 5px;
+    padding: 7px 20px;
+}
