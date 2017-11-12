@@ -64,7 +64,7 @@
 
                 <!-- Tab Content -->
                 <div class="m-t-30">
-                    <div class="container">
+                    <div class="">
                         <!-- Tab Location -->
                         <tab-location v-if="currentTab === 0"></tab-location>
                         <!-- Tab Location -->

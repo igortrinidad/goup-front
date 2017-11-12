@@ -19,7 +19,7 @@
                     <div class="cards" v-if="places.length">
 
                         <!-- FIRST PLACE -->
-                        <div id="card-animated" class="card card-rounded m-0" ref="cardAnimated">
+                        <div id="card-animated" class="card m-0" ref="cardAnimated">
                             <!-- Card Header -->
                             <div class="card-header cover" :style="{ backgroundImage: `url(${ places[0].avatar })` }">
                                 <!-- Current Action -->
@@ -32,9 +32,9 @@
                                 <!-- / Current Action -->
 
                                 <div class="ch-content">
-                                    <h3 class="title f-700 t-overflow m-0 m-b-5">{{ places[0].name }}</h3>
-                                    <p class="title f-700 t-overflow m-0"><i class="ion-ios-location m-r-5"></i> {{ places[0].city }} - {{places[0].state}}</p>
-                                    <p class="title f-700 t-overflow m-0"><i class="ion-android-calendar m-r-5"></i>
+                                    <h3 class="title f-700 t-overflow">{{ places[0].name }}</h3>
+                                    <p class="title f-700 t-overflow" style="margin-bottom: 0px;"><i class="ion-ios-location m-r-5"></i> {{ places[0].city }} - {{places[0].state}}</p>
+                                    <p class="title f-700 t-overflow" style="margin-top: 0px; margin-bottom: -5px;"><i class="ion-android-calendar m-r-5"></i>
                                         {{ places[0].best_day }}
                                     </p>
                                 </div>
@@ -52,13 +52,13 @@
                         <!-- / FIRST PLACE -->
 
                         <!-- SECOND PLACE -->
-                        <div class="card card-rounded m-0" v-if="places.length > 1">
+                        <div class="card m-0" v-if="places.length > 1">
                             <!-- Card Header -->
                             <div class="card-header cover" :style="{ backgroundImage: `url(${ places[1].avatar })` }">
                                 <div class="ch-content">
-                                    <h3 class="title f-700 t-overflow m-0 m-b-5">{{ places[1].name }}</h3>
-                                    <p class="title f-700 t-overflow m-0"><i class="ion-ios-location m-r-5"></i> {{ places[1].city }} - {{places[1].state}}</p>
-                                    <p class="title f-700 t-overflow m-0"><i class="ion-android-calendar m-r-5"></i>
+                                    <h3 class="title f-700 t-overflow">{{ places[1].name }}</h3>
+                                    <p class="title f-700 t-overflow" style="margin-bottom: 0px;"><i class="ion-ios-location m-r-5"></i> {{ places[1].city }} - {{places[1].state}}</p>
+                                    <p class="title f-700 t-overflow" style="margin-top: 0px; margin-bottom: -5px;"><i class="ion-android-calendar m-r-5"></i>
                                         {{ places[1].best_day }}
                                     </p>
                                 </div>
