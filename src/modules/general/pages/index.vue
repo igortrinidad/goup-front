@@ -191,7 +191,6 @@
 
             touchend(top) {
                 let that = this
-
                 // Não passou da distancia minima para nenhum lado. Volta a posição inicial
                 if (that.top > -75 && that.top < 75) {
                     $('#card-animated').transition({ x: 0, y: 0 }, 300)
@@ -274,28 +273,33 @@
 
             getPlaces() {
                 let that = this
-                //- método get
+                console.log('entrou no getPlaces');
 
-                    if (that.starting) {
+                if (that.starting) {
 
-                        that.starting = false
+                    that.starting = false
 
+                    if (localStorage.getItem('places')) {
+                        that.places = JSON.parse(localStorage.getItem('places'))
+                    } else {
                         that.places = [ PlaceModel, PlaceModel, PlaceModel, PlaceModel ]
                         localStorage.setItem('places', JSON.stringify(this.places))
-
-                    } else {
-                        that.places.push(PlaceModel)
-                        localStorage.removeItem('places')
-                        localStorage.setItem('places', JSON.stringify(that.places))
                     }
 
-                    that.places.forEach((place) => {
-                        place.photos = _.orderBy(place.photos, ['is_cover'], ['desc'])
-                    })
+                } else {
+                    that.places.push(PlaceModel)
+                    localStorage.removeItem('places')
+                    localStorage.setItem('places', JSON.stringify(that.places))
+                }
 
-                    this.mountHammer()
+                that.places.forEach((place) => {
+                    place.photos = _.orderBy(place.photos, ['is_cover'], ['desc'])
+                })
 
-                //- final do método get
+                this.mountHammer()
+
+                console.log(that.places);
+
 
             },
         }
