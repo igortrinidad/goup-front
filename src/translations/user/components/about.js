@@ -1,10 +1,6 @@
 export const en = {
     // Generals
-    title: 'Settings',
-    save: 'Save settings',
-    save_success: 'Settings saved',
-    save_error: 'An error occurred and we were unable to save the settings',
-    logout: 'Logout',
+    title: 'About',
     remove_account: 'Remove my account',
 
     // Contact Section
@@ -31,11 +27,7 @@ export const en = {
 
 export const pt = {
     // Generals
-    title: 'Configurações',
-    save: 'Salvar configurações',
-    save_success: 'Configurações salvas',
-    save_error: 'Ocorreu um erro e não conseguimos salvar as configurações',
-    logout: 'Sair',
+    title: 'Sobre',
     remove_account: 'Remover minha conta',
 
     // Contact Section

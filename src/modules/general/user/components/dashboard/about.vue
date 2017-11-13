@@ -10,7 +10,7 @@
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main first-container">
 
-                <div class="container m-t-20">
+                <div class="container">
 
                     <!-- Contact Section -->
                     <div class="card m-t-30 card-rounded text-center">
@@ -38,14 +38,6 @@
                     </div>
                     <!-- / Contact Section -->
 
-
-                    <button type="button" class="btn btn-default btn-block m-t-20">
-                        {{ translations.logout }}
-                    </button>
-
-
-                    <!--  -->
-
                 </div>
 
             </div>
@@ -57,10 +49,10 @@
     import mainHeader from '@/components/main-header'
 
     import User from '@/models/User'
-    import * as translations from '@/translations/user/components/app-config'
+    import * as translations from '@/translations/user/components/about'
 
     export default {
-        name: 'general-user-settings-app-config',
+        name: 'general-user-settings-about',
 
         components: {
             mainHeader,

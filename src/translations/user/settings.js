@@ -1,6 +1,6 @@
 export const en = {
     buttons: {
-        config: 'Settings',
+        about: 'About',
         edit: 'Edit profile',
         add_new_place: 'Add new place'
     },
@@ -10,7 +10,7 @@ export const en = {
 
 export const pt = {
     buttons: {
-        config: 'Configurações',
+        about: 'Sobre',
         edit: 'Editar perfil',
         add_new_place: 'Adicionar novo local'
     },

@@ -10,9 +10,9 @@ const Settings = (resolve) => {
     })
 }
 
-const UserConfig = (resolve) => {
-    require.ensure(['../components/dashboard/app-config'], () => {
-        resolve(require('../components/dashboard/app-config')) // eslint-disable-line global-require
+const About = (resolve) => {
+    require.ensure(['../components/dashboard/about'], () => {
+        resolve(require('../components/dashboard/about')) // eslint-disable-line global-require
     })
 }
 
@@ -41,9 +41,9 @@ export default [
                 meta: {requiresAuth: false}
             },
             {
-                name: 'general.user.settings.configs',
-                path: '/settings/configs',
-                component: UserConfig,
+                name: 'general.user.settings.about',
+                path: '/settings/about',
+                component: About,
                 meta: {requiresAuth: false}
             },
             {
