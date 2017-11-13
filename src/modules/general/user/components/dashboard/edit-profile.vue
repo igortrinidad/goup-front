@@ -105,9 +105,15 @@
                 const language = localStorage.getItem('language')
 
                 if (language === 'en' || !language) {
+                    this.languages.en = true
+                    this.languages.pt = false
+
                     return translations.en
                 }
                 if (language === 'pt') {
+                    this.languages.en = false
+                    this.languages.pt = true
+
                     return translations.pt
                 }
             }

@@ -7,13 +7,6 @@ export const en = {
     logout: 'Logout',
     remove_account: 'Remove my account',
 
-    // Language Section
-    language: {
-        title: 'Language',
-        portuguese: 'Portuguese',
-        english: 'English',
-    },
-
     // Contact Section
     contact: {
         title: 'Contact',
@@ -44,13 +37,6 @@ export const pt = {
     save_error: 'Ocorreu um erro e não conseguimos salvar as configurações',
     logout: 'Sair',
     remove_account: 'Remover minha conta',
-
-    // Language Section
-    language: {
-        title: 'Idioma',
-        portuguese: 'Português',
-        english: 'Inglês',
-    },
 
     // Contact Section
     contact: {
