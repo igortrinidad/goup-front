@@ -11,6 +11,15 @@ export default {
     best_day: 'Quarta-feira',
     style: 'Rustíco',
 
+    // Address
+    address: {
+        name: '',
+        full_address: '',
+        url: ''
+    },
+    lat: -19.9025412,
+    lng: -44.03409,
+
     // Photos
     photos: [
         {

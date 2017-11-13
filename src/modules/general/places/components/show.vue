@@ -95,7 +95,7 @@
                     <div class="m-t-30">
                         <div class="container">
                             <!-- Tab Location -->
-                            <tab-location v-if="currentTab === 0"></tab-location>
+                            <tab-location :place="place" v-if="currentTab === 0"></tab-location>
                             <!-- Tab Location -->
 
                             <!-- Tab Friends -->
