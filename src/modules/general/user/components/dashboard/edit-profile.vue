@@ -14,6 +14,12 @@
                 <div class="p-relative">
                     <div class="swiper-container swiper-gallery" ref="galleryPhotos">
                         <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="new-image">
+                                    <i class="ion-plus-round"></i>
+                                    <span>{{ translations.upload_image }}</span>
+                                </div>
+                            </div>
                             <div
                                 class="swiper-slide"
                                 v-for="(photo, index) in user.photos"
@@ -195,4 +201,32 @@
         color: #FFF;
         float: right
     }
+
+    /* New Image */
+    .new-image {
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+        width: 100%; height: 100%;
+        justify-content: center;
+        text-align: center;
+        padding-top: 80px;
+        border-bottom: 2px solid #FF4B89
+    }
+
+    .new-image i {
+        font-size: 24px;
+        display: inline-flex;
+        width: 40px; height: 40px;
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #FF4B89;
+    }
+    .new-image span {
+        display: block;
+        width: 100%;
+        font-weight: 700;
+        margin-top: 20px;
+    }
+
 </style>
