@@ -6,6 +6,7 @@ export const en = {
     is_opened: 'Is opened now ?',
     yes: 'Yes',
     no: 'No',
+    place_not_found: 'Unfortunately we could not find this place now',
 
     // Tabs
     tabs: {
@@ -38,6 +39,7 @@ export const pt = {
     is_opened: 'Esta aberto agora ?',
     yes: 'Sim',
     no: 'Não',
+    place_not_found: 'Infelizmente não conseguimos encontrar esse lugar agora',
 
     // Tabs
     tabs: {
