@@ -10,24 +10,65 @@
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main container">
 
-            <!-- Photos -->
-            <div class="p-relative">
-                <div class="swiper-container swiper-gallery" ref="galleryPhotos">
-                    <div class="swiper-wrapper">
-                        <div
-                            class="swiper-slide"
-                            v-for="(photo, index) in user.photos"
-                            :style="{ backgroundImage: `url(${ photo.photo_url })` }"
-                            :key="index"
-                        >
+                <!-- Photos -->
+                <div class="p-relative">
+                    <div class="swiper-container swiper-gallery" ref="galleryPhotos">
+                        <div class="swiper-wrapper">
+                            <div
+                                class="swiper-slide"
+                                v-for="(photo, index) in user.photos"
+                                :style="{ backgroundImage: `url(${ photo.photo_url })` }"
+                                :key="index"
+                            >
+                            </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-scrollbar"></div>
+                    </div>
+                </div>
+                <!-- / Photos -->
+
+                <!-- Select Language -->
+                <div class="container m-t-30">
+                    <div class="card card-rounded">
+                        <div class="card-body card-padding text-center">
+                            <p class=" f-22 f-400">{{ translations.language.title }}</p>
+
+                            <ul class="list-group m-t-10 m-0 text-left">
+                                <li class="list-group-item" @click="toggleLang('en')">
+                                    English
+                                    <i
+                                        :class="{
+                                            'icon-select m-l-10 f-20': true,
+                                            'ion-ios-circle-filled': languages.en,
+                                            'ion-ios-circle-outline': !languages.en
+                                        }"
+                                    >
+                                    </i>
+                                </li>
+                                <li class="list-group-item" @click="toggleLang('pt')">
+                                    Português
+                                    <i
+                                        :class="{
+                                            'icon-select m-l-10 f-20': true,
+                                            'ion-ios-circle-filled': languages.pt,
+                                            'ion-ios-circle-outline': !languages.pt
+                                        }"
+                                    >
+                                    </i>
+                                </li>
+                            </ul>
+
                         </div>
                     </div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-scrollbar"></div>
+
+                    <button type="button" class="btn btn-primary btn-block transparent" @click="saveSettings()">
+                        {{ translations.save }}
+                    </button>
+
                 </div>
-            </div>
-            <!-- / Photos -->
+                <!-- / Select Language -->
 
             </div>
         </transition>
@@ -51,7 +92,11 @@
         data () {
             return {
                 interactions: {},
-                user: {}
+                user: {},
+                languages: {
+                    pt: false,
+                    en: false
+                }
             }
         },
 
@@ -73,6 +118,35 @@
         },
 
         methods: {
+
+            saveSettings() {
+                this.setLanguage()
+                this.$router.push({
+                    name: 'general.user.settings',
+                    params: {
+                        settings_saved: true
+                    }
+                })
+            },
+
+            toggleLang(lang) {
+                if (lang === 'en') {
+                    this.languages.en = true
+                    this.languages.pt = false
+                }
+
+                if (lang === 'pt') {
+                    this.languages.en = false
+                    this.languages.pt = true
+                }
+            },
+
+            setLanguage() {
+                if (localStorage.getItem('language')) {
+                    localStorage.removeItem('language')
+                }
+                localStorage.setItem('language', this.languages.en ? 'en' : 'pt')
+            },
 
             getUser() {
                 this.user = User
@@ -100,4 +174,9 @@
 
 <style scoped>
     .swiper-pagination { width: 100%; }
+
+    .icon-select {
+        color: #561F9F;
+        float: right
+    }
 </style>

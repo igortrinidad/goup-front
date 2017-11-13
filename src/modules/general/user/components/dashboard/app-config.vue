@@ -175,8 +175,5 @@
 </script>
 
 <style scoped>
-    .icon-select {
-        color: #561F9F;
-        float: right
-    }
+
 </style>
