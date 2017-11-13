@@ -182,9 +182,11 @@
                         that.hammerCards.on('panleft panright panup pandown tap press', function(ev) {
                             that.animateCurrentCard(ev)
                         })
-                        $(that.$refs.cardAnimated).bind('touchend', function(ev) {
+
+                        $('#card-animated').bind('touchend', function(ev) {
                             that.touchend()
                         })
+
                     }, 200)
                 }
             },
@@ -195,7 +197,6 @@
                 if (that.top > -75 && that.top < 75) {
                     $('#card-animated').transition({ x: 0, y: 0 }, 300)
                 } else {
-
                     // Like
                     if (that.top < -75) {
                         // Chamar a funcao para dar like aqui
@@ -216,9 +217,6 @@
                 this.interactions.ignored = false
                 this.places.splice(0, 1)
                 $(this.$refs.cardAnimated).transition({ x: 0, y: 0, opacity: 1 }, 0)
-                if (this.places.length === 2) {
-                    this.getPlaces()
-                }
             },
 
             animateCurrentCard(e) {
@@ -273,7 +271,6 @@
 
             getPlaces() {
                 let that = this
-                console.log('entrou no getPlaces');
 
                 if (that.starting) {
 
@@ -282,7 +279,7 @@
                     if (localStorage.getItem('places')) {
                         that.places = JSON.parse(localStorage.getItem('places'))
                     } else {
-                        that.places = [ PlaceModel, PlaceModel, PlaceModel, PlaceModel ]
+                        that.places = [ PlaceModel, PlaceModel, PlaceModel ]
                         localStorage.setItem('places', JSON.stringify(this.places))
                     }
 
