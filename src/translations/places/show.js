@@ -12,7 +12,8 @@ export const en = {
     tabs: {
         comments: 'Comments',
         location: 'Location',
-        friends: 'Friends'
+        friends: 'Friends',
+        users: 'More users'
     },
 
     // About Section
@@ -45,7 +46,8 @@ export const pt = {
     tabs: {
         comments: 'Comentários',
         location: 'Localização',
-        friends: 'Amigos'
+        friends: 'Amigos',
+        users: 'Mais usuários'
     },
 
     // About Section

@@ -19,7 +19,7 @@
                 </div>
 
                 <!-- Place Content -->
-                <div v-if="!interactions.placeNotFound && place.id">
+                <div class="m-b-30" v-if="!interactions.placeNotFound && place.id">
                     <!-- Photos -->
                     <div class="p-relative">
                         <div class="swiper-container swiper-gallery" ref="galleryPhotos">
@@ -204,7 +204,6 @@
             getPlace() {
                 let placeFromLocalStorage = JSON.parse(localStorage.getItem('places'))[0]
 
-                console.log(this.$route.params.place_slug);
                 if (this.$route.params.place_slug === placeFromLocalStorage.slug) {
                     this.place = placeFromLocalStorage
 
