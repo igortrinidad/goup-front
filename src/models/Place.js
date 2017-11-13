@@ -10,7 +10,7 @@ export default {
     description: 'Os melhores drinks estão aqui!',
     best_day: 'Quarta-feira',
     style: 'Rustíco',
-
+    phone: '41 999999999',
     // Address
     address: {
         name: '',

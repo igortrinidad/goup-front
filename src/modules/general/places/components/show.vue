@@ -50,6 +50,15 @@
                             {{ `${ place.city } - ${ place.state }` }}
                         </h5>
 
+                        <!-- Call -->
+                        <div class="m-t-30" v-if="place.phone">
+                            <a :href="`tel:${ place.phone }`" class="btn btn-info transparent">
+                                <i class="ion-ios-telephone m-r-5"></i>{{ translations.call }}
+                            </a>
+                        </div>
+                        <!-- Call -->
+
+
                         <div class="container m-t-30">
                             <ul class="list-group list-rounded m-b-0 m-t-10">
                                 <li class="list-group-item">
@@ -65,6 +74,7 @@
                                     <span><strong>{{ translations.is_opened }}</strong> {{ translations.yes }}</span>
                                 </li>
                             </ul>
+
                         </div>
                     </div>
                     <!-- Place Name, Description, City And State -->

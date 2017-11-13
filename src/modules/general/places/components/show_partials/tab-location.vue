@@ -3,7 +3,11 @@
         <div class="m-t-30 text-center">
             <h3 class="m-t-0 m-b-30">{{ translations.tabs.location }}</h3>
 
-            <div v-if="place.id">
+            <div v-if="place.address.full_address">
+                <span>{{ place.address.full_address }}</span>
+            </div>
+
+            <div class="m-t-30">
                 <GmapMap
                     :center="{ lat: place.lat, lng: place.lng }"
                     :zoom="map.zoom"

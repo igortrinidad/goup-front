@@ -7,6 +7,7 @@ export const en = {
     yes: 'Yes',
     no: 'No',
     place_not_found: 'Unfortunately we could not find this place now',
+    call: 'Call now',
 
     // Tabs
     tabs: {
@@ -41,6 +42,7 @@ export const pt = {
     yes: 'Sim',
     no: 'Não',
     place_not_found: 'Infelizmente não conseguimos encontrar esse lugar agora',
+    call: 'Ligue agora',
 
     // Tabs
     tabs: {
