@@ -137,6 +137,7 @@
                     ignored: false,
                     skiped: false
                 },
+                starting: true,
                 placeholder: true,
                 places: [],
                 active: false,
@@ -216,9 +217,9 @@
                 this.interactions.ignored = false
                 this.places.splice(0, 1)
                 $(this.$refs.cardAnimated).transition({ x: 0, y: 0, opacity: 1 }, 0)
-                // if (this.places.length === 2) {
-                //     this.getPlaces()
-                // }
+                if (this.places.length === 2) {
+                    this.getPlaces()
+                }
             },
 
             animateCurrentCard(e) {
@@ -272,13 +273,30 @@
             },
 
             getPlaces() {
-                this.places = [PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel]
+                let that = this
+                //- método get
 
-                this.places.forEach((place) => {
-                    place.photos = _.orderBy(place.photos, ['is_cover'], ['desc'])
-                })
+                    if (that.starting) {
 
-                this.mountHammer()
+                        that.starting = false
+
+                        that.places = [ PlaceModel, PlaceModel, PlaceModel, PlaceModel ]
+                        localStorage.setItem('places', JSON.stringify(this.places))
+
+                    } else {
+                        that.places.push(PlaceModel)
+                        localStorage.removeItem('places')
+                        localStorage.setItem('places', JSON.stringify(that.places))
+                    }
+
+                    that.places.forEach((place) => {
+                        place.photos = _.orderBy(place.photos, ['is_cover'], ['desc'])
+                    })
+
+                    this.mountHammer()
+
+                //- final do método get
+
             },
         }
     }
