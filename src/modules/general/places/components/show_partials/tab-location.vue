@@ -7,7 +7,7 @@
                 <span>{{ place.address.full_address }}</span>
             </div>
 
-            <div class="m-t-30">
+            <div class="m-t-30 rounded">
                 <GmapMap
                     :center="{ lat: place.lat, lng: place.lng }"
                     :zoom="map.zoom"
@@ -100,4 +100,10 @@
 </script>
 
 <style scoped>
+    .rounded {
+        border-radius: 20px;
+        overflow: hidden !important;
+        position: relative;
+        z-index: 1000;
+    }
 </style>

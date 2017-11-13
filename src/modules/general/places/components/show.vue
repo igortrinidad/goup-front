@@ -102,20 +102,18 @@
                     <!-- / Tabs -->
 
                     <!-- Tab Content -->
-                    <div class="m-t-30">
-                        <div class="container">
-                            <!-- Tab Location -->
-                            <tab-location :place="place" v-if="currentTab === 0"></tab-location>
-                            <!-- Tab Location -->
+                    <div class="container">
+                        <!-- Tab Location -->
+                        <tab-location :place="place" v-if="currentTab === 0"></tab-location>
+                        <!-- Tab Location -->
 
-                            <!-- Tab Friends -->
-                            <tab-friends  v-if="currentTab === 1"></tab-friends>
-                            <!-- Tab Friends -->
+                        <!-- Tab Friends -->
+                        <tab-friends  v-if="currentTab === 1"></tab-friends>
+                        <!-- Tab Friends -->
 
-                            <!-- Tab Comments -->
-                            <tab-comments :place="place" v-if="currentTab === 2"></tab-comments>
-                            <!-- Tab Comments -->
-                        </div>
+                        <!-- Tab Comments -->
+                        <tab-comments :place="place" v-if="currentTab === 2"></tab-comments>
+                        <!-- Tab Comments -->
                     </div>
                     <!-- / Tab Content -->
                 </div>
