@@ -1,6 +1,8 @@
 export const en = {
     title: 'Edit profile',
     save: 'Save settings',
+    logout: 'Logout',
+    remove_accout: 'Remove my account',
 
     // Language Section
     language: {
@@ -13,6 +15,8 @@ export const en = {
 export const pt = {
     title: 'Editar perfil',
     save: 'Salvar configurações',
+    logout: 'Fazer logout',
+    remove_accout: 'Remover minha conta',
 
     // Language Section
     language: {

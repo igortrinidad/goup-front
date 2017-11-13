@@ -29,8 +29,9 @@
                 </div>
                 <!-- / Photos -->
 
-                <!-- Select Language -->
                 <div class="container m-t-30 text-center">
+
+                    <!-- / Select Language -->
                     <p class=" f-22 f-400">{{ translations.language.title }}</p>
 
                     <ul class="list-group list-rounded m-t-10 m-0 text-left">
@@ -57,14 +58,27 @@
                             </i>
                         </li>
                     </ul>
+                    <!-- / Select Language -->
 
-
+                    <!-- Button Save Settings -->
                     <button type="button" class="btn btn-primary btn-block transparent m-t-30" @click="saveSettings()">
                         {{ translations.save }}
                     </button>
+                    <!-- Button Save Settings -->
+
+                    <!-- Button Logout -->
+                    <button type="button" class="btn btn-info btn-block transparent m-t-30" @click="saveSettings()">
+                        {{ translations.logout }}
+                    </button>
+                    <!-- Button Logout -->
+
+                    <!-- Button Remove Accout -->
+                    <button type="button" class="btn btn-danger btn-block transparent m-t-30" @click="saveSettings()">
+                        {{ translations.remove_accout }}
+                    </button>
+                    <!-- Button Remove Accout -->
 
                 </div>
-                <!-- / Select Language -->
 
             </div>
         </transition>
