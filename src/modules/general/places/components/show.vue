@@ -247,11 +247,6 @@
         font-size: 14px;
     }
 
-    .list-rounded .list-group-item {
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, .1);
-        font-size: 14px;
-    }
     .list-rounded .list-group-item .icon {
         font-size: 24px;
         display: inline-flex;
@@ -263,16 +258,5 @@
     }
 
     .list-rounded .list-group-item span { display: block; margin-top: 10px; }
-
-
-    .list-rounded .list-group-item:first-child {
-        border-top-right-radius: 20px;
-        border-top-left-radius: 20px;
-    }
-
-    .list-rounded .list-group-item:last-child {
-        border-bottom-right-radius: 20px;
-        border-bottom-left-radius: 20px;
-    }
 
 </style>

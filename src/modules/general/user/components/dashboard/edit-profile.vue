@@ -30,40 +30,36 @@
                 <!-- / Photos -->
 
                 <!-- Select Language -->
-                <div class="container m-t-30">
-                    <div class="card card-rounded">
-                        <div class="card-body card-padding text-center">
-                            <p class=" f-22 f-400">{{ translations.language.title }}</p>
+                <div class="container m-t-30 text-center">
+                    <p class=" f-22 f-400">{{ translations.language.title }}</p>
 
-                            <ul class="list-group m-t-10 m-0 text-left">
-                                <li class="list-group-item" @click="toggleLang('en')">
-                                    English
-                                    <i
-                                        :class="{
-                                            'icon-select m-l-10 f-20': true,
-                                            'ion-ios-circle-filled': languages.en,
-                                            'ion-ios-circle-outline': !languages.en
-                                        }"
-                                    >
-                                    </i>
-                                </li>
-                                <li class="list-group-item" @click="toggleLang('pt')">
-                                    Português
-                                    <i
-                                        :class="{
-                                            'icon-select m-l-10 f-20': true,
-                                            'ion-ios-circle-filled': languages.pt,
-                                            'ion-ios-circle-outline': !languages.pt
-                                        }"
-                                    >
-                                    </i>
-                                </li>
-                            </ul>
+                    <ul class="list-group list-rounded m-t-10 m-0 text-left">
+                        <li class="list-group-item transparent" @click="toggleLang('en')">
+                            English
+                            <i
+                                :class="{
+                                    'icon-select m-l-10 f-20': true,
+                                    'ion-ios-circle-filled': languages.en,
+                                    'ion-ios-circle-outline': !languages.en
+                                }"
+                            >
+                            </i>
+                        </li>
+                        <li class="list-group-item transparent" @click="toggleLang('pt')">
+                            Português
+                            <i
+                                :class="{
+                                    'icon-select m-l-10 f-20': true,
+                                    'ion-ios-circle-filled': languages.pt,
+                                    'ion-ios-circle-outline': !languages.pt
+                                }"
+                            >
+                            </i>
+                        </li>
+                    </ul>
 
-                        </div>
-                    </div>
 
-                    <button type="button" class="btn btn-primary btn-block transparent" @click="saveSettings()">
+                    <button type="button" class="btn btn-primary btn-block transparent m-t-30" @click="saveSettings()">
                         {{ translations.save }}
                     </button>
 
@@ -182,7 +178,7 @@
     .swiper-pagination { width: 100%; }
 
     .icon-select {
-        color: #561F9F;
+        color: #FFF;
         float: right
     }
 </style>
