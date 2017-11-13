@@ -24,10 +24,9 @@
                     </div>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
-
-                    </div>
+                    <div class="swiper-scrollbar"></div>
                 </div>
-                <div class="swiper-pagination"></div>
+            </div>
             <!-- / Photos -->
 
             </div>
@@ -86,12 +85,12 @@
 
                 setTimeout(() => {
                     that.swiperGalleryPhotos = new Swiper(that.$refs.galleryPhotos, {
-                        spaceBetween: 15,
+                        spaceBetween: 0,
                         slidesPerView: 1,
                         nextButton: '.swiper-button-next',
                         prevButton: '.swiper-button-prev',
-                        pagination: '.swiper-pagination',
-                        paginationClickable: true,
+                        scrollbar: '.swiper-scrollbar',
+
                     })
                 }, 200);
             }

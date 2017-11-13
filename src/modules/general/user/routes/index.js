@@ -22,6 +22,12 @@ const UserEditProfile = (resolve) => {
     })
 }
 
+const UserCreatePlace = (resolve) => {
+    require.ensure(['../components/dashboard/create-place'], () => {
+        resolve(require('../components/dashboard/create-place')) // eslint-disable-line global-require
+    })
+}
+
 export default [
     {
         path: 'user',
@@ -44,6 +50,12 @@ export default [
                 name: 'general.user.settings.edit',
                 path: '/settings/edit-profile',
                 component: UserEditProfile,
+                meta: {requiresAuth: false}
+            },
+            {
+                name: 'general.user.settings.createplace',
+                path: '/settings/create-place',
+                component: UserCreatePlace,
                 meta: {requiresAuth: false}
             }
         ]
