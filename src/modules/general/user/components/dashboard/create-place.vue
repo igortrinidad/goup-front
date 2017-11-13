@@ -10,7 +10,25 @@
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main">
 
-                <div class="container bg m-t-20">
+                <div class="container bg m-t-20 text-center">
+
+                    <form class="">
+                        <div class="form-group">
+                            <input type="text" class="form-control" :placeholder="translations.form.place_name">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" :placeholder="translations.form.style">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" :placeholder="translations.form.phone">
+                        </div>
+
+                        <button type="button" class="btn btn-primary transparent">{{ translations.submit }}</button>
+
+                    </form>
+
                 </div>
 
             </div>
