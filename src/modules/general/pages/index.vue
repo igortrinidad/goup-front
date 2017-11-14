@@ -23,13 +23,13 @@
                             <!-- Card Header -->
                             <div class="card-header cover" :style="{ backgroundImage: `url(${ places[0].avatar })` }">
                                 <!-- Current Action -->
-                                <span class="card-action liked" v-show="interactions.liked">
-                                    <i class="ion-chevron-up m-r-5"></i>{{ translations.liked }}
+                                <span class="card-action up" v-show="interactions.up">
+                                    <i class="ion-chevron-up m-r-5"></i>{{ translations.up }}
                                 </span>
-                                <span class="card-action ignored" v-show="interactions.ignored">
-                                    <i class="ion-chevron-down m-r-5"></i>{{ translations.ignored }}
+                                <span class="card-action down" v-show="interactions.down">
+                                    <i class="ion-chevron-down m-r-5"></i>{{ translations.down }}
                                 </span>
-                                <span class="card-action ignored" v-show="interactions.skip">
+                                <span class="card-action down" v-show="interactions.skip">
                                     <i class="ion-chevron-down m-r-5"></i> SKIP
                                 </span>
                                 <!-- / Current Action -->
@@ -136,8 +136,8 @@
         data () {
             return {
                 interactions: {
-                    liked: false,
-                    ignored: false,
+                    up: false,
+                    down: false,
                     skip: false
                 },
                 starting: true,
@@ -200,7 +200,7 @@
                 // Não passou da distancia minima para nenhum lado. Volta a posição inicial
                 if (that.top > -75 && that.top < 75) {
 
-                    // Arrastou para a direita "skip"
+                    // SKIP
                     if (that.left > 75) {
                         $('#card-animated').transition({ x: that.left, opacity: 0 }, 300, () => that.resetPosition())
                     } else {
@@ -208,13 +208,13 @@
                     }
 
                 } else {
-                    // Like
+                    // UP
                     if (that.top < -75) {
                         // Chamar a funcao para dar like aqui
                         $('#card-animated').transition({ y: -200, opacity: 0 }, 300, () => that.resetPosition())
                     }
 
-                    // Ignore
+                    // DOWN
                     if (that.top > 75) {
                         // Chamar a funcao para dar ignore aqui
                         $('#card-animated').transition({ y: 200, opacity: 0 }, 300, () => that.resetPosition())
@@ -224,8 +224,8 @@
 
             resetPosition() {
                 this.top = 0
-                this.interactions.liked = false
-                this.interactions.ignored = false
+                this.interactions.up = false
+                this.interactions.down = false
                 this.interactions.skip = false
                 this.places.splice(0, 1)
                 $(this.$refs.cardAnimated).transition({ x: 0, y: 0, opacity: 1 }, 0)
@@ -245,8 +245,8 @@
                     $('#card-animated').transition({ x: left, y: top }, 0)
 
                     if (top > -75 && top < 75) {
-                        that.interactions.liked = false
-                        that.interactions.ignored = false
+                        that.interactions.up = false
+                        that.interactions.down = false
 
                         if (left > 75) {
                             that.interactions.skip = true
@@ -256,14 +256,14 @@
 
                     } else {
                         if (e.deltaY < -75) {
-                            that.interactions.liked = true
-                            that.interactions.ignored = false
+                            that.interactions.up = true
+                            that.interactions.down = false
                             that.interactions.skip = false
                             return
                         }
                         if(e.deltaY > 75) {
-                            that.interactions.liked = false
-                            that.interactions.ignored = true
+                            that.interactions.up = false
+                            that.interactions.down = true
                             that.interactions.skip = false
                             return
                         }
@@ -272,22 +272,22 @@
             },
 
             goUp() {
-                this.interactions.liked = true
-                this.interactions.ignored = false
+                this.interactions.up = true
+                this.interactions.down = false
                 this.interactions.skip = false
                 $('#card-animated').transition({ x: 0, y: -100, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
             goDown() {
-                this.interactions.liked = false
-                this.interactions.ignored = true
+                this.interactions.up = false
+                this.interactions.down = true
                 this.interactions.skip = false
                 $('#card-animated').transition({ x: 0, y: 100, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
             skip() {
-                this.interactions.liked = false
-                this.interactions.ignored = false
+                this.interactions.up = false
+                this.interactions.down = false
                 this.interactions.skip = true
                 $('#card-animated').transition({ x: 100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
             },

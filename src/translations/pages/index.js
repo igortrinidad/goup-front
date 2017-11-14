@@ -1,13 +1,15 @@
 export const en = {
     end_list: 'Has no companies in nearby',
-    liked: 'Up',
-    ignored: 'Down',
+    up: 'Up',
+    down: 'Down',
+    skip: 'Skip',
     filter: 'Filter'
 }
 
 export const pt = {
     end_list: 'Não tem empresas nas proximidades',
-    liked: 'Up',
-    ignored: 'Down',
+    up: 'Up',
+    down: 'Down',
+    skip: 'Pular',
     filter: 'Filtro'
 }
