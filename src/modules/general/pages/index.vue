@@ -29,6 +29,9 @@
                                 <span class="card-action ignored" v-show="interactions.ignored">
                                     <i class="ion-chevron-down m-r-5"></i>{{ translations.ignored }}
                                 </span>
+                                <span class="card-action ignored" v-show="interactions.skip">
+                                    <i class="ion-chevron-down m-r-5"></i> SKIP
+                                </span>
                                 <!-- / Current Action -->
 
                                 <div class="ch-content">
@@ -135,13 +138,14 @@
                 interactions: {
                     liked: false,
                     ignored: false,
-                    skiped: false
+                    skip: false
                 },
                 starting: true,
                 placeholder: true,
                 places: [],
                 active: false,
                 top: 0,
+                left: 0
             }
         },
 
@@ -195,7 +199,14 @@
                 let that = this
                 // Não passou da distancia minima para nenhum lado. Volta a posição inicial
                 if (that.top > -75 && that.top < 75) {
-                    $('#card-animated').transition({ x: 0, y: 0 }, 300)
+
+                    // Arrastou para a direita "skip"
+                    if (that.left > 75) {
+                        $('#card-animated').transition({ x: that.left, opacity: 0 }, 300, () => that.resetPosition())
+                    } else {
+                        $('#card-animated').transition({ x: 0, y: 0 }, 300)
+                    }
+
                 } else {
                     // Like
                     if (that.top < -75) {
@@ -215,6 +226,7 @@
                 this.top = 0
                 this.interactions.liked = false
                 this.interactions.ignored = false
+                this.interactions.skip = false
                 this.places.splice(0, 1)
                 $(this.$refs.cardAnimated).transition({ x: 0, y: 0, opacity: 1 }, 0)
             },
@@ -227,21 +239,32 @@
                     const top = e.deltaY
                     const left = e.deltaX
 
-                    this.top = top
+                    that.top = top
+                    that.left = left
+
                     $('#card-animated').transition({ x: left, y: top }, 0)
 
                     if (top > -75 && top < 75) {
                         that.interactions.liked = false
                         that.interactions.ignored = false
+
+                        if (left > 75) {
+                            that.interactions.skip = true
+                        } else {
+                            that.interactions.skip = false
+                        }
+
                     } else {
                         if (e.deltaY < -75) {
                             that.interactions.liked = true
                             that.interactions.ignored = false
+                            that.interactions.skip = false
                             return
                         }
                         if(e.deltaY > 75) {
                             that.interactions.liked = false
                             that.interactions.ignored = true
+                            that.interactions.skip = false
                             return
                         }
                     }
@@ -251,21 +274,21 @@
             goUp() {
                 this.interactions.liked = true
                 this.interactions.ignored = false
-                this.interactions.skiped = false
+                this.interactions.skip = false
                 $('#card-animated').transition({ x: 0, y: -100, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
             goDown() {
                 this.interactions.liked = false
                 this.interactions.ignored = true
-                this.interactions.skiped = false
+                this.interactions.skip = false
                 $('#card-animated').transition({ x: 0, y: 100, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
             skip() {
                 this.interactions.liked = false
                 this.interactions.ignored = false
-                this.interactions.skiped = true
+                this.interactions.skip = true
                 $('#card-animated').transition({ x: 100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
