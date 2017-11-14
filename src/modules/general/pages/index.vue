@@ -24,13 +24,13 @@
                             <div class="card-header cover" :style="{ backgroundImage: `url(${ places[0].avatar })` }">
                                 <!-- Current Action -->
                                 <span class="card-action up" v-show="interactions.up">
-                                    <i class="ion-chevron-up m-r-5"></i>{{ translations.up }}
+                                    {{ translations.up }}
                                 </span>
                                 <span class="card-action down" v-show="interactions.down">
-                                    <i class="ion-chevron-down m-r-5"></i>{{ translations.down }}
+                                    {{ translations.down }}
                                 </span>
-                                <span class="card-action down" v-show="interactions.skip">
-                                    <i class="ion-chevron-down m-r-5"></i> SKIP
+                                <span class="card-action skip" v-show="interactions.skip">
+                                    {{ translations.skip }}
                                 </span>
                                 <!-- / Current Action -->
 
@@ -351,7 +351,7 @@
 
     .card .card-header.cover { position: relative; }
 
-    .cards #card-animated{ z-index: 10; }
+    .cards #card-animated{ z-index: 99999; }
 
     .fadeInLeft{
         transition: 0.1s;
