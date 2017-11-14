@@ -229,6 +229,9 @@
                 this.interactions.skip = false
                 this.places.splice(0, 1)
                 $(this.$refs.cardAnimated).transition({ x: 0, y: 0, opacity: 1 }, 0)
+
+                localStorage.removeItem('places')
+                localStorage.setItem('places', JSON.stringify(this.places))
             },
 
             animateCurrentCard(e) {
@@ -307,7 +310,7 @@
                     }
 
                 } else {
-                    that.places.push(PlaceModel)
+                    that.places = [ PlaceModel, PlaceModel, PlaceModel ]
                     localStorage.removeItem('places')
                     localStorage.setItem('places', JSON.stringify(that.places))
                 }
