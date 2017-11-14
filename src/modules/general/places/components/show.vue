@@ -7,79 +7,120 @@
             :cursor="false"
         ></main-header>
 
+
+
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-            <div class="main" v-if="place.id">
+            <div class="main">
 
-                <!-- Place Name, Description, City And State -->
-                <div class="text-center">
-                    <h3 class="m-t-10">{{ place.name }}</h3>
+                <div v-if="interactions.placeNotFound">
 
-                    <p>{{ place.description }}</p>
+                    <h3 class="text-center m-t-30">{{ translations.place_not_found }}</h3>
 
-                    <h5>
-                        <i class="ion-ios-location m-r-5"></i>
-                        {{ `${ place.city } - ${ place.state }` }}
-                    </h5>
-
-                    <div class="container m-t-30">
-                        <ul class="list-group list-rounded m-b-0 m-t-10">
-                            <li class="list-group-item">
-                                <i class="icon ion-android-calendar m-r-5 f-primary"></i>
-                                <span><strong>{{ translations.best_day }}:</strong> {{ place.best_day }}</span>
-                            </li>
-                            <li class="list-group-item">
-                                <i class="icon ion-wineglass m-r-5 f-primary"></i>
-                                <span><strong>{{ translations.style }}:</strong> {{ place.style }}</span>
-                            </li>
-                            <li class="list-group-item">
-                                <i class="icon ion-android-time m-r-5 f-primary"></i>
-                                <span><strong>{{ translations.is_opened }}</strong> {{ translations.yes }}</span>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
-                <!-- Place Name, Description, City And State -->
 
-                <!-- Tabs -->
-                <div class="m-t-30">
-                    <div class="swiper-container tabs text-center" ref="tabs">
-                        <div class="swiper-wrapper">
-                            <div :class="{ 'swiper-slide tab': true, 'active': false }">
-                                <i class="tab-icon ion-ios-location m-r-5"></i>
-                                {{ translations.tabs.location }}
+                <!-- Place Content -->
+                <div class="m-b-30" v-if="!interactions.placeNotFound && place.id">
+                    <!-- Photos -->
+                    <div class="p-relative">
+                        <div class="swiper-container swiper-gallery" ref="galleryPhotos">
+                            <div class="swiper-wrapper">
+                                <div
+                                    class="swiper-slide"
+                                    v-for="(photo, index) in place.photos"
+                                    :style="{ backgroundImage: `url(${ photo.photo_url })` }"
+                                    :key="index"
+                                >
+                                </div>
                             </div>
-                            <div :class="{ 'swiper-slide tab': true, 'active': false }">
-                                <i class="tab-icon ion-ios-people m-r-5"></i>
-                                {{ translations.tabs.friends }}
-                            </div>
-                            <div :class="{ 'swiper-slide tab': true, 'active': false }">
-                                <i class="tab-icon ion-quote m-r-5"></i>
-                                {{ translations.tabs.comments }}
-                            </div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-scrollbar"></div>
                         </div>
-
                     </div>
-                </div>
-                <!-- / Tabs -->
+                    <!-- / Photos -->
 
-                <!-- Tab Content -->
-                <div class="m-t-30">
-                    <div class="">
-                        <!-- Tab Location -->
-                        <tab-location v-if="currentTab === 0"></tab-location>
-                        <!-- Tab Location -->
+                    <!-- Place Name, Description, City And State -->
+                    <div class="text-center">
+                        <h3 class="m-t-30">{{ place.name }}</h3>
 
-                        <!-- Tab Friends -->
-                        <tab-friends  v-if="currentTab === 1"></tab-friends>
-                        <!-- Tab Friends -->
+                        <p>{{ place.description }}</p>
 
-                        <!-- Tab Comments -->
-                        <tab-comments :place="place" v-if="currentTab === 2"></tab-comments>
-                        <!-- Tab Comments -->
+                        <h5>
+                            <i class="ion-ios-location m-r-5"></i>
+                            {{ `${ place.city } - ${ place.state }` }}
+                        </h5>
+
+                        <!-- Call -->
+                        <div class="m-t-30" v-if="place.phone">
+                            <a :href="`tel:${ place.phone }`" class="btn btn-info transparent">
+                                <i class="ion-ios-telephone m-r-5"></i>{{ translations.call }}
+                            </a>
+                        </div>
+                        <!-- Call -->
+
+
+                        <div class="container m-t-30">
+                            <ul class="list-group list-rounded m-b-0 m-t-10">
+                                <li class="list-group-item">
+                                    <i class="icon ion-android-calendar m-r-5 f-primary"></i>
+                                    <span><strong>{{ translations.best_day }}:</strong> {{ place.best_day }}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="icon ion-wineglass m-r-5 f-primary"></i>
+                                    <span><strong>{{ translations.style }}:</strong> {{ place.style }}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="icon ion-android-time m-r-5 f-primary"></i>
+                                    <span><strong>{{ translations.is_opened }}</strong> {{ translations.yes }}</span>
+                                </li>
+                            </ul>
+
+                        </div>
                     </div>
-                </div>
-                <!-- / Tab Content -->
+                    <!-- Place Name, Description, City And State -->
 
+                    <!-- Tabs -->
+                    <div class="m-t-30">
+                        <div class="swiper-container tabs text-center" ref="tabs">
+                            <div class="swiper-wrapper">
+                                <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                    <i class="tab-icon ion-ios-location m-r-5"></i>
+                                    {{ translations.tabs.location }}
+                                </div>
+                                <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                    <i class="tab-icon ion-ios-people m-r-5"></i>
+                                    {{ translations.tabs.friends }}
+                                </div>
+                                <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                    <i class="tab-icon ion-quote m-r-5"></i>
+                                    {{ translations.tabs.comments }}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- / Tabs -->
+
+                    <!-- Tab Content -->
+                    <div class="m-t-30">
+                        <div class="">
+                            <!-- Tab Location -->
+                            <tab-location :place="place" v-if="currentTab === 0"></tab-location>
+                            <!-- Tab Location -->
+
+                            <!-- Tab Friends -->
+                            <tab-friends  v-if="currentTab === 1"></tab-friends>
+                            <!-- Tab Friends -->
+
+                            <!-- Tab Comments -->
+                            <tab-comments :place="place" v-if="currentTab === 2"></tab-comments>
+                            <!-- Tab Comments -->
+                        </div>
+                        <!-- / Tab Content -->
+                    </div>
+                    <!-- / Place Content -->
+
+                </div>
             </div>
         </transition>
 
@@ -110,7 +151,10 @@
             return {
                 placeholder: true,
                 place: {},
-                currentTab: 1
+                currentTab: 1,
+                interactions: {
+                    placeNotFound: false
+                }
             }
         },
 
@@ -168,9 +212,17 @@
             },
 
             getPlace() {
-                this.place = PlaceModel
-                this.initSwiperGallery()
-                this.initSwiperTabs()
+                let placeFromLocalStorage = JSON.parse(localStorage.getItem('places'))[0]
+
+                if (this.$route.params.place_slug === placeFromLocalStorage.slug) {
+                    this.place = placeFromLocalStorage
+
+                    this.interactions.placeNotFound = false
+                    this.initSwiperGallery()
+                    this.initSwiperTabs()
+                } else {
+                    this.interactions.placeNotFound = true
+                }
             }
         }
     }
@@ -197,11 +249,6 @@
         font-size: 14px;
     }
 
-    .list-rounded .list-group-item {
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, .1);
-        font-size: 14px;
-    }
     .list-rounded .list-group-item .icon {
         font-size: 24px;
         display: inline-flex;
@@ -213,16 +260,5 @@
     }
 
     .list-rounded .list-group-item span { display: block; margin-top: 10px; }
-
-
-    .list-rounded .list-group-item:first-child {
-        border-top-right-radius: 20px;
-        border-top-left-radius: 20px;
-    }
-
-    .list-rounded .list-group-item:last-child {
-        border-bottom-right-radius: 20px;
-        border-bottom-left-radius: 20px;
-    }
 
 </style>

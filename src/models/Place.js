@@ -10,6 +10,15 @@ export default {
     description: 'Os melhores drinks estão aqui!',
     best_day: 'Quarta-feira',
     style: 'Rustíco',
+    phone: '41 999999999',
+    // Address
+    address: {
+        name: '',
+        full_address: '',
+        url: ''
+    },
+    lat: -19.9025412,
+    lng: -44.03409,
 
     // Photos
     photos: [

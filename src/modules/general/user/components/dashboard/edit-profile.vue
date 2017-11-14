@@ -10,25 +10,81 @@
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main container">
 
-            <!-- Photos -->
-            <div class="p-relative">
-                <div class="swiper-container swiper-gallery" ref="galleryPhotos">
-                    <div class="swiper-wrapper">
-                        <div
-                            class="swiper-slide"
-                            v-for="(photo, index) in user.photos"
-                            :style="{ backgroundImage: `url(${ photo.photo_url })` }"
-                            :key="index"
-                        >
+                <!-- Photos -->
+                <div class="p-relative">
+                    <div class="swiper-container swiper-gallery" ref="galleryPhotos">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="new-image">
+                                    <i class="ion-plus-round"></i>
+                                    <span>{{ translations.upload_image }}</span>
+                                </div>
+                            </div>
+                            <div
+                                class="swiper-slide"
+                                v-for="(photo, index) in user.photos"
+                                :style="{ backgroundImage: `url(${ photo.photo_url })` }"
+                                :key="index"
+                            >
+                            </div>
                         </div>
-                    </div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
-
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-scrollbar"></div>
                     </div>
                 </div>
-                <div class="swiper-pagination"></div>
-            <!-- / Photos -->
+                <!-- / Photos -->
+
+                <div class="container m-t-30 text-center">
+
+                    <!-- / Select Language -->
+                    <p class=" f-22 f-400">{{ translations.language.title }}</p>
+
+                    <ul class="list-group list-rounded m-t-10 m-0 text-left">
+                        <li class="list-group-item transparent" @click="toggleLang('en')">
+                            English
+                            <i
+                                :class="{
+                                    'icon-select m-l-10 f-20': true,
+                                    'ion-ios-circle-filled': languages.en,
+                                    'ion-ios-circle-outline': !languages.en
+                                }"
+                            >
+                            </i>
+                        </li>
+                        <li class="list-group-item transparent" @click="toggleLang('pt')">
+                            Português
+                            <i
+                                :class="{
+                                    'icon-select m-l-10 f-20': true,
+                                    'ion-ios-circle-filled': languages.pt,
+                                    'ion-ios-circle-outline': !languages.pt
+                                }"
+                            >
+                            </i>
+                        </li>
+                    </ul>
+                    <!-- / Select Language -->
+
+                    <!-- Button Save Settings -->
+                    <button type="button" class="btn btn-primary btn-block transparent m-t-30" @click="saveSettings()">
+                        {{ translations.save }}
+                    </button>
+                    <!-- Button Save Settings -->
+
+                    <!-- Button Logout -->
+                    <button type="button" class="btn btn-info btn-block transparent m-t-30" @click="saveSettings()">
+                        {{ translations.logout }}
+                    </button>
+                    <!-- Button Logout -->
+
+                    <!-- Button Remove Accout -->
+                    <button type="button" class="btn btn-danger btn-block transparent m-t-30" @click="saveSettings()">
+                        {{ translations.remove_accout }}
+                    </button>
+                    <!-- Button Remove Accout -->
+
+                </div>
 
             </div>
         </transition>
@@ -52,7 +108,11 @@
         data () {
             return {
                 interactions: {},
-                user: {}
+                user: {},
+                languages: {
+                    pt: false,
+                    en: false
+                }
             }
         },
 
@@ -61,9 +121,15 @@
                 const language = localStorage.getItem('language')
 
                 if (language === 'en' || !language) {
+                    this.languages.en = true
+                    this.languages.pt = false
+
                     return translations.en
                 }
                 if (language === 'pt') {
+                    this.languages.en = false
+                    this.languages.pt = true
+
                     return translations.pt
                 }
             }
@@ -74,6 +140,35 @@
         },
 
         methods: {
+
+            saveSettings() {
+                this.setLanguage()
+                this.$router.push({
+                    name: 'general.user.settings',
+                    params: {
+                        settings_saved: true
+                    }
+                })
+            },
+
+            toggleLang(lang) {
+                if (lang === 'en') {
+                    this.languages.en = true
+                    this.languages.pt = false
+                }
+
+                if (lang === 'pt') {
+                    this.languages.en = false
+                    this.languages.pt = true
+                }
+            },
+
+            setLanguage() {
+                if (localStorage.getItem('language')) {
+                    localStorage.removeItem('language')
+                }
+                localStorage.setItem('language', this.languages.en ? 'en' : 'pt')
+            },
 
             getUser() {
                 this.user = User
@@ -86,12 +181,12 @@
 
                 setTimeout(() => {
                     that.swiperGalleryPhotos = new Swiper(that.$refs.galleryPhotos, {
-                        spaceBetween: 15,
+                        spaceBetween: 0,
                         slidesPerView: 1,
                         nextButton: '.swiper-button-next',
                         prevButton: '.swiper-button-prev',
-                        pagination: '.swiper-pagination',
-                        paginationClickable: true,
+                        scrollbar: '.swiper-scrollbar',
+
                     })
                 }, 200);
             }
@@ -101,4 +196,37 @@
 
 <style scoped>
     .swiper-pagination { width: 100%; }
+
+    .icon-select {
+        color: #FFF;
+        float: right
+    }
+
+    /* New Image */
+    .new-image {
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+        width: 100%; height: 100%;
+        justify-content: center;
+        text-align: center;
+        padding-top: 80px;
+        border-bottom: 2px solid #FF4B89
+    }
+
+    .new-image i {
+        font-size: 24px;
+        display: inline-flex;
+        width: 40px; height: 40px;
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #FF4B89;
+    }
+    .new-image span {
+        display: block;
+        width: 100%;
+        font-weight: 700;
+        margin-top: 20px;
+    }
+
 </style>

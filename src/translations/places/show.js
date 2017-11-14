@@ -6,12 +6,15 @@ export const en = {
     is_opened: 'Is opened now ?',
     yes: 'Yes',
     no: 'No',
+    place_not_found: 'Unfortunately we could not find this place now',
+    call: 'Call now',
 
     // Tabs
     tabs: {
         comments: 'Comments',
         location: 'Location',
-        friends: 'Friends'
+        friends: 'Friends',
+        users: 'More users'
     },
 
     // About Section
@@ -38,12 +41,15 @@ export const pt = {
     is_opened: 'Esta aberto agora ?',
     yes: 'Sim',
     no: 'Não',
+    place_not_found: 'Infelizmente não conseguimos encontrar esse lugar agora',
+    call: 'Ligue agora',
 
     // Tabs
     tabs: {
         comments: 'Comentários',
         location: 'Localização',
-        friends: 'Amigos'
+        friends: 'Amigos',
+        users: 'Mais usuários'
     },
 
     // About Section

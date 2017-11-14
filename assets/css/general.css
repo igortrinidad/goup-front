@@ -44,62 +44,22 @@ legend + .form-group{
 
 
 
-/* List */
-.list {}
-
-.list .list-item {
-    background: #fff;
-    border-top: 1px solid #e8ecec;
-    padding: 10px 0;
+/* List  Rounded */
+.list-rounded .list-group-item:first-child {
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
 }
 
-.list .list-item:last-child { border-bottom: 1px solid #e8ecec; }
-
-/* list content */
-.list .list-item .list-content {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-flow: row wrap;
-    width: 100%;
-}
-.list .list-item .list-content .img {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin: 0 auto;
+.list-rounded .list-group-item:last-child {
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
 }
 
-.list .list-item .list-content .head {
-    width: 150px;
-    text-align: center;
+.list-rounded .list-group-item {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .1);
+    font-size: 14px;
 }
-
-.list .list-item .list-content .infos { width: calc(100% - 160px); }
-
-.list .list-item .list-content .name{
-    font-weight: 300;
-    text-transform: capitalize;
-    font-size: 22px;
-    color: #88c657;
-}
-.list .list-item .list-content .name:first-letter { font-weight: 700; }
-.list .list-item .list-content .icon { color: #88c657; }
-.ion-ios-star { color: #FFCC5F; }
-@media (max-width: 414px) {
-    .list .list-item .list-content .head,
-    .list .list-item .list-content .infos { width: 100%; text-align: center; }
-    .list .list-item .list-content .infos { margin-top: 10px; }
-}
-
-/* List & Cards With Swiper */
-.cards .swiper-pagination-bullet,
-.list .swiper-pagination-bullet { border-color: #88C657 !important }
-
-.cards .swiper-pagination-bullet.swiper-pagination-bullet-active,
-.list .swiper-pagination-bullet.swiper-pagination-bullet-active { background-color: #88C657 !important }
-
 
 /* Fix Steps */
 .fa-file-text-o:before, .fa-file-txt-o:before {

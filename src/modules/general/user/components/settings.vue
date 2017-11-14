@@ -27,16 +27,22 @@
                                 <i class="ion-edit m-r-5"></i> {{ translations.buttons.edit }}
                             </router-link>
                         </div>
+
                         <div class="col-xs-12 m-t-20">
-                            <router-link :to="{ name: 'general.user.settings.configs' }" tag="button" class="btn btn-primary btn-block transparent">
-                                <i class="ion-ios-gear m-r-5"></i> {{ translations.buttons.config }}
+                            <router-link :to="{ name: 'general.user.settings.createplace' }" tag="button" class="btn btn-primary btn-block transparent">
+                                <i class="ion-plus-round m-r-5"></i> {{ translations.buttons.add_new_place }}
+                            </router-link>
+                        </div>
+
+                        <div class="col-xs-12 m-t-20">
+                            <router-link :to="{ name: 'general.user.settings.about' }" tag="button" class="btn btn-primary btn-block transparent">
+                                <i class="ion-help-circled m-r-5"></i> {{ translations.buttons.about }}
                             </router-link>
                         </div>
                     </div>
                 </div>
 
-
-                <div class="container m-t-15">
+                <!-- <div class="container m-t-15">
                     <div class="card card-rounded">
                         <div class="card-body">
                             <h1>Teste de lugares</h1>
@@ -45,7 +51,7 @@
                             <h1>Teste de lugares</h1>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
             </div>
         </transition>

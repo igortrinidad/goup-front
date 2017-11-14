@@ -137,6 +137,7 @@
                     ignored: false,
                     skiped: false
                 },
+                starting: true,
                 placeholder: true,
                 places: [],
                 active: false,
@@ -181,21 +182,21 @@
                         that.hammerCards.on('panleft panright panup pandown tap press', function(ev) {
                             that.animateCurrentCard(ev)
                         })
-                        $(that.$refs.cardAnimated).bind('touchend', function(ev) {
+
+                        $('#card-animated').bind('touchend', function(ev) {
                             that.touchend()
                         })
+
                     }, 200)
                 }
             },
 
             touchend(top) {
                 let that = this
-
                 // Não passou da distancia minima para nenhum lado. Volta a posição inicial
                 if (that.top > -75 && that.top < 75) {
                     $('#card-animated').transition({ x: 0, y: 0 }, 300)
                 } else {
-
                     // Like
                     if (that.top < -75) {
                         // Chamar a funcao para dar like aqui
@@ -216,9 +217,6 @@
                 this.interactions.ignored = false
                 this.places.splice(0, 1)
                 $(this.$refs.cardAnimated).transition({ x: 0, y: 0, opacity: 1 }, 0)
-                // if (this.places.length === 2) {
-                //     this.getPlaces()
-                // }
             },
 
             animateCurrentCard(e) {
@@ -272,13 +270,34 @@
             },
 
             getPlaces() {
-                this.places = [PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel]
+                let that = this
 
-                this.places.forEach((place) => {
+                if (that.starting) {
+
+                    that.starting = false
+
+                    if (localStorage.getItem('places')) {
+                        that.places = JSON.parse(localStorage.getItem('places'))
+                    } else {
+                        that.places = [ PlaceModel, PlaceModel, PlaceModel ]
+                        localStorage.setItem('places', JSON.stringify(this.places))
+                    }
+
+                } else {
+                    that.places.push(PlaceModel)
+                    localStorage.removeItem('places')
+                    localStorage.setItem('places', JSON.stringify(that.places))
+                }
+
+                that.places.forEach((place) => {
                     place.photos = _.orderBy(place.photos, ['is_cover'], ['desc'])
                 })
 
                 this.mountHammer()
+
+                console.log(that.places);
+
+
             },
         }
     }

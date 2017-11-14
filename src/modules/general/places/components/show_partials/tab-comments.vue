@@ -2,8 +2,6 @@
     <div>
         <div class="m-t-30 text-center">
             <div class="container">
-                <h3 class="m-t-0 m-b-30">{{ translations.comments.title }}</h3>
-
                 <!-- Comments List -->
                 <div class="swiper-container swiper-comments" ref="swipperComments">
                     <div class="swiper-wrapper">
