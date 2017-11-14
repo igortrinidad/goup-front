@@ -32,6 +32,9 @@
                                 <span class="card-action skip" v-show="interactions.skip">
                                     {{ translations.skip }}
                                 </span>
+                                <span class="card-action skip" v-show="interactions.favorite">
+                                    {{ translations.favorite }}
+                                </span>
                                 <!-- / Current Action -->
 
                                 <div class="ch-content">
@@ -85,8 +88,8 @@
                                     </span>
                                 </div>
                                 <div v-if="places.length">
-                                    <span class="action" @click="getPlaces()">
-                                        <span class="ion-funnel f-default"></span>
+                                    <span class="action" @click="skip()">
+                                        <span class="ion-ios-rewind f-default"></span>
                                     </span>
 
                                     <span class="action xl"  @click="goDown()">
@@ -97,8 +100,8 @@
                                         <span class="ion-chevron-up f-green"></span>
                                     </span>
 
-                                    <span class="action" @click="skip()">
-                                        <span class="ion-ios-fastforward f-default"></span>
+                                    <span class="action" @click="favorite()">
+                                        <span class="ion-ios-star f-default"></span>
                                     </span>
                                 </div>
                             </div>
@@ -138,7 +141,8 @@
                 interactions: {
                     up: false,
                     down: false,
-                    skip: false
+                    skip: false,
+                    favorite: false
                 },
                 starting: true,
                 placeholder: true,
@@ -198,38 +202,44 @@
             touchend(top) {
                 let that = this
                 // Não passou da distancia minima para nenhum lado. Volta a posição inicial
-                if (that.top > -75 && that.top < 75) {
-
-                    // SKIP
-                    if (that.left > 75) {
-                        $('#card-animated').transition({ x: that.left, opacity: 0 }, 300, () => that.resetPosition())
-                    } else {
-                        $('#card-animated').transition({ x: 0, y: 0 }, 300)
-                    }
-
+                if (that.top > -75 && that.top < 75 && that.left > -75 && that.left < 75) {
+                    $('#card-animated').transition({ x: 0, y: 0 }, 300)
                 } else {
                     // UP
                     if (that.top < -75) {
-                        // Chamar a funcao para dar like aqui
                         $('#card-animated').transition({ y: -200, opacity: 0 }, 300, () => that.resetPosition())
                     }
-
                     // DOWN
                     if (that.top > 75) {
-                        // Chamar a funcao para dar ignore aqui
                         $('#card-animated').transition({ y: 200, opacity: 0 }, 300, () => that.resetPosition())
+                    }
+                    // Skip
+                    if (that.left > 75) {
+                        $('#card-animated').transition({ x: 300, opacity: 0 }, 300, () => that.resetPosition())
+                    }
+                    // Favorite
+                    if (that.left < -75) {
+                        $('#card-animated').transition({ x: -300, opacity: 0 }, 300, () => that.resetPosition())
                     }
                 }
             },
 
             resetPosition() {
+                // Reset Global Top And Left
                 this.top = 0
+                this.left = 0
+
+                // Reset Interactions
                 this.interactions.up = false
                 this.interactions.down = false
                 this.interactions.skip = false
+                this.interactions.favorite = false
+
+                // Remove From Array
                 this.places.splice(0, 1)
                 $(this.$refs.cardAnimated).transition({ x: 0, y: 0, opacity: 1 }, 0)
 
+                // Update localStorage
                 localStorage.removeItem('places')
                 localStorage.setItem('places', JSON.stringify(this.places))
             },
@@ -247,52 +257,69 @@
 
                     $('#card-animated').transition({ x: left, y: top }, 0)
 
-                    if (top > -75 && top < 75) {
+                    if (top > -75 && top < 75 && left > -75 && left < 75) {
+                        // Do nothing just reset position
                         that.interactions.up = false
                         that.interactions.down = false
-
-                        if (left > 75) {
-                            that.interactions.skip = true
-                        } else {
-                            that.interactions.skip = false
-                        }
-
+                        that.interactions.favorite = false
+                        that.interactions.skip = false
                     } else {
-                        if (e.deltaY < -75) {
+                        // UP
+                        if (top < -75) {
                             that.interactions.up = true
                             that.interactions.down = false
+                            that.interactions.favorite = false
                             that.interactions.skip = false
                             return
                         }
-                        if(e.deltaY > 75) {
+                        // DOWN
+                        if(top > 75) {
                             that.interactions.up = false
                             that.interactions.down = true
+                            that.interactions.favorite = false
                             that.interactions.skip = false
+                            return
+                        }
+                        // FAVORITE
+                        if (left > 75 && (top > -75 && top < 75)) {
+                            that.interactions.up = false
+                            that.interactions.down = false
+                            that.interactions.favorite = true
+                            that.interactions.skip = false
+                            return
+                        }
+                        // SKIP
+                        if (left < -75 && (top > -75 && top < 75)) {
+                            that.interactions.up = false
+                            that.interactions.down = false
+                            that.interactions.favorite = false
+                            that.interactions.skip = true
                             return
                         }
                     }
                 }
             },
 
+            // Button Action UP
             goUp() {
                 this.interactions.up = true
-                this.interactions.down = false
-                this.interactions.skip = false
+
                 $('#card-animated').transition({ x: 0, y: -100, opacity: 0 }, 1000, () => this.resetPosition())
             },
-
+            // Button Action DOWN
             goDown() {
-                this.interactions.up = false
                 this.interactions.down = true
-                this.interactions.skip = false
                 $('#card-animated').transition({ x: 0, y: 100, opacity: 0 }, 1000, () => this.resetPosition())
             },
-
-            skip() {
-                this.interactions.up = false
-                this.interactions.down = false
-                this.interactions.skip = true
+            // Button Action FAVORITE
+            favorite() {
+                this.interactions.favorite = true
                 $('#card-animated').transition({ x: 100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
+            },
+            // Button Action SKIP
+            skip() {
+                this.interactions.skip = true
+                $('#card-animated').transition({ x: -100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
             getPlaces() {

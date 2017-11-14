@@ -3,6 +3,7 @@ export const en = {
     up: 'Go Up',
     down: 'Go Down',
     skip: 'Skip',
+    favorite: 'Favorite',
     filter: 'Filter'
 }
 
@@ -11,5 +12,6 @@ export const pt = {
     up: 'Go Up',
     down: 'Go Down',
     skip: 'Pular',
+    favorite: 'Favoritar',
     filter: 'Filtro'
 }
