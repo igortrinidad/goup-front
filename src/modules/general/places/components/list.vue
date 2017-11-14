@@ -17,7 +17,7 @@
 
                     <div class="row m-t-30">
                         <div class="col-sm-12" v-for="place in places">
-                            <div class="card">
+                            <div class="card m-b-10">
                                 <div class="card-body card-padding">
                                     <div class="row">
                                         <div class="col-xs-4">
@@ -25,7 +25,7 @@
                                             </div>
                                         </div>
                                         <div class="col-xs-8">
-                                            <span class="title f-700 t-overflow f-default">{{ place.name }}</span>
+                                            <span class="f-700 t-overflow">{{ place.name }}</span>
                                             <small>{{ place.city }} - {{ place.state }}</small>
                                         </div>
                                     </div>
