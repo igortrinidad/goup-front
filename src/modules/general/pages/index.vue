@@ -351,7 +351,7 @@
 
     .card .card-header.cover { position: relative; }
 
-    .cards #card-animated{ z-index: 99999; }
+    .cards #card-animated{ z-index: 10; }
 
     .fadeInLeft{
         transition: 0.1s;
