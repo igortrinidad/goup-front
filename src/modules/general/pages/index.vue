@@ -32,7 +32,7 @@
                                 <span class="card-action skip" v-show="interactions.skip">
                                     {{ translations.skip }}
                                 </span>
-                                <span class="card-action skip" v-show="interactions.favorite">
+                                <span class="card-action save" v-show="interactions.favorite">
                                     {{ translations.favorite }}
                                 </span>
                                 <!-- / Current Action -->

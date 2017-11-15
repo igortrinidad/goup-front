@@ -19,6 +19,7 @@
 .card-action.up { color: #FFF; background-color: rgba(95, 190, 113, .8); }
 .card-action.down { color: #FFF; background-color: rgba(254, 0, 34, .8); }
 .card-action.skip { color: #FFF; background-color: rgba(56, 57, 56, .8); }
+.card-action.save { color: #FFF; background-color: rgba(35, 137, 234, 0.8); }
 
 /* Actions */
 .actions {
