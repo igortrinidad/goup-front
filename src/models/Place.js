@@ -9,9 +9,13 @@ export default {
     state: 'MG',
     description: 'Os melhores drinks estão aqui!',
     best_day: 'Quarta-feira',
+    category: {
+        name_en: 'Bar',
+        name_pt: 'Bar',
+    },
     style: 'Rustíco',
     phone: '41 999999999',
-    rating: 3,
+    ranking: 1,
 
     // Address
     address: {

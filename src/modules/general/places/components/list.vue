@@ -11,7 +11,7 @@
             <div class="main">
                 <div class="container">
 
-                    <!-- Filter Button -->
+                    <!-- Categories Filters -->
                     <div class="text-center">
                         <span
                             :class="{
@@ -23,32 +23,51 @@
                             @click="changeCurrentCategory(category)"
                         >
                             {{ category }}
+                            <i :class="{
+                                'm-l-5': true,
+                                'ion-ios-circle-outline': currentCategory !== category,
+                                'ion-ios-circle-filled': currentCategory === category
+                                }"
+                            >
+                            </i>
                         </span>
                     </div>
-                    <!-- Filter Button -->
+                    <!-- Categories Filters -->
 
                     <div class="row m-t-30">
                         <div class="col-sm-12" v-for="place in places">
                             <div class="card m-b-10">
                                 <div class="card-body card-padding">
-                                    <div class="row">
-                                        <div class="col-xs-4">
-                                            <div class="picture-circle picture-circle-xs m-0 m-t-10" :style="{ backgroundImage: `url(${ place.avatar })` }">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-8">
-                                            <span class="f-700 t-overflow">
-                                                {{ place.name }}
-                                            </span>
-                                            <rating-simple
-                                                :value="place.rating"
-                                                :size="1"
-                                                :alignClass="'text-left'"
-                                                :colorOfIcon="'#FF4B89'"
-                                            />
-                                            <small>{{ place.city }} - {{ place.state }}</small>
+
+                                    <!-- Place Thumbnail -->
+                                    <div class="picture-circle picture-circle-m m-t-10" :style="{ backgroundImage: `url(${ place.avatar })` }">
+                                    </div>
+                                    <!-- /Place Thumbnail -->
+
+                                    <!-- Place Category -->
+                                    <span class="label label-primary transparent place-category">
+                                        {{ checkLanguage === 'en' ? place.category.name_en : place.category.name_pt }}
+                                    </span>
+                                    <!-- /Place Category -->
+
+                                    <!-- Place Ranking -->
+                                    <span class="label label-primary transparent place-ranking">
+                                        <i class="ion-podium m-r-5"></i>
+                                        {{ place.ranking }}º
+                                    </span>
+                                    <!-- Place Ranking -->
+
+                                    <!-- Title And Location -->
+                                    <div class="text-center">
+                                        <h4 class="f-700">
+                                            {{ place.name }}
+                                        </h4>
+                                        <div class="border-inside-card text-center">
+                                            <i class="ion-ios-location"></i>
+                                            <small class="d-block">{{ place.city }} - {{ place.state }}</small>
                                         </div>
                                     </div>
+                                    <!-- /Title And Location -->
                                 </div>
                             </div>
                         </div>
@@ -90,7 +109,6 @@
     import { mapGetters } from 'vuex'
 
     import mainHeader from '@/components/main-header.vue'
-    import ratingSimple from '@/components/rating-simple.vue'
 
     import PlaceModel from '@/models/Place'
     import { cleanCategoriesArrayExample } from '@/models/Category'
@@ -102,7 +120,6 @@
 
         components: {
             mainHeader,
-            ratingSimple
         },
 
         data () {
@@ -168,4 +185,9 @@
 
 <style scoped>
 
+    .place-category,
+    .place-ranking { position: absolute; top: 52px; }
+
+    .place-category { left: 10px; }
+    .place-ranking { right: 10px; }
 </style>
