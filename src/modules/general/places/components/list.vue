@@ -31,6 +31,16 @@
                             >
                             </i>
                         </span>
+
+                        <button
+                            type="button"
+                            class="btn btn-primary transparent m-t-30"
+                            data-toggle="modal"
+                            data-target="#modal-filter"
+                        >
+                            {{ translations.more_filters }}
+                        </button>
+
                     </div>
                     <!-- Categories Filters -->
 
@@ -40,7 +50,7 @@
                                 <div class="card-body card-padding">
 
                                     <!-- Place Thumbnail -->
-                                    <div class="picture-circle picture-circle-m m-t-10" :style="{ backgroundImage: `url(${ place.avatar })` }">
+                                    <div class="picture-circle picture-circle-m m-t-10 rounded" :style="{ backgroundImage: `url(${ place.avatar })` }">
                                     </div>
                                     <!-- /Place Thumbnail -->
 
@@ -87,13 +97,12 @@
                                 >
                                     <i class="ion-close-round"></i>
                                 </button>
-                                <h3 class="title text-center">{{ translations.filter }}</h3>
+                                <h3 class="title text-center">{{ translations.filters }}</h3>
                             </div>
                             <div class="modal-body">
-                                <div class="form-group">
-                                    <label class="f-default">{{ translations.label.max_range }}</label>
-                                </div>
-                                <hr>
+                                MOSTRAR UMA LISTA DE TAGS COM AS SUBCATEGORIAS DA CATEGORIA ATUAL
+                                <br>
+                                E OUTRAS OPÇÕES PARA FILTRO
                             </div>
                         </div>
                     </div>

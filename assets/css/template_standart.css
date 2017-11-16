@@ -109,6 +109,8 @@ hr {
 .picture-circle-xl{ width: 124px; height: 124px; }
 .picture-circle-xxl{ width: 168px; height: 168px; }
 
+.picture-circle.rounded{ border-radius: 20px; }
+
 /*
 * Table
  */
