@@ -27,9 +27,10 @@ export const en = {
     comments: {
         title: 'Comments',
         newComment: 'Add new comment',
-        comment: 'Comment',
+        comment: 'Leave yout comment',
         commentPlaceholder: 'Leave your comment about',
-        successComment: 'comment successfully submitted!'
+        successComment: 'Comment successfully submitted!',
+        length: 'Characters remaining'
     }
 }
 
@@ -62,8 +63,9 @@ export const pt = {
     comments: {
         title: 'Comentários',
         newComment: 'Novo comentário',
-        comment: 'Comentar',
+        comment: 'Deixe seu comentario',
         commentPlaceholder: 'Deixe seu comentário sobre',
-        successComment: 'Comentários enviado com sucesso!'
+        successComment: 'Comentários enviado com sucesso!',
+        length: 'Caracteres restantes'
     }
 }

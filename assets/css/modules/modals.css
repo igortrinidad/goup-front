@@ -30,13 +30,14 @@
 
 
 .modal .modal-header .title { color: #383938 !important; margin: 0; }
-
+.modal .modal-header { position: relative; }
 .modal .modal-header .btn-close {
     position: absolute;
-    top: 13px;
-    right: 13px;
+    top: 50%;
+    right: 10px;
     padding: 5px 15px;
     border-width: 2px !important;
+    margin-top: -14.5px;
 }
 
 .modal .modal-footer .btn.btn-default   { color: #383938; }

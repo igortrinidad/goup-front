@@ -24,33 +24,67 @@
 
                 <!-- / Comments List -->
 
-                <!-- New Comment -->
+                <!-- Modal New Comment -->
 
+                <div class="modal" id="modal-new-comment" tabindex="-1" role="dialog" aria-labelledby="modal-new-comment" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span
+                                    class="label label-primary transparent btn-close"
+                                    data-dismiss="modal"
+                                >
+                                    <i class="ion-close-round"></i>
+                                </span>
+                                <h3 class="title text-center">New Comment</h3>
+                            </div>
+                            <div class="modal-body">
+                                <form class="m-t-30">
+                                    <div class="form-group">
+                                        <textarea
+                                            id="new-comment"
+                                            class="form-control"
+                                            rows="4"
+                                            v-model="newComment.content"
+                                            maxlength="120"
+                                            :placeholder="`${ translations.comments.commentPlaceholder } ${ place.name }`"
+                                        >
+                                        </textarea>
+                                    </div>
 
-                <div v-if="interactions.newComment">
-                    <form class="m-t-30">
-                        <div class="form-group">
-                            <textarea
-                                class="form-control"
-                                rows="4"
-                                v-model="newComment.content"
-                                :placeholder="`${ translations.comments.commentPlaceholder } ${ place.name }`"
-                            >
-                            </textarea>
+                                    <!-- Character Count -->
+                                    <small class="f-danger" v-show="120 - newComment.content.length > 0">
+                                        {{ translations.comments.length }}
+                                        {{ 120 - newComment.content.length }}
+                                    </small>
+                                    <!-- /Character Count -->
+
+                                </form>
+
+                                <button
+                                    type="button"
+                                    class="btn btn-primary transparent m-t-30"
+                                    v-show="120 - newComment.content.length <= 60"
+                                    data-dismiss="modal"
+                                    @click="handleNewComment()"
+                                >
+                                    {{ translations.comments.comment }}
+                                </button>
+                            </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
 
                 <button
                     type="button"
                     class="btn btn-primary transparent m-t-30"
-                    @click="handleNewComment()"
-                    :disabled="interactions.newComment && !newComment.content"
+                    data-toggle="modal"
+                    data-target="#modal-new-comment"
                 >
-                    {{ interactions.newComment ? translations.comments.comment : translations.comments.newComment }}
+                    {{ translations.comments.newComment }}
                 </button>
 
-                <!-- / New Comment -->
+                <!-- / Modal New Comment -->
 
             </div>
         </div>
@@ -116,14 +150,10 @@
         methods: {
 
             handleNewComment() {
-                if (this.interactions.newComment) {
-                    this.place.comments.unshift(this.newComment)
-                    this.interactions.newComment = false
-                    successNotify('', this.translations.successComment)
-                    this.initSwiperComments()
-                } else {
-                    this.interactions.newComment = true
-                }
+                this.place.comments.unshift(this.newComment)
+                this.interactions.newComment = false
+                successNotify('', this.translations.comments.successComment)
+                this.initSwiperComments()
             },
 
             initSwiperComments() {
