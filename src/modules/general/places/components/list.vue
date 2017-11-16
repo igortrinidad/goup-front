@@ -11,6 +11,7 @@
             <div class="main">
                 <div class="container">
 
+                    <!-- Filter Button -->
                     <div class="text-center">
                         <button
                             type="button"
@@ -18,9 +19,10 @@
                             data-toggle="modal"
                             data-target="#modal-filter"
                         >
-                            Filtro
+                            {{ translations.filter }}
                         </button>
                     </div>
+                    <!-- Filter Button -->
 
                     <div class="row m-t-30">
                         <div class="col-sm-12" v-for="place in places">
@@ -56,17 +58,21 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
+                                <button
+                                    type="button"
+                                    class="btn btn-primary transparent btn-close"
+                                    data-dismiss="modal"
+                                >
+                                    <i class="ion-close-round"></i>
                                 </button>
+                                <h3 class="title text-center">{{ translations.filter }}</h3>
                             </div>
                             <div class="modal-body">
-                                ...
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <div class="form-group">
+                                    <label class="f-default">{{ translations.label.max_range }}</label>
+                                    <vue-slider ref="slider" v-model="filter.max_range" :max="1000"></vue-slider>
+                                </div>
+                                <hr>
                             </div>
                         </div>
                     </div>
@@ -79,28 +85,47 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
+
+    import vueSlider from 'vue-slider-component'
     import mainHeader from '@/components/main-header.vue'
     import ratingSimple from '@/components/rating-simple.vue'
 
     import PlaceModel from '@/models/Place'
+    import * as translations from '@/translations/places/list'
 
     export default {
         name: 'general-places-list',
 
         components: {
+            vueSlider,
             mainHeader,
-            ratingSimple
+            ratingSimple,
         },
 
         data () {
             return {
                 placeholder: true,
-                places: []
+                places: [],
+                filter: {
+                    max_range: 0
+                }
             }
         },
 
         computed: {
+            ...mapGetters(['checkLanguage']),
 
+            'translations': function() {
+                const language = localStorage.getItem('language')
+
+                if (language === 'en' || !language) {
+                    return translations.en
+                }
+                if (language === 'pt') {
+                    return translations.pt
+                }
+            }
         },
 
         mounted(){
