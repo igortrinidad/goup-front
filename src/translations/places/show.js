@@ -8,6 +8,7 @@ export const en = {
     no: 'No',
     place_not_found: 'Unfortunately we could not find this place now',
     call: 'Call now',
+    share: 'Compartilhe with your friends',
 
     // Tabs
     tabs: {
@@ -44,6 +45,7 @@ export const pt = {
     no: 'Não',
     place_not_found: 'Infelizmente não conseguimos encontrar esse lugar agora',
     call: 'Ligue agora',
+    share: 'Compartilhe com seus amigos',
 
     // Tabs
     tabs: {

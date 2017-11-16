@@ -106,17 +106,17 @@ button:active{
     color: #FFF;
 }
 
-/*
+
 .btn.btn-whatsapp,
 .btn.btn-whatsapp:hover{
-    background-color: #561F9F;
-    border-color: transparent;
-    color: #f2f2f2;
+    background-color: transparent;
+    border-color: #1ebea5;
+    color: #FFF;
 }
 
 .btn.btn-instagram,
 .btn.btn-instagram:hover{
-    background-color: #561F9F;
-    border-color: transparent;
-    color: #f2f2f2;
-}*/
+    background-color: transparent;
+    border-color: #a039a8;
+    color: #FFF;
+}

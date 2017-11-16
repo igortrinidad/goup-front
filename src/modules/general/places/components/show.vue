@@ -13,9 +13,7 @@
             <div class="main">
 
                 <div v-if="interactions.placeNotFound">
-
                     <h3 class="text-center m-t-30">{{ translations.place_not_found }}</h3>
-
                 </div>
 
                 <!-- Place Content -->
@@ -56,8 +54,20 @@
                                 <i class="ion-ios-telephone m-r-5"></i>{{ translations.call }}
                             </a>
                         </div>
-                        <!-- Call -->
+                        <!-- /Call -->
 
+                        <!-- Share -->
+                        <h4 class="m-t-30">{{ translations.share }}</h4>
+                        <a class="btn btn-facebook transparent m-5">
+                            <i class="ion-social-facebook m-r-5"></i>
+                        </a>
+                        <a class="btn btn-instagram transparent m-5">
+                            <i class="ion-social-instagram m-r-5"></i>
+                        </a>
+                        <a class="btn btn-whatsapp transparent m-5">
+                            <i class="ion-social-whatsapp m-r-5"></i>
+                        </a>
+                        <!-- /Share -->
 
                         <div class="container m-t-30">
                             <ul class="list-group list-rounded m-b-0 m-t-10">
