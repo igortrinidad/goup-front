@@ -13,14 +13,17 @@
 
                     <!-- Filter Button -->
                     <div class="text-center">
-                        <button
-                            type="button"
-                            class="btn btn-primary transparent"
-                            data-toggle="modal"
-                            data-target="#modal-filter"
+                        <span
+                            :class="{
+                                'label transparent m-5': true,
+                                'label-default': currentCategory !== category,
+                                'label-primary': currentCategory === category
+                            }"
+                            v-for="category in categories"
+                            @click="changeCurrentCategory(category)"
                         >
-                            {{ translations.filter }}
-                        </button>
+                            {{ category }}
+                        </span>
                     </div>
                     <!-- Filter Button -->
 
@@ -70,7 +73,6 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label class="f-default">{{ translations.label.max_range }}</label>
-                                    <vue-slider ref="slider" v-model="filter.max_range" :max="1000"></vue-slider>
                                 </div>
                                 <hr>
                             </div>
@@ -87,29 +89,28 @@
 <script>
     import { mapGetters } from 'vuex'
 
-    import vueSlider from 'vue-slider-component'
     import mainHeader from '@/components/main-header.vue'
     import ratingSimple from '@/components/rating-simple.vue'
 
     import PlaceModel from '@/models/Place'
+    import { cleanCategoriesArrayExample } from '@/models/Category'
+
     import * as translations from '@/translations/places/list'
 
     export default {
         name: 'general-places-list',
 
         components: {
-            vueSlider,
             mainHeader,
-            ratingSimple,
+            ratingSimple
         },
 
         data () {
             return {
                 placeholder: true,
                 places: [],
-                filter: {
-                    max_range: 0
-                }
+                categories: [],
+                currentCategory: '',
             }
         },
 
@@ -130,12 +131,35 @@
 
         mounted(){
             this.getPlaces()
+            this.getCategoriesByLanguage(this.checkLanguage)
         },
 
         methods: {
-            getPlaces() {
+
+            changeCurrentCategory(category) {
+                this.currentCategory = category
+            },
+
+            getCategoriesByLanguage(lang) {
                 let that = this
 
+                const categories = cleanCategoriesArrayExample()
+
+                if (lang === 'en') {
+                    categories.forEach((category) => {
+                        that.categories.push(category.name_en)
+                    })
+                }
+                if (lang === 'pt') {
+                    categories.forEach((category) => {
+                        that.categories.push(category.name_pt)
+                    })
+                }
+                that.currentCategory = that.categories[0]
+            },
+
+            getPlaces() {
+                let that = this
                 that.places = [ PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel ]
             }
         }

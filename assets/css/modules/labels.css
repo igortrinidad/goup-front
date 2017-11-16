@@ -2,6 +2,8 @@
 .label {
     padding: 7px 15px !important;
     display: inline-block;
+    border-radius: 20px;
+    border: 2px solid;
 }
 
 .label-block{
@@ -24,22 +26,28 @@
 .label.label-primary:hover{
   background-color: #561F9F;
   color: #FF4B89 !important;
+  border-color: #FF4B89;
 }
 
 .label.label-success,
 .label.label-success:hover{
     background-color: #561F9F;
     color: #8BF3FB;
+    border-color: #8BF3FB;
 }
 
 .label.label-info,
 .label.label-info:hover{
   background-color: #561F9F;
   color: #FFFD7B;
+  border-color: #FFFD7B;
 }
 
 .label.label-danger,
 .label.label-danger:hover{
   background-color: #561F9F;
   color: #FE0022;
+  border-color: #FE0022;
 }
+
+.label.transparent { background-color: transparent !important; }
