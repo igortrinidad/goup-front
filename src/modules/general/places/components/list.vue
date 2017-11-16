@@ -10,7 +10,30 @@
         <transition appear mode="in-out" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
             <div class="main">
                 <div class="container">
-                    <h1>RANKING DE LOCAIS</h1>
+
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary transparent">Filtro</button>
+                    </div>
+
+                    <div class="row m-t-30">
+                        <div class="col-sm-12" v-for="place in places">
+                            <div class="card m-b-10">
+                                <div class="card-body card-padding">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <div class="picture-circle picture-circle-xs m-0" :style="{ backgroundImage: `url(${ place.avatar })` }">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <span class="f-700 t-overflow">{{ place.name }}</span>
+                                            <small>{{ place.city }} - {{ place.state }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </transition>
@@ -20,6 +43,8 @@
 
 <script>
     import mainHeader from '@/components/main-header.vue'
+
+    import PlaceModel from '@/models/Place'
 
     export default {
         name: 'general-places-list',
@@ -31,6 +56,7 @@
         data () {
             return {
                 placeholder: true,
+                places: []
             }
         },
 
@@ -39,11 +65,15 @@
         },
 
         mounted(){
-
+            this.getPlaces()
         },
 
         methods: {
+            getPlaces() {
+                let that = this
 
+                that.places = [ PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel ]
+            }
         }
     }
 </script>

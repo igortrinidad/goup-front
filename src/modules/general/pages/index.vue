@@ -88,20 +88,20 @@
                                     </span>
                                 </div>
                                 <div v-if="places.length">
-                                    <span class="action" @click="skip()">
+                                    <span class="action skip" @click="skip()">
                                         <span class="ion-ios-rewind f-default"></span>
                                     </span>
 
-                                    <span class="action xl"  @click="goDown()">
+                                    <span class="action xl down"  @click="goDown()">
                                         <span class="ion-chevron-down f-red "></span>
                                     </span>
 
-                                    <span class="action xl" @click="goUp()">
+                                    <span class="action xl up" @click="goUp()">
                                         <span class="ion-chevron-up f-green"></span>
                                     </span>
 
-                                    <span class="action" @click="favorite()">
-                                        <span class="ion-ios-star f-default"></span>
+                                    <span class="action favorite" @click="favorite()">
+                                        <span class="ion-ios-star f-primary"></span>
                                     </span>
                                 </div>
                             </div>
