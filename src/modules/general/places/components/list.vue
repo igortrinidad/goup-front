@@ -21,11 +21,19 @@
                                 <div class="card-body card-padding">
                                     <div class="row">
                                         <div class="col-xs-4">
-                                            <div class="picture-circle picture-circle-xs m-0" :style="{ backgroundImage: `url(${ place.avatar })` }">
+                                            <div class="picture-circle picture-circle-xs m-0 m-t-10" :style="{ backgroundImage: `url(${ place.avatar })` }">
                                             </div>
                                         </div>
                                         <div class="col-xs-8">
-                                            <span class="f-700 t-overflow">{{ place.name }}</span>
+                                            <span class="f-700 t-overflow">
+                                                {{ place.name }}
+                                            </span>
+                                            <rating-simple
+                                                :value="place.rating"
+                                                :size="1"
+                                                :alignClass="'text-left'"
+                                                :colorOfIcon="'#FF4B89'"
+                                            />
                                             <small>{{ place.city }} - {{ place.state }}</small>
                                         </div>
                                     </div>
@@ -43,6 +51,7 @@
 
 <script>
     import mainHeader from '@/components/main-header.vue'
+    import ratingSimple from '@/components/rating-simple.vue'
 
     import PlaceModel from '@/models/Place'
 
@@ -51,6 +60,7 @@
 
         components: {
             mainHeader,
+            ratingSimple
         },
 
         data () {

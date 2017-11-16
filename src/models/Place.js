@@ -11,6 +11,8 @@ export default {
     best_day: 'Quarta-feira',
     style: 'Rustíco',
     phone: '41 999999999',
+    rating: 3,
+
     // Address
     address: {
         name: '',
