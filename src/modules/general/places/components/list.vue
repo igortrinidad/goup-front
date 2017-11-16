@@ -11,11 +11,12 @@
             <div class="main">
                 <div class="container">
 
-                    <!-- Categories Filters -->
-                    <div class="text-center">
+                    <!-- CATEGORIES -->
+                    <div class="row text-center" style="overflow-x: auto; margin-bottom: -20px;">
+
                         <span
+                            class="label transparent m-5 cursor-pointer"
                             :class="{
-                                'label transparent m-5': true,
                                 'label-default': currentCategory !== category,
                                 'label-primary': currentCategory === category
                             }"
@@ -32,17 +33,20 @@
                             </i>
                         </span>
 
+                    </div>
+
+                    <!-- Categories Filters -->
+                    <div class="row text-center">
+
                         <button
                             type="button"
-                            class="btn btn-primary transparent m-t-30"
+                            class="btn btn-xs btn-primary transparent m-t-30"
                             data-toggle="modal"
                             data-target="#modal-filter"
                         >
                             {{ translations.more_filters }}
                         </button>
-
-                    </div>
-                    <!-- Categories Filters -->
+                    </div>                    
 
                     <div class="row m-t-30">
                         <div class="col-sm-12" v-for="place in places">
