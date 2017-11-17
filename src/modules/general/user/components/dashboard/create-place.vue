@@ -14,23 +14,30 @@
 
                     <form>
                         <!-- Place Name -->
-                        <div class="form-group border-inside-card default">
-                            <label class="f-700 f-primary" for="place-name">{{ translations.form.name }}</label>
-                            <input
-                                type="text"
-                                id="place-name"
-                                class="form-control"
-                                v-model="place.name"
-                                :placeholder="translations.form.name"
-                            >
-                            <label class="f-700 f-primary m-t-10" for="place-description">{{ translations.form.description }}</label>
-                            <input
-                                type="text"
-                                id="place-description"
-                                class="form-control"
-                                v-model="place.description"
-                                :placeholder="translations.form.description"
-                            >
+                        <div class="border-inside-card default">
+                            <div :class="{ 'form-group': true, 'has-error': not_valid.indexOf('name') > -1 }">
+                                <label class="f-700 f-primary" for="place-name">{{ translations.form.name }}</label>
+                                <input
+                                    type="text"
+                                    id="place-name"
+                                    class="form-control"
+                                    v-model="place.name"
+                                    :placeholder="translations.form.name"
+                                    @blur="validField($event.target.value, 'name')"
+                                >
+                            </div>
+
+                            <div :class="{ 'form-group': true, 'has-error': not_valid.indexOf('description') > -1 }">
+                                <label class="f-700 f-primary m-t-10" for="place-description">{{ translations.form.description }}</label>
+                                <input
+                                    type="text"
+                                    id="place-description"
+                                    class="form-control"
+                                    v-model="place.description"
+                                    :placeholder="translations.form.description"
+                                    @blur="validField($event.target.value, 'description')"
+                                >
+                            </div>
                         </div>
                         <!-- /Place Name -->
 
@@ -38,7 +45,7 @@
                         <div class="form-group border-inside-card default">
                             <!-- Categories -->
                             <div class="form-group">
-                                <label class="f-700 f-primary" for="">{{ translations.form.categories }}</label>
+                                <label class="f-700 f-primary">{{ translations.form.categories }}</label>
 
                                 <ul class="list-group list-rounded m-t-10 m-0 text-left">
                                     <li
@@ -95,29 +102,35 @@
                         <!-- / Categories & SubCategories  -->
 
                         <!-- Style And Phone -->
-                        <div class="form-group border-inside-card default">
-                            <label class="f-700 f-primary" for="place-style">{{ translations.form.style }}</label>
-                            <input
-                                type="text"
-                                id="place-style"
-                                class="form-control"
-                                :placeholder="translations.form.style"
-                                v-model="place.style"
-                            >
+                        <div class="border-inside-card default">
+                            <div :class="{ 'form-group': true, 'has-error': not_valid.indexOf('style') > -1 }">
+                                <label class="f-700 f-primary" for="place-style">{{ translations.form.style }}</label>
+                                <input
+                                    type="text"
+                                    id="place-style"
+                                    class="form-control"
+                                    :placeholder="translations.form.style"
+                                    v-model="place.style"
+                                    @blur="validField($event.target.value, 'style')"
+                                >
+                            </div>
 
-                            <label class="f-700 f-primary m-t-10" for="place-phone">{{ translations.form.phone }}</label>
-                            <input
-                                type="text"
-                                id="place-phone"
-                                class="form-control"
-                                :placeholder="translations.form.phone"
-                                v-model="place.phone"
-                            >
+                            <div :class="{ 'form-group': true, 'has-error': not_valid.indexOf('phone') > -1 }">
+                                <label class="f-700 f-primary" for="place-phone">{{ translations.form.phone }}</label>
+                                <input
+                                    type="text"
+                                    id="place-phone"
+                                    class="form-control"
+                                    :placeholder="translations.form.phone"
+                                    v-model="place.phone"
+                                    @blur="validField($event.target.value, 'phone')"
+                                >
+                            </div>
                         </div>
                         <!-- / Style And Phone -->
 
                         <!-- Address -->
-                        <div class="form-group border-inside-card default">
+                        <div class="form-group border-inside-card default m-t-15">
                             <label class="f-700 f-primary" for="place-address">{{ translations.form.address }}</label>
                             <GmapAutocomplete
                                 class="form-control"
@@ -184,7 +197,15 @@
                         </div>
                         <!-- / Current User Is Owner -->
 
-                        <button type="button" class="btn btn-primary transparent" @click="registerPlace()">
+                        <button
+                            type="button"
+                            class="btn btn-primary transparent"
+                            @click="registerPlace()"
+                            :disabled="
+                                !place.name || !place.description || !place.category.subcategories.length ||
+                                !place.photos || !place.lat || place.lng || place.style || place.phone
+                            "
+                        >
                             {{ translations.submit }}
                         </button>
 
@@ -218,6 +239,7 @@
             return {
                 place: cleanPlaceModel(),
                 categories: [],
+                not_valid: [],
                 currentCategory: '',
                 subcategories: [],
                 subcategory: '',
@@ -242,6 +264,20 @@
         },
 
         methods: {
+
+            validField(value, inputName) {
+                const index = this.not_valid.indexOf(inputName);
+                if (!value) {
+                    errorNotify('', this.translations.form.required)
+                    if (index < 0) {
+                        this.not_valid.push(inputName)
+                    }
+                } else {
+                    if(index > -1){
+                        this.not_valid.splice(index, 1)
+                    }
+                }
+            },
 
             setPlaceAdress(place) {
                 let that = this

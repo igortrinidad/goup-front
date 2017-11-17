@@ -18,11 +18,10 @@
 .has-error .form-control,
 .has-error .form-control:focus,
 .has-error .multiselect {
-    border: 1px solid #E14A45 !important;
-    border-radius: 4px;
+    border: 2px solid #FE0022 !important;
 }
 
 .has-error .ql-toolbar.ql-snow,
 .has-error .ql-container.ql-snow {
-    border: 1px solid #E14A45 !important;
+    border: 2px solid #FE0022 !important;
 }

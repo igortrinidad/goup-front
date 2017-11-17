@@ -11,7 +11,8 @@ export const en = {
         phone: "Place's phone",
         is_owner: 'Do you own the place?',
         address: "Place's address",
-        photos: "Upload local's photo"
+        photos: "Upload local's photo",
+        required: 'The field is required',
     },
     yes: 'Yes',
     no: 'No',
@@ -31,7 +32,8 @@ export const pt = {
         phone: 'Telefone do local',
         is_owner: 'Você é o proprietário do local?',
         address: 'Endereço do local',
-        photos: 'Faça upload de fotos do local'
+        photos: 'Faça upload de fotos do local',
+        required: 'O campo é obrigatório',
     },
     yes: 'Sim',
     no: 'Não',
