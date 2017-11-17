@@ -64,9 +64,10 @@
                             </button>
 
                             <!-- List SubCategory -->
-                            <div class="m-t-10">
-                                <span class="label label-primary transparent m-5" v-for="subcategory in subcategories">
+                            <div class="m-t-10 subcategories">
+                                <span class="label label-primary transparent m-5" v-for="(subcategory, index) in subcategories">
                                     {{ subcategory }}
+                                    <i class="ion-close-round m-l-5" @click="removeSubcategory(index)"></i>
                                 </span>
                             </div>
                             <!-- / List SubCategory -->
@@ -142,14 +143,17 @@
         },
 
         methods: {
+            removeSubcategory(index) {
+                this.subcategories.splice(index, 1)
+            },
 
             pushSubcategory() {
-                const index = this.subcategories.indexOf(this.subcategory);
+                const index = this.subcategories.indexOf(this.subcategory.toLowerCase());
 
                 if(index > -1){
                     warningNotify('', 'Subcategoria ja existe no array')
                 } else {
-                    this.subcategories.push(this.subcategory)
+                    this.subcategories.push(this.subcategory.toLowerCase())
                     this.subcategory = ''
                 }
 
@@ -181,4 +185,6 @@
         color: #FFF;
         float: right
     }
+
+    .subcategories .label { text-transform: uppercase; }
 </style>
