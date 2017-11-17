@@ -46,13 +46,13 @@
 
                         <!-- SubCategories -->
                         <div class="form-group" v-show="currentCategory">
-                            <label for="subcategory">{{ translations.form.sub_categories }}</label>
+                            <label for="subcategory">{{ translations.form.subcategories }}</label>
                             <input
                                 id="subcategory"
                                 type="text"
                                 class="form-control"
                                 v-model="subcategory"
-                                :placeholder="translations.form.sub_categories"
+                                :placeholder="translations.form.subcategories"
                             >
                             <button
                                 type="button"
@@ -60,7 +60,7 @@
                                 :disabled="!subcategory"
                                 @click="pushSubcategory()"
                             >
-                                {{ translations.form.add_sub_category }}
+                                {{ translations.form.add_subcategory }}
                             </button>
 
                             <!-- List SubCategory -->

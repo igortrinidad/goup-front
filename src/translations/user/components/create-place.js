@@ -2,11 +2,12 @@ export const en = {
     title: 'Add new place',
     form: {
         place_name: 'Place Name',
-        phone: 'Phone',
         categories: 'Select a category',
-        sub_categories: 'One or more subcategories',
-        add_sub_category: 'Add sub category',
-        style: 'Style',
+        subcategories: 'One or more subcategories',
+        add_subcategory: 'Add sub category',
+        subcategory_already_exists: 'Subcategory already exists',
+        style: "Place's style",
+        phone: "Place's phone",
     },
     submit: 'Register place'
 }
@@ -15,11 +16,12 @@ export const pt = {
     title: 'Adicionar novo local',
     form: {
         place_name: 'Nome do local',
-        phone: 'Telefone',
         categories: 'Selecione uma cateogria',
-        sub_categories: 'Uma ou mais subcategorias',
-        add_sub_category: 'Adicionar subcategoria',
-        style: 'Estilo',
+        subcategories: 'Uma ou mais subcategorias',
+        add_subcategory: 'Adicionar subcategoria',
+        subcategory_already_exists: 'Subcategoria já existe',
+        style: 'Estilo do local',
+        phone: 'Telefone do local',
     },
     submit: 'Registrar local'
 }
