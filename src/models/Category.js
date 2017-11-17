@@ -7,7 +7,7 @@ export function cleanCategoriesArrayExample() {
 		},
 		{
 			name_en: 'Restaurant',
-			name_pt: 'Restaurant',
+			name_pt: 'Restaurante',
 		},
 		{
 			name_en: 'Concert',

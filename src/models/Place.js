@@ -9,6 +9,7 @@ export default {
     state: 'MG',
     description: 'Os melhores drinks estão aqui!',
     best_day: 'Quarta-feira',
+    is_owner: true,
     category: {
         name_en: 'Bar',
         name_pt: 'Bar',
@@ -51,4 +52,47 @@ export default {
         Comments, Comments, Comments
     ]
 
+}
+
+
+export function cleanPlaceModel() {
+	return {
+        id: '',
+        name: '',
+        slug: '',
+        avatar: '',
+        city: '',
+        state: '',
+        description: '',
+        best_day: '',
+        is_owner: true,
+        category: {
+            name_en: '',
+            name_pt: '',
+            subcategories: [
+
+            ]
+        },
+        style: '',
+        phone: '',
+        ranking: 0,
+
+        // Address
+        address: {
+            name: '',
+            full_address: '',
+            url: ''
+        },
+        lat: 0,
+        lng: 0,
+
+        // Photos
+        photos: [
+        ],
+
+        // Comments
+        comments: [
+        ]
+
+    }
 }

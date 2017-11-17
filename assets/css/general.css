@@ -61,6 +61,12 @@ legend + .form-group{
     font-size: 14px;
 }
 
+.list-rounded .list-group-item.active {
+    background: transparent;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, .1);
+}
+
 /* Fix Steps */
 .fa-file-text-o:before, .fa-file-txt-o:before {
     color: #69A7BE !important;

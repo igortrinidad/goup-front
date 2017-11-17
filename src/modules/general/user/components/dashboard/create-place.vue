@@ -12,82 +12,142 @@
 
                 <div class="container bg m-t-20 text-center">
 
-                    <form class="">
+                    <form>
                         <!-- Place Name -->
-                        <div class="form-group">
-                            <label for="place-name">{{ translations.form.place_name }}</label>
-                            <input type="text" id="place-name" class="form-control" :placeholder="translations.form.place_name">
+                        <div class="form-group border-inside-card default">
+                            <label class="f-700 f-primary" for="place-name">{{ translations.form.place_name }}</label>
+                            <input
+                                type="text"
+                                id="place-name"
+                                class="form-control"
+                                v-model="place.name"
+                                :placeholder="translations.form.place_name"
+                            >
                         </div>
                         <!-- /Place Name -->
 
-                        <!-- Categories -->
-                        <div class="form-group">
-                            <label for="">{{ translations.form.categories }}</label>
+                        <!-- Categories & SubCategories -->
+                        <div class="form-group border-inside-card default">
+                            <!-- Categories -->
+                            <div class="form-group">
+                                <label class="f-700 f-primary" for="">{{ translations.form.categories }}</label>
+
+                                <ul class="list-group list-rounded m-t-10 m-0 text-left">
+                                    <li
+                                        class="list-group-item transparent"
+                                        :class="{ 'active': currentCategory === category }"
+                                        @click="handleCategory(category)"
+                                        v-for="category in categories"
+                                    >
+                                        {{ category }}
+                                        <i
+                                            :class="{
+                                                'icon-select m-l-10 f-20': true,
+                                                'ion-ios-circle-filled': currentCategory === category,
+                                                'ion-ios-circle-outline': currentCategory !== category
+                                            }"
+                                        >
+                                        </i>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- / Categories -->
+
+                            <!-- SubCategories -->
+                            <div class="form-group m-t-10" v-show="currentCategory">
+                                <label class="f-700 f-primary" for="subcategory">{{ translations.form.subcategories }}</label>
+                                <input
+                                    id="subcategory"
+                                    type="text"
+                                    class="form-control"
+                                    v-model="subcategory"
+                                    :placeholder="translations.form.subcategories"
+                                >
+                                <button
+                                    type="button"
+                                    class="btn btn-primary transparent m-t-10"
+                                    :disabled="!subcategory"
+                                    @click="pushSubcategory()"
+                                >
+                                    {{ translations.form.add_subcategory }}
+                                </button>
+
+                                <!-- List SubCategory -->
+                                <div class="m-t-10 subcategories">
+                                    <span class="label label-primary transparent m-5" v-for="(subcategory, index) in subcategories">
+                                        {{ subcategory }}
+                                        <i class="ion-close-round m-l-5" @click="removeSubcategory(index)"></i>
+                                    </span>
+                                </div>
+                                <!-- / List SubCategory -->
+
+                            </div>
+                            <!-- /SubCategories -->
+                        </div>
+                        <!-- / Categories & SubCategories  -->
+
+                        <!-- Style And Phone -->
+                        <div class="form-group border-inside-card default">
+                            <label class="f-700 f-primary" for="">{{ translations.form.style }}</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                :placeholder="translations.form.style"
+                                v-model="place.style"
+                            >
+                        </div>
+
+                        <div class="form-group border-inside-card default">
+                            <label class="f-700 f-primary" for="">{{ translations.form.phone }}</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                :placeholder="translations.form.phone"
+                                v-model="place.phone"
+                            >
+                        </div>
+                        <!-- / Style And Phone -->
+
+                        <!-- Current User Is Owner -->
+                        <div class="form-group border-inside-card default">
+                            <label class="f-700 f-primary" for="">{{ translations.form.is_owner }}</label>
 
                             <ul class="list-group list-rounded m-t-10 m-0 text-left">
                                 <li
                                     class="list-group-item transparent"
-                                    @click="handleCategory(category)"
-                                    v-for="category in categories"
+                                    :class="{ 'active': place.is_owner }"
+                                    @click="place.is_owner = true"
                                 >
-                                    {{ category }}
+                                    {{ translations.yes }}
                                     <i
                                         :class="{
                                             'icon-select m-l-10 f-20': true,
-                                            'ion-ios-circle-filled': currentCategory === category,
-                                            'ion-ios-circle-outline': currentCategory !== category
+                                            'ion-ios-circle-filled': place.is_owner,
+                                            'ion-ios-circle-outline': !place.is_owner
+                                        }"
+                                    >
+                                    </i>
+                                </li>
+                                <li
+                                    class="list-group-item transparent"
+                                    :class="{ 'active': !place.is_owner }"
+                                    @click="place.is_owner = false"
+                                >
+                                    {{ translations.no }}
+                                    <i
+                                        :class="{
+                                            'icon-select m-l-10 f-20': true,
+                                            'ion-ios-circle-filled': !place.is_owner,
+                                            'ion-ios-circle-outline': place.is_owner
                                         }"
                                     >
                                     </i>
                                 </li>
                             </ul>
                         </div>
-                        <!-- / Categories -->
+                        <!-- / Current User Is Owner -->
 
-                        <!-- SubCategories -->
-                        <div class="form-group" v-show="currentCategory">
-                            <label for="subcategory">{{ translations.form.subcategories }}</label>
-                            <input
-                                id="subcategory"
-                                type="text"
-                                class="form-control"
-                                v-model="subcategory"
-                                :placeholder="translations.form.subcategories"
-                            >
-                            <button
-                                type="button"
-                                class="btn btn-primary transparent m-t-10"
-                                :disabled="!subcategory"
-                                @click="pushSubcategory()"
-                            >
-                                {{ translations.form.add_subcategory }}
-                            </button>
-
-                            <!-- List SubCategory -->
-                            <div class="m-t-10 subcategories">
-                                <span class="label label-primary transparent m-5" v-for="(subcategory, index) in subcategories">
-                                    {{ subcategory }}
-                                    <i class="ion-close-round m-l-5" @click="removeSubcategory(index)"></i>
-                                </span>
-                            </div>
-                            <!-- / List SubCategory -->
-
-                        </div>
-                        <!-- /SubCategories -->
-
-                        <!-- Style And Phone -->
-                        <div class="form-group">
-                            <label for="">{{ translations.form.style }}</label>
-                            <input type="text" class="form-control" :placeholder="translations.form.style">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="">{{ translations.form.phone }}</label>
-                            <input type="text" class="form-control" :placeholder="translations.form.phone">
-                        </div>
-                        <!-- / Style And Phone -->
-
-                        <button type="button" class="btn btn-primary transparent">
+                        <button type="button" class="btn btn-primary transparent" @click="registerPlace()">
                             {{ translations.submit }}
                         </button>
 
@@ -108,6 +168,7 @@
 
     import * as translations from '@/translations/user/components/create-place'
     import { cleanCategoriesArrayExample } from '@/models/Category'
+    import { cleanPlaceModel } from '@/models/Place'
 
     export default {
         name: 'general-user-settings-create-place',
@@ -118,10 +179,11 @@
 
         data () {
             return {
+                place: cleanPlaceModel(),
                 categories: [],
                 currentCategory: '',
                 subcategories: [],
-                subcategory: ''
+                subcategory: '',
             }
         },
 
@@ -143,6 +205,31 @@
         },
 
         methods: {
+
+            registerPlace() {
+                let currentCategoryNames = {}
+
+                const categories = cleanCategoriesArrayExample()
+
+                categories.forEach((category) => {
+                    if (this.currentCategory === category.name_en || this.currentCategory === category.name_pt) {
+                        currentCategoryNames = {
+                            name_en: category.name_en,
+                            name_pt: category.name_pt
+                        }
+                    }
+                })
+
+                this.place.category.name_en = currentCategoryNames.name_en
+                this.place.category.name_pt = currentCategoryNames.name_pt
+                this.place.category.subcategories = this.subcategories
+
+                // submit this.place
+                console.log(this.place);
+
+            },
+
+
             removeSubcategory(index) {
                 this.subcategories.splice(index, 1)
             },
