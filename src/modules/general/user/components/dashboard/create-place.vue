@@ -15,13 +15,21 @@
                     <form>
                         <!-- Place Name -->
                         <div class="form-group border-inside-card default">
-                            <label class="f-700 f-primary" for="place-name">{{ translations.form.place_name }}</label>
+                            <label class="f-700 f-primary" for="place-name">{{ translations.form.name }}</label>
                             <input
                                 type="text"
                                 id="place-name"
                                 class="form-control"
                                 v-model="place.name"
-                                :placeholder="translations.form.place_name"
+                                :placeholder="translations.form.name"
+                            >
+                            <label class="f-700 f-primary m-t-10" for="place-description">{{ translations.form.description }}</label>
+                            <input
+                                type="text"
+                                id="place-description"
+                                class="form-control"
+                                v-model="place.description"
+                                :placeholder="translations.form.description"
                             >
                         </div>
                         <!-- /Place Name -->
@@ -88,19 +96,19 @@
 
                         <!-- Style And Phone -->
                         <div class="form-group border-inside-card default">
-                            <label class="f-700 f-primary" for="">{{ translations.form.style }}</label>
+                            <label class="f-700 f-primary" for="place-style">{{ translations.form.style }}</label>
                             <input
                                 type="text"
+                                id="place-style"
                                 class="form-control"
                                 :placeholder="translations.form.style"
                                 v-model="place.style"
                             >
-                        </div>
 
-                        <div class="form-group border-inside-card default">
-                            <label class="f-700 f-primary" for="">{{ translations.form.phone }}</label>
+                            <label class="f-700 f-primary m-t-10" for="place-phone">{{ translations.form.phone }}</label>
                             <input
                                 type="text"
+                                id="place-phone"
                                 class="form-control"
                                 :placeholder="translations.form.phone"
                                 v-model="place.phone"
@@ -108,9 +116,38 @@
                         </div>
                         <!-- / Style And Phone -->
 
+                        <!-- Address -->
+                        <div class="form-group border-inside-card default">
+                            <label class="f-700 f-primary" for="place-address">{{ translations.form.address }}</label>
+                            <GmapAutocomplete
+                                class="form-control"
+                                :select-first-on-enter="true"
+                                @place_changed="setPlaceAdress"
+                                :placeholder="translations.form.address"
+                                :options="{ language: 'pt-BR', componentRestrictions: { country: 'br' } }"
+                            >
+                            </GmapAutocomplete>
+                        </div>
+                        <!-- / Address -->
+
+                        <!-- Photos -->
+                        <div class="form-group border-inside-card default">
+                            <button type="button" class="btn btn-primary transparent">
+                                {{ translations.form.photos }}
+                            </button>
+
+                            <div class="m-t-10" v-for="photo in place.photos">
+                                <img :src="photo.photo_url" class="img-responsive rounded">
+                            </div>
+
+                        </div>
+                        <!-- / Photos -->
+
                         <!-- Current User Is Owner -->
                         <div class="form-group border-inside-card default">
-                            <label class="f-700 f-primary" for="">{{ translations.form.is_owner }}</label>
+                            <label class="f-700 f-primary" @click="place.is_owner = !place.is_owner">
+                                {{ translations.form.is_owner }}
+                            </label>
 
                             <ul class="list-group list-rounded m-t-10 m-0 text-left">
                                 <li
@@ -206,6 +243,31 @@
 
         methods: {
 
+            setPlaceAdress(place) {
+                let that = this
+                if (place.geometry !== undefined) {
+                    that.place.lat = place.geometry.location.lat()
+                    that.place.lng = place.geometry.location.lng()
+                    that.place.address = {
+                        full_address: place.formatted_address,
+                        name: place.name,
+                        url: place.url
+                    }
+                    place.address_components.map((current) =>{
+                        current.types.map((type) => {
+                            //state
+                            if(type == 'administrative_area_level_1'){
+                                that.place.state = current.short_name
+                            }
+                            //City
+                            if(type == 'administrative_area_level_2'){
+                                that.place.city = current.short_name
+                            }
+                        })
+                    })
+                }
+            },
+
             registerPlace() {
                 let currentCategoryNames = {}
 
@@ -274,4 +336,8 @@
     }
 
     .subcategories .label { text-transform: uppercase; }
+
+    .img-responsive.rounded {
+        border-radius: 20px;
+    }
 </style>

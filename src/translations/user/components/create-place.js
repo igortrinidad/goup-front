@@ -1,7 +1,8 @@
 export const en = {
     title: 'Add new place',
     form: {
-        place_name: 'Place Name',
+        name: "Place's name",
+        description: "Place's description",
         categories: 'Select a category',
         subcategories: 'One or more subcategories',
         add_subcategory: 'Add sub category',
@@ -9,6 +10,8 @@ export const en = {
         style: "Place's style",
         phone: "Place's phone",
         is_owner: 'Do you own the place?',
+        address: "Place's address",
+        photos: "Upload local's photo"
     },
     yes: 'Yes',
     no: 'No',
@@ -18,7 +21,8 @@ export const en = {
 export const pt = {
     title: 'Adicionar novo local',
     form: {
-        place_name: 'Nome do local',
+        name: 'Nome do local',
+        description: 'Descrição do local',
         categories: 'Selecione uma cateogria',
         subcategories: 'Uma ou mais subcategorias',
         add_subcategory: 'Adicionar subcategoria',
@@ -26,6 +30,8 @@ export const pt = {
         style: 'Estilo do local',
         phone: 'Telefone do local',
         is_owner: 'Você é o proprietário do local?',
+        address: 'Endereço do local',
+        photos: 'Faça upload de fotos do local'
     },
     yes: 'Sim',
     no: 'Não',
