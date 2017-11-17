@@ -44,6 +44,37 @@
                         </div>
                         <!-- / Categories -->
 
+                        <!-- SubCategories -->
+                        <div class="form-group" v-show="currentCategory">
+                            <label for="subcategory">{{ translations.form.sub_categories }}</label>
+                            <input
+                                id="subcategory"
+                                type="text"
+                                class="form-control"
+                                v-model="subcategory"
+                                :placeholder="translations.form.sub_categories"
+                            >
+                            <button
+                                type="button"
+                                class="btn btn-primary transparent m-t-10"
+                                :disabled="!subcategory"
+                                @click="pushSubcategory()"
+                            >
+                                {{ translations.form.add_sub_category }}
+                            </button>
+
+                            <!-- List SubCategory -->
+                            <div class="m-t-10">
+                                <span class="label label-primary transparent m-5" v-for="subcategory in subcategories">
+                                    {{ subcategory }}
+                                </span>
+                            </div>
+                            <!-- / List SubCategory -->
+
+                        </div>
+                        <!-- /SubCategories -->
+
+                        <!-- Style And Phone -->
                         <div class="form-group">
                             <label for="">{{ translations.form.style }}</label>
                             <input type="text" class="form-control" :placeholder="translations.form.style">
@@ -53,6 +84,7 @@
                             <label for="">{{ translations.form.phone }}</label>
                             <input type="text" class="form-control" :placeholder="translations.form.phone">
                         </div>
+                        <!-- / Style And Phone -->
 
                         <button type="button" class="btn btn-primary transparent">
                             {{ translations.submit }}
@@ -86,7 +118,9 @@
         data () {
             return {
                 categories: [],
-                currentCategory: ''
+                currentCategory: '',
+                subcategories: [],
+                subcategory: ''
             }
         },
 
@@ -108,6 +142,18 @@
         },
 
         methods: {
+
+            pushSubcategory() {
+                const index = this.subcategories.indexOf(this.subcategory);
+
+                if(index > -1){
+                    warningNotify('', 'Subcategoria ja existe no array')
+                } else {
+                    this.subcategories.push(this.subcategory)
+                    this.subcategory = ''
+                }
+
+            },
 
             handleCategory(category) {
                 this.currentCategory = category
