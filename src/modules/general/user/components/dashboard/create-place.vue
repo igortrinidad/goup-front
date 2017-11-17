@@ -13,8 +13,10 @@
                 <div class="container bg m-t-20 text-center">
 
                     <form>
-                        <!-- Place Name -->
+                        <!-- Place Informations -->
                         <div class="border-inside-card default">
+
+                            <!-- Name -->
                             <div :class="{ 'form-group': true, 'has-error': not_valid.indexOf('name') > -1 }">
                                 <label class="f-700 f-primary" for="place-name">{{ translations.form.name }}</label>
                                 <input
@@ -26,7 +28,9 @@
                                     @blur="validField($event.target.value, 'name')"
                                 >
                             </div>
+                            <!-- / Name -->
 
+                            <!-- Description -->
                             <div :class="{ 'form-group': true, 'has-error': not_valid.indexOf('description') > -1 }">
                                 <label class="f-700 f-primary m-t-10" for="place-description">{{ translations.form.description }}</label>
                                 <input
@@ -38,8 +42,51 @@
                                     @blur="validField($event.target.value, 'description')"
                                 >
                             </div>
+                            <!-- / Description -->
+
+                            <!-- Style -->
+                            <div :class="{ 'form-group': true, 'has-error': not_valid.indexOf('style') > -1 }">
+                                <label class="f-700 f-primary" for="place-style">{{ translations.form.style }}</label>
+                                <input
+                                    type="text"
+                                    id="place-style"
+                                    class="form-control"
+                                    :placeholder="translations.form.style"
+                                    v-model="place.style"
+                                    @blur="validField($event.target.value, 'style')"
+                                >
+                            </div>
+                            <!-- / Style -->
+
+                            <!-- Phone -->
+                            <div :class="{ 'form-group': true, 'has-error': not_valid.indexOf('phone') > -1 }">
+                                <label class="f-700 f-primary" for="place-phone">{{ translations.form.phone }}</label>
+                                <input
+                                    type="text"
+                                    id="place-phone"
+                                    class="form-control"
+                                    :placeholder="translations.form.phone"
+                                    v-model="place.phone"
+                                    @blur="validField($event.target.value, 'phone')"
+                                >
+                            </div>
+                            <!-- / Phone -->
+
+                            <!-- Best Day -->
+                            <div :class="{ 'form-group': true, 'has-error': not_valid.indexOf('best_day') > -1 }">
+                                <label class="f-700 f-primary" for="place-bestday">{{ translations.form.best_day }}</label>
+                                <input
+                                    type="text"
+                                    id="place-bestday"
+                                    class="form-control"
+                                    :placeholder="translations.form.best_day"
+                                    v-model="place.best_day"
+                                    @blur="validField($event.target.value, 'best_day')"
+                                >
+                            </div>
+                            <!-- / Best Day -->
                         </div>
-                        <!-- /Place Name -->
+                        <!-- /Place Informations -->
 
                         <!-- Categories & SubCategories -->
                         <div class="form-group border-inside-card default">
@@ -100,34 +147,6 @@
                             <!-- /SubCategories -->
                         </div>
                         <!-- / Categories & SubCategories  -->
-
-                        <!-- Style And Phone -->
-                        <div class="border-inside-card default">
-                            <div :class="{ 'form-group': true, 'has-error': not_valid.indexOf('style') > -1 }">
-                                <label class="f-700 f-primary" for="place-style">{{ translations.form.style }}</label>
-                                <input
-                                    type="text"
-                                    id="place-style"
-                                    class="form-control"
-                                    :placeholder="translations.form.style"
-                                    v-model="place.style"
-                                    @blur="validField($event.target.value, 'style')"
-                                >
-                            </div>
-
-                            <div :class="{ 'form-group': true, 'has-error': not_valid.indexOf('phone') > -1 }">
-                                <label class="f-700 f-primary" for="place-phone">{{ translations.form.phone }}</label>
-                                <input
-                                    type="text"
-                                    id="place-phone"
-                                    class="form-control"
-                                    :placeholder="translations.form.phone"
-                                    v-model="place.phone"
-                                    @blur="validField($event.target.value, 'phone')"
-                                >
-                            </div>
-                        </div>
-                        <!-- / Style And Phone -->
 
                         <!-- Address -->
                         <div class="form-group border-inside-card default m-t-15">
@@ -202,8 +221,8 @@
                             class="btn btn-primary transparent"
                             @click="registerPlace()"
                             :disabled="
-                                !place.name || !place.description || !place.category.subcategories.length ||
-                                !place.photos || !place.lat || place.lng || place.style || place.phone
+                                !place.name || !place.description || !place.style ||
+                                !place.phone || !place.best_day
                             "
                         >
                             {{ translations.submit }}
