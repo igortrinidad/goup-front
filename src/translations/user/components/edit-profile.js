@@ -3,7 +3,6 @@ export const en = {
     upload_image: 'Upload a new image',
     save: 'Save settings',
     logout: 'Logout',
-    remove_accout: 'Remove my account',
 
     // Language Section
     language: {
@@ -18,7 +17,6 @@ export const pt = {
     upload_image: 'Faça o upload de uma nova imagem',
     save: 'Salvar configurações',
     logout: 'Fazer logout',
-    remove_accout: 'Remover minha conta',
 
     // Language Section
     language: {

@@ -123,7 +123,7 @@
 
     import mainHeader from '@/components/main-header.vue'
 
-    import PlaceModel from '@/models/Place'
+    import { cleanPlaceModel } from '@/models/Place'
     import { cleanCategoriesArrayExample } from '@/models/Category'
 
     import * as translations from '@/translations/places/list'
@@ -190,7 +190,7 @@
 
             getPlaces() {
                 let that = this
-                that.places = [ PlaceModel, PlaceModel, PlaceModel, PlaceModel, PlaceModel ]
+                that.places = [ cleanPlaceModel(), cleanPlaceModel(), cleanPlaceModel(), cleanPlaceModel(), cleanPlaceModel() ]
             }
         }
     }

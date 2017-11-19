@@ -78,12 +78,6 @@
                     </button>
                     <!-- Button Logout -->
 
-                    <!-- Button Remove Accout -->
-                    <button type="button" class="btn btn-danger btn-block transparent m-t-30" @click="saveSettings()">
-                        {{ translations.remove_accout }}
-                    </button>
-                    <!-- Button Remove Accout -->
-
                 </div>
 
             </div>

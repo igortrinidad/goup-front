@@ -4,6 +4,12 @@ const Main = (resolve) => {
     })
 }
 
+const Create = (resolve) => {
+    require.ensure(['../components/create'], () => {
+        resolve(require('../components/create')) // eslint-disable-line global-require
+    })
+}
+
 const List = (resolve) => {
     require.ensure(['../components/list'], () => {
         resolve(require('../components/list')) // eslint-disable-line global-require
@@ -22,6 +28,12 @@ export default [
         component: Main,
         meta: {requiresAuth: false},
         children: [
+            {
+                name: 'general.places.create',
+                path: '/create',
+                component: Create,
+                meta: {requiresAuth: false}
+            },
             {
                 name: 'general.places.list',
                 path: '/ranking',

@@ -12,7 +12,7 @@
                     >
                         <i class="ion-ios-arrow-back"></i>
                     </button>
-                    <div class="logo full">
+                    <div class="logo full text-center">
                         {{ title }}
                     </div>
                 </div>

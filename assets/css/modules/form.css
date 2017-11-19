@@ -8,6 +8,13 @@
     padding: 10px 20px;
 }
 
+/* Remove ios shadow */
+* {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
 .form-group .form-control:focus {
     transform: scale(1);
     transition: ease .3s;
