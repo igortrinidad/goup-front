@@ -1,6 +1,6 @@
 {
-    "name": "iSaudavel - A sua saúde em boas mãos.",
-    "short_name": "iSaudavel",
+    "name": "GoUp",
+    "short_name": "GoUp",
     "icons": [
         {
             "src": "/static/assets/img/logos/logo-192x192.png",
@@ -15,7 +15,7 @@
     ],
     "start_url": "/index.html",
     "display": "standalone",
-    "background_color": "#000000",
-    "theme_color": "#4DBA87",
+    "background_color": "#5B2992",
+    "theme_color": "#FF4B89",
     "gcm_sender_id": "103953800507"
 }

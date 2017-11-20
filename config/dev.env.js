@@ -3,8 +3,8 @@ var prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
     NODE_ENV: '"development"',
-    API_URL: '"http://isaudavel-api.dev/api"',
-    API_ROOT_URL: '"http://isaudavel-api.dev/"',
-    FACEBOOK_CLIENT_ID: '"1854829291449231"',
+    API_URL: '"http://goup.dev/api"',
+    API_ROOT_URL: '"http://goup.dev/"',
+    FACEBOOK_CLIENT_ID: '"171329556786695"',
     GOOGLE_MAPS_KEY: '"AIzaSyAc7FRXAfTUbAG_lUOjKzzFa41JbRCCbbM"'
 })

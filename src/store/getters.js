@@ -47,4 +47,4 @@ export const checkLanguage = () => {
 }
 
 // get current token
-export const AuthToken = ({ Auth }) => Auth.token.token
+export const AuthToken = ({ Auth }) => Auth.token

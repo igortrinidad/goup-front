@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "823793769083",
-    "firebase_url": "https://isaudaveldev.firebaseio.com",
-    "project_id": "isaudaveldev",
-    "storage_bucket": "isaudaveldev.appspot.com"
+    "project_number": "221971517855",
+    "firebase_url": "https://goup-16bff.firebaseio.com",
+    "project_id": "goup-16bff",
+    "storage_bucket": "goup-16bff.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:823793769083:android:90881c3e50dbe43a",
+        "mobilesdk_app_id": "1:221971517855:android:8aa5d490ad70568a",
         "android_client_info": {
           "package_name": "today.goup"
         }
       },
       "oauth_client": [
         {
-          "client_id": "823793769083-jsuhuc9ojoecp2iug7qu3fjn8lm5cke7.apps.googleusercontent.com",
+          "client_id": "221971517855-56r5lkgjanlteoehb41nbk6l195fa2l2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAQy-avX2X8t3KsjqgylYDj9LEtVabAk6U"
+          "current_key": "AIzaSyDhzyJ2UxYfN6p2jzIJhU1qhbYkXvkHXuY"
         }
       ],
       "services": {

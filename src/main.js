@@ -16,6 +16,9 @@ import LazyImg from 'v2-lazy-image'
 import moment from 'moment'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 
+import {initFcmPushNotifications} from './utils/push-notifications'
+initFcmPushNotifications()
+
 require('moment/locale/pt-br')
 
     global_functions();
@@ -34,7 +37,7 @@ require('moment/locale/pt-br')
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
         js = d.createElement(s); js.id = id;
-        js.src = "https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.9&appId=1854829291449231";
+        js.src = `https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.9&appId=${facebookClientId}`;
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
