@@ -1,4 +1,4 @@
-import * as TYPES from './mutations-types'
+import * as TYPES from './mutation-types'
 import { localStorageSetItem, localStorageRemoveItem } from '../../../../utils/local'
 import { setToken as httpSetToken } from '../../../../plugins/http'
 
@@ -9,10 +9,7 @@ export const authSetToken = ({ commit }, token) => {
      * Sets the token to the local storage
      * for auto-login purpose
      */
-    localStorageSetItem('token', { token })
-
-    //Remove unused auth plugin token
-    //localStorageRemoveItem('default-auth-token')
+    localStorageSetItem('token', token)
 
     /**
      * Set the Axios Authorization header with the token

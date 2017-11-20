@@ -1,4 +1,4 @@
-import * as TYPES from './mutations-types'
+import * as TYPES from './mutation-types'
 
 export const setEnv = ({ commit }, env) => {
     /**
@@ -21,7 +21,7 @@ export const setLoading = ({ commit }, options) => {
 export const setLanguage = ({ commit }, language) => {
 
     localStorage.setItem('language', language);
-    
+
     commit(TYPES.SET_LANGUAGE, {
         language
     })

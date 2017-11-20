@@ -48,6 +48,7 @@
                                 <router-link
                                     tag="span"
                                     class="icon-information ion-ios-information"
+                                    v-if="places[0].slug"
                                     :to="{ name: 'general.places.show', params: { place_slug: places[0].slug } }"
                                 >
                                 </router-link>

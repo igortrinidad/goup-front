@@ -1,11 +1,11 @@
 // https://vuex.vuejs.org/en/mutations.html
 
-import * as TYPES from './mutations-types'
+import * as TYPES from './mutation-types'
 
 /* eslint-disable no-param-reassign */
 export default {
-    [TYPES.SET_TOKEN] (state, value) {
-        state.token = value
+    [TYPES.SET_TOKEN] (state, {token}) {
+        state.token = token
     },
     [TYPES.SET_USER](state, payload) {
         state.user = payload.user

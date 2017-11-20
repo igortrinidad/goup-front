@@ -1,5 +1,5 @@
 // https://vuex.vuejs.org/en/mutations.html
-import * as TYPES from './mutations-types'
+import * as TYPES from './mutation-types'
 
 /* eslint-disable no-param-reassign */
 export default {

@@ -55,15 +55,15 @@
             </div>
 
             <div v-if="interactions.loginWithEmail">
-                <form class="m-t-30 text-center">
+                <form class="m-t-30 text-center" >
                     <div class="form-group">
-                        <input type="text" class="form-control" :placeholder="translations.inputEmail">
+                        <input type="text" class="form-control" :placeholder="translations.inputEmail" v-model="login.email">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" :placeholder="translations.inputPassword">
+                        <input type="password" class="form-control" :placeholder="translations.inputPassword" v-model="login.password" @keyup.enter="makeLogin">
                     </div>
 
-                    <button type="button" class="btn btn-block btn-primary">{{ translations.login }}</button>
+                    <button type="button" class="btn btn-block btn-primary" :disabled="!login.email || !login.password" @click.prevent="makeLogin()">{{ translations.login }}</button>
 
                     <button type="button" class="btn btn-block btn-facebook m-t-10">
                         <i class="ion-social-facebook m-r-10"></i>{{ translations.loginFacebook }}
@@ -91,6 +91,7 @@
 
 <script>
     import * as translations from '@/translations/auth/login'
+    import {mapActions} from  'vuex'
 
     export default {
         name: 'login',
@@ -99,7 +100,11 @@
             return{
                 interactions: {
                     loginWithEmail: false
-                }
+                },
+               login: {
+                   email: '',
+                   password: ''
+               }
             }
         },
         computed: {
@@ -120,6 +125,8 @@
         },
 
         methods: {
+            ...mapActions(['authSetToken', 'authSetUser']),
+
             initSwiper() {
                 let that = this
 
@@ -131,6 +138,33 @@
                         pagination: '.swiper-pagination'
                     })
                 }, 200);
+            },
+
+            makeLogin(){
+                let that = this
+
+                that.$http.post('/auth/login', that.login)
+                    .then(function (response) {
+                        that.authSetToken(response.data.token)
+                        that.authSetUser(response.data.user)
+                        that.$router.push(that.handleRedirect())
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
+
+            handleRedirect(){
+                let that = this
+                let redirect_to
+
+                if (that.$route.query.redirect_back) {
+                    redirect_to = that.$route.query.redirect_back
+                } else {
+                    redirect_to = that.$route.query.redirect
+                }
+
+                return redirect_to ? redirect_to : '/';
             },
         }
     }

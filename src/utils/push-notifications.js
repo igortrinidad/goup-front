@@ -179,9 +179,9 @@ export function initFcmPushNotifications() {
 }
 
 function storeUserFcmToken(token, mobile = true) {
-    axios.defaults.headers.common.Authorization = `Bearer ${store.getters.AuthToken}`
+    axios.defaults.headers.common.Authorization = store.getters.AuthToken
 
-    axios.post(`${apiUrl}/user/fcm_token`, {token: token, is_mobile: mobile})
+    axios.post(`${apiUrl}/auth/fcm_token`, {token: token, is_mobile: mobile})
         .then(function (response) {
             //console.log(response);
         })

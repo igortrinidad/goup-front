@@ -64,6 +64,7 @@
 
     import User from '@/models/User'
     import * as translations from '@/translations/user/settings'
+    import {mapGetters} from 'vuex'
 
     export default {
         name: 'general-user-settings',
@@ -80,6 +81,8 @@
         },
 
         computed: {
+            ...mapGetters(['currentUser']),
+
             'translations': function() {
                 const language = localStorage.getItem('language')
 
@@ -93,7 +96,7 @@
         },
 
         mounted(){
-            this.getUser()
+            this.user = _.cloneDeep(this.currentUser)
             if (this.$route.params.settings_saved) {
                 successNotify('', this.translations.save_success)
             }
@@ -101,9 +104,6 @@
 
         methods: {
 
-            getUser() {
-                this.user = User
-            },
         }
     }
 </script>
