@@ -1,43 +1,9 @@
-<template lang="html">
+<template>
     <div class="main login">
-        <!-- <div class="container">
+        <div class="container text-center">
             <img class="logo" src="../../../../assets/logos/LOGOS-05.png" alt="">
-        </div> -->
-
-        <!-- Tour -->
-        <div class="container">
-            <div class="swiper-container text-center" ref="swiperTour">
-                <div class="swiper-wrapper m-b-10">
-                    <div class="swiper-slide">
-                        <h4 class="tour-title">{{ translations.tourTitle }}</h4>
-                        <div class="card">
-                            <div class="card-header cover" style="background: url('https://serranatural.com/landing/img/produtos/decor1.jpg')"></div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <h4 class="tour-title">{{ translations.likeLocal }}</h4>
-                        <div class="card">
-                            <div class="card-header cover" style="background: url('https://serranatural.com/landing/img/produtos/decor1.jpg')"></div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <h4 class="tour-title">{{ translations.unlikeLocal }}</h4>
-                        <div class="card">
-                            <div class="card-header cover" style="background: url('https://serranatural.com/landing/img/produtos/decor1.jpg')"></div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <h4 class="tour-title">{{ translations.friends }}</h4>
-                        <div class="card">
-                            <div class="card-header cover" style="background: url('https://serranatural.com/landing/img/produtos/decor1.jpg')"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
+            <h2 class="f-300 m-b-30">{{ translations.title }}</h2>
         </div>
-        <!-- / Tour -->
-
         <!-- Login -->
         <div class="container">
             <div v-if="!interactions.loginWithEmail">
@@ -49,7 +15,7 @@
                     {{ translations.loginEmail }}
                 </button>
 
-                <button type="button" class="btn btn-block btn-facebook m-t-10">
+                <button type="button" class="btn btn-block btn-facebook m-t-10" @click.prevent="facebookLogin()">
                     <i class="ion-social-facebook m-r-10"></i>{{ translations.loginFacebook }}
                 </button>
             </div>
@@ -65,7 +31,7 @@
 
                     <button type="button" class="btn btn-block btn-primary" :disabled="!login.email || !login.password" @click.prevent="makeLogin()">{{ translations.login }}</button>
 
-                    <button type="button" class="btn btn-block btn-facebook m-t-10">
+                    <button type="button" class="btn btn-block btn-facebook m-t-10" @click.prevent="facebookLogin()">
                         <i class="ion-social-facebook m-r-10"></i>{{ translations.loginFacebook }}
                     </button>
                 </form>
@@ -73,9 +39,23 @@
         </div>
         <!-- / Login -->
 
-        <!-- Terms And Privacy -->
+
         <div class="container text-center">
             <div class="m-t-30">
+                <small class="f-300">
+                    <router-link :to="{name: 'landing.reset-pass', params: {usertype: 'user'}}" class="f-primary">{{ translations.forgotPassword }}</router-link>
+                </small>
+            </div>
+
+            <div class="m-t-10">
+                <small class="f-300">
+                    {{ translations.signup }}
+                    <router-link :to="{name: 'general.auth.signup'}" class="f-primary">{{ translations.getStart }}</router-link>
+                </small>
+            </div>
+
+            <!-- Terms And Privacy -->
+            <div class="m-t-10">
                 <small class="f-300">
                     {{ translations.acceptTerms }}
                     <a href="#" class="f-primary">{{ translations.terms }}</a>
@@ -83,8 +63,9 @@
                     <a href="#" class="f-primary">{{ translations.privacy }}</a>
                 </small>
             </div>
+             <!-- / Terms And Privacy -->
         </div>
-        <!-- / Terms And Privacy -->
+
 
     </div>
 </template>
@@ -92,6 +73,7 @@
 <script>
     import * as translations from '@/translations/auth/login'
     import {mapActions} from  'vuex'
+    import {facebookClientId} from '@/config'
 
     export default {
         name: 'login',
@@ -121,24 +103,13 @@
         },
 
         mounted() {
-            this.initSwiper()
+            if (window.cordova) {
+                openFB.init({appId: facebookClientId, tokenStore: localStorage});
+            }
         },
 
         methods: {
             ...mapActions(['authSetToken', 'authSetUser']),
-
-            initSwiper() {
-                let that = this
-
-                setTimeout(() => {
-                    that.swiperTour = new Swiper(that.$refs.swiperTour, {
-                        spaceBetween: 15,
-                        slidesPerView: 1,
-                        paginationClickable: true,
-                        pagination: '.swiper-pagination'
-                    })
-                }, 200);
-            },
 
             makeLogin(){
                 let that = this
@@ -165,6 +136,113 @@
                 }
 
                 return redirect_to ? redirect_to : '/';
+            },
+
+            /*
+             * FACEBOOK Methods
+             */
+            facebookLogin(){
+                let that = this
+
+
+
+                if(window.cordova){
+                    openFB.login(
+                        function(response) {
+                            if(response.status === 'connected') {
+                                that.statusChangeCallback(response)
+                            } else {
+
+                                alert('Facebook login failed: ' + response.error);
+                                localStorage.clear();
+                                if(window.cordova){
+                                    window.cookies.clear();
+                                }
+                            }
+                        }, {scope: 'public_profile,email'});
+                }
+
+                if(!window.cordova){
+                    FB.login(function(response) {
+                        that.statusChangeCallback(response)
+                    }, {scope: 'public_profile,email'});
+                }
+            },
+
+            statusChangeCallback(response) {
+                let that = this
+
+                if (response.status === 'connected') {
+                    that.getUserInfo(response.authResponse.accessToken);
+                } else {
+                    errorNotify('', 'É necessário fazer login para continuar.')
+
+                }
+            },
+
+            getUserInfo(accessToken) {
+                let that = this
+                if(window.cordova){
+                    openFB.api({
+                        path: '/v2.8/me',
+                        params: { "access_token": accessToken, "fields":"id,name,first_name,last_name,email" },
+                        success: function(response) {
+
+                            response.photo_url = 'https://graph.facebook.com/' + response.id + '/picture?type=normal';
+                            response.access_token = accessToken;
+                            response.role = 'user';
+
+                            that.socialLogin(response)
+                        },
+                        error: that.errorHandler
+                    })
+                }
+
+                if(!window.cordova){
+                    FB.api('/me', {fields: 'name,first_name, last_name, email' }, function(response) {
+                        response.photo_url = 'https://graph.facebook.com/' + response.id + '/picture?type=normal';
+                        response.access_token = accessToken;
+                        response.role = 'user';
+
+                        that.socialLogin(response)
+                    });
+                }
+            },
+
+            socialLogin(response){
+                let that = this
+                localStorage.setItem('provider', 'facebook')
+
+
+
+                that.$http.post('/auth/social_login', response)
+                    .then(function (response) {
+
+                        that.authSetToken(response.data.access_token) // this is a Vuex action
+                        that.authSetUser(response.data.user) // this is a Vuex action
+
+
+                        successNotify('', 'Login efetuado com sucesso.')
+
+                        that.$router.push(that.handleRedirect(response.data.user.id))
+
+                    })
+                    .catch(function (error) {
+                        errorNotify('Ops!', 'Erro ao efetuar login.')
+                        localStorage.clear();
+                        if(window.cordova){
+                            window.cookies.clear();
+                        }
+                    });
+            },
+
+            errorHandler(error) {
+
+                errorNotify('', error.message);
+                localStorage.clear();
+                if(window.cordova){
+                    window.cookies.clear();
+                }
             },
         }
     }

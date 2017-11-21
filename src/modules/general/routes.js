@@ -82,10 +82,6 @@ export default [
         ]
     },
     {
-        path: '*',
-        component: notFound
-    },
-    {
         name: 'general.404',
         path: '/not-found',
         component: notFound
@@ -94,5 +90,9 @@ export default [
         name: 'general.403',
         path: '/403',
         component: Forbidden
+    },
+    {
+        path: '*',
+        component: notFound
     }
 ]

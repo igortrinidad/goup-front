@@ -7,17 +7,21 @@
 }
 
 .btn-notification{
-    background-color: #6EC058 !important;
     color: #fff !important;
     font-size: 12px;
-
 }
+
+
 
 .iziToast>.iziToast-body>.iziToast-buttons {
    display: table-cell;
 }
 
-    
+.iziToast.iziToast-layout2 .iziToast-body > p {
+    padding-top: 10px;
+}
+
+
 .notification {
     padding: 10px;
     border-radius: 4px;

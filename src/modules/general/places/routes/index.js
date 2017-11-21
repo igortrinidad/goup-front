@@ -42,7 +42,7 @@ export default [
             },
             {
                 name: 'general.places.show',
-                path: '/:place_slug',
+                path: '/place/:place_slug',
                 component: Show,
                 meta: {requiresAuth: false}
             },

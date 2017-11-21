@@ -35,20 +35,19 @@ const beforeEach = (to, from, next) => {
             localStoredUser !== undefined &&
             localStoredUser !== null
         ) {
-            token = localStoredToken.token
-            store.dispatch('authSetToken', token)
+            store.dispatch('authSetToken', localStoredToken)
             store.dispatch('authSetUser', localStoredUser.user)
         }
     }
 
     //prevents user to access login / signup routes
-    // if ( store.getters.isLogged && preventsLogged(prevents)) {
-    //     next('/')
-    // }
+     if ( store.getters.isLogged && preventsLogged(prevents)) {
+         next('/')
+     }
 
     //check user role
     if(needRole && store.getters.userRole != role){
-        next({name: 'landing.403'})
+        next({name: 'general.403'})
     }
 
     /**
@@ -66,11 +65,10 @@ const beforeEach = (to, from, next) => {
      * login.
      */
     if (needAuth(auth, token)) {
-        next({name: 'landing.index'})
+        next({name: 'general.auth.login'})
     }
 
     $('html, body').stop().animate({ scrollTop: 0 }, 500, 'easeInOutExpo');
-
 
 
     //Hide all modals on change route

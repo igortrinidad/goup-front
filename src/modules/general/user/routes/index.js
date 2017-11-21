@@ -33,19 +33,19 @@ export default [
                 name: 'general.user.settings',
                 path: '/settings/:settings_saved?',
                 component: Settings,
-                meta: {requiresAuth: false}
+                meta: {requiresAuth: true}
             },
             {
                 name: 'general.user.settings.about',
                 path: '/settings/about',
                 component: About,
-                meta: {requiresAuth: false}
+                meta: {requiresAuth: true}
             },
             {
                 name: 'general.user.settings.edit',
                 path: '/settings/edit-profile',
                 component: UserEditProfile,
-                meta: {requiresAuth: false}
+                meta: {requiresAuth: true}
             },
         ]
     }

@@ -2,24 +2,35 @@
     <div class="first-container">
         <div class="container text-center">
             <h1 class="f-700">403</h1>
-            <h1 class="text-muted">Forbidden :(</h1>
-            <h3>Você não tem permissão para acessar este recurso.</h3>
+            <h1 class="text-muted">{{ translations.forbidden }}</h1>
+            <h3>{{ translations.message }}</h3>
 
             <div class="row m-t-20">
-                <router-link to="/" class="btn btn-success">Voltar para home</router-link>
+                <router-link to="/" class="btn btn-success">{{ translations.button }}</router-link>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import * as translations from '@/translations/pages/403'
+
     export default{
-        name: 'landing-403',
+        name: 'general-403',
         data(){
             return {}
         },
-        mounted(){
+        computed: {
+            'translations': function() {
+                const language = localStorage.getItem('language')
 
+                if (language === 'en' || !language) {
+                    return translations.en
+                }
+                if (language === 'pt') {
+                    return translations.pt
+                }
+            }
         },
         methods: {}
     }
@@ -30,5 +41,9 @@
         color: #fff;
         background-color:  #8e44ad;
         border-color: #8e44ad
+    }
+
+    .text-muted{
+        color: #CC3A84
     }
 </style>

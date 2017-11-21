@@ -39,20 +39,14 @@
                                 <i class="ion-help-circled m-r-5"></i> {{ translations.buttons.about }}
                             </router-link>
                         </div>
-                    </div>
-                </div>
 
-                <!-- <div class="container m-t-15">
-                    <div class="card card-rounded">
-                        <div class="card-body">
-                            <h1>Teste de lugares</h1>
-                            <h1>Teste de lugares</h1>
-                            <h1>Teste de lugares</h1>
-                            <h1>Teste de lugares</h1>
+                        <div class="col-xs-12 m-t-20">
+                            <router-link :to="{ name: 'general.auth.logout' }" tag="button" class="btn btn-primary btn-block transparent">
+                                <i class="ion-log-out rotate-180 m-r-5"></i> {{ translations.buttons.logout }}
+                            </router-link>
                         </div>
                     </div>
-                </div> -->
-
+                </div>
             </div>
         </transition>
 
@@ -118,5 +112,10 @@
         padding-bottom: 30px;
         border-radius: 0 0 20px 20px;
     }
+    .rotate-180 {
+        display: inline-block;
+        transform: rotate(180deg);
+    }
+
 
  </style>

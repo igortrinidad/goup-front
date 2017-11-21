@@ -21,6 +21,13 @@ const Signup = (resolve) => {
     })
 }
 
+const SignupSuccess = (resolve) => {
+    require.ensure(['../components/signup-success'], () => {
+        resolve(require('../components/signup-success')) // eslint-disable-line global-require
+    })
+}
+
+
 export default [
     {
         name: 'general.auth.login',
@@ -38,6 +45,12 @@ export default [
         name: 'general.auth.logout',
         path: '/logout',
         component: Logout,
-        meta: { requiresAuth: true, needRole: true, role: 'general' },
+        meta: { requiresAuth: true},
+    },
+    {
+        name: 'general.auth.signup.success',
+        path: '/cadastro/sucesso',
+        component: SignupSuccess,
+        meta: { requiresAuth: false},
     },
 ]

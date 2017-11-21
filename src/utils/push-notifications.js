@@ -9,6 +9,8 @@ import router from '../router'
 
 var notificationAudio = new Audio(require('../assets/audio/notification.mp3'))
 
+import * as translations from '../translations/notifications/request'
+
 export function initFcmPushNotifications() {
 
     /*
@@ -122,54 +124,28 @@ export function initFcmPushNotifications() {
             })
                 .then(() => {
                     // Requests user browser permission
-                    return messaging.requestPermission();
-                })
-                .then(() => {
-                    // Gets token
-                    return messaging.getToken();
-                })
-                .then((token) => {
+                    //return messaging.requestPermission();
+                    if (store.getters.isLogged) {
+                        return requestPermission()
 
-                    console.log(token)
+                    }else{
+                        //Wait until user is logged
+                        store.watch(
+                            (state) => {
+                                return store.getters.isLogged
+                            },
+                            (val, oldVal) => {
+                                if (val) {
 
-                    store.dispatch('setFcmTokenBrowser', token)
-
-                    if (!store.getters.isLogged) {
-                        //console.log('o usuario nao esta logado')
-                    }
-
-                    //Wait until user is logged
-                    store.watch(
-                        (state) => {
-                            return store.getters.isLogged
-                        },
-                        (val, oldVal) => {
-                            if (val) {
-                                //o usuario esta logado, verificar se o token é igual para atualizar ou nao
-                                //console.log('o usuario esta logado')
-                                if (store.getters.isLogged) {
-
-                                    if (store.getters.currentUser.role == 'user' && store.getters.currentUser.fcm_token_browser != token) {
-                                        storeUserFcmToken(token, false)
-                                        //console.log('token armazenado no db')
-                                    }
+                                    return requestPermission()
                                 }
+                            },
+                            {
+                                deep: true
                             }
-                        },
-                        {
-                            deep: true
-                        }
-                    );
-
-                }).then(() => {
-
-                return messaging.onMessage(function (payload) {
-                    //Play notification audio
-                    notificationAudio.play()
-
-                    notificationHandler(payload.data)
-                });
-            })
+                        );
+                    }
+                })
                 .catch((err) => {
                     console.log('ServiceWorker registration failed: ', err);
                 });
@@ -255,3 +231,121 @@ function notificationHandler(payload) {
         });
     }
 }
+
+function handleTranslations() {
+    const language = localStorage.getItem('language')
+
+    if (language === 'en' || !language) {
+        return translations.en
+    }
+    if (language === 'pt') {
+        return translations.pt
+    }
+}
+
+function requestPermission(){
+
+    if (Notification.permission == "granted") {
+        return getFcmToken()
+    }
+
+    return new Promise((resolve, reject) => {
+        const managePermissionResult = result => {
+            if (result === 'granted') {
+                return getFcmToken()
+            } else if (result === 'denied') {
+                return reject();
+            } else {
+                return reject();
+            }
+        };
+
+        iziToast.show({
+            icon: 'icon-contacts',
+            title: `${handleTranslations().title}`,
+            message: `${handleTranslations().message}`,
+            position: 'topCenter',
+            image: '/static/assets/img/logos/LOGOS-05.png',
+            imageWidth: 70,
+            color: 'dark',
+            backgroundColor: '#5A298D',
+            titleColor: '#fff',
+            messageColor: '#fff',
+            timeout: 0,
+            layout: 2,
+            buttons: [
+                [`<button class="btn-notification">${handleTranslations().buttons.notNow}</button>`, function (instance, toast) {
+                    instance.hide({
+                        transitionOut: 'fadeOutUp',
+                    }, toast, 'close', 'btn2');
+                }, false],
+                [`<button class="btn btn-primary transparent">${handleTranslations().buttons.enable}</button>`, function (instance, toast) {
+                    instance.hide({
+                        transitionOut: 'fadeOutUp',
+                    }, toast, 'close', 'btn2');
+
+                    const permissionPromise = Notification.requestPermission(result => {
+                        if (permissionPromise) {
+                            return;
+                        }
+                        managePermissionResult(result);
+                    });
+
+                    if (permissionPromise) {
+                        permissionPromise.then(managePermissionResult);
+                    }
+
+                }, true]
+            ],
+            drag: false
+        });
+
+    });
+
+}
+
+function getFcmToken(){
+    messaging.getToken().then((token) => {
+
+        console.log(token)
+
+        store.dispatch('setFcmTokenBrowser', token)
+
+        if(store.getters.isLogged){
+            if (store.getters.currentUser.role == 'user' && store.getters.currentUser.fcm_token_browser != token) {
+                storeUserFcmToken(token, false)
+            }
+        }else{
+            store.watch(
+                (state) => {
+                    return store.getters.isLogged
+                },
+                (val, oldVal) => {
+                    if (val) {
+                        //o usuario esta logado, verificar se o token é igual para atualizar ou nao
+                        if (store.getters.isLogged) {
+
+                            if (store.getters.currentUser.role == 'user' && store.getters.currentUser.fcm_token_browser != token) {
+                                storeUserFcmToken(token, false)
+                            }
+                        }
+                    }
+                },
+                {
+                    deep: true
+                }
+            );
+        }
+
+    }).then(() => {
+
+        return messaging.onMessage(function (payload) {
+            //Play notification audio
+            notificationAudio.play()
+
+            notificationHandler(payload.data)
+        });
+    })
+
+}
+
