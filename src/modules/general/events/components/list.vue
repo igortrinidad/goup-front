@@ -126,7 +126,7 @@
     import { cleanPlaceModel } from '@/models/Place'
     import { cleanCategoriesArrayExample } from '@/models/Category'
 
-    import * as translations from '@/translations/places/list'
+    import * as translations from '@/translations/events/list'
 
     export default {
         name: 'general-events-list',
