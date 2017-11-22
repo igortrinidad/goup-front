@@ -1,75 +1,84 @@
 <template>
-    <div class="main login">
-        <div class="container text-center">
-            <img class="logo" src="../../../../assets/logos/LOGOS-05.png" alt="">
-            <h2 class="f-300 m-b-30">{{ translations.title }}</h2>
-        </div>
+    <div>
 
-        <!-- Signup -->
-        <div class="container">
-            <div v-if="!interactions.signupWithEmail">
-                <button
-                    type="button"
-                    class="btn btn-block btn-primary m-t-10"
-                    @click="interactions.signupWithEmail = true"
-                >
-                    {{ translations.loginEmail }}
-                </button>
+        <main-header
+            :title="translations.header"
+            :type="'back'"
+            :cursor="false"
+        ></main-header>
 
-                <button type="button" class="btn btn-block btn-facebook m-t-10" @click.prevent="facebookLogin()">
-                    <i class="ion-social-facebook m-r-10"></i>{{ translations.loginFacebook }}
-                </button>
+        <div class="main login first-container">
+            <div class="container text-center">
+                <img class="logo" src="../../../../assets/logos/LOGOS-05.png" alt="">
+                <h2 class="f-300 m-b-30">{{ translations.title }}</h2>
             </div>
 
-            <div v-if="interactions.signupWithEmail">
-                <form class="m-t-30 text-center" >
-                    <div class="form-group">
-                        <input type="text" class="form-control" :placeholder="translations.placeholders.name" v-model="user.name">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" :placeholder="translations.placeholders.last_name" v-model="user.last_name">
-                    </div>
-                    <div class="form-group">
-                        <input type="email" class="form-control" :placeholder="translations.placeholders.email" v-model="user.email" id="signup-email">
-                    </div>
-                    <div class="form-group">
-                        <input type="tex" class="form-control" :placeholder="translations.placeholders.bday" v-model="user.bday"  data-mask="00/00/0000">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" :placeholder="translations.placeholders.password" v-model="user.password" @keyup.enter="makeLogin">
-                    </div>
-
-                    <button type="button" class="btn btn-block btn-primary" :disabled="validateForm()" @click.prevent="signup()">{{ translations.signup }}</button>
+            <!-- Signup -->
+            <div class="container">
+                <div v-if="!interactions.signupWithEmail">
+                    <button
+                        type="button"
+                        class="btn btn-block btn-primary m-t-10"
+                        @click="interactions.signupWithEmail = true"
+                    >
+                        {{ translations.loginEmail }}
+                    </button>
 
                     <button type="button" class="btn btn-block btn-facebook m-t-10" @click.prevent="facebookLogin()">
                         <i class="ion-social-facebook m-r-10"></i>{{ translations.loginFacebook }}
                     </button>
-                </form>
+                </div>
+
+                <div v-if="interactions.signupWithEmail">
+                    <form class="m-t-30 text-center" >
+                        <div class="form-group">
+                            <input type="text" class="form-control" :placeholder="translations.placeholders.name" v-model="user.name">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" :placeholder="translations.placeholders.last_name" v-model="user.last_name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" :placeholder="translations.placeholders.email" v-model="user.email" id="signup-email">
+                        </div>
+                        <div class="form-group">
+                            <input type="tex" class="form-control" :placeholder="translations.placeholders.bday" v-model="user.bday"  data-mask="00/00/0000">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" :placeholder="translations.placeholders.password" v-model="user.password" @keyup.enter="makeLogin">
+                        </div>
+
+                        <button type="button" class="btn btn-block btn-primary" :disabled="validateForm()" @click.prevent="signup()">{{ translations.signup }}</button>
+
+                        <button type="button" class="btn btn-block btn-facebook m-t-10" @click.prevent="facebookLogin()">
+                            <i class="ion-social-facebook m-r-10"></i>{{ translations.loginFacebook }}
+                        </button>
+                    </form>
+                </div>
             </div>
+            <!-- / Signup -->
+
+            <!-- Terms And Privacy -->
+            <div class="container text-center">
+                <div class="m-t-30">
+                    <small class="f-300">
+                        {{ translations.alreadySigned }}
+                        <router-link :to="{name: 'general.auth.login'}" class="f-primary">{{ translations.loginHere }}</router-link>
+
+                    </small>
+                </div>
+
+                <div class="m-t-10">
+                    <small class="f-300">
+                        {{ translations.acceptTerms }}
+                        <a href="#" class="f-primary">{{ translations.terms }}</a>
+                        &
+                        <a href="#" class="f-primary">{{ translations.privacy }}</a>
+                    </small>
+                </div>
+            </div>
+            <!-- / Terms And Privacy -->
+
         </div>
-        <!-- / Signup -->
-
-        <!-- Terms And Privacy -->
-        <div class="container text-center">
-            <div class="m-t-30">
-                <small class="f-300">
-                    {{ translations.alreadySigned }}
-                    <router-link :to="{name: 'general.auth.login'}" class="f-primary">{{ translations.loginHere }}</router-link>
-
-                </small>
-            </div>
-
-            <div class="m-t-10">
-                <small class="f-300">
-                    {{ translations.acceptTerms }}
-                    <a href="#" class="f-primary">{{ translations.terms }}</a>
-                    &
-                    <a href="#" class="f-primary">{{ translations.privacy }}</a>
-                </small>
-            </div>
-        </div>
-        <!-- / Terms And Privacy -->
-
     </div>
 </template>
 
@@ -80,7 +89,9 @@
 
     export default {
         name: 'signup',
-
+        components: {
+            mainHeader: require('@/components/main-header.vue')
+        },
         data() {
             return{
                 interactions: {
@@ -286,7 +297,9 @@
     }
 
     .main.login {
-        background: #561F9F;
+        background-color: #561F9F;
+        background-image: url("https://s3.amazonaws.com/goup-assets/img/pattern-goup-transp.png");
+        background-repeat: repeat;
         height: 100vh;
         overflow: scroll;
     }

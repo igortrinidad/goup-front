@@ -1,70 +1,82 @@
 <template>
-    <div class="main login">
-        <div class="container text-center">
-            <img class="logo" src="../../../../assets/logos/LOGOS-05.png" alt="">
-            <h2 class="f-300 m-b-30">{{ translations.title }}</h2>
-        </div>
-        <!-- Login -->
-        <div class="container">
-            <div v-if="!interactions.loginWithEmail">
-                <button
-                    type="button"
-                    class="btn btn-block btn-primary m-t-10"
-                    @click="interactions.loginWithEmail = true"
-                >
-                    {{ translations.loginEmail }}
-                </button>
+    <div>
 
-                <button type="button" class="btn btn-block btn-facebook m-t-10" @click.prevent="facebookLogin()">
-                    <i class="ion-social-facebook m-r-10"></i>{{ translations.loginFacebook }}
-                </button>
+        <main-header
+            :title="'Login'"
+            :type="'back'"
+            :cursor="false"
+        ></main-header>
+
+        <div class="main login first-container">
+
+            <div class="container text-center">
+                <img class="logo" src="../../../../assets/logos/LOGOS-05.png" alt="">
+                <h2 class="f-300 m-b-30">{{ translations.title }}</h2>
             </div>
-
-            <div v-if="interactions.loginWithEmail">
-                <form class="m-t-30 text-center" >
-                    <div class="form-group">
-                        <input type="text" class="form-control" :placeholder="translations.inputEmail" v-model="login.email">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" :placeholder="translations.inputPassword" v-model="login.password" @keyup.enter="makeLogin">
-                    </div>
-
-                    <button type="button" class="btn btn-block btn-primary" :disabled="!login.email || !login.password" @click.prevent="makeLogin()">{{ translations.login }}</button>
+            <!-- Login -->
+            <div class="container">
+                <div v-if="!interactions.loginWithEmail">
+                    <button
+                        type="button"
+                        class="btn btn-block btn-primary m-t-10"
+                        @click="interactions.loginWithEmail = true"
+                    >
+                        {{ translations.loginEmail }}
+                    </button>
 
                     <button type="button" class="btn btn-block btn-facebook m-t-10" @click.prevent="facebookLogin()">
                         <i class="ion-social-facebook m-r-10"></i>{{ translations.loginFacebook }}
                     </button>
-                </form>
+                </div>
+
+                <div v-if="interactions.loginWithEmail">
+                    <form class="m-t-30 text-center" >
+                        <div class="form-group">
+                            <input type="text" class="form-control" :placeholder="translations.inputEmail" v-model="login.email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" :placeholder="translations.inputPassword" v-model="login.password" @keyup.enter="makeLogin">
+                        </div>
+
+                        <button type="button" class="btn btn-block btn-primary" :disabled="!login.email || !login.password" @click.prevent="makeLogin()">{{ translations.login }}</button>
+
+                        <button type="button" class="btn btn-block btn-facebook m-t-10" @click.prevent="facebookLogin()">
+                            <i class="ion-social-facebook m-r-10"></i>{{ translations.loginFacebook }}
+                        </button>
+                    </form>
+                </div>
             </div>
+            <!-- / Login -->
+
+
+            <div class="container text-center">
+                <div class="m-t-30">
+                    <small class="f-300">
+                        <router-link :to="{name: 'landing.reset-pass', params: {usertype: 'user'}}" class="f-primary">{{ translations.forgotPassword }}</router-link>
+                    </small>
+                </div>
+
+                <div class="m-t-10">
+                    <small class="f-300">
+                        {{ translations.signup }}
+                        <router-link :to="{name: 'general.auth.signup'}" class="f-primary">{{ translations.getStart }}</router-link>
+                    </small>
+                </div>
+
+                <!-- Terms And Privacy -->
+                <div class="m-t-10">
+                    <small class="f-300">
+                        {{ translations.acceptTerms }}
+                        <a href="#" class="f-primary">{{ translations.terms }}</a>
+                        &
+                        <a href="#" class="f-primary">{{ translations.privacy }}</a>
+                    </small>
+                </div>
+                 <!-- / Terms And Privacy -->
+            </div>
+            
         </div>
-        <!-- / Login -->
 
-
-        <div class="container text-center">
-            <div class="m-t-30">
-                <small class="f-300">
-                    <router-link :to="{name: 'landing.reset-pass', params: {usertype: 'user'}}" class="f-primary">{{ translations.forgotPassword }}</router-link>
-                </small>
-            </div>
-
-            <div class="m-t-10">
-                <small class="f-300">
-                    {{ translations.signup }}
-                    <router-link :to="{name: 'general.auth.signup'}" class="f-primary">{{ translations.getStart }}</router-link>
-                </small>
-            </div>
-
-            <!-- Terms And Privacy -->
-            <div class="m-t-10">
-                <small class="f-300">
-                    {{ translations.acceptTerms }}
-                    <a href="#" class="f-primary">{{ translations.terms }}</a>
-                    &
-                    <a href="#" class="f-primary">{{ translations.privacy }}</a>
-                </small>
-            </div>
-             <!-- / Terms And Privacy -->
-        </div>
 
 
     </div>
@@ -77,7 +89,9 @@
 
     export default {
         name: 'login',
-
+        components: {
+            mainHeader: require('@/components/main-header.vue')
+        },
         data() {
             return{
                 interactions: {
@@ -260,7 +274,9 @@
     }
 
     .main.login {
-        background: #561F9F;
+        background-color: #561F9F;
+        background-image: url("https://s3.amazonaws.com/goup-assets/img/pattern-goup-transp.png");
+        background-repeat: repeat;
         height: 100vh;
         overflow: scroll;
     }

@@ -6,7 +6,7 @@ export const en = {
     inputEmail: 'Enter your e-mail',
     inputPassword: 'Enter your password',
     acceptTerms: 'Continuing you agree to our',
-    terms: 'Security terms',
+    terms: 'Terms of Use',
     privacy: 'Privacy policy',
 
     // Tour
@@ -30,8 +30,8 @@ export const pt = {
     inputEmail: 'Informe seu e-mail',
     inputPassword: 'Informe sua senha',
     acceptTerms: 'Ao continuar você concorda com nossos',
-    terms: 'Termos de segurança',
-    privacy: 'Política de privadede',
+    terms: 'Termos de Uso',
+    privacy: 'Política de Privacidade',
 
     // Tour
     tourTitle: 'Descubra locais novos perto de você',

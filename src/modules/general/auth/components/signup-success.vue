@@ -43,7 +43,9 @@
     }
 
     .main.login {
-        background: #561F9F;
+        background-color: #561F9F;
+        background-image: url("https://s3.amazonaws.com/goup-assets/img/pattern-goup-transp.png");
+        background-repeat: repeat;
         height: 100vh;
         overflow: scroll;
     }
