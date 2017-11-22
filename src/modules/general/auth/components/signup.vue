@@ -41,7 +41,7 @@
                             <input type="email" class="form-control" :placeholder="translations.placeholders.email" v-model="user.email" id="signup-email">
                         </div>
                         <div class="form-group">
-                            <input type="tex" class="form-control" :placeholder="translations.placeholders.bday" v-model="user.bday"  data-mask="00/00/0000">
+                            <input type="tel" class="form-control" :placeholder="translations.placeholders.bday" v-model="user.bday"  data-mask="00/00/0000">
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control" :placeholder="translations.placeholders.password" v-model="user.password" @keyup.enter="makeLogin">

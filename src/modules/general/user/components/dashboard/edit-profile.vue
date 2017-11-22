@@ -37,10 +37,24 @@
 
                 <div class="container m-t-30 text-center">
 
+                    <p class=" f-22 f-400">{{ translations.account.title }}</p>
+                    <div class="form-group">
+                        <input type="text" class="form-control" :placeholder="translations.placeholders.name" v-model="user.name">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" :placeholder="translations.placeholders.last_name" v-model="user.last_name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" :placeholder="translations.placeholders.email" v-model="user.email">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-control" :placeholder="translations.placeholders.bday" v-model="user.bday"  data-mask="00/00/0000">
+                    </div>
+
                     <!-- / Select Language -->
                     <p class=" f-22 f-400">{{ translations.language.title }}</p>
 
-                    <ul class="list-group list-rounded m-t-10 m-0 text-left">
+                    <ul class="list-group list-rounded m-t-10 m-0 text-left m-b-20">
                         <li class="list-group-item transparent" @click="toggleLang('en')">
                             English
                             <i
@@ -66,17 +80,30 @@
                     </ul>
                     <!-- / Select Language -->
 
+                    <!-- Password -->
+                    <p class=" f-22 f-400">{{ translations.password.title }}</p>
+                    <button type="button" class="btn btn-info btn-block transparent m-t-30" @click="interactions.changePassword = true" v-if="!interactions.changePassword">
+                        {{ translations.password.button }}
+                    </button>
+
+                    <div v-if="interactions.changePassword">
+                        <div class="form-group">
+                            <input type="password" class="form-control" :placeholder="translations.placeholders.password" v-model="user.password">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" :placeholder="translations.placeholders.password_confirmation" v-model="user.password_confirmation">
+                        </div>
+                        <button type="button" class="btn btn-info btn-block transparent m-t-30" @click="cancelChangePassword()">
+                            {{ translations.password.buttonCancel }}
+                        </button>
+                    </div>
+                    <!-- /Password -->
+
                     <!-- Button Save Settings -->
                     <button type="button" class="btn btn-primary btn-block transparent m-t-30" @click="saveSettings()">
                         {{ translations.save }}
                     </button>
                     <!-- Button Save Settings -->
-
-                    <!-- Button Logout -->
-                    <button type="button" class="btn btn-info btn-block transparent m-t-30" @click="saveSettings()">
-                        {{ translations.logout }}
-                    </button>
-                    <!-- Button Logout -->
 
                 </div>
 
@@ -91,6 +118,7 @@
 
     import User from '@/models/User'
     import * as translations from '@/translations/user/components/edit-profile'
+    import {mapGetters, mapActions} from 'vuex'
 
     export default {
         name: 'general-user-settings-edit-profile',
@@ -101,7 +129,9 @@
 
         data () {
             return {
-                interactions: {},
+                interactions: {
+                    changePassword: false,
+                },
                 user: {},
                 languages: {
                     pt: false,
@@ -111,8 +141,10 @@
         },
 
         computed: {
+            ...mapGetters(['language']),
+
             'translations': function() {
-                const language = localStorage.getItem('language')
+                const language = this.language
 
                 if (language === 'en' || !language) {
                     this.languages.en = true
@@ -134,18 +166,24 @@
         },
 
         methods: {
+            ...mapActions(['setLanguage', 'authSetUser']),
 
             saveSettings() {
-                this.setLanguage()
-                this.$router.push({
-                    name: 'general.user.settings',
-                    params: {
-                        settings_saved: true
-                    }
-                })
+
+                let that = this
+
+                that.setLanguage(that.user.language)
+
+                that.$http.post('user/update', that.user)
+                    .then(function (response) {
+                        that.authSetUser(response.data.user)
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
             },
 
-            toggleLang(lang) {
+            toggleLang(lang) {  console.log(lang)
                 if (lang === 'en') {
                     this.languages.en = true
                     this.languages.pt = false
@@ -155,20 +193,26 @@
                     this.languages.en = false
                     this.languages.pt = true
                 }
+
+                this.user.language = lang
             },
 
-            setLanguage() {
-                if (localStorage.getItem('language')) {
-                    localStorage.removeItem('language')
-                }
-                localStorage.setItem('language', this.languages.en ? 'en' : 'pt')
+
+            getUser(){
+                let that = this
+
+                that.$http.get('user/profile')
+                    .then(function (response) {
+                        that.user = response.data.user
+                        that.initSwiper()
+                        that.setLanguage(that.user.language)
+
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
             },
 
-            getUser() {
-                this.user = User
-                console.log(this.user);
-                this.initSwiper()
-            },
 
             initSwiper() {
                 let that = this
@@ -183,6 +227,12 @@
 
                     })
                 }, 200);
+            },
+
+            cancelChangePassword(){
+                this.user.password = ''
+                this.user.password_confirmation = ''
+                this.interactions.changePassword = false
             }
         }
     }

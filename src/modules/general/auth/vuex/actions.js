@@ -24,7 +24,12 @@ export const authSetToken = ({ commit }, token) => {
     })
 }
 
-export const authSetUser = ({ commit }, user) => {
+export const authSetUser = ({ commit, dispatch }, user) => {
+
+    if(!_.isEmpty(user.language)){
+        dispatch('setLanguage', user.language)
+    }
+
     /**
      * Sets the user to the local storage
      * for auto-login purpose

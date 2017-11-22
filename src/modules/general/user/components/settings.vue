@@ -29,8 +29,8 @@
                         </div>
 
                         <div class="col-xs-12 m-t-20">
-                            <router-link :to="{ name: 'general.places.create' }" tag="button" class="btn btn-primary btn-block transparent">
-                                <i class="ion-plus-round m-r-5"></i> {{ translations.buttons.add_new_place }}
+                            <router-link :to="{ name: 'general.events.create' }" tag="button" class="btn btn-primary btn-block transparent">
+                                <i class="ion-plus-round m-r-5"></i> {{ translations.buttons.add_new_event }}
                             </router-link>
                         </div>
 

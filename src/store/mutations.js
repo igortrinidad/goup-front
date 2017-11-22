@@ -8,6 +8,8 @@ export default {
     },
 
     [TYPES.SET_LANGUAGE](state, payload) {
+        localStorage.setItem('language', payload.language);
+
         state.language = payload.language
     },
 

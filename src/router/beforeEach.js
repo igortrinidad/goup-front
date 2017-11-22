@@ -9,6 +9,7 @@ const preventsLogged = prevents => prevents === true
 const beforeEach = (to, from, next) => {
 
     let token = store.state.Auth.token
+    let language = store.state.language
     const auth = to.meta.requiresAuth
     const prevents = to.meta.preventsLogged
     const needRole = to.meta.needRole
@@ -37,6 +38,7 @@ const beforeEach = (to, from, next) => {
         ) {
             store.dispatch('authSetToken', localStoredToken)
             store.dispatch('authSetUser', localStoredUser.user)
+            store.dispatch('setLanguage', localStoredUser.user.language)
         }
     }
 

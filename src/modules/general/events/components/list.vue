@@ -46,7 +46,7 @@
                         >
                             {{ translations.more_filters }}
                         </button>
-                    </div>                    
+                    </div>
 
                     <div class="row m-t-30">
                         <div class="col-sm-12" v-for="place in places">
@@ -129,7 +129,7 @@
     import * as translations from '@/translations/places/list'
 
     export default {
-        name: 'general-places-list',
+        name: 'general-events-list',
 
         components: {
             mainHeader,

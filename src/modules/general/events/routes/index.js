@@ -29,19 +29,19 @@ export default [
         meta: {requiresAuth: false},
         children: [
             {
-                name: 'general.places.create',
+                name: 'general.events.create',
                 path: '/create',
                 component: Create,
                 meta: {requiresAuth: false}
             },
             {
-                name: 'general.places.list',
+                name: 'general.events.list',
                 path: '/ranking',
                 component: List,
                 meta: {requiresAuth: false}
             },
             {
-                name: 'general.places.show',
+                name: 'general.events.show',
                 path: '/place/:place_slug',
                 component: Show,
                 meta: {requiresAuth: false}

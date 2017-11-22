@@ -90,6 +90,11 @@ require('moment/locale/pt-br')
 
     Vue.axios.interceptors.response.use(function (response) {
 
+        //Check and store a refreshed  token
+        const refreshedToken = _.get(response, 'headers.authorization')
+        if (refreshedToken){
+            store.dispatch('authSetToken', refreshedToken)
+        }
 
         return response;
 
@@ -118,17 +123,12 @@ require('moment/locale/pt-br')
 
             warningNotify('Ops!', 'Não autorizado, por favor faça o login.')
 
-            if(url.match(/client/g)){
-                router.push({ name: 'client.auth.login' })
-                return false
-            }
-
             if(url.match(/auth/g)){
-                router.push({ name: 'auth.login' })
+                router.push({ path: '/login' })
                 return false
             }
 
-            router.push({ name: 'landing.index' })
+            router.push({ path: '/' })
             return false
 
         }

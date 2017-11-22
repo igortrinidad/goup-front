@@ -20,8 +20,6 @@ export const setLoading = ({ commit }, options) => {
 
 export const setLanguage = ({ commit }, language) => {
 
-    localStorage.setItem('language', language);
-
     commit(TYPES.SET_LANGUAGE, {
         language
     })

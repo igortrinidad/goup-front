@@ -1,20 +1,22 @@
 export const en = {
-    title: 'Add new place',
+    title: 'Add new event',
     form: {
-        name: "Place's name",
-        description: "Place's description",
+        event_name: `Event's name`,
+        event_description: `Event's description`,
+        event_value: `value of the ticket from`,
         categories: 'Select a category',
         subcategories: 'One or more subcategories',
         add_new_tag: 'Add tag',
         subcategory_already_exists: 'Subcategory already exists',
-        tags: "Inform some tags to define the place",
-        phone: "Place's phone",
-        address: "Address",
-        google_select: "Select a place from Google",
+        tags: `Inform some tags to define the place`,
+        place_name: `Place's name`,
+        phone: `Place's phone`,
+        address: `Address`,
+        google_select: `Select a place from Google`,
         photo_cover_warning: 'This photo was taken by Google Business. To change this photo, updates Google Business register and the changes will update automatically.',
         required: 'The field is required',
-        best_day_type: "Place's best day is weekly or specific?",
-        best_day: "Place's best day",
+        best_day_type: `Place's best day is weekly or specific?`,
+        best_day: `Place's best day`,
         best_day_type_list: {
             true: 'Yes',
             false:  'No',
@@ -23,26 +25,28 @@ export const en = {
     },
     yes: 'Yes',
     no: 'No',
-    submit: 'Register place'
+    submit: 'Register event',
+    success: 'New event added successfully'
 }
 
 export const pt = {
-    title: 'Adicionar novo local',
+    title: 'Adicionar novo evento',
     form: {
-        name: 'Nome do local',
-        description: 'Descrição do local',
-        categories: 'Selecione uma cateogria',
-        subcategories: 'Uma ou mais subcategorias',
+        event_name: 'Nome do evento',
+        event_description: 'Descrição do evento',
+        event_value: 'Valor do ingresso a partir de',
+        categories: 'Selecione uma categoria',
         add_new_tag: 'Adicionar tag',
         subcategory_already_exists: 'Subcategoria já existe',
-        tags: 'Informe algumas tags que definem o local',
+        tags: 'Informe algumas tags que definem o evento',
+        place_name:'Nome do local',
         phone: 'Telefone do local',
         address: 'Endereço',
         google_select: 'Selecione um local do Google',
         photo_cover_warning: 'Esta foto foi retirada do cadastro do local no Google Meus Locais. Para alterar esta foto você deve atualizar o cadastro do local no Google Meus Locais.',
         required: 'O campo é obrigatório',
-        best_day_type: "O melhor dia é semanal ou um dia específico?",
-        best_day: "Melhor dia do local",
+        best_day_type: `O melhor dia é semanal ou um dia específico?`,
+        best_day: `Melhor dia do local`,
         best_day_type_list: {
             true: 'Sim',
             false:  'Não',
@@ -51,5 +55,6 @@ export const pt = {
     },
     yes: 'Sim',
     no: 'Não',
-    submit: 'Registrar local'
+    submit: 'Cadastrar evento',
+    success: 'Novo evento adicionado com sucesso.'
 }

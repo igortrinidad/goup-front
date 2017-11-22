@@ -7,8 +7,8 @@ export const loader = ({ loader }) => loader
 export const disableLoader = ({ disable_loader }) => disable_loader
 
 // get current language
-export const language = () => {
-    const language = localStorage.getItem('language')
+export const language = (state) => {
+    const language = !_.isEmpty(state.language) ? state.language : localStorage.getItem('language')
 
     if (language === 'en' || !language) {
         return 'en'

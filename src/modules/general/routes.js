@@ -13,7 +13,7 @@ import ResetPass from './pages/reset-pass.vue'
 
 import { routes as auth } from './auth'
 import { routes as user } from './user'
-import { routes as places } from './places'
+import { routes as events } from './events'
 import { routes as explorer } from './explorer'
 
 // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/Spread_operator
@@ -30,7 +30,7 @@ export default [
             ...explorer,
             ...auth,
             ...user,
-            ...places,
+            ...events,
             {
                 name: 'general.about',
                 path: 'sobre',
