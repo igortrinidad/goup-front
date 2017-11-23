@@ -5,3 +5,7 @@ import { isEmpty } from 'lodash'
 export const isLogged = ({ token }) => !isEmpty(token)
 // get current user data
 export const currentUser = ({ user }) => user
+
+export const userRole = ({ user }) => user.role
+export const fcmTokenMobile = ({ user }) => user.fcm_token_mobile
+export const fcmTokenBrowser = ({ user }) => user.fcm_token_browser

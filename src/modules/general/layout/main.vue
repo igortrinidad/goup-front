@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- <main-loader></main-loader> -->
+        <main-loader></main-loader>
 
         <!-- <main-header :type="'logo'"></main-header> -->
 
@@ -11,10 +11,12 @@
 
 <script>
     import { mapGetters } from 'vuex'
+    import mainLoader from '@/components/main-loader.vue'
 
     export default{
         name: 'landing-layout',
         components:{
+            mainLoader
         },
         data(){
             return{

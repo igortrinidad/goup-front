@@ -23,40 +23,30 @@ export function initFcmPushNotifications() {
 
             if (typeof(FCMPlugin) !== 'undefined') {
 
-
                 //Fetch token
                 FCMPlugin.getToken(function (token) {
+
                     //Store the token on vuex
                     store.dispatch('setFcmTokenMobile', token)
 
-                    if (!store.getters.isLogged) {
-                        //console.log('o usuario nao esta logado')
-                    }
+                    if (store.getters.isLogged && store.getters.userRole === 'user') {
+                        storeUserFcmToken(token, true)
 
-                    //Wait until user is logged
-                    store.watch(
-                        (state) => {
-                            return store.getters.isLogged
-                        },
-                        (val, oldVal) => {
-                            if (val) {
-                                //o usuario esta logado, verificar se o token é igual para atualizar ou nao
-                                //console.log('o usuario esta logado')
-                                if (store.getters.isLogged) {
-
-                                    if (store.getters.currentUser.role == 'client' && store.getters.currentUser.fcm_token_mobile != token) {
-                                        storeUserFcmToken(token, true)
-                                        //console.log('token armazenado no db')
-                                    }
-
-                                }
+                    } else {
+                        store.watch(
+                            (state) => {
+                                return store.getters.isLogged
+                            },
+                            (val, oldVal) => {
+                               if( val){
+                                   storeUserFcmToken(token, true)
+                               }
+                            },
+                            {
+                                deep: true
                             }
-                        },
-                        {
-                            deep: true
-                        }
-                    );
-
+                        );
+                    }
                 });
 
                 //Token refresh
@@ -65,33 +55,25 @@ export function initFcmPushNotifications() {
                     //Store the token on vuex
                     store.dispatch('setFcmTokenMobile', token)
 
-                    if (!store.getters.isLogged) {
-                        //console.log('o usuario nao esta logado')
-                    }
+                    if (store.getters.isLogged && store.getters.userRole === 'user') {
 
-                    //Wait until user is logged
-                    store.watch(
-                        (state) => {
-                            return store.getters.isLogged
-                        },
-                        (val, oldVal) => {
-                            if (val) {
-                                //o usuario esta logado, verificar se o token é igual para atualizar ou nao
-                                //console.log('o usuario esta logado')
-                                if (store.getters.isLogged) {
+                        storeUserFcmToken(token, true)
 
-                                    if (store.getters.currentUser.role == 'client' && store.getters.currentUser.fcm_token_mobile != token) {
-                                        storeUserFcmToken(token, true)
-                                        //console.log('token armazenado no db')
-                                    }
-
+                    } else {
+                        store.watch(
+                            (state) => {
+                                return store.getters.isLogged
+                            },
+                            (val, oldVal) => {
+                                if( val){
+                                    storeUserFcmToken(token, true)
                                 }
+                            },
+                            {
+                                deep: true
                             }
-                        },
-                        {
-                            deep: true
-                        }
-                    );
+                        );
+                    }
                 });
 
                 FCMPlugin.onNotification(function (data) {
@@ -128,7 +110,7 @@ export function initFcmPushNotifications() {
                     if (store.getters.isLogged) {
                         return requestPermission()
 
-                    }else{
+                    } else {
                         //Wait until user is logged
                         store.watch(
                             (state) => {
@@ -171,11 +153,11 @@ function notificationHandler(payload) {
     console.log(payload)
 
     //Increment notification badge
-    if (store.getters.currentUser.role == 'client'){
+    if (store.getters.currentUser.role == 'client') {
         store.dispatch('incrementClientUnreadNotifications', 1)
     }
 
-    if (store.getters.currentUser.role == 'professional'){
+    if (store.getters.currentUser.role == 'professional') {
         store.dispatch('incrementProfessionalUnreadNotifications', 1)
     }
 
@@ -243,7 +225,7 @@ function handleTranslations() {
     }
 }
 
-function requestPermission(){
+function requestPermission() {
 
     if (Notification.permission == "granted") {
         return getFcmToken()
@@ -304,18 +286,18 @@ function requestPermission(){
 
 }
 
-function getFcmToken(){
+function getFcmToken() {
     messaging.getToken().then((token) => {
 
         console.log(token)
 
         store.dispatch('setFcmTokenBrowser', token)
 
-        if(store.getters.isLogged){
+        if (store.getters.isLogged) {
             if (store.getters.currentUser.role == 'user' && store.getters.currentUser.fcm_token_browser != token) {
                 storeUserFcmToken(token, false)
             }
-        }else{
+        } else {
             store.watch(
                 (state) => {
                     return store.getters.isLogged

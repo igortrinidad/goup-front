@@ -179,12 +179,39 @@
 
 
                         <!-- Photos -->
-                        <div class="form-group border-inside-card default" v-if="interactions.placeSelected">
+                        <div class="form-group border-inside-card default">
 
-                            <label class="f-700 f-primary" for="subcategory">{{ translations.form.subcategories }}</label>
+                            <label class="f-700 f-primary" for="subcategory">{{ translations.form.photos }}</label>
 
-                            <div class="m-t-10">
-                                <img :src="event.photo_url" class="img-responsive rounded">
+                            <div class="row" v-if="isMobile">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6">
+                                        <div class="new-image m-t-30 m-b-30 cursor-pointer" @click="getPicture()">
+                                            <i class="ion-ios-camera-outline"></i>
+                                            <span>{{ translations.form.takePicture }}</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="new-image m-t-30 m-b-30 cursor-pointer" @click="getCameraRoll()">
+                                            <i class="ion-ios-film-outline"></i>
+                                            <span>{{ translations.form.openGalery }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="new-image m-t-30 m-b-30 cursor-pointer" @click="showPhotoUploader = true"  v-if="!isMobile">
+                                <i class="ion-plus-round"></i>
+                                <span>{{ translations.form.upload_image }}</span>
+                            </div>
+
+
+                            <div class="row">
+
+                                <span v-for="photo in event.photos">{{photo.path}}</span>
+
                             </div>
 
                             <p class="f-300">{{translations.form.photo_cover_warning}}</p>
@@ -217,11 +244,17 @@
             </div>
         </transition>
 
+        <photo-uploader
+            :isvisible.sync="showPhotoUploader"
+            :send-action="storeImage"
+            @close-photo-uploader-modal="handleUploaderVisibility"
+        ></photo-uploader>
+
     </div>
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import { mapGetters, mapActions } from 'vuex'
 
     import mainHeader from '@/components/main-header'
 
@@ -229,17 +262,22 @@
     import { cleanEventModel } from '@/models/Event'
     import Vue from 'vue'
     import VueNumeric from 'vue-numeric'
+    import photoUploader from '@/components/photo-uploader.vue'
+    import {apiUrl} from '@/config/'
 
     export default {
         name: 'general-events-create',
 
         components: {
             mainHeader,
-            VueNumeric
+            VueNumeric,
+            photoUploader
         },
 
         data () {
             return {
+                isMobile: false,
+                showPhotoUploader: false,
                 interactions: {
                     placeSelected: false,
                 },
@@ -254,7 +292,7 @@
         },
 
         computed: {
-            ...mapGetters(['checkLanguage', 'language']),
+            ...mapGetters(['checkLanguage', 'language', 'AuthToken']),
 
             'translations': function() {
                 const language = localStorage.getItem('language')
@@ -269,10 +307,14 @@
         },
 
         mounted(){
+            if(window.cordova){
+                this.isMobile = true
+            }
             this.getCategories()
         },
 
         methods: {
+            ...mapActions(['setLoading']),
 
             testePlaceId: function(){
                 let that = this
@@ -329,9 +371,6 @@
                     that.event.lat = place.geometry.location.lat()
                     that.event.lng = place.geometry.location.lng()
 
-                    that.event.photos = [];
-
-                    that.event.photo_url = place.photos[0].getUrl({'maxWidth': 1000, 'maxHeight': 1000});
                 }
             },
 
@@ -370,6 +409,110 @@
 
             },
 
+            handleUploaderVisibility(visibility){
+                let that = this
+                that.showPhotoUploader = visibility
+            },
+
+            //Get from device camera
+            getPicture: function () {
+                let that = this
+
+                navigator.camera.getPicture(onSuccess, onFail, {
+                    quality: 50,
+                    destinationType: Camera.DestinationType.FILE_URI
+                });
+
+                function onSuccess(imageURI) {
+
+                    that.storeImageMobile(imageURI);
+
+                }
+
+                function onFail(message) {
+                    alert('Failed because: ' + message);
+                }
+            },
+
+            //Camera roll
+            getCameraRoll: function(){
+                let that = this
+
+                navigator.camera.getPicture(function cameraSuccess(imageURI) {
+
+                        that.storeImageMobile(imageURI);
+
+                    },
+                    function (message) {
+                        errorNotify('', message)
+                    },
+                    {
+                        quality: 50,
+                        destinationType: navigator.camera.DestinationType.FILE_URI,
+                        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+                    }
+                )
+            },
+
+            storeImageMobile(imageURI) {
+                let that = this
+
+                var win = function (response) {
+
+                    let api_response = JSON.parse(response.response)
+                    that.event.push(api_response.attachment)
+                    that.setLoading({is_loading: false, message: ''})
+                    successNotify('', 'Imagem enviada com sucesso')
+
+                }
+
+                var fail = function (error) {
+
+                    that.setLoading({is_loading: false, message: ''})
+                    errorNotify('', 'Houve um erro ao enviar a imagem')
+                    console.log(error);
+                }
+
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                options.fileName = "myphoto.jpg";
+                options.mimeType = "image/jpeg";
+                options.headers = {'Authorization': that.AuthToken};
+
+                var params = new Object();
+
+                params.event_id = that.event;
+
+                options.params = params;
+                var ft = new FileTransfer();
+
+                that.setLoading({is_loading: true, message: 'Enviando, aguarde'})
+
+                ft.upload(imageURI, encodeURI(`${apiUrl}/event/photo/upload`), win, fail, options);
+            },
+
+            storeImage: function(imageData){
+
+                let that = this
+
+                let formData = new FormData();
+                formData.append('event_id', that.event.id)
+                formData.append('file', imageData.file)
+
+                console.log(formData)
+
+
+                that.$http.post('event/photo/upload', formData , {headers: {'Content-Type': 'multipart/form-data'}})
+                    .then(function (response) {
+                        console.log(response)
+                        that.event.photos.push(response.data.photo)
+
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
+
         }
     }
 </script>
@@ -384,5 +527,30 @@
 
     .img-responsive.rounded {
         border-radius: 20px;
+    }
+    new-image {
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+        width: 100%; height: 100%;
+        justify-content: center;
+        text-align: center;
+        padding-top: 80px;
+        border-bottom: 2px solid #FF4B89
+    }
+
+    .new-image i {
+        font-size: 24px;
+        display: inline-flex;
+        width: 40px; height: 40px;
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #FF4B89;
+    }
+    .new-image span {
+        display: block;
+        width: 100%;
+        font-weight: 700;
+        margin-top: 20px;
     }
 </style>

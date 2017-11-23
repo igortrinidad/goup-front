@@ -1,7 +1,8 @@
+const UUID = require('uuid-js')
 
 export function cleanEventModel() {
     return {
-        id: '',
+        id: UUID.create().toString(),
         user_id: '',
         category_id: '',
         google_place_id: '',
@@ -12,7 +13,6 @@ export function cleanEventModel() {
         lat: 0,
         lng: 0,
 
-
         category: {
             name_en: '',
             name_pt: '',
@@ -20,7 +20,10 @@ export function cleanEventModel() {
 
         place:{
 
-        }
+        },
+
+        tags:[],
+        photos:[]
 
     }
 }
