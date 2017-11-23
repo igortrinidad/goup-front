@@ -48,7 +48,7 @@
     import { mapGetters } from 'vuex'
 
     import UserModel from '@/models/User'
-    import * as translations from '@/translations/places/show'
+    import * as translations from '@/translations/events/show'
 
     export default {
         name: 'general-places-show-tab-friends',

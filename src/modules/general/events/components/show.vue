@@ -144,7 +144,7 @@
     import tabComments from './show_partials/tab-comments.vue'
     import tabFriends from './show_partials/tab-friends.vue'
 
-    import * as translations from '@/translations/places/show'
+    import * as translations from '@/translations/events/show'
     import PlaceModel from '@/models/Place'
 
     export default {

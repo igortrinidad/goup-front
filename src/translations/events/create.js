@@ -3,7 +3,7 @@ export const en = {
     form: {
         event_name: `Event's name`,
         event_description: `Event's description`,
-        event_value: `value of the ticket from`,
+        event_value: `Ticket start at (leave 0 if it's free)`,
         categories: 'Select a category',
         subcategories: 'One or more subcategories',
         add_new_tag: 'Add tag',
@@ -34,7 +34,7 @@ export const pt = {
     form: {
         event_name: 'Nome do evento',
         event_description: 'Descrição do evento',
-        event_value: 'Valor do ingresso a partir de',
+        event_value: 'Valor do ingresso (deixe 0 para gratuito)',
         categories: 'Selecione uma categoria',
         add_new_tag: 'Adicionar tag',
         subcategory_already_exists: 'Subcategoria já existe',
