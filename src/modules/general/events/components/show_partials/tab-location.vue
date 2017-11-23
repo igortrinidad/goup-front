@@ -33,7 +33,7 @@
 <script>
     import { mapGetters } from 'vuex'
 
-    import * as translations from '@/translations/places/show'
+    import * as translations from '@/translations/events/show'
 
     export default {
         name: 'general-places-show-tab-location',

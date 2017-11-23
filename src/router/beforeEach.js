@@ -19,6 +19,19 @@ const beforeEach = (to, from, next) => {
 
     $('#side-menu-global-id').removeClass('active')
 
+    //Detect unathenticated user language
+    if (!store.getters.isLogged) {
+        let systemLanguage = navigator.language || navigator.userLanguage
+        systemLanguage = _.split(systemLanguage, '-', 1)[0]
+
+        if(systemLanguage === 'en' || systemLanguage === 'pt'){
+            store.dispatch('setLanguage', systemLanguage)
+        }else{
+            //Fallback to english
+            store.dispatch('setLanguage', 'en')
+        }
+
+    }
     /**
      * If there's no token stored in the state
      * then check localStorage:
