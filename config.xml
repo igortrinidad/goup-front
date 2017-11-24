@@ -17,9 +17,9 @@
     <allow-intent href="whatsapp:*" launch-external="yes" />
     <allow-intent href="https://api.whatsapp.com/*" launch-external="yes" />
     <allow-navigation href="*" />
-    <allow-navigation href="http://isaudavel.com" />
-    <allow-navigation href="http://isaudavel.com*" />
-    <allow-navigation href="https://isaudavel.com/*" />
+    <allow-navigation href="http://goup.today" />
+    <allow-navigation href="http://goup.today*" />
+    <allow-navigation href="https://goup.today/*" />
     <allow-navigation href="https://www.facebook.com/*" />
     <allow-navigation href="https://hooks.slack.com/*" />
     <allow-navigation href="https://m.facebook.com/*" />
@@ -102,7 +102,6 @@
         </feature>
     </platform>
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
-    <engine name="browser" spec="^4.1.0" />
     <engine name="android" spec="^6.3.0" />
     <engine name="ios" spec="^4.5.3" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
@@ -119,7 +118,5 @@
     <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.2.1" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.1" />
-    <plugin name="cordova-plugin-datepicker" spec="^0.9.3" />
-    <plugin name="cordova-universal-clipboard" spec="git+https://github.com/Visigo/CordovaClipboard.git" />
     <plugin name="cordova-plugin-fcm" spec="git+https://github.com/ostownsville/cordova-plugin-fcm.git" />
 </widget>
