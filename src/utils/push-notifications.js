@@ -234,6 +234,7 @@ function requestPermission() {
     return new Promise((resolve, reject) => {
         const managePermissionResult = result => {
             if (result === 'granted') {
+                successNotify('', `${handleTranslations().success}`)
                 return getFcmToken()
             } else if (result === 'denied') {
                 return reject();
@@ -250,7 +251,7 @@ function requestPermission() {
             image: '/static/assets/img/logos/LOGOS-05.png',
             imageWidth: 70,
             color: 'dark',
-            backgroundColor: '#5A298D',
+            backgroundColor: '#561F9F',
             titleColor: '#fff',
             messageColor: '#fff',
             timeout: 0,

@@ -26,6 +26,11 @@ export const en = {
         clear_search: 'Clean',
         takePicture: 'Take a picture',
         openGalery: 'Open camera roll',
+        setAsCover: 'Set as cover photo',
+        removeImage: 'Remove',
+        addedTags: 'Added tags',
+        noTags: 'No tags added',
+        tagsPlaceholder: 'Tag name'
     },
     yes: 'Yes',
     no: 'No',
@@ -60,6 +65,11 @@ export const pt = {
         clear_search: 'Limpar',
         takePicture: 'Tirar foto',
         openGalery: 'Abrir galeria',
+        setAsCover: 'Definir como foto de capa',
+        removeImage: 'Remover',
+        addedTags: 'Tags adicionadas',
+        noTags: 'Nenhuma tag adicionada.',
+        tagsPlaceholder: 'Nome da tag'
     },
     yes: 'Sim',
     no: 'Não',

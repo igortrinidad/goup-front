@@ -23,7 +23,7 @@
                             v-for="category in categories"
                             @click="changeCurrentCategory(category)"
                         >
-                            {{ category }}
+                            {{ category[`name_${language}`] }}
                             <i :class="{
                                 'm-l-5': true,
                                 'ion-ios-circle-outline': currentCategory !== category,
@@ -49,36 +49,36 @@
                     </div>
 
                     <div class="row m-t-30">
-                        <div class="col-sm-12" v-for="place in places">
+                        <div class="col-sm-12" v-for="event in events">
                             <div class="card m-b-10">
                                 <div class="card-body card-padding">
 
                                     <!-- Place Thumbnail -->
-                                    <div class="picture-circle picture-circle-m m-t-10 rounded" :style="{ backgroundImage: `url(${ place.avatar })` }">
+                                    <div class="picture-circle picture-circle-m m-t-10 rounded" :style="{ backgroundImage: `url(${ event.cover })` }">
                                     </div>
                                     <!-- /Place Thumbnail -->
 
                                     <!-- Place Category -->
                                     <span class="label label-primary transparent place-category">
-                                        {{ checkLanguage === 'en' ? place.category.name_en : place.category.name_pt }}
+                                        {{ checkLanguage === 'en' ? event.category.name_en : event.category.name_pt }}
                                     </span>
                                     <!-- /Place Category -->
 
                                     <!-- Place Ranking -->
                                     <span class="label label-primary transparent place-ranking">
                                         <i class="ion-podium m-r-5"></i>
-                                        {{ place.ranking }}º
+                                        {{ event.ranking }}º
                                     </span>
                                     <!-- Place Ranking -->
 
                                     <!-- Title And Location -->
                                     <div class="text-center">
                                         <h4 class="f-700">
-                                            {{ place.name }}
+                                            {{ event.name }}
                                         </h4>
                                         <div class="border-inside-card text-center">
                                             <i class="ion-ios-location"></i>
-                                            <small class="d-block">{{ place.city }} - {{ place.state }}</small>
+                                            <small class="d-block">{{ event.place.city }} - {{ event.place.state }}</small>
                                         </div>
                                     </div>
                                     <!-- /Title And Location -->
@@ -138,14 +138,14 @@
         data () {
             return {
                 placeholder: true,
-                places: [],
+                events: [],
                 categories: [],
                 currentCategory: '',
             }
         },
 
         computed: {
-            ...mapGetters(['checkLanguage']),
+            ...mapGetters(['checkLanguage', 'language']),
 
             'translations': function() {
                 const language = localStorage.getItem('language')
@@ -160,37 +160,40 @@
         },
 
         mounted(){
-            this.getPlaces()
-            this.getCategoriesByLanguage(this.checkLanguage)
+            this.getCategories()
         },
 
         methods: {
 
             changeCurrentCategory(category) {
                 this.currentCategory = category
+
+                this.getPlaces()
             },
 
-            getCategoriesByLanguage(lang) {
+            getCategories() {
                 let that = this
 
-                const categories = cleanCategoriesArrayExample()
-
-                if (lang === 'en') {
-                    categories.forEach((category) => {
-                        that.categories.push(category.name_en)
+                that.$http.get(`event/categories/${that.language}`)
+                    .then(function (response) {
+                        that.categories = response.data.categories
+                        that.changeCurrentCategory(that.categories[0])
                     })
-                }
-                if (lang === 'pt') {
-                    categories.forEach((category) => {
-                        that.categories.push(category.name_pt)
-                    })
-                }
-                that.currentCategory = that.categories[0]
+                    .catch(function (error) {
+                        console.log(error)
+                    });
             },
 
             getPlaces() {
                 let that = this
-                that.places = [ cleanPlaceModel(), cleanPlaceModel(), cleanPlaceModel(), cleanPlaceModel(), cleanPlaceModel() ]
+
+                that.$http.post('event/list', {category_id:  that.currentCategory.id})
+                    .then(function (response) {
+                        that.events = response.data.events
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
             }
         }
     }

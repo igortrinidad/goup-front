@@ -161,8 +161,9 @@
                                     type="text"
                                     id="place-style"
                                     class="form-control"
-                                    :placeholder="translations.form.tags"
-                                    v-model="event.style"
+                                    :placeholder="translations.form.tagsPlaceholder"
+                                    v-model="newTag.name"
+                                    @keyup.enter="addNewTag"
                                 >
                             </div>
                             <!-- / TAGS -->
@@ -170,9 +171,21 @@
                             <button
                                 type="button"
                                 class="btn btn-sm btn-primary transparent"
+                                @click.prevent="addNewTag"
                             >
                                 {{ translations.form.add_new_tag }}
                             </button>
+
+                            <div class="row m-t-20">
+
+                                 <label class="f-700 f-primary" for="place-style">{{ translations.form.addedTags }}</label>
+
+                                  <p class="f-300" v-if="!event.tags.length">{{translations.form.noTags}}</p>
+
+                                <span class="small label label-success m-l-5 tag" v-for="tag in event.tags">
+                                    {{tag.name}} <i class="ion-close m-l-5 f-primary cursor-pointer" @click.prevent="removeTag(tag.name)"></i>
+                                </span>
+                            </div>
 
                         </div>
                         <!-- / Tags -->
@@ -210,11 +223,23 @@
 
                             <div class="row">
 
-                                <span v-for="photo in event.photos">{{photo.path}}</span>
+                                <p class="f-300" v-if="!event.photos.length">{{translations.form.photo_cover_warning}}</p>
 
+                                <div class="col-md-3 col-sm-6" v-for="photo in event.photos">
+                                    <span class="cursor-pointer" @click="setAsCover(photo.id)">
+                                        <i :class="{
+                                            'f-20': true,
+                                            'ion-ios-circle-filled': photo.is_cover,
+                                            'ion-ios-circle-outline': !photo.is_cover
+                                        }"></i>
+                                        {{translations.form.setAsCover}}
+                                    </span>
+
+                                    <img  class="img-responsive thumbnail m-b-5" :src="photo.photo_url">
+
+                                    <span class="label label-primary small cursor-pointer" @click.prevent="removeImage(photo.id)">{{translations.form.removeImage}}</span>
+                                </div>
                             </div>
-
-                            <p class="f-300">{{translations.form.photo_cover_warning}}</p>
 
                         </div>
                         <!-- / Photos -->
@@ -225,10 +250,7 @@
                                 type="button"
                                 class="btn btn-primary btn-block transparent"
                                 @click="storeEvent()"
-                                :disabled="
-                                    !event.name || !event.description || !event.category_id ||
-                                    !event.value || !event.google_place_id
-                                "
+                                :disabled="!event.name || !event.description || !event.category_id  || !event.google_place_id || !event.photos.length"
                             >
                                 {{ translations.submit }}
                             </button>
@@ -287,7 +309,9 @@
                 not_valid: [],
                 currentCategory: '',
                 subcategories: [],
-                subcategory: '',
+                newTag: {
+                    name: ''
+                }
             }
         },
 
@@ -460,7 +484,12 @@
                 var win = function (response) {
 
                     let api_response = JSON.parse(response.response)
-                    that.event.push(api_response.attachment)
+
+                    if(!that.event.photos.length){
+                        api_response.photo.is_cover = true
+                    }
+
+                    that.event.photos.push(api_response.photo)
                     that.setLoading({is_loading: false, message: ''})
                     successNotify('', 'Imagem enviada com sucesso')
 
@@ -481,7 +510,7 @@
 
                 var params = new Object();
 
-                params.event_id = that.event;
+                params.event_id = that.event.id;
 
                 options.params = params;
                 var ft = new FileTransfer();
@@ -499,12 +528,13 @@
                 formData.append('event_id', that.event.id)
                 formData.append('file', imageData.file)
 
-                console.log(formData)
-
-
                 that.$http.post('event/photo/upload', formData , {headers: {'Content-Type': 'multipart/form-data'}})
                     .then(function (response) {
-                        console.log(response)
+
+                        if(!that.event.photos.length){
+                            response.data.photo.is_cover = true
+                        }
+
                         that.event.photos.push(response.data.photo)
 
                     })
@@ -512,6 +542,52 @@
                         console.log(error)
                     });
             },
+
+             setAsCover(photo_id){
+                let that = this
+
+                that.event.photos.map((photo) => {
+                    photo.is_cover = false
+
+                    if(photo.id == photo_id ){
+                        photo.is_cover = true
+                    }
+                })
+            },
+
+            removeImage(photo_id){
+                let that = this
+
+                that.$http.get(`event/photo/destroy/${photo_id}`)
+                    .then(function (response) {
+
+                        that.event.photos = that.event.photos.filter(function (photo) {
+                            return photo.id != photo_id;
+                        });
+
+                        successNotify('', 'Imagem removida com sucesso')
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
+
+            addNewTag(){
+
+                let exists = _.find(this.event.tags, {name: this.newTag.name})
+
+                if(!exists){
+                    this.event.tags.push(_.cloneDeep(this.newTag));
+                }
+
+                this.newTag.name = ''
+            },
+
+            removeTag(name){
+                this.event.tags = this.event.tags.filter(function (tag) {
+                    return tag.name != name;
+                });
+            }
 
         }
     }
@@ -523,7 +599,7 @@
         float: right
     }
 
-    .subcategories .label { text-transform: uppercase; }
+    .tag { text-transform: uppercase; }
 
     .img-responsive.rounded {
         border-radius: 20px;
