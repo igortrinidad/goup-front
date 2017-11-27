@@ -10,7 +10,6 @@
         <transition appear mode="in-out" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
             <div class="main">
                 <div class="container">
-
                     <!-- CATEGORIES -->
                     <div class="row text-center" style="overflow-x: auto; margin-bottom: -20px;">
 
@@ -41,14 +40,41 @@
                         <button
                             type="button"
                             class="btn btn-xs btn-primary transparent m-t-30"
-                            data-toggle="modal"
-                            data-target="#modal-filter"
+                            @click.prevent="handleModalVisibility"
                         >
                             {{ translations.more_filters }}
                         </button>
                     </div>
 
                     <div class="row m-t-30">
+
+                        <div class="text-center">
+                            <div class="form-group" v-if="!interactions.changeLocation">
+                                <label><i class="ion-ios-location-outline"></i> <strong>{{currentLocation.city}} - {{currentLocation.state}}</strong></label>
+                                <button class="btn label label-primary" @click.prevent="interactions.changeLocation = true">{{ translations.location.buttons.change }}</button>
+
+                            </div>
+
+                            <div class="form-group" v-if="interactions.changeLocation">
+                                <label for="newLocation">{{ translations.location.newLocation }}</label>
+                                <GmapAutocomplete
+                                    id="newLocation"
+                                    :value="currentLocation.newLocation"
+                                    class="form-control"
+                                    :select-first-on-enter="true"
+                                    @place_changed="setNewLocation"
+                                    :placeholder="translations.location.newLocation"
+                                    :options="{ language: 'pt-BR', componentRestrictions: { country: 'br' } }"
+                                >
+                                </GmapAutocomplete>
+                                <button class="btn label label-success m-t-10" @click.prevent="interactions.changeLocation = false ">{{ translations.location.buttons.cancel }}</button>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <h4 v-if="!events.length" class="text-center">{{translations.noEvents}}</h4>
+                        </div>
+
                         <div class="col-sm-12" v-for="event in events">
                             <div class="card m-b-10">
                                 <div class="card-body card-padding">
@@ -79,6 +105,7 @@
                                         <div class="border-inside-card text-center">
                                             <i class="ion-ios-location"></i>
                                             <small class="d-block">{{ event.place.city }} - {{ event.place.state }}</small>
+                                            <p><small>Distância aproximada: {{handleDistance(event.distance)}}</small></p>
                                         </div>
                                     </div>
                                     <!-- /Title And Location -->
@@ -103,10 +130,14 @@
                                 </button>
                                 <h3 class="title text-center">{{ translations.filters }}</h3>
                             </div>
-                            <div class="modal-body">
-                                MOSTRAR UMA LISTA DE TAGS COM AS SUBCATEGORIAS DA CATEGORIA ATUAL
-                                <br>
-                                E OUTRAS OPÇÕES PARA FILTRO
+                            <div class="modal-body text-primary">
+                                <div class="form-group">
+                                    <label for="radius" class="m-b-30">Eventos no raio de</label>
+                                    <vue-slider ref="slider" v-model="radius"  :formatter="formatLabel" :process-style="processStyle" :tooltip-style="tooltipStyle" :max="500"></vue-slider>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="label label-primary" @click.prevent="applyFilters">Aplicar filtros</button>
                             </div>
                         </div>
                     </div>
@@ -122,25 +153,40 @@
     import { mapGetters } from 'vuex'
 
     import mainHeader from '@/components/main-header.vue'
-
     import { cleanPlaceModel } from '@/models/Place'
     import { cleanCategoriesArrayExample } from '@/models/Category'
-
     import * as translations from '@/translations/events/list'
+    import moment from 'moment'
+    import vueSlider from 'vue-slider-component'
 
     export default {
         name: 'general-events-list',
 
         components: {
             mainHeader,
+            vueSlider,
         },
 
         data () {
             return {
+                interactions:{
+                    changeLocation: false,
+                    showFilters: false
+                },
                 placeholder: true,
                 events: [],
                 categories: [],
-                currentCategory: '',
+                currentCategory: {},
+                currentLocation:{
+                    lat:-23.5505199,
+                    lng:-46.63330940000003,
+                    city: 'São Paulo',
+                    state: 'SP',
+                    newLocation: ''
+                },
+                radius: 10,
+                processStyle: {backgroundColor: "#561f9f"},
+                tooltipStyle: {backgroundColor: "#561f9f", borderColor: "#561f9f"}
             }
         },
 
@@ -160,6 +206,17 @@
         },
 
         mounted(){
+
+
+            if(!window.cordova){
+                this.locationRequest()
+            }
+
+            if(window.cordova){
+                this.geolocationInit();
+                this.getLocation()
+            }
+
             this.getCategories()
         },
 
@@ -167,8 +224,7 @@
 
             changeCurrentCategory(category) {
                 this.currentCategory = category
-
-                this.getPlaces()
+                this.getEvents()
             },
 
             getCategories() {
@@ -177,23 +233,220 @@
                 that.$http.get(`event/categories/${that.language}`)
                     .then(function (response) {
                         that.categories = response.data.categories
-                        that.changeCurrentCategory(that.categories[0])
+                        that.currentCategory = that.categories[0]
                     })
                     .catch(function (error) {
                         console.log(error)
                     });
             },
 
-            getPlaces() {
+            getEvents() {
                 let that = this
-
-                that.$http.post('event/list', {category_id:  that.currentCategory.id})
+                that.$http.post('event/list', {
+                    language: that.language,
+                    category_id: that.currentCategory.id,
+                    lat: that.currentLocation.lat,
+                    lng: that.currentLocation.lng,
+                    radius: that.radius,
+                })
                     .then(function (response) {
                         that.events = response.data.events
-                    })
-                    .catch(function (error) {
-                        console.log(error)
+                    }).catch(function (error) {
+                    console.log(error)
+                });
+
+            },
+
+            applyFilters(){
+                this.getEvents()
+
+                $('#modal-filter').modal('hide')
+            },
+
+            locationRequest() {
+                let that = this
+                let checkToAsk = parseInt(localStorage.getItem('location-request'))
+                let now = moment().unix()
+
+                if(!checkToAsk || now > checkToAsk){
+                    navigator.permissions.query({name:'geolocation'}).then(function(result) {
+                        if (result.state === 'granted') {
+                            //get current location
+                            that.getLocation()
+                        } else if (result.state === 'prompt') {
+
+                            //Request user permission
+                            iziToast.show({
+                                icon: 'icon-contacts',
+                                title: `${that.translations.location.notification.title}`,
+                                message: `${that.translations.location.notification.message}`,
+                                position: 'topCenter',
+                                image: '/static/assets/img/logos/LOGOS-05.png',
+                                imageWidth: 70,
+                                color: 'dark',
+                                backgroundColor: '#561F9F',
+                                titleColor: '#fff',
+                                messageColor: '#fff',
+                                timeout: 0,
+                                layout: 2,
+                                buttons: [
+                                    [`<button class="btn-notification">${that.translations.location.notification.buttons.notNow}</button>`, function (instance, toast) {
+                                        instance.hide({
+                                            transitionOut: 'fadeOutUp',
+                                        }, toast, 'close', 'btn2');
+
+                                        localStorage.setItem('location-request', moment().add(1, 'hour').unix())
+
+                                        infoNotify('', that.translations.location.permissionDenied)
+                                        that.getEvents()
+
+                                    }, false],
+                                    [`<button class="btn btn-primary transparent">${that.translations.location.notification.buttons.enable}</button>`, function (instance, toast) {
+                                        instance.hide({
+                                            transitionOut: 'fadeOutUp',
+                                        }, toast, 'close', 'btn2');
+
+                                        if(checkToAsk){
+                                            localStorage.removeItem('location-request')
+                                        }
+
+                                        that.getLocation()
+
+                                    }, true]
+                                ],
+                                drag: false
+                            });
+                        }
+
                     });
+                }else{
+                    that.getEvents()
+                }
+
+            },
+
+            getLocation(){
+                let that = this
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(that.navigatorSuccess, that.navigatorError);
+                } else {
+                    errorNotify('', that.translations.location.notSupported);
+                }
+            },
+
+            navigatorSuccess(position) {
+                let that = this
+
+                that.currentLocation.lat = position.coords.latitude
+                that.currentLocation.lng = position.coords.longitude
+
+                that.getLocationByCoordinates()
+
+            },
+
+            navigatorError() {
+                errorNotify('', this.translations.location.unavailable);
+            },
+
+            geolocationInit: function(){
+                let that = this
+                // onSuccess Callback
+                //   This method accepts a `Position` object, which contains
+                //   the current GPS coordinates
+                //
+
+                function onSuccess(position) {
+                    that.currentLocation.lat = position.coords.latitude;
+                    that.currentLocation.lng =  position.coords.longitude;
+
+                    navigator.geolocation.clearWatch(watchID);
+
+                    that.getLocationByCoordinates();
+                }
+
+                // onError Callback receives a PositionError object
+                function onError(error) {
+                    console.log(error)
+                    errorNotify('', that.translations.location.unavailable);
+                }
+
+                // Options: throw an error if no update is received every 30 seconds.
+                var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
+            },
+
+            setNewLocation(place){
+                let that = this
+                that.currentLocation.lat = place.geometry.location.lat()
+                that.currentLocation.lng = place.geometry.location.lng()
+
+                place.address_components.map((current) =>{
+                    current.types.map((type) => {
+                        if(type == 'administrative_area_level_1'){
+                            that.currentLocation.state = current.short_name
+                        }
+                        if(type == 'administrative_area_level_2'){
+                            that.currentLocation.city  = current.short_name
+                        }
+                    })
+                })
+
+                that.interactions.changeLocation = false
+                that.getEvents()
+            },
+
+            getLocationByCoordinates(){
+
+                let that = this
+
+                let geocoder = new google.maps.Geocoder;
+
+                let latlng = new google.maps.LatLng(that.currentLocation.lat, that.currentLocation.lng);
+
+                geocoder.geocode({
+                    'latLng': latlng
+                }, function (results, status) {
+
+                    if (status === google.maps.GeocoderStatus.OK) {
+
+                        if (results) {
+
+                            results[0].address_components.map((current) =>{
+                                current.types.map((type) => {
+                                    if(type == 'administrative_area_level_1'){
+                                        that.currentLocation.state = current.short_name
+                                    }
+                                    if(type == 'administrative_area_level_2'){
+                                        that.currentLocation.city  = current.short_name
+                                    }
+                                })
+                            })
+
+                            console.log(`lat: ${that.currentLocation.lat} | lng: ${that.currentLocation.lng}`)
+                            console.log(`Current location: ${that.currentLocation.city} - ${that.currentLocation.state}`)
+
+                            that.getEvents()
+
+                        } else {
+                            errorNotify('', that.translations.location.unavailable);
+                        }
+                    }
+                });
+
+            },
+
+            handleModalVisibility(){
+                $('#modal-filter').modal('show')
+                this.$nextTick(() => this.$refs.slider.refresh());
+            },
+
+            formatLabel(value){
+                return `${value} km`
+            },
+
+            handleDistance(distance){
+                distance = parseFloat(distance);
+                return `${distance.toFixed(2)} km`
             }
         }
     }
@@ -206,4 +459,11 @@
 
     .place-category { left: 10px; }
     .place-ranking { right: 10px; }
+
+    .modal-footer {
+        border-radius: 0;
+        bottom:0px;
+        position:absolute;
+        width:100%;
+    }
 </style>
