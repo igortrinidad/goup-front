@@ -44,32 +44,18 @@
                         >
                             {{ translations.more_filters }}
                         </button>
+
+                        <div class="row m-t-30">
+                            <label>Cidades próximas</label>
+                            <p v-if="!cities.length">Nenhuma cidade próxima.</p>
+                            <div class="col-sm-12">
+                                <span class="small label label-success m-l-5 tag" v-for="city in cities" v-if="city.name != currentLocation.city">{{city.name}} - {{city.state}} <small> <span class="text-white">|</span> <span class="f-primary">{{handleDistance(city.distance)}}</span></small></span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row m-t-30">
 
-                        <div class="text-center">
-                            <div class="form-group" v-if="!interactions.changeLocation">
-                                <label><i class="ion-ios-location-outline"></i> <strong>{{currentLocation.city}} - {{currentLocation.state}}</strong></label>
-                                <button class="btn label label-primary" @click.prevent="interactions.changeLocation = true">{{ translations.location.buttons.change }}</button>
-
-                            </div>
-
-                            <div class="form-group" v-if="interactions.changeLocation">
-                                <label for="newLocation">{{ translations.location.newLocation }}</label>
-                                <GmapAutocomplete
-                                    id="newLocation"
-                                    :value="currentLocation.newLocation"
-                                    class="form-control"
-                                    :select-first-on-enter="true"
-                                    @place_changed="setNewLocation"
-                                    :placeholder="translations.location.newLocation"
-                                    :options="{ language: 'pt-BR', componentRestrictions: { country: 'br' } }"
-                                >
-                                </GmapAutocomplete>
-                                <button class="btn label label-success m-t-10" @click.prevent="interactions.changeLocation = false ">{{ translations.location.buttons.cancel }}</button>
-                            </div>
-                        </div>
 
                         <div class="col-sm-12">
                             <h4 v-if="!events.length" class="text-center">{{translations.noEvents}}</h4>
@@ -93,7 +79,7 @@
                                     <!-- Place Ranking -->
                                     <span class="label label-primary transparent place-ranking">
                                         <i class="ion-podium m-r-5"></i>
-                                        {{ event.ranking }}º
+                                        {{ event.rank_position }}º
                                     </span>
                                     <!-- Place Ranking -->
 
@@ -104,7 +90,7 @@
                                         </h4>
                                         <div class="border-inside-card text-center">
                                             <i class="ion-ios-location"></i>
-                                            <small class="d-block">{{ event.place.city }} - {{ event.place.state }}</small>
+                                            <small class="d-block">{{ event.city.name }} - {{ event.city.state }}</small>
                                             <p><small>Distância aproximada: {{handleDistance(event.distance)}}</small></p>
                                         </div>
                                     </div>
@@ -131,10 +117,7 @@
                                 <h3 class="title text-center">{{ translations.filters }}</h3>
                             </div>
                             <div class="modal-body text-primary">
-                                <div class="form-group">
-                                    <label for="radius" class="m-b-30">Eventos no raio de</label>
-                                    <vue-slider ref="slider" v-model="radius"  :formatter="formatLabel" :process-style="processStyle" :tooltip-style="tooltipStyle" :max="500"></vue-slider>
-                                </div>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="label label-primary" @click.prevent="applyFilters">Aplicar filtros</button>
@@ -184,9 +167,10 @@
                     state: 'SP',
                     newLocation: ''
                 },
-                radius: 10,
-                processStyle: {backgroundColor: "#561f9f"},
-                tooltipStyle: {backgroundColor: "#561f9f", borderColor: "#561f9f"}
+                radius: 40,
+                cities:[],
+                processStyle: {backgroundColor: "#48C3D1"},
+                tooltipStyle: {backgroundColor: "#48C3D1", borderColor: "#48C3D1"}
             }
         },
 
@@ -206,7 +190,6 @@
         },
 
         mounted(){
-
 
             if(!window.cordova){
                 this.locationRequest()
@@ -234,6 +217,22 @@
                     .then(function (response) {
                         that.categories = response.data.categories
                         that.currentCategory = that.categories[0]
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
+
+            getNearByCities() {
+                let that = this
+
+                that.$http.post(`city/near_by_location`, {
+                    lat: that.currentLocation.lat,
+                    lng: that.currentLocation.lng,
+                    radius: that.radius
+                })
+                    .then(function (response) {
+                        that.cities = response.data.cities
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -426,6 +425,7 @@
                             console.log(`Current location: ${that.currentLocation.city} - ${that.currentLocation.state}`)
 
                             that.getEvents()
+                            that.getNearByCities()
 
                         } else {
                             errorNotify('', that.translations.location.unavailable);
@@ -437,7 +437,6 @@
 
             handleModalVisibility(){
                 $('#modal-filter').modal('show')
-                this.$nextTick(() => this.$refs.slider.refresh());
             },
 
             formatLabel(value){
@@ -447,6 +446,11 @@
             handleDistance(distance){
                 distance = parseFloat(distance);
                 return `${distance.toFixed(2)} km`
+            },
+
+            handleRadius(val){
+                this.radius = val
+                this.getEvents()
             }
         }
     }
@@ -465,5 +469,8 @@
         bottom:0px;
         position:absolute;
         width:100%;
+    }
+    .text-white{
+        color: white;
     }
 </style>

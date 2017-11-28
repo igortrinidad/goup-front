@@ -13,6 +13,13 @@ export function cleanEventModel() {
         lat: 0,
         lng: 0,
 
+        city:{
+            name: '',
+            state:'',
+            lat: 0,
+            lng: 0,
+        },
+
         category: {
             name_en: '',
             name_pt: '',

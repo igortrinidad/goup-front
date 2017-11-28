@@ -172,6 +172,7 @@
                                 type="button"
                                 class="btn btn-sm btn-primary transparent"
                                 @click.prevent="addNewTag"
+                                :disabled="!newTag.name"
                             >
                                 {{ translations.form.add_new_tag }}
                             </button>
@@ -311,7 +312,7 @@
                 subcategories: [],
                 newTag: {
                     name: ''
-                }
+                },
             }
         },
 
@@ -390,12 +391,47 @@
                     that.event.place.address = place.vicinity;
                     that.event.place.phone = place.formatted_phone_number;
 
-                    console.log(place);
-
                     that.event.lat = place.geometry.location.lat()
                     that.event.lng = place.geometry.location.lng()
 
+                    place.address_components.map((current) =>{
+                        current.types.map((type) => {
+                            if(type == 'administrative_area_level_1'){
+                                that.event.city.state = current.short_name
+                            }
+                            if(type == 'administrative_area_level_2'){
+                                that.event.city.name  = current.short_name
+                            }
+                        })
+                    })
+
+                    that.getCityCoordinates()
+
                 }
+            },
+
+            getCityCoordinates(){
+
+                let that = this
+
+                let geocoder = new google.maps.Geocoder;
+
+                geocoder.geocode({
+                    'address': `${that.event.city.name} - ${that.event.city.state}`
+                }, function (results, status) {
+
+                    if (status === google.maps.GeocoderStatus.OK) {
+
+                        if (results) {
+                            that.event.city.lat = results[0].geometry.location.lat()
+                            that.event.city.lng = results[0].geometry.location.lng()
+
+                        } else {
+                            errorNotify('', 'Não foi possivel definir a cidade.');
+                        }
+                    }
+                });
+
             },
 
             handleCategory(category) {

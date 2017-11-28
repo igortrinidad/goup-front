@@ -3,5 +3,5 @@ module.exports = {
     API_URL: '"https://goup.today/api"',
     API_ROOT_URL: '"https://goup.today/"',
     FACEBOOK_CLIENT_ID: '"171329556786695"',
-    GOOGLE_MAPS_KEY: '"AIzaSyAc7FRXAfTUbAG_lUOjKzzFa41JbRCCbbM"'
+    GOOGLE_MAPS_KEY: '"AIzaSyDfAjj4h72pB3ppjb2E03dWnb9wIzK-fx8"'
 }
