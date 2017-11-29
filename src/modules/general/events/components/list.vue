@@ -9,50 +9,71 @@
 
         <transition appear mode="in-out" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
             <div class="main">
-                <div class="container">
-                    <!-- CATEGORIES -->
-                    <div class="row text-center" style="overflow-x: auto; margin-bottom: -20px;">
 
-                        <span
-                            class="label transparent m-5 cursor-pointer"
-                            :class="{
-                                'label-default': currentCategory !== category,
-                                'label-primary': currentCategory === category
-                            }"
-                            v-for="category in categories"
-                            @click="changeCurrentCategory(category)"
-                        >
-                            {{ category[`name_${language}`] }}
-                            <i :class="{
-                                'm-l-5': true,
-                                'ion-ios-circle-outline': currentCategory !== category,
-                                'ion-ios-circle-filled': currentCategory === category
-                                }"
-                            >
-                            </i>
-                        </span>
+                <!-- CATEGORIES -->
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <label>{{ translations.categories }}</label>
+                        <div class="swiper-container" ref="categorySlider">
+                            <div class="swiper-wrapper">
+                                <div
+                                    class="swiper-slide label transparent m-5 cursor-pointer"
+                                    :class="{
+                                    'label-default': currentCategory !== category,
+                                    'label-primary': currentCategory === category}"
 
-                    </div>
-
-                    <!-- Categories Filters -->
-                    <div class="row text-center">
-
-                        <button
-                            type="button"
-                            class="btn btn-xs btn-primary transparent m-t-30"
-                            @click.prevent="handleModalVisibility"
-                        >
-                            {{ translations.more_filters }}
-                        </button>
-
-                        <div class="row m-t-30">
-                            <label>Cidades próximas</label>
-                            <p v-if="!cities.length">Nenhuma cidade próxima.</p>
-                            <div class="col-sm-12">
-                                <span class="small label label-success m-l-5 tag" v-for="city in cities" v-if="city.name != currentLocation.city">{{city.name}} - {{city.state}} <small> <span class="text-white">|</span> <span class="f-primary">{{handleDistance(city.distance)}}</span></small></span>
+                                    v-for="(category, $index) in categories"
+                                    :key="$index">
+                                    {{ category[`name_${language}`] }}
+                                    <i :class="{
+                                        'm-l-5': true,
+                                        'ion-ios-circle-outline': currentCategory !== category,
+                                        'ion-ios-circle-filled': currentCategory === category
+                                        }">
+                                    </i>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <!-- Categories Filters -->
+                <!--Cities-->
+                <div class="row m-t-10">
+                    <div class="col-sm-12 text-center">
+
+                        <label>{{ translations.nearCities }}</label>
+                        <p v-if="!cities.length">Nenhuma cidade próxima.</p>
+                        <div class="swiper-container" ref="citiesSlider">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide label transparent m-5 cursor-pointer"
+                                     v-for="(city, $index) in cities"
+                                     :key="$index"
+                                     :class="{'cursor-pointer': currentCity != city.id, 'label-success':currentCity == city.id}">
+                                         <span v-if="currentCity == city.id">
+                                             {{city.name}} - {{city.state}}
+                                         </span>
+                                        <span v-if="currentCity != city.id">
+                                            {{city.name}} - {{city.state}}
+                                            <span class="text-white">|</span>
+                                            <span class="f-primary">{{handleDistance(city.distance)}}</span>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Cities-->
+
+                <div class="container">
+                    <div class="row text-center">
+                        <button
+                            type="button"
+                            class="btn btn-xs btn-primary transparent m-t-30"
+                            @click.prevent="handleModalVisibility">
+                            {{ translations.more_filters }}
+                        </button>
+                    </div>
+
 
                     <div class="row m-t-30">
 
@@ -72,6 +93,7 @@
 
                                     <!-- Place Category -->
                                     <span class="label label-primary transparent place-category">
+
                                         {{ checkLanguage === 'en' ? event.category.name_en : event.category.name_pt }}
                                     </span>
                                     <!-- /Place Category -->
@@ -80,6 +102,7 @@
                                     <span class="label label-primary transparent place-ranking">
                                         <i class="ion-podium m-r-5"></i>
                                         {{ event.rank_position }}º
+                                        <span class="text-muted f-success ">{{event.votes}}</span>
                                     </span>
                                     <!-- Place Ranking -->
 
@@ -169,6 +192,7 @@
                 },
                 radius: 40,
                 cities:[],
+                currentCity: null,
                 processStyle: {backgroundColor: "#48C3D1"},
                 tooltipStyle: {backgroundColor: "#48C3D1", borderColor: "#48C3D1"}
             }
@@ -201,6 +225,7 @@
             }
 
             this.getCategories()
+
         },
 
         methods: {
@@ -217,6 +242,7 @@
                     .then(function (response) {
                         that.categories = response.data.categories
                         that.currentCategory = that.categories[0]
+                        that.categorySwiper()
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -233,6 +259,7 @@
                 })
                     .then(function (response) {
                         that.cities = response.data.cities
+                        that.citiesSwiper()
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -247,9 +274,11 @@
                     lat: that.currentLocation.lat,
                     lng: that.currentLocation.lng,
                     radius: that.radius,
+                    city_id: that.currentCity,
                 })
                     .then(function (response) {
                         that.events = response.data.events
+                        that.currentCity = response.data.current_city
                     }).catch(function (error) {
                     console.log(error)
                 });
@@ -451,7 +480,74 @@
             handleRadius(val){
                 this.radius = val
                 this.getEvents()
-            }
+            },
+
+
+            categorySwiper() {
+                let that = this
+
+                setTimeout(() => {
+                    that.swiperTabs = new Swiper(that.$refs.categorySlider, {
+                        spaceBetween: 0,
+                        slidesPerView: 5,
+                        initialSlide: 0,
+                        loop: false,
+                        centeredSlides: true,
+                        slideToClickedSlide: true,
+                        prevButton: '.swiper-button-prev',
+                        nextButton: '.swiper-button-next',
+                        onSlideChangeEnd: swiper => {
+                            that.changeCurrentCategory(that.categories[swiper.realIndex])
+                        },
+                        breakpoints: {
+                            350: {
+                                slidesPerView: 2,
+                            },
+                            480: {
+                                slidesPerView: 2,
+                            },
+                            768: {
+                                slidesPerView: 3,
+                            },
+                        }
+                    })
+
+                }, 100)
+            },
+
+
+            citiesSwiper() {
+                let that = this
+
+                setTimeout(() => {
+                    that.swiperTabs = new Swiper(that.$refs.citiesSlider, {
+                        spaceBetween: 0,
+                        slidesPerView: 5,
+                        initialSlide: 0,
+                        loop: false,
+                        centeredSlides: true,
+                        slideToClickedSlide: true,
+                        prevButton: '.swiper-button-prev',
+                        nextButton: '.swiper-button-next',
+                        onSlideChangeEnd: swiper => {
+                            that.currentCity = that.cities[swiper.realIndex].id
+                            that.getEvents();
+                        },
+                        breakpoints: {
+                            350: {
+                                slidesPerView: 2,
+                            },
+                            480: {
+                                slidesPerView: 2,
+                            },
+                            768: {
+                                slidesPerView: 3,
+                            },
+                        }
+                    })
+
+                }, 100)
+            },
         }
     }
 </script>

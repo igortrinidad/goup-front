@@ -2,7 +2,9 @@ export const en = {
     title: 'Ranking',
     filters: 'Filters',
     more_filters: 'More filters',
-    noEvents: 'No events were found near you, look under another category or use filters',
+    noEvents: 'No event found near you, search in another category or nearby cities.',
+    categories: 'Categories',
+    nearCities: 'Near cities',
 
     label: {
         max_range: 'Max Range'
@@ -36,7 +38,8 @@ export const pt = {
     filters: 'Filtros',
     more_filters: 'mais filtros',
     noEvents: 'Nenhum evento encontrado próximo a você, procure em outra categoria ou cidades próximas',
-
+    categories: 'Categorias',
+    nearCities: 'Cidades próximas',
     label: {
         max_range: 'Max Range'
     },
