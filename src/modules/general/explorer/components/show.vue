@@ -11,17 +11,46 @@
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
                 <div class="container">
-                    <h1 class="text-center m-b-30" v-show="!places.length">
+
+                    <!--Cities-->
+                    <div class="row m-t-10">
+                        <div class="col-sm-12 text-center">
+
+                            <label>{{ translations.nearCities }}</label>
+                            <p v-if="!cities.length">{{ translations.noCity }}</p>
+                            <div class="swiper-container" ref="citiesSlider">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide label transparent m-5 cursor-pointer"
+                                         v-for="(city, $index) in cities"
+                                         :key="$index"
+                                         :class="{'cursor-pointer': currentCity != city.id, 'label-success':currentCity == city.id}">
+                                         <span v-if="currentCity == city.id">
+                                             {{city.name}} - {{city.state}}
+                                         </span>
+                                        <span v-if="currentCity != city.id">
+                                            {{city.name}} - {{city.state}}
+                                            <span class="text-white">|</span>
+                                            <span class="f-primary">{{handleDistance(city.distance)}}</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Cities-->
+
+
+                    <h1 class="text-center m-b-30" v-show="!events.length">
                         {{ translations.end_list }}
                     </h1>
 
                     <!-- Cards -->
-                    <div class="cards" v-if="places.length">
+                    <div class="cards m-t-30" v-if="events.length">
 
                         <!-- FIRST PLACE -->
                         <div id="card-animated" class="card m-0" ref="cardAnimated">
                             <!-- Card Header -->
-                            <div class="card-header cover" :style="{ backgroundImage: `url(${ places[0].avatar })` }">
+                            <div class="card-header cover" :style="{ backgroundImage: `url(${ events[0].cover })` }">
                                 <!-- Current Action -->
                                 <span class="card-action up" v-show="interactions.up">
                                     {{ translations.up }}
@@ -38,20 +67,21 @@
                                 <!-- / Current Action -->
 
                                 <div class="ch-content">
-                                    <h3 class="title f-700 t-overflow">{{ places[0].name }}</h3>
-                                    <p class="title f-700 t-overflow" style="margin-bottom: 0px;"><i class="ion-ios-location m-r-5"></i> {{ places[0].city }} - {{places[0].state}}</p>
-                                    <p class="title f-700 t-overflow" style="margin-top: 0px; margin-bottom: -5px;"><i class="ion-android-calendar m-r-5"></i>
-                                        {{ places[0].best_day }}
-                                    </p>
+                                    <h3 class="title f-700 t-overflow">{{ events[0].name }}</h3>
+                                    <p class="title f-700 t-overflow" style="margin-bottom: 0px;"><i class="ion-ios-location m-r-5"></i> {{ events[0].city.name }} - {{events[0].city.state}}</p>
                                 </div>
 
                                 <router-link
                                     tag="span"
                                     class="icon-information ion-ios-information"
-                                    v-if="places[0].slug"
-                                    :to="{ name: 'general.places.show', params: { place_slug: places[0].slug } }"
+                                    v-if="events[0].slug"
+                                    :to="{ name: 'general.events.show', params: { place_slug: events[0].slug } }"
                                 >
                                 </router-link>
+
+                               <span class="icon-favorite">
+                                    <i class="ion-ios-star f-primary"></i> {{events[0].favorited_count}}
+                               </span>
 
                             </div>
                             <!-- / Card Header -->
@@ -59,15 +89,12 @@
                         <!-- / FIRST PLACE -->
 
                         <!-- SECOND PLACE -->
-                        <div class="card m-0" v-if="places.length > 1">
+                        <div class="card m-0" v-if="events.length > 1">
                             <!-- Card Header -->
-                            <div class="card-header cover" :style="{ backgroundImage: `url(${ places[1].avatar })` }">
+                            <div class="card-header cover" :style="{ backgroundImage: `url(${ events[1].cover })` }">
                                 <div class="ch-content">
-                                    <h3 class="title f-700 t-overflow">{{ places[1].name }}</h3>
-                                    <p class="title f-700 t-overflow" style="margin-bottom: 0px;"><i class="ion-ios-location m-r-5"></i> {{ places[1].city }} - {{places[1].state}}</p>
-                                    <p class="title f-700 t-overflow" style="margin-top: 0px; margin-bottom: -5px;"><i class="ion-android-calendar m-r-5"></i>
-                                        {{ places[1].best_day }}
-                                    </p>
+                                    <h3 class="title f-700 t-overflow">{{ events[1].name }}</h3>
+                                    <p class="title f-700 t-overflow" style="margin-bottom: 0px;"><i class="ion-ios-location m-r-5"></i> {{ events[1].city.name }} - {{events[1].city.state}}</p>
                                 </div>
                                 <span class="icon-information ion-ios-information">
                                 </span>
@@ -83,12 +110,12 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="actions">
-                                <div v-if="!places.length">
-                                    <span class="action" @click="getPlaces()">
+                                <div v-if="!events.length">
+                                    <span class="action" @click="getEvents()">
                                         <span class="ion-refresh f-default"></span>
                                     </span>
                                 </div>
-                                <div v-if="places.length">
+                                <div v-if="events.length && isLogged">
                                     <span class="action skip" @click="skip()">
                                         <span class="ion-ios-rewind f-default"></span>
                                     </span>
@@ -104,6 +131,12 @@
                                     <span class="action favorite" @click="favorite()">
                                         <span class="ion-ios-star f-primary"></span>
                                     </span>
+                                </div>
+
+                                <div v-if="!isLogged">
+                                   <p><strong>{{translations.makeLogin}}</strong></p>
+
+                                    <router-link type="button" class="btn btn-block btn-primary" :to="{name: 'general.auth.login'}">{{ translations.goToLogin }}</router-link>
                                 </div>
                             </div>
                         </div>
@@ -121,13 +154,15 @@
 <script>
     import Hammer from 'hammerjs'
     import { transition } from 'jquery.transit'
-    import { mapGetters } from 'vuex'
+    import { mapGetters, mapActions } from 'vuex'
 
     import mainHeader from '@/components/main-header.vue'
     import elements from '@/components/elements.vue'
     import { cleanPlaceModel } from '@/models/Place'
 
     import * as translations from '@/translations/pages/index'
+    import moment from 'moment'
+    import {language} from "../../../../store/getters";
 
     export default {
         name: 'landing',
@@ -147,16 +182,25 @@
                 },
                 starting: true,
                 placeholder: true,
-                places: [],
+                events: [],
                 active: false,
                 top: 0,
-                left: 0
+                left: 0,
+                currentLocation:{
+                    lat:-23.5505199,
+                    lng:-46.63330940000003,
+                    city: 'São Paulo',
+                    state: 'SP',
+                    newLocation: ''
+                },
+                currentCity: null,
+                cities: []
             }
         },
 
         computed: {
 
-            ...mapGetters(['checkLanguage']),
+            ...mapGetters(['checkLanguage', 'language', 'isLogged', 'currentUser']),
 
             'translations': function() {
                 const language = localStorage.getItem('language')
@@ -171,11 +215,21 @@
         },
 
         mounted(){
-            this.getPlaces()
+
+            if(!window.cordova){
+                this.locationRequest()
+            }
+
+            if(window.cordova){
+                this.geolocationInit();
+                this.getLocation()
+            }
         },
 
 
         methods: {
+
+            ...mapActions(['setLoading']),
 
             mountHammer() {
                 let that = this
@@ -184,7 +238,7 @@
                     that.hammerCards = false
                 }
 
-                if (this.places.length) {
+                if (this.events.length) {
                     setTimeout(() => {
                         that.hammerCards = new Hammer(that.$refs.cardAnimated)
                         that.hammerCards.get('pan').set({ direction: Hammer.DIRECTION_ALL })
@@ -226,6 +280,13 @@
             },
 
             resetPosition() {
+
+                let interaction = _.cloneDeep(this.interactions)
+                interaction.user_id = this.currentUser.id
+                interaction.event_id =  this.events[0].id
+
+                this.handleInteraction(interaction)
+
                 // Reset Global Top And Left
                 this.top = 0
                 this.left = 0
@@ -236,13 +297,14 @@
                 this.interactions.skip = false
                 this.interactions.favorite = false
 
+
                 // Remove From Array
-                this.places.splice(0, 1)
+                this.events.splice(0, 1)
                 $(this.$refs.cardAnimated).transition({ x: 0, y: 0, opacity: 1 }, 0)
 
                 // Update localStorage
-                localStorage.removeItem('places')
-                localStorage.setItem('places', JSON.stringify(this.places))
+                /*localStorage.removeItem('events')
+                localStorage.setItem('events', JSON.stringify(this.events))*/
             },
 
             animateCurrentCard(e) {
@@ -323,34 +385,263 @@
                 $('#card-animated').transition({ x: -100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
-            getPlaces() {
+            locationRequest() {
                 let that = this
+                let checkToAsk = parseInt(localStorage.getItem('location-request'))
+                let now = moment().unix()
 
-                if (that.starting) {
+                if(!checkToAsk || now > checkToAsk){
+                    navigator.permissions.query({name:'geolocation'}).then(function(result) {
+                        if (result.state === 'granted') {
+                            //get current location
+                            that.getLocation()
+                        } else if (result.state === 'prompt') {
 
-                    that.starting = false
+                            //Request user permission
+                            iziToast.show({
+                                icon: 'icon-contacts',
+                                title: `${that.translations.location.notification.title}`,
+                                message: `${that.translations.location.notification.message}`,
+                                position: 'topCenter',
+                                image: '/static/assets/img/logos/LOGOS-05.png',
+                                imageWidth: 70,
+                                color: 'dark',
+                                backgroundColor: '#561F9F',
+                                titleColor: '#fff',
+                                messageColor: '#fff',
+                                timeout: 0,
+                                layout: 2,
+                                buttons: [
+                                    [`<button class="btn-notification">${that.translations.location.notification.buttons.notNow}</button>`, function (instance, toast) {
+                                        instance.hide({
+                                            transitionOut: 'fadeOutUp',
+                                        }, toast, 'close', 'btn2');
 
-                    if (localStorage.getItem('places')) {
-                        that.places = JSON.parse(localStorage.getItem('places'))
-                    } else {
-                        that.places = [ cleanPlaceModel(), cleanPlaceModel(), cleanPlaceModel() ]
-                        localStorage.setItem('places', JSON.stringify(this.places))
-                    }
+                                        localStorage.setItem('location-request', moment().add(1, 'hour').unix())
 
-                } else {
-                    that.places = [ cleanPlaceModel(), cleanPlaceModel(), cleanPlaceModel() ]
-                    localStorage.removeItem('places')
-                    localStorage.setItem('places', JSON.stringify(that.places))
+                                        infoNotify('', that.translations.location.permissionDenied)
+                                        that.getEvents()
+
+                                    }, false],
+                                    [`<button class="btn btn-primary transparent">${that.translations.location.notification.buttons.enable}</button>`, function (instance, toast) {
+                                        instance.hide({
+                                            transitionOut: 'fadeOutUp',
+                                        }, toast, 'close', 'btn2');
+
+                                        if(checkToAsk){
+                                            localStorage.removeItem('location-request')
+                                        }
+
+                                        that.getLocation()
+
+                                    }, true]
+                                ],
+                                drag: false
+                            });
+                        }
+
+                    });
+                }else{
+                    that.getEvents()
                 }
 
-                that.places.forEach((place) => {
-                    place.photos = _.orderBy(place.photos, ['is_cover'], ['desc'])
+            },
+
+            getLocation(){
+                let that = this
+
+                that.setLoading({is_loading: true, message: 'Aguardando localização'})
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(that.navigatorSuccess, that.navigatorError);
+                } else {
+                    errorNotify('', that.translations.location.notSupported);
+                }
+            },
+
+            navigatorSuccess(position) {
+                let that = this
+
+                that.currentLocation.lat = position.coords.latitude
+                that.currentLocation.lng = position.coords.longitude
+
+                that.setLoading({is_loading: false, message: ''})
+
+                that.getLocationByCoordinates()
+
+            },
+
+            navigatorError() {
+                this.setLoading({is_loading: false, message: ''})
+                errorNotify('', this.translations.location.unavailable);
+            },
+
+            geolocationInit: function(){
+                let that = this
+                function onSuccess(position) {
+                    that.currentLocation.lat = position.coords.latitude;
+                    that.currentLocation.lng =  position.coords.longitude;
+
+                    navigator.geolocation.clearWatch(watchID);
+
+                    that.getLocationByCoordinates();
+                }
+
+                // onError Callback receives a PositionError object
+                function onError(error) {
+                    console.log(error)
+                    errorNotify('', that.translations.location.unavailable);
+                }
+
+                // Options: throw an error if no update is received every 30 seconds.
+                var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
+            },
+
+            getLocationByCoordinates(){
+
+                let that = this
+
+                let geocoder = new google.maps.Geocoder;
+
+                let latlng = new google.maps.LatLng(that.currentLocation.lat, that.currentLocation.lng);
+
+                geocoder.geocode({
+                    'latLng': latlng
+                }, function (results, status) {
+
+                    if (status === google.maps.GeocoderStatus.OK) {
+
+                        if (results) {
+
+                            results[0].address_components.map((current) =>{
+                                current.types.map((type) => {
+                                    if(type == 'administrative_area_level_1'){
+                                        that.currentLocation.state = current.short_name
+                                    }
+                                    if(type == 'administrative_area_level_2'){
+                                        that.currentLocation.city  = current.short_name
+                                    }
+                                })
+                            })
+
+                            console.log(`lat: ${that.currentLocation.lat} | lng: ${that.currentLocation.lng}`)
+                            console.log(`Current location: ${that.currentLocation.city} - ${that.currentLocation.state}`)
+
+                            that.getEvents()
+                            that.getNearByCities()
+
+                        } else {
+                            errorNotify('', that.translations.location.unavailable);
+                        }
+                    }
+                });
+
+            },
+
+            handleDistance(distance){
+                distance = parseFloat(distance);
+                return `${distance.toFixed(2)} km`
+            },
+
+            getNearByCities() {
+                let that = this
+
+                that.$http.post(`city/near_by_location`, {
+                    lat: that.currentLocation.lat,
+                    lng: that.currentLocation.lng,
+                    radius: that.radius
                 })
+                    .then(function (response) {
+                        that.cities = response.data.cities
+                        that.citiesSwiper()
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
 
-                this.mountHammer()
+            citiesSwiper() {
+                let that = this
 
-                console.log(that.places);
+                setTimeout(() => {
+                    that.swiperTabs = new Swiper(that.$refs.citiesSlider, {
+                        spaceBetween: 0,
+                        slidesPerView: 5,
+                        initialSlide: 0,
+                        loop: false,
+                        centeredSlides: true,
+                        slideToClickedSlide: true,
+                        prevButton: '.swiper-button-prev',
+                        nextButton: '.swiper-button-next',
+                        onSlideChangeEnd: swiper => {
+                            that.currentCity = that.cities[swiper.realIndex].id
+                            that.getEvents();
+                        },
+                        breakpoints: {
+                            350: {
+                                slidesPerView: 2,
+                            },
+                            480: {
+                                slidesPerView: 2,
+                            },
+                            768: {
+                                slidesPerView: 3,
+                            },
+                        }
+                    })
 
+                }, 100)
+            },
+
+            getEvents() {
+                let that = this
+                that.$http.post('event/explorer/list', {
+                    language: that.language,
+                    lat: that.currentLocation.lat,
+                    lng: that.currentLocation.lng,
+                    city_id: that.currentCity,
+                })
+                    .then(function (response) {
+
+                        that.events = response.data.events
+                        that.currentCity = response.data.current_city
+
+                        /*if (that.starting) {
+
+                            that.starting = false
+
+                            if (localStorage.getItem('events')) {
+                                that.events = JSON.parse(localStorage.getItem('events'))
+                            } else {
+                                localStorage.setItem('events', JSON.stringify(that.events))
+                            }
+
+                        } else {
+                            localStorage.removeItem('events')
+                            localStorage.setItem('events', JSON.stringify(that.events))
+                        }
+*/
+
+
+                        if(that.isLogged){
+                            that.mountHammer()
+                        }
+                    }).catch(function (error) {
+                    console.log(error)
+                });
+
+            },
+
+            handleInteraction(interaction) {
+                let that = this
+                that.$http.post('event/interaction/store', interaction)
+                    .then(function (response) {
+
+                     console.log(response)
+
+                    }).catch(function (error) {
+                    console.log(error)
+                });
 
             },
         }
@@ -380,7 +671,12 @@
         left: 0;
     }
 
-    .card .card-header.cover { position: relative; }
+    .card .card-header.cover {
+        position: relative;
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
 
     .cards #card-animated{ z-index: 10; }
 
@@ -392,6 +688,15 @@
         position: absolute;
         top: 0px;
         right: 10px;
+        font-size: 30px;
+        color: #fff;
+        z-index: 7;
+    }
+
+    .icon-favorite {
+        position: absolute;
+        top: 0px;
+        left: 10px;
         font-size: 30px;
         color: #fff;
         z-index: 7;

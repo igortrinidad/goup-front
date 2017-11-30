@@ -102,7 +102,6 @@
                                     <span class="label label-primary transparent place-ranking">
                                         <i class="ion-podium m-r-5"></i>
                                         {{ event.rank_position }}º
-                                        <span class="text-muted f-success ">{{event.votes}}</span>
                                     </span>
                                     <!-- Place Ranking -->
 
@@ -111,6 +110,9 @@
                                         <h4 class="f-700">
                                             {{ event.name }}
                                         </h4>
+                                        <span class="icon-favorite">
+                                            <i class="ion-ios-star f-primary"></i> {{event.favorited_count}}
+                                        </span>
                                         <div class="border-inside-card text-center">
                                             <i class="ion-ios-location"></i>
                                             <small class="d-block">{{ event.city.name }} - {{ event.city.state }}</small>
@@ -156,7 +158,7 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import { mapGetters, mapActions } from 'vuex'
 
     import mainHeader from '@/components/main-header.vue'
     import { cleanPlaceModel } from '@/models/Place'
@@ -229,6 +231,8 @@
         },
 
         methods: {
+            ...mapActions(['setLoading']),
+
 
             changeCurrentCategory(category) {
                 this.currentCategory = category
@@ -268,7 +272,7 @@
 
             getEvents() {
                 let that = this
-                that.$http.post('event/list', {
+                that.$http.post('event/rank/list', {
                     language: that.language,
                     category_id: that.currentCategory.id,
                     lat: that.currentLocation.lat,
@@ -356,6 +360,8 @@
             getLocation(){
                 let that = this
 
+                that.setLoading({is_loading: true, message: 'Aguardando localização'})
+
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(that.navigatorSuccess, that.navigatorError);
                 } else {
@@ -369,21 +375,19 @@
                 that.currentLocation.lat = position.coords.latitude
                 that.currentLocation.lng = position.coords.longitude
 
+                that.setLoading({is_loading: false, message: ''})
+
                 that.getLocationByCoordinates()
 
             },
 
             navigatorError() {
+                this.setLoading({is_loading: false, message: ''})
                 errorNotify('', this.translations.location.unavailable);
             },
 
             geolocationInit: function(){
                 let that = this
-                // onSuccess Callback
-                //   This method accepts a `Position` object, which contains
-                //   the current GPS coordinates
-                //
-
                 function onSuccess(position) {
                     that.currentLocation.lat = position.coords.latitude;
                     that.currentLocation.lng =  position.coords.longitude;
