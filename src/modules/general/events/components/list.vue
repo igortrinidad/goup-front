@@ -190,7 +190,7 @@
                     state: 'SP',
                     newLocation: ''
                 },
-                radius: 40,
+                radius: 80,
                 cities:[],
                 currentCity: null,
                 processStyle: {backgroundColor: "#48C3D1"},
