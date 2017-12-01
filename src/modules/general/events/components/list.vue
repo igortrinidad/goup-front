@@ -25,12 +25,6 @@
                                     v-for="(category, $index) in categories"
                                     :key="$index">
                                     {{ category[`name_${language}`] }}
-                                    <i :class="{
-                                        'm-l-5': true,
-                                        'ion-ios-circle-outline': currentCategory !== category,
-                                        'ion-ios-circle-filled': currentCategory === category
-                                        }">
-                                    </i>
                                 </div>
                             </div>
                         </div>
@@ -77,11 +71,19 @@
 
 
                         <div class="col-sm-12">
-                            <h4 v-if="!events.length && !interactions.is_loading" class="text-center">{{translations.noEvents}}</h4>
+                            <h4 v-if="!events.length && !interactions.is_loading" class="text-center">
+                                {{translations.noEvents}}
+                            </h4>
                         </div>
 
-                        <div class="col-sm-12" v-for="event in events">
-                            <div class="card m-b-10">
+                        <!-- Events -->
+                        <div class="col-sm-12" v-for="(event, indexEvents) in events">
+                            <router-link
+                                tag="div"
+                                class="card m-b-10"
+                                :key="indexEvents"
+                                :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
+                            >
                                 <div class="card-body card-padding">
 
                                     <!-- Place Thumbnail -->
@@ -119,8 +121,10 @@
                                     </div>
                                     <!-- /Title And Location -->
                                 </div>
-                            </div>
+                            </router-link>
                         </div>
+                        <!-- /Events -->
+
                     </div>
 
                 </div>
@@ -226,7 +230,7 @@
 
 
             if( window.cordova && moment().add(1, 'days').isAfter(moment('DD/MM/YYYY HH:mm:ss', last_location)) || window.cordova && !last_location  ){
-                
+
                 //this.geolocationInit();
                 this.getLocation()
 
@@ -494,7 +498,7 @@
                             that.getEvents()
 
                             if(get_cities){
-                                that.getNearByCities() 
+                                that.getNearByCities()
                             }
 
                         } else {

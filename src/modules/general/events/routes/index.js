@@ -42,7 +42,7 @@ export default [
             },
             {
                 name: 'general.events.show',
-                path: '/place/:place_slug',
+                path: '/place/:event_slug',
                 component: Show,
                 meta: {requiresAuth: false}
             },
