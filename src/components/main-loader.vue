@@ -38,12 +38,12 @@
      */
     .loading-wrapper {
         position: fixed;
-        top: 0;
+        top: 72;
         left: 0;
         width: 100%;
         height: 100%;
         z-index: 100000;
-        background-color: rgba(86, 31, 159, .3)
+        background-color: rgba(86, 31, 159, .6)
     }
 
     .loading-box {

@@ -17,7 +17,7 @@
                         <div class="col-sm-12 text-center">
 
                             <label>{{ translations.nearCities }}</label>
-                            <p v-if="!cities.length">{{ translations.noCity }}</p>
+                            <p v-if="!cities.length && !interactions.is_loading">{{ translations.noCity }}</p>
                             <div class="swiper-container" ref="citiesSlider">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide label transparent m-5 cursor-pointer"
@@ -29,8 +29,6 @@
                                          </span>
                                         <span v-if="currentCity != city.id">
                                             {{city.name}} - {{city.state}}
-                                            <span class="text-white">|</span>
-                                            <span class="f-primary">{{handleDistance(city.distance)}}</span>
                                         </span>
                                     </div>
                                 </div>
@@ -40,9 +38,9 @@
                     <!--Cities-->
 
 
-                    <h1 class="text-center m-b-30" v-show="!events.length">
+                    <h4 class="text-center m-b-30 m-t-30" v-show="!events.length && !interactions.is_loading">
                         {{ translations.end_list }}
-                    </h1>
+                    </h4>
 
                     <!-- Cards -->
                     <div class="cards m-t-30" v-if="events.length">
@@ -110,11 +108,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="actions">
-                                <div v-if="!events.length">
-                                    <span class="action" @click="getEvents()">
-                                        <span class="ion-refresh f-default"></span>
-                                    </span>
-                                </div>
+
                                 <div v-if="events.length && isLogged">
                                     <span class="action skip" @click="skip()">
                                         <span class="ion-ios-rewind f-default"></span>
@@ -178,7 +172,8 @@
                     up: false,
                     down: false,
                     skip: false,
-                    favorite: false
+                    favorite: false,
+                    is_loading: true,
                 },
                 starting: true,
                 placeholder: true,
@@ -216,13 +211,31 @@
 
         mounted(){
 
+            var that = this;
+
             if(!window.cordova){
                 this.locationRequest()
             }
 
-            if(window.cordova){
-                this.geolocationInit();
+            var last_location = localStorage.getItem('last_location_getted')
+
+
+            if( window.cordova && moment().add(1, 'days').isAfter(moment('DD/MM/YYYY HH:mm:ss', last_location)) || window.cordova && !last_location  ){
+                
+                //this.geolocationInit();
                 this.getLocation()
+
+            } else {
+
+                console.log('local_storage found');
+                that.currentLocation.lat = localStorage.getItem('user_lat');
+                that.currentLocation.lng = localStorage.getItem('user_lng');
+
+                that.getLocationByCoordinates(false);
+
+                that.cities = JSON.parse(localStorage.getItem('cities'));
+                that.citiesSwiper();
+
             }
         },
 
@@ -450,7 +463,7 @@
             getLocation(){
                 let that = this
 
-                that.setLoading({is_loading: true, message: 'Aguardando localização'})
+                that.setLoading({is_loading: true, message: ''})
 
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(that.navigatorSuccess, that.navigatorError);
@@ -462,10 +475,14 @@
             navigatorSuccess(position) {
                 let that = this
 
+                that.setLoading({is_loading: true, message: ''})
+
                 that.currentLocation.lat = position.coords.latitude
                 that.currentLocation.lng = position.coords.longitude
 
-                that.setLoading({is_loading: false, message: ''})
+                localStorage.setItem('user_lat', position.coords.latitude);
+                localStorage.setItem('user_lng', position.coords.longitude);
+                localStorage.setItem('last_location_getted', moment().format('DD/MM/YYYY HH:mm:ss'));
 
                 that.getLocationByCoordinates()
 
@@ -497,7 +514,7 @@
                 var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
             },
 
-            getLocationByCoordinates(){
+            getLocationByCoordinates(get_cities = true){
 
                 let that = this
 
@@ -528,7 +545,10 @@
                             console.log(`Current location: ${that.currentLocation.city} - ${that.currentLocation.state}`)
 
                             that.getEvents()
-                            that.getNearByCities()
+
+                            if(get_cities){
+                                that.getNearByCities()
+                            }
 
                         } else {
                             errorNotify('', that.translations.location.unavailable);
@@ -554,6 +574,9 @@
                     .then(function (response) {
                         that.cities = response.data.cities
                         that.citiesSwiper()
+
+                        localStorage.setItem('cities', JSON.stringify(that.cities));
+
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -605,7 +628,7 @@
 
                         that.events = response.data.events
                         that.currentCity = response.data.current_city
-
+                        that.interactions.is_loading = false;
                         /*if (that.starting) {
 
                             that.starting = false
@@ -628,6 +651,7 @@
                         }
                     }).catch(function (error) {
                     console.log(error)
+                    that.interactions.is_loading = false;
                 });
 
             },

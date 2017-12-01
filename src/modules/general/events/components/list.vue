@@ -54,8 +54,6 @@
                                          </span>
                                         <span v-if="currentCity != city.id">
                                             {{city.name}} - {{city.state}}
-                                            <span class="text-white">|</span>
-                                            <span class="f-primary">{{handleDistance(city.distance)}}</span>
                                         </span>
                                 </div>
                             </div>
@@ -79,7 +77,7 @@
 
 
                         <div class="col-sm-12">
-                            <h4 v-if="!events.length" class="text-center">{{translations.noEvents}}</h4>
+                            <h4 v-if="!events.length && !interactions.is_loading" class="text-center">{{translations.noEvents}}</h4>
                         </div>
 
                         <div class="col-sm-12" v-for="event in events">
@@ -179,7 +177,8 @@
             return {
                 interactions:{
                     changeLocation: false,
-                    showFilters: false
+                    showFilters: false,
+                    is_loading: true,
                 },
                 placeholder: true,
                 events: [],
@@ -217,16 +216,35 @@
 
         mounted(){
 
+            var that = this;
+
             if(!window.cordova){
                 this.locationRequest()
             }
 
-            if(window.cordova){
-                this.geolocationInit();
+            var last_location = localStorage.getItem('last_location_getted')
+
+
+            if( window.cordova && moment().add(1, 'days').isAfter(moment('DD/MM/YYYY HH:mm:ss', last_location)) || window.cordova && !last_location  ){
+                
+                //this.geolocationInit();
                 this.getLocation()
+
+            } else {
+
+                console.log('local_storage found');
+                that.currentLocation.lat = localStorage.getItem('user_lat');
+                that.currentLocation.lng = localStorage.getItem('user_lng');
+
+                that.getLocationByCoordinates(false);
+
+                that.cities = JSON.parse(localStorage.getItem('cities'));
+                that.citiesSwiper();
+
             }
 
             this.getCategories()
+
 
         },
 
@@ -242,15 +260,26 @@
             getCategories() {
                 let that = this
 
-                that.$http.get(`event/categories/${that.language}`)
-                    .then(function (response) {
-                        that.categories = response.data.categories
-                        that.currentCategory = that.categories[0]
-                        that.categorySwiper()
-                    })
-                    .catch(function (error) {
-                        console.log(error)
-                    });
+                if(!JSON.parse(localStorage.getItem('categories'))){
+
+                    that.$http.get(`event/categories/${that.language}`)
+                        .then(function (response) {
+                            that.categories = response.data.categories
+                            that.currentCategory = that.categories[0]
+                            that.categorySwiper()
+                            localStorage.setItem('categories', JSON.stringify(that.categories));
+                        })
+                        .catch(function (error) {
+                            console.log(error)
+                        });
+
+                } else {
+                    that.categories = JSON.parse(localStorage.getItem('categories'));
+                    that.currentCategory = that.categories[0];
+                    that.categorySwiper();
+                }
+
+
             },
 
             getNearByCities() {
@@ -272,6 +301,10 @@
 
             getEvents() {
                 let that = this
+
+                that.events = [];
+                that.interactions.is_loading = true;
+
                 that.$http.post('event/rank/list', {
                     language: that.language,
                     category_id: that.currentCategory.id,
@@ -283,8 +316,9 @@
                     .then(function (response) {
                         that.events = response.data.events
                         that.currentCity = response.data.current_city
+                        that.interactions.is_loading = false;
                     }).catch(function (error) {
-                    console.log(error)
+                    that.interactions.is_loading = false;
                 });
 
             },
@@ -427,7 +461,7 @@
                 that.getEvents()
             },
 
-            getLocationByCoordinates(){
+            getLocationByCoordinates(get_cities = true){
 
                 let that = this
 
@@ -458,7 +492,10 @@
                             console.log(`Current location: ${that.currentLocation.city} - ${that.currentLocation.state}`)
 
                             that.getEvents()
-                            that.getNearByCities()
+
+                            if(get_cities){
+                                that.getNearByCities() 
+                            }
 
                         } else {
                             errorNotify('', that.translations.location.unavailable);
