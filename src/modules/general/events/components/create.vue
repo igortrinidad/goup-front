@@ -179,11 +179,11 @@
 
                             <div class="row m-t-20">
 
-                                 <label class="f-700 f-primary" for="place-style">{{ translations.form.addedTags }}</label>
+                                <label class="f-700 f-primary" for="place-style">{{ translations.form.addedTags }}</label>
 
-                                  <p class="f-300" v-if="!event.tags.length">{{translations.form.noTags}}</p>
+                                <p class="f-300" v-if="!event.tags.length">{{translations.form.noTags}}</p>
 
-                                <span class="small label label-success m-l-5 tag" v-for="tag in event.tags">
+                                <span class="small label label-success m-5 tag" v-for="tag in event.tags">
                                     {{tag.name}} <i class="ion-close m-l-5 f-primary cursor-pointer" @click.prevent="removeTag(tag.name)"></i>
                                 </span>
                             </div>
