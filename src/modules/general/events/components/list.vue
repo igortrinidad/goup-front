@@ -561,10 +561,12 @@
                 let that = this
 
                 setTimeout(() => {
+                    let currentIndex = JSON.parse(localStorage.getItem('city_index'))
+
                     that.swiperTabs = new Swiper(that.$refs.citiesSlider, {
                         spaceBetween: 0,
                         slidesPerView: 5,
-                        initialSlide: 0,
+                        initialSlide: currentIndex ? currentIndex : 0,
                         loop: false,
                         centeredSlides: true,
                         slideToClickedSlide: true,
@@ -572,6 +574,7 @@
                         nextButton: '.swiper-button-next',
                         onSlideChangeEnd: swiper => {
                             that.currentCity = that.cities[swiper.realIndex].id
+                            localStorage.setItem('city_index', swiper.realIndex)
                             that.getEvents();
                         },
                         breakpoints: {
