@@ -19,9 +19,9 @@
                                 <div
                                     class="swiper-slide label transparent m-5 cursor-pointer"
                                     :class="{
-                                    'label-default': currentCategory !== category,
-                                    'label-primary': currentCategory === category}"
-
+                                        'label-default': currentCategory !== category,
+                                        'label-primary': currentCategory === category
+                                    }"
                                     v-for="(category, $index) in categories"
                                     :key="$index">
                                     {{ category[`name_${language}`] }}
@@ -39,16 +39,18 @@
                         <p v-if="!cities.length">Nenhuma cidade próxima.</p>
                         <div class="swiper-container" ref="citiesSlider">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide label transparent m-5 cursor-pointer"
-                                     v-for="(city, $index) in cities"
-                                     :key="$index"
-                                     :class="{'cursor-pointer': currentCity != city.id, 'label-success':currentCity == city.id}">
-                                         <span v-if="currentCity == city.id">
-                                             {{city.name}} - {{city.state}}
-                                         </span>
-                                        <span v-if="currentCity != city.id">
-                                            {{city.name}} - {{city.state}}
-                                        </span>
+                                <div
+                                    class="swiper-slide label transparent m-5 cursor-pointer"
+                                    v-for="(city, $index) in cities"
+                                    :key="$index"
+                                    :class="{ 'cursor-pointer': currentCity != city.id, 'label-success':currentCity == city.id }"
+                                >
+                                    <span v-if="currentCity == city.id">
+                                        {{city.name}} - {{city.state}}
+                                    </span>
+                                    <span v-if="currentCity != city.id">
+                                        {{city.name}} - {{city.state}}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +71,6 @@
 
                     <div class="row m-t-30">
 
-
                         <div class="col-sm-12">
                             <h4 v-if="!events.length && !interactions.is_loading" class="text-center">
                                 {{translations.noEvents}}
@@ -80,46 +81,39 @@
                         <div class="col-sm-12" v-for="(event, indexEvents) in events">
                             <router-link
                                 tag="div"
-                                class="card m-b-10"
+                                class="card m-b-10 p-0"
+                                style="height: 100px;"
                                 :key="indexEvents"
                                 :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
                             >
-                                <div class="card-body card-padding">
 
+                                <div class="card-body p-5">
                                     <!-- Place Thumbnail -->
-                                    <div class="picture-circle picture-circle-m m-t-10 rounded" :style="{ backgroundImage: `url(${ event.cover })` }">
-                                    </div>
-                                    <!-- /Place Thumbnail -->
-
-                                    <!-- Place Category -->
-                                    <span class="label label-primary transparent place-category">
-
-                                        {{ checkLanguage === 'en' ? event.category.name_en : event.category.name_pt }}
-                                    </span>
-                                    <!-- /Place Category -->
-
-                                    <!-- Place Ranking -->
-                                    <span class="label label-primary transparent place-ranking">
-                                        <i class="ion-podium m-r-5"></i>
-                                        {{ event.rank_position }}º
-                                    </span>
-                                    <!-- Place Ranking -->
-
-                                    <!-- Title And Location -->
-                                    <div class="text-center">
-                                        <h4 class="f-700">
-                                            {{ event.name }}
-                                        </h4>
-                                        <span class="icon-favorite">
-                                            <i class="ion-ios-star f-primary"></i> {{event.favorited_count}}
-                                        </span>
-                                        <div class="border-inside-card text-center">
-                                            <i class="ion-ios-location"></i>
-                                            <small class="d-block">{{ event.city.name }} - {{ event.city.state }}</small>
-                                            <p><small>Distância aproximada: {{handleDistance(event.distance)}}</small></p>
+                                    <div class="picture-circle rounded absolute" :style="{ backgroundImage: `url(${ event.cover })` }">
+                                        <div class="event-ranking">
+                                            <small>
+                                                <i class="ion-podium"></i> {{ event.rank_position }}º
+                                            </small>
+                                            <small class="divider">
+                                                <i class="ion-ios-star"></i> {{ event.favorited_count }}
+                                            </small>
                                         </div>
                                     </div>
-                                    <!-- /Title And Location -->
+
+                                    <!-- /Place Thumbnail -->
+
+                                    <div class="ext-padding">
+                                        <h4 class="m-0 m-b-0 f-700 t-overflow">{{ event.name }}</h4>
+                                        <div class="border-inside-card p-5">
+                                            <small class="d-block f-12 ">
+                                                <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
+                                            </small>
+
+                                            <small class="d-block f-14 m-t-10">
+                                                <span class="label label-xs label-primary">{{ handleDistance(event.distance) }}</span>
+                                            </small>
+                                        </div>
+                                    </div>
                                 </div>
                             </router-link>
                         </div>
@@ -599,11 +593,7 @@
 
 <style scoped>
 
-    .place-category,
-    .place-ranking { position: absolute; top: 52px; }
-
-    .place-category { left: 10px; }
-    .place-ranking { right: 10px; }
+    /*  */
 
     .modal-footer {
         border-radius: 0;
@@ -614,4 +604,43 @@
     .text-white{
         color: white;
     }
+
+    /* Event Card */
+    .picture-circle.absolute {
+        position: absolute;
+        top: 50%; left: 5px;
+        width: 90px;
+        height: 90px;
+        display: block;
+        margin-top: -46px;
+        border-radius: 6px !important
+    }
+
+    .event-ranking {
+        position: absolute;
+        bottom: -2px; left: 0; right: 0;
+        background-color: rgba(255, 75, 137, .95);
+        border: 2px solid #FF4B89;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0 0 6px 6px;
+        height: 25px;
+        font-weight: 700;
+
+    }
+
+    .event-ranking small {
+        width: 50%;
+        text-align: center;
+    }
+    .event-ranking .divider {
+        border-left: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .ext-padding {
+        padding-left: 95px;
+    }
+
 </style>

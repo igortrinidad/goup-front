@@ -5,6 +5,7 @@ export const en = {
     noEvents: 'No event found near you, search in another category or nearby cities.',
     categories: 'Categories',
     nearCities: 'Near cities',
+    approximate_distances: 'Approximate distances',
 
     label: {
         max_range: 'Max Range'
@@ -40,6 +41,7 @@ export const pt = {
     noEvents: 'Nenhum evento encontrado próximo a você, procure em outra categoria ou cidades próximas',
     categories: 'Categorias',
     nearCities: 'Cidades próximas',
+    approximate_distances: 'Distância aproximada',
     label: {
         max_range: 'Max Range'
     },

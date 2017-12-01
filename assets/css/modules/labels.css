@@ -6,6 +6,10 @@
     border: 2px solid;
 }
 
+.label.label-xs {
+    padding: 4.5px 10px !important;
+}
+
 .label-block{
     display: block;
     width: 100%;
