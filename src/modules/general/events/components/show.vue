@@ -222,17 +222,12 @@
             },
 
             getPlace() {
-                let placeFromLocalStorage = JSON.parse(localStorage.getItem('places'))[0]
 
-                if (this.$route.params.place_slug === placeFromLocalStorage.slug) {
-                    this.place = placeFromLocalStorage
+                this.place = {}
 
-                    this.interactions.placeNotFound = false
-                    this.initSwiperGallery()
-                    this.initSwiperTabs()
-                } else {
-                    this.interactions.placeNotFound = true
-                }
+                this.initSwiperGallery()
+                this.initSwiperTabs()
+                this.interactions.placeNotFound = true
             }
         }
     }
