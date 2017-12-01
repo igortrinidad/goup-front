@@ -1,5 +1,5 @@
 <template>
-    <div id="list" class="first-container">
+    <div class="first-container">
 
         <main-header
             :title="'ranking'"
@@ -176,6 +176,7 @@
                     showFilters: false,
                     is_loading: true,
                 },
+                destroyed: false,
                 placeholder: true,
                 events: [],
                 categories: [],
@@ -246,16 +247,15 @@
                 $(window).animate({ scrollTop: JSON.parse(localStorage.getItem('current_scroll')) }, 300);
             }
 
-            $(window).scroll(function () {
+            $(window).scroll(() => {
                 let scroll = $(window).scrollTop();
                 localStorage.setItem('current_scroll', scroll)
-            });
+            })
 
         },
 
         methods: {
             ...mapActions(['setLoading']),
-
 
             changeCurrentCategory(category) {
                 this.currentCategory = category
