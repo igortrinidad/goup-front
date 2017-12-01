@@ -1,5 +1,5 @@
 <template>
-    <div class="first-container">
+    <div id="list" class="first-container">
 
         <main-header
             :title="'ranking'"
@@ -241,6 +241,15 @@
 
             this.getCategories()
 
+            if (localStorage.getItem('current_scroll')) {
+                console.log(JSON.parse(localStorage.getItem('current_scroll')));
+                $(window).animate({ scrollTop: JSON.parse(localStorage.getItem('current_scroll')) }, 300);
+            }
+
+            $(window).scroll(function () {
+                let scroll = $(window).scrollTop();
+                localStorage.setItem('current_scroll', scroll)
+            });
 
         },
 
