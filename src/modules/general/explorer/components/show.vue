@@ -73,7 +73,7 @@
                                     tag="span"
                                     class="icon-information ion-ios-information"
                                     v-if="events[0].slug"
-                                    :to="{ name: 'general.events.show', params: { place_slug: events[0].slug } }"
+                                    :to="{ name: 'general.events.show', params: { event_slug: events[0].slug } }"
                                 >
                                 </router-link>
 
@@ -221,7 +221,7 @@
 
 
             if( window.cordova && moment().add(1, 'days').isAfter(moment('DD/MM/YYYY HH:mm:ss', last_location)) || window.cordova && !last_location  ){
-                
+
                 //this.geolocationInit();
                 this.getLocation()
 
