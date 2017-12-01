@@ -104,15 +104,13 @@
 
                                     <div class="ext-padding">
                                         <h4 class="m-0 m-b-0 f-700 t-overflow">{{ event.name }}</h4>
-                                        <div class="border-inside-card p-5">
-                                            <small class="d-block f-12 ">
-                                                <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
-                                            </small>
+                                        <small class="d-block f-12 m-t-15">
+                                            <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
+                                        </small>
 
-                                            <small class="d-block f-14 m-t-10">
-                                                <span class="label label-xs label-primary">{{ handleDistance(event.distance) }}</span>
-                                            </small>
-                                        </div>
+                                        <small class="d-block f-14 m-t-5">
+                                            <span class="label label-xs label-primary">{{ handleDistance(event.distance) }}</span>
+                                        </small>
                                     </div>
                                 </div>
                             </router-link>
@@ -526,10 +524,13 @@
                 let that = this
 
                 setTimeout(() => {
+
+                    let currentIndex = JSON.parse(localStorage.getItem('category_index'))
+
                     that.swiperTabs = new Swiper(that.$refs.categorySlider, {
                         spaceBetween: 0,
                         slidesPerView: 5,
-                        initialSlide: 0,
+                        initialSlide: currentIndex ? currentIndex : 0,
                         loop: false,
                         centeredSlides: true,
                         slideToClickedSlide: true,
@@ -537,6 +538,7 @@
                         nextButton: '.swiper-button-next',
                         onSlideChangeEnd: swiper => {
                             that.changeCurrentCategory(that.categories[swiper.realIndex])
+                            localStorage.setItem('category_index', swiper.realIndex)
                         },
                         breakpoints: {
                             350: {
