@@ -46372,7 +46372,7 @@ var WebSocketConnection = /** @class */ (function () {
                     }
                 };
                 // Plumb appropriate http_proxy environment variable into faye-websocket if it exists.
-                var env = __webpack_require__.i({"NODE_ENV":"production","API_URL":"https://dfa0a5e8.ngrok.io/api","API_ROOT_URL":"https://dfa0a5e8.ngrok.io/","FACEBOOK_CLIENT_ID":"171329556786695","GOOGLE_MAPS_KEY":"AIzaSyDfAjj4h72pB3ppjb2E03dWnb9wIzK-fx8"});
+                var env = __webpack_require__.i({"NODE_ENV":"production","API_URL":"https://d628c5c9.ngrok.io/api","API_ROOT_URL":"https://d628c5c9.ngrok.io/","FACEBOOK_CLIENT_ID":"171329556786695","GOOGLE_MAPS_KEY":"AIzaSyDfAjj4h72pB3ppjb2E03dWnb9wIzK-fx8"});
                 var proxy = this.connURL.indexOf('wss://') == 0
                     ? env['HTTPS_PROXY'] || env['https_proxy']
                     : env['HTTP_PROXY'] || env['http_proxy'];
@@ -90379,7 +90379,7 @@ var debugs = {};
 var debugEnviron;
 exports.debuglog = function(set) {
   if (isUndefined(debugEnviron))
-    debugEnviron = __webpack_require__.i({"NODE_ENV":"production","API_URL":"https://dfa0a5e8.ngrok.io/api","API_ROOT_URL":"https://dfa0a5e8.ngrok.io/","FACEBOOK_CLIENT_ID":"171329556786695","GOOGLE_MAPS_KEY":"AIzaSyDfAjj4h72pB3ppjb2E03dWnb9wIzK-fx8"}).NODE_DEBUG || '';
+    debugEnviron = __webpack_require__.i({"NODE_ENV":"production","API_URL":"https://d628c5c9.ngrok.io/api","API_ROOT_URL":"https://d628c5c9.ngrok.io/","FACEBOOK_CLIENT_ID":"171329556786695","GOOGLE_MAPS_KEY":"AIzaSyDfAjj4h72pB3ppjb2E03dWnb9wIzK-fx8"}).NODE_DEBUG || '';
   set = set.toUpperCase();
   if (!debugs[set]) {
     if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
@@ -95764,4 +95764,4 @@ function applyToTag (styleElement, obj) {
 
 /***/ })
 ]);
-//# sourceMappingURL=vendor.52ba337a9fe6b70442e9.js.map
+//# sourceMappingURL=vendor.1e8c041fbf32500cd9c4.js.map
