@@ -123,11 +123,11 @@
                                     <div class="swiper-slide label transparent m-5 cursor-pointer"
                                          v-for="(city, $index) in getCities"
                                          :key="$index"
-                                         :class="{'cursor-pointer': currentCity != city.id, 'label-primary':currentCity == city}">
-                                         <span v-if="currentCity == city.id">
+                                         :class="{'cursor-pointer': currentCity != city, 'label-primary':currentCity == city}">
+                                         <span v-if="currentCity == city">
                                              {{city.name}} - {{city.state}}
                                          </span>
-                                        <span v-if="currentCity != city.id">
+                                        <span v-if="currentCity != city">
                                             {{city.name}} - {{city.state}}
                                         </span>
                                     </div>
