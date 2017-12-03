@@ -20,7 +20,7 @@
     "cordova-ios": "^4.5.3",
     "cordova-plugin-camera": "^2.4.1",
     "cordova-plugin-compat": "^1.2.0",
-    "cordova-plugin-fcm": "git+https://github.com/ostownsville/cordova-plugin-fcm.git",
+    "cordova-plugin-fcm": "^2.1.2",
     "cordova-plugin-file": "^5.0.0",
     "cordova-plugin-file-transfer": "^1.7.0",
     "cordova-plugin-geolocation": "^2.4.3",
@@ -146,8 +146,7 @@
       },
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-x-socialsharing": {},
-      "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-fcm": {}
+      "cordova-plugin-inappbrowser": {}
     }
   }
 }

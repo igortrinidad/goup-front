@@ -9,7 +9,6 @@ const preventsLogged = prevents => prevents === true
 const beforeEach = (to, from, next) => {
 
     let token = store.state.Auth.token
-    let language = store.state.language
     const auth = to.meta.requiresAuth
     const prevents = to.meta.preventsLogged
     const needRole = to.meta.needRole
@@ -21,19 +20,6 @@ const beforeEach = (to, from, next) => {
 
      store.dispatch('setLoading', {is_loading: false, message: ''})
 
-    //Detect unathenticated user language
-    if (!store.getters.isLogged) {
-        
-        let language = localStorage.getItem('language')
-
-        if(!language){
-            store.dispatch('setLanguage', 'en')
-        }else{
-            //Fallback to english
-            store.dispatch('setLanguage', language)
-        }
-
-    }
     /**
      * If there's no token stored in the state
      * then check localStorage:
@@ -53,7 +39,6 @@ const beforeEach = (to, from, next) => {
         ) {
             store.dispatch('authSetToken', localStoredToken)
             store.dispatch('authSetUser', localStoredUser.user)
-            store.dispatch('setLanguage', localStoredUser.user.language)
         }
     }
 

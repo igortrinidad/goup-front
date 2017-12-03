@@ -12,38 +12,13 @@
             <div class="main">
                 <div class="container">
 
-                    <!--Cities-->
-                    <div class="row m-t-10">
-                        <div class="col-sm-12 text-center">
-
-                            <label>{{ translations.nearCities }}</label>
-                            <p v-if="!cities.length && !interactions.is_loading">{{ translations.noCity }}</p>
-                            <div class="swiper-container" ref="citiesSlider">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide label transparent m-5 cursor-pointer"
-                                         v-for="(city, $index) in cities"
-                                         :key="$index"
-                                         :class="{'cursor-pointer': currentCity != city.id, 'label-success':currentCity == city.id}">
-                                         <span v-if="currentCity == city.id">
-                                             {{city.name}} - {{city.state}}
-                                         </span>
-                                        <span v-if="currentCity != city.id">
-                                            {{city.name}} - {{city.state}}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Cities-->
-
 
                     <h4 class="text-center m-b-30 m-t-30" v-show="!events.length && !interactions.is_loading">
                         {{ translations.end_list }}
                     </h4>
 
                     <!-- Cards -->
-                    <div class="cards m-t-30" v-if="events.length">
+                    <div class="cards m-t-20" v-if="events.length">
 
                         <!-- FIRST PLACE -->
                         <div id="card-animated" class="card m-0" ref="cardAnimated">
@@ -105,7 +80,7 @@
                     <!-- Cards -->
 
                     <!-- Actions -->
-                    <div class="row">
+                    <div class="row" style="margin-top: -10px;">
                         <div class="col-sm-12">
                             <div class="actions">
 
@@ -136,6 +111,31 @@
                         </div>
                     </div>
                     <!-- / Actions -->
+
+                    <!--Cities-->
+                    <div class="row m-t-20">
+                        <div class="col-sm-12 text-center">
+
+                            <label>{{ translations.nearCities }}</label>
+                            <p v-if="!getCities.length && !interactions.is_loading">{{ translations.noCity }}</p>
+                            <div class="swiper-container" ref="citiesSlider">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide label transparent m-5 cursor-pointer"
+                                         v-for="(city, $index) in getCities"
+                                         :key="$index"
+                                         :class="{'cursor-pointer': currentCity != city.id, 'label-primary':currentCity == city}">
+                                         <span v-if="currentCity == city.id">
+                                             {{city.name}} - {{city.state}}
+                                         </span>
+                                        <span v-if="currentCity != city.id">
+                                            {{city.name}} - {{city.state}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Cities-->
 
                 </div>
             </div>
@@ -189,13 +189,12 @@
                     newLocation: ''
                 },
                 currentCity: null,
-                cities: []
             }
         },
 
         computed: {
 
-            ...mapGetters(['language', 'language', 'isLogged', 'currentUser']),
+            ...mapGetters(['language', 'language', 'isLogged', 'currentUser', 'getUserLastGeoLocation', 'getCities', 'getCategories']),
 
             'translations': function() {
 
@@ -212,30 +211,11 @@
 
             var that = this;
 
-            if(!window.cordova){
-                this.locationRequest()
-            }
+            this.currentCategory = this.getCategories[0];
+            this.currentCity = this.getCities[0];
+            this.citiesSwiper();
+            this.getEvents();
 
-            var last_location = localStorage.getItem('last_location_getted')
-
-
-            if( window.cordova && moment().add(1, 'days').isAfter(moment('DD/MM/YYYY HH:mm:ss', last_location)) || window.cordova && !last_location  ){
-
-                //this.geolocationInit();
-                this.getLocation()
-
-            } else {
-
-                console.log('local_storage found');
-                that.currentLocation.lat = localStorage.getItem('user_lat');
-                that.currentLocation.lng = localStorage.getItem('user_lng');
-
-                that.getLocationByCoordinates(false);
-
-                that.cities = JSON.parse(localStorage.getItem('cities'));
-                that.citiesSwiper();
-
-            }
         },
 
 
@@ -397,186 +377,12 @@
                 $('#card-animated').transition({ x: -100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
-            locationRequest() {
-                let that = this
-                let checkToAsk = parseInt(localStorage.getItem('location-request'))
-                let now = moment().unix()
-
-                if(!checkToAsk || now > checkToAsk){
-                    navigator.permissions.query({name:'geolocation'}).then(function(result) {
-                        if (result.state === 'granted') {
-                            //get current location
-                            that.getLocation()
-                        } else if (result.state === 'prompt') {
-
-                            //Request user permission
-                            iziToast.show({
-                                icon: 'icon-contacts',
-                                title: `${that.translations.location.notification.title}`,
-                                message: `${that.translations.location.notification.message}`,
-                                position: 'topCenter',
-                                image: '/static/assets/img/logos/LOGOS-05.png',
-                                imageWidth: 70,
-                                color: 'dark',
-                                backgroundColor: '#561F9F',
-                                titleColor: '#fff',
-                                messageColor: '#fff',
-                                timeout: 0,
-                                layout: 2,
-                                buttons: [
-                                    [`<button class="btn-notification">${that.translations.location.notification.buttons.notNow}</button>`, function (instance, toast) {
-                                        instance.hide({
-                                            transitionOut: 'fadeOutUp',
-                                        }, toast, 'close', 'btn2');
-
-                                        localStorage.setItem('location-request', moment().add(1, 'hour').unix())
-
-                                        infoNotify('', that.translations.location.permissionDenied)
-                                        that.getEvents()
-
-                                    }, false],
-                                    [`<button class="btn btn-primary transparent">${that.translations.location.notification.buttons.enable}</button>`, function (instance, toast) {
-                                        instance.hide({
-                                            transitionOut: 'fadeOutUp',
-                                        }, toast, 'close', 'btn2');
-
-                                        if(checkToAsk){
-                                            localStorage.removeItem('location-request')
-                                        }
-
-                                        that.getLocation()
-
-                                    }, true]
-                                ],
-                                drag: false
-                            });
-                        }
-
-                    });
-                }else{
-                    that.getEvents()
-                }
-
-            },
-
-            getLocation(){
-                let that = this
-
-                that.setLoading({is_loading: true, message: ''})
-
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(that.navigatorSuccess, that.navigatorError);
-                } else {
-                    errorNotify('', that.translations.location.notSupported);
-                }
-            },
-
-            navigatorSuccess(position) {
-                let that = this
-
-                that.setLoading({is_loading: true, message: ''})
-
-                that.currentLocation.lat = position.coords.latitude
-                that.currentLocation.lng = position.coords.longitude
-
-                that.getLocationByCoordinates()
-
-            },
-
-            navigatorError() {
-                this.setLoading({is_loading: false, message: ''})
-                errorNotify('', this.translations.location.unavailable);
-            },
-
-            geolocationInit: function(){
-                let that = this
-                function onSuccess(position) {
-                    that.currentLocation.lat = position.coords.latitude;
-                    that.currentLocation.lng =  position.coords.longitude;
-
-                    navigator.geolocation.clearWatch(watchID);
-
-                    that.getLocationByCoordinates();
-                }
-
-                // onError Callback receives a PositionError object
-                function onError(error) {
-                    console.log(error)
-                    errorNotify('', that.translations.location.unavailable);
-                }
-
-                // Options: throw an error if no update is received every 30 seconds.
-                var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
-            },
-
-            getLocationByCoordinates(get_cities = true){
-
-                let that = this
-
-                let geocoder = new google.maps.Geocoder;
-
-                let latlng = new google.maps.LatLng(that.currentLocation.lat, that.currentLocation.lng);
-
-                geocoder.geocode({
-                    'latLng': latlng
-                }, function (results, status) {
-
-                    if (status === google.maps.GeocoderStatus.OK) {
-
-                        if (results) {
-
-                            results[0].address_components.map((current) =>{
-                                current.types.map((type) => {
-                                    if(type == 'administrative_area_level_1'){
-                                        that.currentLocation.state = current.short_name
-                                    }
-                                    if(type == 'administrative_area_level_2'){
-                                        that.currentLocation.city  = current.short_name
-                                    }
-                                })
-                            })
-
-                            console.log(`lat: ${that.currentLocation.lat} | lng: ${that.currentLocation.lng}`)
-                            console.log(`Current location: ${that.currentLocation.city} - ${that.currentLocation.state}`)
-
-                            that.getEvents()
-
-                            if(get_cities){
-                                that.getNearByCities()
-                            }
-
-                        } else {
-                            errorNotify('', that.translations.location.unavailable);
-                        }
-                    }
-                });
-
-            },
 
             handleDistance(distance){
                 distance = parseFloat(distance);
                 return `${distance.toFixed(2)} km`
             },
 
-            getNearByCities() {
-                let that = this
-
-                that.$http.post(`city/near_by_location`, {
-                    lat: that.currentLocation.lat,
-                    lng: that.currentLocation.lng,
-                    radius: that.radius
-                })
-                    .then(function (response) {
-                        that.cities = response.data.cities
-                        that.citiesSwiper()
-
-                        localStorage.setItem('cities', JSON.stringify(that.cities));
-
-                    })
-                    .catch(function (error) {
-                        console.log(error)
-                    });
-            },
 
             citiesSwiper() {
                 let that = this
@@ -592,7 +398,7 @@
                         prevButton: '.swiper-button-prev',
                         nextButton: '.swiper-button-next',
                         onSlideChangeEnd: swiper => {
-                            that.currentCity = that.cities[swiper.realIndex].id
+                            that.currentCity = that.getCities[swiper.realIndex]
                             that.getEvents();
                         },
                         breakpoints: {
@@ -615,14 +421,13 @@
                 let that = this
                 that.$http.post('event/explorer/list', {
                     language: that.language,
-                    lat: that.currentLocation.lat,
-                    lng: that.currentLocation.lng,
-                    city_id: that.currentCity,
+                    lat: that.getUserLastGeoLocation.lat,
+                    lng: that.getUserLastGeoLocation.lng,
+                    city_id: that.currentCity.id,
                 })
                     .then(function (response) {
 
                         that.events = response.data.events
-                        that.currentCity = response.data.current_city
                         that.interactions.is_loading = false;
                         /*if (that.starting) {
 

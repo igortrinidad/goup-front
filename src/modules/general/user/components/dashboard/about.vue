@@ -16,22 +16,18 @@
                     <div class="card m-t-30 card-rounded text-center">
                         <div class="card-body card-padding">
 
-                            <p class=" f-22 f-400">{{ translations.contact.title }}</p>
-                            <button class="btn btn-default transparent">{{ translations.contact.help }}</button>
-
-                            <hr>
-
                             <p class=" f-22 f-400">{{ translations.share.title }}</p>
-                            <button class="btn btn-default transparent">{{ translations.share.facebook }}</button>
+                            <p class=" f-12 f-400">{{ translations.share.subtitle }}</p>
+                            <button class="btn btn-default transparent" @click="openShareFacebook()">{{ translations.share.facebook }}</button>
                             <br>
-                            <button class="btn btn-default transparent m-t-10">{{ translations.share.whatsapp }}</button>
+                            <button class="btn btn-default transparent m-t-10" @click="openShareWhatsapp()">{{ translations.share.whatsapp }}</button>
 
                             <hr>
 
                             <p class=" f-22 f-400">{{ translations.legal.title }}</p>
-                            <button class="btn btn-default transparent">{{ translations.legal.terms }}</button>
+                            <router-link tag="button" :to="{name: 'general.terms'}" class="btn btn-default transparent">{{ translations.legal.terms }}</router-link>
                             <br>
-                            <button class="btn btn-default transparent m-t-10">{{ translations.legal.privacy }}</button>
+                            <router-link tag="button" :to="{name: 'general.privacy'}" class="btn btn-default transparent m-t-10">{{ translations.legal.privacy }}</router-link>
 
 
                         </div>
@@ -88,6 +84,35 @@
 
             getUser() {
                 this.user = User
+            },
+
+            // Facebook share
+            openShareFacebook() {
+                let that = this
+
+                var url = `https://www.facebook.com/dialog/share?app_id=151705885358217&href=https://goup.today&display=popup&mobile_iframe=true`;
+
+                    if(window.cordova){
+                        var ref = window.open(url, '_blank', 'location=yes');
+                        ref.addEventListener('loadstart', function(event) {
+                            var url = "https://www.facebook.com/dialog/return/close";
+                            if (event.url.indexOf(url) !== -1) {
+                                ref.close();
+                                successNotify('', 'Compartilhado com sucesso!')
+                            }
+                        });
+                    } else {
+
+                        window.open(url, '_blank', 'location=yes');
+                    }
+            },
+
+            // Whatsapp share
+            openShareWhatsapp() {
+
+                var url = `https://api.whatsapp.com/send?text=${this.translations.share.share_message}`
+
+                window.open(url, '_system', null);
             },
         }
     }

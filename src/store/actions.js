@@ -1,5 +1,24 @@
 import * as TYPES from './mutation-types'
 import moment from 'moment';
+import store from '../store'
+
+var checkUserLastLocation = function(){
+    var userLastGeoLocation = JSON.parse(localStorage.getItem('user_last_geo_location'));
+
+    if(!userLastGeoLocation){
+        return false
+    }
+
+    if(moment().subtract(3, 'hours').isBefore(moment(userLastGeoLocation.time, 'DD/MM/YYYY HH:mm:ss'))){
+        return 'is_valid'
+    }
+
+    if(moment().subtract(3, 'hours').isAfter(moment(userLastGeoLocation.time, 'DD/MM/YYYY HH:mm:ss'))){
+        return 'is_invalid'
+    }
+
+
+}
 
 export const setEnv = ({ commit }, env) => {
     /**
@@ -7,6 +26,7 @@ export const setEnv = ({ commit }, env) => {
      */
     commit(TYPES.SET_ENV, env)
 }
+
 
 
 export const setLoading = ({ commit }, options) => {
@@ -28,20 +48,147 @@ export const setLanguage = ({ commit }, language) => {
     })
 }
 
+export const setCities = ({ commit }) => {
+
+
+    var cities = JSON.parse(localStorage.getItem('cities'));
+
+    var userLastGeoLocation = JSON.parse(localStorage.getItem('user_last_geo_location'));
+
+    //Se não encontrar categorias salvas
+    if(!cities || !cities.length){
+        window.$vueinstance.$http.post(`city/near_by_location`, {
+            lat: userLastGeoLocation.lat,
+            lng: userLastGeoLocation.lng,
+            radius: 100
+        })
+            .then(function (response) {
+                var cities = response.data.cities
+
+                localStorage.setItem('cities', JSON.stringify(cities));
+
+                commit(TYPES.SET_CITIES, {
+                    cities
+                })
+
+            })
+            .catch(function (error) {
+                console.log(error)
+            });
+
+    //Se encontrar categorias salvas
+    } else {
+
+        //Se a localização for encontrada na localstorage e for válida (menor que 3 horas) retorna a localização
+        if(checkUserLastLocation() == 'is_valid'){
+
+           commit(TYPES.SET_CITIES, {
+                cities
+            })
+
+        } else {
+
+            window.$vueinstance.$http.post(`city/near_by_location`, {
+                lat: userLastGeoLocation.lat,
+                lng: userLastGeoLocation.lng,
+                radius: 100
+            })
+                .then(function (response) {
+                    var cities = response.data.cities
+
+                    localStorage.setItem('cities', JSON.stringify(cities));
+
+                    commit(TYPES.SET_CITIES, {
+                        cities
+                    })
+
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        }
+
+    }
+
+}
+
+export const setCategories = ({ commit }) => {
+
+
+    var categories = JSON.parse(localStorage.getItem('categories'));
+
+    //Se não encontrar categorias salvas
+    if(!categories || !categories.length){
+        window.$vueinstance.$http.get(`event/categories/${localStorage.getItem('language')}`)
+            .then(function (response) {
+               var categories = response.data.categories
+
+               localStorage.setItem('categories', JSON.stringify(categories));
+
+                commit(TYPES.SET_CATEGORIES, {
+                    categories
+                })
+
+            })
+            .catch(function (error) {
+                console.log(error)
+            });
+
+    //Se encontrar categorias salvas
+    } else {
+
+        var userLastGeoLocation = JSON.parse(localStorage.getItem('user_last_geo_location'));
+
+        //Se a localização for encontrada na localstorage e for válida (menor que 3 horas) retorna a localização
+        if(checkUserLastLocation() == 'is_valid'){
+            
+
+           commit(TYPES.SET_CATEGORIES, {
+                categories
+            })
+
+        } else {
+
+            window.$vueinstance.$http.get(`event/categories/${localStorage.getItem('language')}`)
+                .then(function (response) {
+                   var categories = response.data.categories
+
+                   localStorage.setItem('categories', JSON.stringify(categories));
+
+                    commit(TYPES.SET_CATEGORIES, {
+                        categories
+                    })
+
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        }
+
+    }
+
+
+}
+
 export const setUserLastGeolocation = ({ commit }) => {
+
+
 
     var userLastGeoLocation = JSON.parse(localStorage.getItem('user_last_geo_location'));
 
     //Se a localização for encontrada na localstorage e for válida (menor que 3 horas) retorna a localização
-    if(userLastGeoLocation && moment().subtract(3, 'hours').isBefore(moment(userLastGeoLocation.time, 'DD/MM/YYYY HH:mm:ss'))){
+    if(checkUserLastLocation() == 'is_valid'){
         
         window.console.log('Localização encontrada na localStorage e é anterior a 3 horas. (válida)');
+
+            store.dispatch('setCities');
+            store.dispatch('setCategories');
 
     }
 
     //Se a localização for encontrada na localStorage e NAO for valida (maior que 3 horas) tenta buscar a localização
     //Se não conseguir, retornar a localização que já encontrou
-    if(userLastGeoLocation && moment().subtract(3, 'hours').isAfter(moment(userLastGeoLocation.time, 'DD/MM/YYYY HH:mm:ss'))){
+    if(checkUserLastLocation() == 'is_invalid'){
 
 
         window.console.log('Localização é anterior à 3 horas. (inválida)');
@@ -58,8 +205,10 @@ export const setUserLastGeolocation = ({ commit }) => {
 
                     localStorage.setItem('user_last_geo_location', JSON.stringify(userLastGeoLocation));
 
-                    window.console.log(userLastGeoLocation);
                     window.console.log('Achou a localização, retornando dados e salvando na localStorage');
+
+                    store.dispatch('setCities');
+                    store.dispatch('setCategories');
 
                 },
                 //On Error
@@ -67,6 +216,31 @@ export const setUserLastGeolocation = ({ commit }) => {
 
                     window.console.log('Não foi possível localizar o usuário, ou o usuário não permitiu.');
 
+                    var geolocation_attempts = JSON.parse(localStorage.getItem('geolocation_attempts'));
+
+                    if(!geolocation_attempts){
+                        localStorage.setItem('geolocation_attempts', 1);
+                    } else {
+                        localStorage.setItem('geolocation_attempts', geolocation_attempts++);
+                    }
+
+                    //Shut user out to enable or check geolocation
+                    if(geolocation_attempts == 10){
+
+                        userLastGeoLocation = {
+                            location_granted: false,
+                            lat: null,
+                            lng: null,
+                            time: null
+                        }
+
+                        commit(TYPES.SET_USER_LAST_GEOLOCATION, {
+                            userLastGeoLocation
+                        })
+
+                        localStorage.setItem('user_last_geo_location', userLastGeoLocation);
+
+                    }
 
                 }, 
                 //options
@@ -78,7 +252,7 @@ export const setUserLastGeolocation = ({ commit }) => {
     //Se não encontrar, retornará o objeto vazio que será utilizado para direcionar o user para a página welcome: '/'
     } 
 
-    if(!userLastGeoLocation){
+    if(checkUserLastLocation() == false){
 
         window.console.log('Localização ainda não foi salva ou não foi permitida');
 

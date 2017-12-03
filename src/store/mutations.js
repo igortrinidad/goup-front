@@ -12,9 +12,17 @@ export default {
         state.language = payload.language
     },
 
-    [TYPES.SET_USER_LAST_GEOLOCATION](state, payload) {
+    [TYPES.SET_CITIES](state, payload) {
 
-        console.log(payload);
+        state.cities = payload.cities
+    },
+
+    [TYPES.SET_CATEGORIES](state, payload) {
+
+        state.categories = payload.categories
+    },
+
+    [TYPES.SET_USER_LAST_GEOLOCATION](state, payload) {
         
         state.user_last_geolocation = payload.userLastGeoLocation
     },

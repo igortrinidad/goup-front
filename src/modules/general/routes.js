@@ -1,4 +1,4 @@
-import About from './pages/about.vue'
+
 import Welcome from './pages/welcome.vue'
 import NewInvite from './pages/new-invite.vue'
 import appLayout from './layout/main'
@@ -36,12 +36,6 @@ export default [
                 name: 'general.welcome',
                 path: '',
                 component: Welcome,
-                meta: { requiresAuth: false },
-            },
-            {
-                name: 'general.about',
-                path: 'sobre',
-                component: About,
                 meta: { requiresAuth: false },
             },
             {

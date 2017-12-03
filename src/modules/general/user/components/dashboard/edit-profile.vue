@@ -54,30 +54,22 @@
                     <!-- / Select Language -->
                     <p class=" f-22 f-400">{{ translations.language.title }}</p>
 
-                    <ul class="list-group list-rounded m-t-10 m-0 text-left m-b-20">
-                        <li class="list-group-item transparent" @click="toggleLang('en')">
-                            English
-                            <i
-                                :class="{
-                                    'icon-select m-l-10 f-20': true,
-                                    'ion-ios-circle-filled': languages.en,
-                                    'ion-ios-circle-outline': !languages.en
-                                }"
-                            >
-                            </i>
-                        </li>
-                        <li class="list-group-item transparent" @click="toggleLang('pt')">
-                            Português
-                            <i
-                                :class="{
-                                    'icon-select m-l-10 f-20': true,
-                                    'ion-ios-circle-filled': languages.pt,
-                                    'ion-ios-circle-outline': !languages.pt
-                                }"
-                            >
-                            </i>
-                        </li>
-                    </ul>
+                    <div class="flags m-b-20">
+                        <img
+                            class="m-r-10 country-flag"
+                            src="../../../../../assets/img/brazil.png"
+                            width="32px"
+                            @click="setLanguage('pt')"
+                            :class="{ 'country-selected' : language ===  'pt' }"
+                        >
+                        <img
+                            class="m-r-5 country-flag"
+                            src="../../../../../assets/img/united-kingdom.png"
+                            width="32px"
+                            @click="setLanguage('en')"
+                            :class="{ 'country-selected' : language ===  'en' }"
+                        >
+                    </div>
                     <!-- / Select Language -->
 
                     <!-- Password -->
@@ -165,29 +157,15 @@
 
                 let that = this
 
-                that.setLanguage(that.user.language)
-
                 that.$http.post('user/update', that.user)
                     .then(function (response) {
                         that.authSetUser(response.data.user)
+                        successNotify('', that.translations.save_success);
+                        that.$router.push('/settings');
                     })
                     .catch(function (error) {
                         console.log(error)
                     });
-            },
-
-            toggleLang(lang) {  console.log(lang)
-                if (lang === 'en') {
-                    this.languages.en = true
-                    this.languages.pt = false
-                }
-
-                if (lang === 'pt') {
-                    this.languages.en = false
-                    this.languages.pt = true
-                }
-
-                this.user.language = lang
             },
 
 
@@ -198,8 +176,6 @@
                     .then(function (response) {
                         that.user = response.data.user
                         that.initSwiper()
-                        that.setLanguage(that.user.language)
-
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -264,6 +240,20 @@
         width: 100%;
         font-weight: 700;
         margin-top: 20px;
+    }
+
+    .flags{
+        top: 17px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    .country-flag{
+        filter: grayscale(90%);
+    }
+
+    .country-selected{
+        filter: grayscale(0%);
     }
 
 </style>

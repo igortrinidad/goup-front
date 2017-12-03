@@ -12,8 +12,10 @@ export const en = {
     // Share
     share: {
         title: 'Share',
+        subtitle: 'Share this new crazy app with your friends',
         facebook: 'Share on facebook',
-        whatsapp: 'Share on whatsapp'
+        share_message: 'Hi, find places to get out today with the amazing app goUp! https://goup.today',
+        whatsapp: 'Share on whatsapp',
     },
 
     // Legal
@@ -39,8 +41,10 @@ export const pt = {
     // Share
     share: {
         title: 'Compartilhar',
-        facebook: 'Compartilhar no facebook',
-        whatsapp: 'Compartilhar no whatsapp'
+        subtitle: 'Compartilhe essa novidade com seus amigos',
+        facebook: 'Compartilhar no Facebook',
+        whatsapp: 'Compartilhar no Whatsapp',
+        share_message: 'Olá! Encontre lugares para sair hoje com o aplicativo goUp! https://goup.today',
     },
 
     // Legal

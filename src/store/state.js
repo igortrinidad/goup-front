@@ -11,6 +11,8 @@ export default {
         lng: null,
         time: null
     },
+    categories: [],
+    cities: [],
     disable_loader: false,
     fcm_token_mobile: null,
     fcm_token_browser: null

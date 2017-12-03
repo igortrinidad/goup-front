@@ -30,8 +30,6 @@ require('moment/locale/pt-br')
 
     store.dispatch('setEnv', process.env.NODE_ENV);
 
-    store.dispatch('setUserLastGeolocation');
-
 
     //FACEBOOK SDK
     (function(d, s, id) {
@@ -187,4 +185,17 @@ require('moment/locale/pt-br')
     var component = App;
     component.router = Vue.router;
     component.store = store
-    new Vue(component).$mount('#root');
+    window.$vueinstance = new Vue(component).$mount('#root');
+
+    store.dispatch('setUserLastGeolocation');
+
+    //Define a linguagem do usuário;
+    var language = localStorage.getItem('language');
+    if(!language){
+        language = 'en';
+        var language = localStorage.setItem('language', language);
+        store.dispatch('setLanguage', language);
+    } else {
+        store.dispatch('setLanguage', language);
+    }
+

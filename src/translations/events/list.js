@@ -4,7 +4,7 @@ export const en = {
     more_filters: 'More filters',
     noEvents: 'No event found near you, search in another category or nearby cities.',
     categories: 'Categories',
-    nearCities: 'Near cities',
+    nearCities: 'Nearby cities',
     approximate_distances: 'Approximate distances',
 
     label: {

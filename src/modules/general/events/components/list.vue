@@ -13,7 +13,7 @@
                 <!-- CATEGORIES -->
                 <div class="row">
                     <div class="col-sm-12 text-center">
-                        <label>{{ translations.categories }}</label>
+                        <label class="f-13 f-300">{{ translations.categories }}</label>
                         <div class="swiper-container" ref="categorySlider">
                             <div class="swiper-wrapper">
                                 <div
@@ -22,7 +22,7 @@
                                         'label-default': currentCategory !== category,
                                         'label-primary': currentCategory === category
                                     }"
-                                    v-for="(category, $index) in categories"
+                                    v-for="(category, $index) in getCategories"
                                     :key="$index">
                                     {{ category[`name_${language}`] }}
                                 </div>
@@ -35,15 +35,15 @@
                 <div class="row m-t-10">
                     <div class="col-sm-12 text-center">
 
-                        <label>{{ translations.nearCities }}</label>
-                        <p v-if="!cities.length">Nenhuma cidade próxima.</p>
+                        <label class="f-13 f-300">{{ translations.nearCities }}</label>
+                        <p v-if="!getCities.length" >Nenhuma cidade próxima.</p>
                         <div class="swiper-container" ref="citiesSlider">
                             <div class="swiper-wrapper">
                                 <div
                                     class="swiper-slide label transparent m-5 cursor-pointer"
-                                    v-for="(city, $index) in cities"
+                                    v-for="(city, $index) in getCities"
                                     :key="$index"
-                                    :class="{ 'cursor-pointer': currentCity != city.id, 'label-success':currentCity == city.id }"
+                                    :class="{ 'cursor-pointer': currentCity != city.id, 'label-primary':currentCity == city }"
                                 >
                                     <span v-if="currentCity == city.id">
                                         {{city.name}} - {{city.state}}
@@ -179,25 +179,16 @@
                 destroyed: false,
                 placeholder: true,
                 events: [],
-                categories: [],
-                currentCategory: {},
-                currentLocation:{
-                    lat:-23.5505199,
-                    lng:-46.63330940000003,
-                    city: 'São Paulo',
-                    state: 'SP',
-                    newLocation: ''
-                },
-                radius: 80,
-                cities:[],
+                currentCategory: null,
                 currentCity: null,
+                radius: 100,
                 processStyle: {backgroundColor: "#48C3D1"},
                 tooltipStyle: {backgroundColor: "#48C3D1", borderColor: "#48C3D1"}
             }
         },
 
         computed: {
-            ...mapGetters(['language']),
+            ...mapGetters(['language', 'getCities', 'getUserLastGeoLocation', 'getCategories']),
 
             'translations': function() {
 
@@ -214,33 +205,6 @@
 
             var that = this;
 
-            if(!window.cordova){
-                this.locationRequest()
-            }
-
-            var last_location = localStorage.getItem('last_location_getted')
-
-
-            if( window.cordova && moment().add(1, 'days').isAfter(moment('DD/MM/YYYY HH:mm:ss', last_location)) || window.cordova && !last_location  ){
-
-                //this.geolocationInit();
-                this.getLocation()
-
-            } else {
-
-                console.log('local_storage found');
-                that.currentLocation.lat = localStorage.getItem('user_lat');
-                that.currentLocation.lng = localStorage.getItem('user_lng');
-
-                that.getLocationByCoordinates(false);
-
-                that.cities = JSON.parse(localStorage.getItem('cities'));
-                that.citiesSwiper();
-
-            }
-
-            this.getCategories()
-
             if (localStorage.getItem('current_scroll')) {
                 console.log(JSON.parse(localStorage.getItem('current_scroll')));
                 $(window).animate({ scrollTop: JSON.parse(localStorage.getItem('current_scroll')) }, 300);
@@ -251,6 +215,12 @@
                 localStorage.setItem('current_scroll', scroll)
             })
 
+            this.categorySwiper();
+            this.citiesSwiper();
+            this.currentCategory = this.getCategories[0];
+            this.currentCity = this.getCities[0];
+            this.getEvents();
+
         },
 
         methods: {
@@ -258,49 +228,7 @@
 
             changeCurrentCategory(category) {
                 this.currentCategory = category
-                this.getEvents()
-            },
-
-            getCategories() {
-                let that = this
-
-                if(!JSON.parse(localStorage.getItem('categories'))){
-
-                    that.$http.get(`event/categories/${that.language}`)
-                        .then(function (response) {
-                            that.categories = response.data.categories
-                            that.currentCategory = that.categories[0]
-                            that.categorySwiper()
-                            localStorage.setItem('categories', JSON.stringify(that.categories));
-                        })
-                        .catch(function (error) {
-                            console.log(error)
-                        });
-
-                } else {
-                    that.categories = JSON.parse(localStorage.getItem('categories'));
-                    that.currentCategory = that.categories[0];
-                    that.categorySwiper();
-                }
-
-
-            },
-
-            getNearByCities() {
-                let that = this
-
-                that.$http.post(`city/near_by_location`, {
-                    lat: that.currentLocation.lat,
-                    lng: that.currentLocation.lng,
-                    radius: that.radius
-                })
-                    .then(function (response) {
-                        that.cities = response.data.cities
-                        that.citiesSwiper()
-                    })
-                    .catch(function (error) {
-                        console.log(error)
-                    });
+                this.getEvents();
             },
 
             getEvents() {
@@ -312,14 +240,13 @@
                 that.$http.post('event/rank/list', {
                     language: that.language,
                     category_id: that.currentCategory.id,
-                    lat: that.currentLocation.lat,
-                    lng: that.currentLocation.lng,
+                    lat: that.getUserLastGeoLocation.lat,
+                    lng: that.getUserLastGeoLocation.lng,
                     radius: that.radius,
-                    city_id: that.currentCity,
+                    city_id: that.currentCity.id,
                 })
                     .then(function (response) {
                         that.events = response.data.events
-                        that.currentCity = response.data.current_city
                         that.interactions.is_loading = false;
                     }).catch(function (error) {
                     that.interactions.is_loading = false;
@@ -331,182 +258,6 @@
                 this.getEvents()
 
                 $('#modal-filter').modal('hide')
-            },
-
-            locationRequest() {
-                let that = this
-                let checkToAsk = parseInt(localStorage.getItem('location-request'))
-                let now = moment().unix()
-
-                if(!checkToAsk || now > checkToAsk){
-                    navigator.permissions.query({name:'geolocation'}).then(function(result) {
-                        if (result.state === 'granted') {
-                            //get current location
-                            that.getLocation()
-                        } else if (result.state === 'prompt') {
-
-                            //Request user permission
-                            iziToast.show({
-                                icon: 'icon-contacts',
-                                title: `${that.translations.location.notification.title}`,
-                                message: `${that.translations.location.notification.message}`,
-                                position: 'topCenter',
-                                image: '/static/assets/img/logos/LOGOS-05.png',
-                                imageWidth: 70,
-                                color: 'dark',
-                                backgroundColor: '#561F9F',
-                                titleColor: '#fff',
-                                messageColor: '#fff',
-                                timeout: 0,
-                                layout: 2,
-                                buttons: [
-                                    [`<button class="btn-notification">${that.translations.location.notification.buttons.notNow}</button>`, function (instance, toast) {
-                                        instance.hide({
-                                            transitionOut: 'fadeOutUp',
-                                        }, toast, 'close', 'btn2');
-
-                                        localStorage.setItem('location-request', moment().add(1, 'hour').unix())
-
-                                        infoNotify('', that.translations.location.permissionDenied)
-                                        that.getEvents()
-
-                                    }, false],
-                                    [`<button class="btn btn-primary transparent">${that.translations.location.notification.buttons.enable}</button>`, function (instance, toast) {
-                                        instance.hide({
-                                            transitionOut: 'fadeOutUp',
-                                        }, toast, 'close', 'btn2');
-
-                                        if(checkToAsk){
-                                            localStorage.removeItem('location-request')
-                                        }
-
-                                        that.getLocation()
-
-                                    }, true]
-                                ],
-                                drag: false
-                            });
-                        }
-
-                    });
-                }else{
-                    that.getEvents()
-                }
-
-            },
-
-            getLocation(){
-                let that = this
-
-                that.setLoading({is_loading: true, message: 'Aguardando localização'})
-
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(that.navigatorSuccess, that.navigatorError);
-                } else {
-                    errorNotify('', that.translations.location.notSupported);
-                }
-            },
-
-            navigatorSuccess(position) {
-                let that = this
-
-                that.currentLocation.lat = position.coords.latitude
-                that.currentLocation.lng = position.coords.longitude
-
-                that.setLoading({is_loading: false, message: ''})
-
-                that.getLocationByCoordinates()
-
-            },
-
-            navigatorError() {
-                this.setLoading({is_loading: false, message: ''})
-                errorNotify('', this.translations.location.unavailable);
-            },
-
-            geolocationInit: function(){
-                let that = this
-                function onSuccess(position) {
-                    that.currentLocation.lat = position.coords.latitude;
-                    that.currentLocation.lng =  position.coords.longitude;
-
-                    navigator.geolocation.clearWatch(watchID);
-
-                    that.getLocationByCoordinates();
-                }
-
-                // onError Callback receives a PositionError object
-                function onError(error) {
-                    console.log(error)
-                    errorNotify('', that.translations.location.unavailable);
-                }
-
-                // Options: throw an error if no update is received every 30 seconds.
-                var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
-            },
-
-            setNewLocation(place){
-                let that = this
-                that.currentLocation.lat = place.geometry.location.lat()
-                that.currentLocation.lng = place.geometry.location.lng()
-
-                place.address_components.map((current) =>{
-                    current.types.map((type) => {
-                        if(type == 'administrative_area_level_1'){
-                            that.currentLocation.state = current.short_name
-                        }
-                        if(type == 'administrative_area_level_2'){
-                            that.currentLocation.city  = current.short_name
-                        }
-                    })
-                })
-
-                that.interactions.changeLocation = false
-                that.getEvents()
-            },
-
-            getLocationByCoordinates(get_cities = true){
-
-                let that = this
-
-                let geocoder = new google.maps.Geocoder;
-
-                let latlng = new google.maps.LatLng(that.currentLocation.lat, that.currentLocation.lng);
-
-                geocoder.geocode({
-                    'latLng': latlng
-                }, function (results, status) {
-
-                    if (status === google.maps.GeocoderStatus.OK) {
-
-                        if (results) {
-
-                            results[0].address_components.map((current) =>{
-                                current.types.map((type) => {
-                                    if(type == 'administrative_area_level_1'){
-                                        that.currentLocation.state = current.short_name
-                                    }
-                                    if(type == 'administrative_area_level_2'){
-                                        that.currentLocation.city  = current.short_name
-                                    }
-                                })
-                            })
-
-                            console.log(`lat: ${that.currentLocation.lat} | lng: ${that.currentLocation.lng}`)
-                            console.log(`Current location: ${that.currentLocation.city} - ${that.currentLocation.state}`)
-
-                            that.getEvents()
-
-                            if(get_cities){
-                                that.getNearByCities()
-                            }
-
-                        } else {
-                            errorNotify('', that.translations.location.unavailable);
-                        }
-                    }
-                });
-
             },
 
             handleModalVisibility(){
@@ -545,7 +296,7 @@
                         prevButton: '.swiper-button-prev',
                         nextButton: '.swiper-button-next',
                         onSlideChangeEnd: swiper => {
-                            that.changeCurrentCategory(that.categories[swiper.realIndex])
+                            that.changeCurrentCategory(that.getCategories[swiper.realIndex])
                             localStorage.setItem('category_index', swiper.realIndex)
                         },
                         breakpoints: {
@@ -581,9 +332,11 @@
                         prevButton: '.swiper-button-prev',
                         nextButton: '.swiper-button-next',
                         onSlideChangeEnd: swiper => {
-                            that.currentCity = that.cities[swiper.realIndex].id
+
+                            that.currentCity = that.getCities[swiper.realIndex].id
                             localStorage.setItem('city_index', swiper.realIndex)
                             that.getEvents();
+
                         },
                         breakpoints: {
                             350: {

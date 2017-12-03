@@ -96,7 +96,7 @@
             }
         },
         computed: {
-            ...mapGetters(['getUserLastGeoLocation', 'isLogged', 'language']),
+            ...mapGetters(['getUserLastGeoLocation', 'isLogged', 'language', 'getCities', 'getCategories']),
 
             'translations': function() {
 
