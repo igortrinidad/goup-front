@@ -12,7 +12,7 @@ const Show = (resolve) => {
 
 export default [
     {
-        path: '',
+        path: 'explorer',
         component: Main,
         meta: {requiresAuth: false},
         children: [

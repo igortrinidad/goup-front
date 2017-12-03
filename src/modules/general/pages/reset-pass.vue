@@ -1,31 +1,41 @@
 <template>
-    <div class="main login">
-        <div class="container text-center">
-            <img class="logo" src="../../../assets/logos/LOGOS-05.png" alt="">
-            <h2 class="f-300 m-b-30">{{ translations.title }}</h2>
-        </div>
 
-        <div class="container text-center">
+    <div>
 
-            <div v-if="!interactions.success">
-                <h4 class="f-300 m-b-30">{{ translations.message }}</h4>
-                <div class="form-group">
-                    <label class="text-center" for="email">{{ translations.fieldLabel }}</label>
-                    <input class="form-control" id="email" v-model="email" placeholder="E-mail">
-                </div>
+        <main-header
+            :title="translations.title"
+            :type="'back'"
+            :cursor="false"
+        ></main-header>
 
-                <div class="form-group">
-                    <button class="btn btn-primary f-300 p-5 p-l-10 p-r-10" @click="generateNewPass()">{{ translations.buttonRecovery }}</button>
-                </div>
+        <div class="main login">
+            <div class="first-container text-center">
+                <img class="logo" src="../../../assets/logos/LOGOS-02.png" alt="" width="140px;">
             </div>
 
-            <div v-if="interactions.success">
-                <h3 class="f-300 m-b-30">{{ translations.success }}</h3>
-                <div class="container m-t-20">
-                    <router-link tag="button" class="btn btn-block btn-primary" to="/login">{{ translations.buttonLogin }}</router-link>
+            <div class="container text-center">
+
+                <div v-if="!interactions.success">
+                    <h4 class="f-300 m-b-30">{{ translations.message }}</h4>
+                    <div class="form-group">
+                        <label class="text-center" for="email">{{ translations.fieldLabel }}</label>
+                        <input class="form-control" id="email" v-model="email" placeholder="E-mail">
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary f-300 p-5 p-l-10 p-r-10" @click="generateNewPass()">{{ translations.buttonRecovery }}</button>
+                    </div>
+                </div>
+
+                <div v-if="interactions.success">
+                    <h3 class="f-300 m-b-30">{{ translations.success }}</h3>
+                    <div class="container m-t-20">
+                        <router-link tag="button" class="btn btn-block btn-primary" to="/login">{{ translations.buttonLogin }}</router-link>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
 </template>
@@ -36,6 +46,9 @@
 
     export default {
         name: 'landing-reset-password',
+        components: {
+            mainHeader: require('@/components/main-header.vue')
+        },
         data() {
             return {
                 interactions:{

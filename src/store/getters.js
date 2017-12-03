@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 // get current ENVRONMENT
 export const currentEnv = ({ env }) => env
 
@@ -18,6 +20,13 @@ export const language = (state) => {
     }
 }
 
+
+export const getUserLastGeoLocation = (state) => {
+
+    return state.user_last_geolocation;
+
+}
+
 //check if is iOS
 export const checkIOS = () => {
     const cordova = window.cordova
@@ -28,20 +37,6 @@ export const checkIOS = () => {
 
     if(!cordova){
         return false
-    }
-
-}
-
-//check language defined
-export const checkLanguage = () => {
-
-    var language = localStorage.getItem('language');
-
-    if(!language){
-    	localStorage.setItem('language', 'en')
-        return 'en';
-    } else {
-    	return language
     }
 
 }

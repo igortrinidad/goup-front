@@ -30,6 +30,8 @@ require('moment/locale/pt-br')
 
     store.dispatch('setEnv', process.env.NODE_ENV);
 
+    store.dispatch('setUserLastGeolocation');
+
 
     //FACEBOOK SDK
     (function(d, s, id) {
@@ -75,8 +77,6 @@ require('moment/locale/pt-br')
     // Automatic loader
     Vue.axios.interceptors.request.use(function (config) {
 
-        //Enalble loader
-        store.dispatch('setLoading', {is_loading: true, message: ''})
 
         return config;
     }, function (error) {
@@ -89,9 +89,6 @@ require('moment/locale/pt-br')
 
     Vue.axios.interceptors.response.use(function (response) {
 
-        //Disable loader
-        store.dispatch('setLoading', {is_loading: false, message: ''})
-
         //Check and store a refreshed  token
         const refreshedToken = _.get(response, 'headers.authorization')
         if (refreshedToken){
@@ -101,8 +98,6 @@ require('moment/locale/pt-br')
         return response;
 
     }, function (error) {
-        //Disable loader
-        store.dispatch('setLoading', {is_loading: false, message: ''})
 
         const { response } = error
 
@@ -119,7 +114,7 @@ require('moment/locale/pt-br')
             store.dispatch('authSetUser', {})
 
             //Limpa a localStorage mas mantém o histórico de cidades
-            localStorage.clear();
+            window.clearAndMaintain();
 
             if(window.cordova){
                 window.cookies.clear();

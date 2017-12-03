@@ -197,15 +197,14 @@
         },
 
         computed: {
-            ...mapGetters(['checkLanguage', 'language']),
+            ...mapGetters(['language']),
 
             'translations': function() {
-                const language = localStorage.getItem('language')
 
-                if (language === 'en' || !language) {
+                if (this.language === 'en') {
                     return translations.en
                 }
-                if (language === 'pt') {
+                if (this.language === 'pt') {
                     return translations.pt
                 }
             }

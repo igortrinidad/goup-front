@@ -66,7 +66,7 @@
             return {}
         },
         computed: {
-            ...mapGetters(['checkLanguage', 'language']),
+            ...mapGetters(['language']),
 
             'translations': function() {
                 const language = this.language

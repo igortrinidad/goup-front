@@ -8,9 +8,15 @@ export default {
     },
 
     [TYPES.SET_LANGUAGE](state, payload) {
-        localStorage.setItem('language', payload.language);
 
         state.language = payload.language
+    },
+
+    [TYPES.SET_USER_LAST_GEOLOCATION](state, payload) {
+
+        console.log(payload);
+        
+        state.user_last_geolocation = payload.userLastGeoLocation
     },
 
     [TYPES.SET_ENV](state, payload) {

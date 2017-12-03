@@ -10,11 +10,10 @@
         <div class="main login first-container">
 
             <div class="container text-center">
-                <img class="logo" src="../../../../assets/logos/LOGOS-05.png" alt="">
-                <h2 class="f-300 m-b-30">{{ translations.title }}</h2>
+                <img class="logo" src="../../../../assets/logos/LOGOS-02.png" alt="">
             </div>
             <!-- Login -->
-            <div class="container">
+            <div class="container m-t-20">
                 <div v-if="!interactions.loginWithEmail">
                     <button
                         type="button"
@@ -50,29 +49,35 @@
 
 
             <div class="container text-center">
-                <div class="m-t-30">
+                <div class="m-t-20">
                     <small class="f-300">
-                        <router-link :to="{name: 'landing.reset-pass', params: {usertype: 'user'}}" class="f-primary">{{ translations.forgotPassword }}</router-link>
+                        <router-link 
+                            :to="{name: 'landing.reset-pass', params: {usertype: 'user'}}" 
+                            class="btn btn-info btn-xs">
+                            {{ translations.forgotPassword }}
+                        </router-link>
                     </small>
                 </div>
 
-                <div class="m-t-10">
-                    <small class="f-300">
-                        {{ translations.signup }}
-                        <router-link :to="{name: 'general.auth.signup'}" class="f-primary">{{ translations.getStart }}</router-link>
-                    </small>
+                <div class="m-t-20">
+                    <p class="f-13 f-300">{{ translations.signup }}</p>
+                    <router-link :to="{name: 'general.auth.signup'}" class="f-primary btn btn-primary">{{ translations.getStart }}</router-link>
                 </div>
 
-                <!-- Terms And Privacy -->
-                <div class="m-t-10">
-                    <small class="f-300">
-                        {{ translations.acceptTerms }}
-                        <a href="#" class="f-primary">{{ translations.terms }}</a>
-                        &
-                        <a href="#" class="f-primary">{{ translations.privacy }}</a>
-                    </small>
-                </div>
-                 <!-- / Terms And Privacy -->
+                <!-- TERMS AND PRIVACY -->
+                <span>
+                    <p class="f-13 f-300 m-t-20">
+                        {{translations.terms.first}}
+                        <router-link :to="{name: 'general.terms'}">
+                            {{translations.terms.terms_button}}
+                        </router-link>
+                        {{translations.terms.and}}
+                        <router-link :to="{name: 'general.privacy'}">
+                            {{translations.terms.privacy_button}}
+                        </router-link>
+                    </p>
+                </span>
+                <!-- TERMS AND PRIVACY -->
             </div>
             
         </div>
@@ -84,7 +89,7 @@
 
 <script>
     import * as translations from '@/translations/auth/login'
-    import {mapActions} from  'vuex'
+    import {mapGetters, mapActions} from  'vuex'
     import {facebookClientId} from '@/config'
 
     export default {
@@ -104,13 +109,15 @@
             }
         },
         computed: {
-            'translations': function() {
-                const language = localStorage.getItem('language')
 
-                if (language === 'en' || !language) {
+            ...mapGetters(['language']),
+
+            'translations': function() {
+
+                if (this.language === 'en') {
                     return translations.en
                 }
-                if (language === 'pt') {
+                if (this.language === 'pt') {
                     return translations.pt
                 }
             }
@@ -168,7 +175,7 @@
                             } else {
 
                                 alert('Facebook login failed: ' + response.error);
-                                localStorage.clear();
+                                window.clearAndMaintain();
                                 if(window.cordova){
                                     window.cookies.clear();
                                 }
@@ -243,7 +250,7 @@
                     })
                     .catch(function (error) {
                         errorNotify('Ops!', 'Erro ao efetuar login.')
-                        localStorage.clear();
+                        window.clearAndMaintain();
                         if(window.cordova){
                             window.cookies.clear();
                         }
@@ -253,7 +260,7 @@
             errorHandler(error) {
 
                 errorNotify('', error.message);
-                localStorage.clear();
+                window.clearAndMaintain();
                 if(window.cordova){
                     window.cookies.clear();
                 }

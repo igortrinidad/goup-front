@@ -21,7 +21,7 @@
                 this.authSetToken(null) // this is a Vuex action
                 this.authSetUser({}) // this is a Vuex action
 
-                localStorage.clear();
+                window.clearAndMaintain();
 
                 if(window.cordova){
                     window.cookies.clear();

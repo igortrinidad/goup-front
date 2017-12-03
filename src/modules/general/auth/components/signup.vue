@@ -9,8 +9,8 @@
 
         <div class="main login first-container">
             <div class="container text-center">
-                <img class="logo" src="../../../../assets/logos/LOGOS-05.png" alt="">
-                <h2 class="f-300 m-b-30">{{ translations.title }}</h2>
+                <img class="logo" src="../../../../assets/logos/LOGOS-02.png" alt="">
+                <h3 class="f-300 m-b-30">{{ translations.title }}</h3>
             </div>
 
             <!-- Signup -->
@@ -60,21 +60,25 @@
             <!-- Terms And Privacy -->
             <div class="container text-center">
                 <div class="m-t-30">
-                    <small class="f-300">
-                        {{ translations.alreadySigned }}
-                        <router-link :to="{name: 'general.auth.login'}" class="f-primary">{{ translations.loginHere }}</router-link>
-
-                    </small>
+                    <p class="f-13 f-300">{{ translations.alreadySigned }}</p>
+                    <router-link :to="{name: 'general.auth.login'}" class="btn btn-primary" tag="button">{{ translations.loginHere }}</router-link>
                 </div>
 
-                <div class="m-t-10">
-                    <small class="f-300">
-                        {{ translations.acceptTerms }}
-                        <a href="#" class="f-primary">{{ translations.terms }}</a>
-                        &
-                        <a href="#" class="f-primary">{{ translations.privacy }}</a>
-                    </small>
-                </div>
+                <!-- TERMS AND PRIVACY -->
+                <span>
+                    <p class="f-13 f-300 m-t-20">
+                        {{translations.terms.first}}
+                        <router-link :to="{name: 'general.terms'}">
+                            {{translations.terms.terms_button}}
+                        </router-link>
+                        {{translations.terms.and}}
+                        <router-link :to="{name: 'general.privacy'}">
+                            {{translations.terms.privacy_button}}
+                        </router-link>
+                    </p>
+                </span>
+                <!-- TERMS AND PRIVACY -->
+
             </div>
             <!-- / Terms And Privacy -->
 
@@ -84,7 +88,7 @@
 
 <script>
     import * as translations from '@/translations/auth/signup'
-    import {mapActions} from  'vuex'
+    import {mapActions, mapGetters} from  'vuex'
     import {facebookClientId} from '@/config'
 
     export default {
@@ -107,13 +111,14 @@
             }
         },
         computed: {
-            'translations': function() {
-                const language = localStorage.getItem('language')
+            ...mapGetters(['language']),
 
-                if (language === 'en' || !language) {
+            'translations': function() {
+
+                if (this.language === 'en') {
                     return translations.en
                 }
-                if (language === 'pt') {
+                if (this.language === 'pt') {
                     return translations.pt
                 }
             }
@@ -193,7 +198,7 @@
                             } else {
 
                                 alert('Facebook login failed: ' + response.error);
-                                localStorage.clear();
+                                window.clearAndMaintain();
                                 if(window.cordova){
                                     window.cookies.clear();
                                 }
@@ -266,7 +271,7 @@
                     })
                     .catch(function (error) {
                         errorNotify('Ops!', 'Erro ao efetuar login.')
-                        localStorage.clear();
+                        window.clearAndMaintain();
                         if(window.cordova){
                             window.cookies.clear();
                         }
@@ -276,7 +281,7 @@
             errorHandler(error) {
 
                 errorNotify('', error.message);
-                localStorage.clear();
+                window.clearAndMaintain();
                 if(window.cordova){
                     window.cookies.clear();
                 }

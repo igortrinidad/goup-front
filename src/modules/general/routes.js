@@ -1,4 +1,5 @@
 import About from './pages/about.vue'
+import Welcome from './pages/welcome.vue'
 import NewInvite from './pages/new-invite.vue'
 import appLayout from './layout/main'
 import notFound from './pages/404.vue'
@@ -32,6 +33,12 @@ export default [
             ...user,
             ...events,
             {
+                name: 'general.welcome',
+                path: '',
+                component: Welcome,
+                meta: { requiresAuth: false },
+            },
+            {
                 name: 'general.about',
                 path: 'sobre',
                 component: About,
@@ -56,7 +63,7 @@ export default [
                 meta: { requiresAuth: false }
             },
             {
-                name: 'landing.privacy',
+                name: 'general.privacy',
                 path: '/privacidade',
                 component: Privacy,
                 meta: { requiresAuth: false }

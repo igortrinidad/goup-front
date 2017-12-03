@@ -1,6 +1,25 @@
 
 export default function(){
 
+
+    //Altera o console para pegar os erros de javascript também
+
+    var clear = function(){
+        
+        var user_last_geolocation = localStorage.getItem('user_last_geo_location');
+        var language = localStorage.getItem('language');
+
+        window.localStorage.clear();
+
+        localStorage.setItem('user_last_geo_location', user_last_geolocation);
+        localStorage.setItem('language', language);
+
+    }
+
+    //Then redefine the old console
+    window.clearAndMaintain = clear;
+
+
     //Submenu toggle
     $('body').on('click', '.sub-menu > a', function(e){
         e.preventDefault();

@@ -32,9 +32,9 @@
 
                     <!-- Logo -->
                     <div>
-                        <router-link tag="div" class="logo cursor-pointer" to="/">
-                            <img v-if="title === 'home'" src="../assets/logos/LOGOS-06.png" alt="" style="width: 100%">
-                            <img v-if="title !== 'home'" src="../assets/logos/LOGOS-07.png" alt="" style="width: 100%">
+                        <router-link tag="div" class="logo cursor-pointer" to="/explorer">
+                            <img v-if="title === 'home'" src="../assets/logos/LOGOS-07.png" alt="" style="width: 100%">
+                            <img v-if="title !== 'home'" src="../assets/logos/LOGOS-08.png" alt="" style="width: 100%">
                         </router-link>
                     </div>
                     <!-- / Logo -->

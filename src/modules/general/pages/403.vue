@@ -14,20 +14,22 @@
 
 <script>
     import * as translations from '@/translations/pages/403'
-
+    import {mapGetters} from 'vuex'
+    
     export default{
         name: 'general-403',
         data(){
             return {}
         },
         computed: {
-            'translations': function() {
-                const language = localStorage.getItem('language')
+            ...mapGetters(['language']),
 
-                if (language === 'en' || !language) {
+            'translations': function() {
+
+                if (this.language === 'en') {
                     return translations.en
                 }
-                if (language === 'pt') {
+                if (this.language === 'pt') {
                     return translations.pt
                 }
             }

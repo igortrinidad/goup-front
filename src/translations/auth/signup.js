@@ -3,9 +3,6 @@ export const en = {
     title: 'Start using GoUp now!',
     loginEmail: 'Signup with e-mail',
     loginFacebook: 'Signup in with Facebook',
-    acceptTerms: 'Continuing you agree to our',
-    terms: 'Terms of Use',
-    privacy: 'Privacy policy',
     alreadySigned: 'Already have an account?',
     loginHere: 'Login here',
     placeholders:{
@@ -24,6 +21,12 @@ export const en = {
                 changeEmail: 'Change e-mail',
             }
         }
+    },
+    terms: {
+        first: 'Ao continuar você concorda com nossos',
+        terms_button: 'Termos de Uso',
+        and: 'e',
+        privacy_button: 'Política de privacidade.'
     }
 }
 
@@ -32,11 +35,8 @@ export const pt = {
     title: 'Começe a usar o Goup agora!',
     loginEmail: 'Cadastre-se com seu e-mail',
     loginFacebook: 'Cadastre-se com seu Facebook',
-    acceptTerms: 'Ao continuar você concorda com nossos',
-    terms: 'Termos de uso',
-    privacy: 'Política de privacidade',
-    alreadySigned: 'Já tem uma conta?',
-    loginHere: 'faça o login aqui',
+    alreadySigned: 'Já possui uma conta?',
+    loginHere: 'Faça o login aqui',
     placeholders:{
         name: 'Seu nome',
         last_name: 'Seu sobrenome',
@@ -53,5 +53,11 @@ export const pt = {
                 changeEmail: 'Alterar e-mail',
             }
         }
+    },
+    terms: {
+        first: 'Ao continuar você concorda com nossos',
+        terms_button: 'Termos de Uso',
+        and: 'e',
+        privacy_button: 'Política de privacidade.'
     }
 }

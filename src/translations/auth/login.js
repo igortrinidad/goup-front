@@ -5,9 +5,6 @@ export const en = {
     loginFacebook: 'Login with Facebook',
     inputEmail: 'Enter your e-mail',
     inputPassword: 'Enter your password',
-    acceptTerms: 'Continuing you agree to our',
-    terms: 'Terms of Use',
-    privacy: 'Privacy policy',
 
     // Tour
     tourTitle: 'Discover new places near you',
@@ -18,7 +15,13 @@ export const en = {
     //actions
     signup: `Don't have an account?`,
     getStart: 'Get started',
-    forgotPassword: 'Forgot your password?'
+    forgotPassword: 'Forgot your password?',
+    terms: {
+        first: 'When continue you agree with our',
+        terms_button: 'Terms of Use',
+        and: 'and',
+        privacy_button: 'Privacy Policy.'
+    }
 
 }
 
@@ -29,9 +32,6 @@ export const pt = {
     loginFacebook: 'Entrar com Facebook',
     inputEmail: 'Informe seu e-mail',
     inputPassword: 'Informe sua senha',
-    acceptTerms: 'Ao continuar você concorda com nossos',
-    terms: 'Termos de Uso',
-    privacy: 'Política de Privacidade',
 
     // Tour
     tourTitle: 'Descubra locais novos perto de você',
@@ -41,6 +41,12 @@ export const pt = {
 
     //actions
     signup: 'Ainda não tem uma conta?',
-    getStart: 'cadastre-se',
-    forgotPassword: 'Esqueceu sua senha?'
+    getStart: 'Cadastre-se',
+    forgotPassword: 'Esqueceu sua senha?',
+    terms: {
+        first: 'Ao continuar você concorda com nossos',
+        terms_button: 'Termos de Uso',
+        and: 'e',
+        privacy_button: 'Política de privacidade.'
+    }
 }

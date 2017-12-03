@@ -1,7 +1,7 @@
 <template>
     <div class="main login">
         <div class="container text-center">
-            <img class="logo" src="../../../../assets/logos/LOGOS-05.png" alt="">
+            <img class="logo" src="../../../../assets/logos/LOGOS-02.png" alt="">
             <h2 class="f-300 m-b-30">{{ translations.title }}</h2>
             <h3 class="f-300 m-b-30">{{ translations.message }}</h3>
         </div>
@@ -17,13 +17,14 @@
     export default {
         name: 'signup-success',
         computed: {
-            'translations': function() {
-                const language = localStorage.getItem('language')
+            ...mapGetters(['language']),
 
-                if (language === 'en' || !language) {
+            'translations': function() {
+
+                if (this.language === 'en') {
                     return translations.en
                 }
-                if (language === 'pt') {
+                if (this.language === 'pt') {
                     return translations.pt
                 }
             }

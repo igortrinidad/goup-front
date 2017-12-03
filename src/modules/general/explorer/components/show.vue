@@ -195,15 +195,14 @@
 
         computed: {
 
-            ...mapGetters(['checkLanguage', 'language', 'isLogged', 'currentUser']),
+            ...mapGetters(['language', 'language', 'isLogged', 'currentUser']),
 
             'translations': function() {
-                const language = localStorage.getItem('language')
 
-                if (language === 'en' || !language) {
+                if (this.language === 'en') {
                     return translations.en
                 }
-                if (language === 'pt') {
+                if (this.language === 'pt') {
                     return translations.pt
                 }
             }
@@ -479,10 +478,6 @@
 
                 that.currentLocation.lat = position.coords.latitude
                 that.currentLocation.lng = position.coords.longitude
-
-                localStorage.setItem('user_lat', position.coords.latitude);
-                localStorage.setItem('user_lng', position.coords.longitude);
-                localStorage.setItem('last_location_getted', moment().format('DD/MM/YYYY HH:mm:ss'));
 
                 that.getLocationByCoordinates()
 

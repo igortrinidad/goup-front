@@ -144,18 +144,11 @@
             ...mapGetters(['language']),
 
             'translations': function() {
-                const language = this.language
 
-                if (language === 'en' || !language) {
-                    this.languages.en = true
-                    this.languages.pt = false
-
+                if (this.language === 'en') {
                     return translations.en
                 }
-                if (language === 'pt') {
-                    this.languages.en = false
-                    this.languages.pt = true
-
+                if (this.language === 'pt') {
                     return translations.pt
                 }
             }

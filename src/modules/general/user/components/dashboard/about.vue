@@ -50,6 +50,7 @@
 
     import User from '@/models/User'
     import * as translations from '@/translations/user/components/about'
+    import {mapGetters} from 'vuex'
 
     export default {
         name: 'general-user-settings-about',
@@ -66,13 +67,14 @@
         },
 
         computed: {
-            'translations': function() {
-                const language = localStorage.getItem('language')
+            ...mapGetters(['language']),
 
-                if (language === 'en' || !language) {
+            'translations': function() {
+
+                if (this.language === 'en') {
                     return translations.en
                 }
-                if (language === 'pt') {
+                if (this.language === 'pt') {
                     return translations.pt
                 }
             }

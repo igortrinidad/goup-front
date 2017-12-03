@@ -1,26 +1,55 @@
 <template lang="html">
     <div class="first-container">
         <main-header
-            :type="'center'"
-            :title="'Termos de uso'"
+            :type="'back'"
+            :title="translations.terms_title"
             :cursor="false"
             :action="function(){ return false}"
             :hasback="true"
         >
         </main-header>
 
-        <span>terms</span>
+
+        <div class="first-container">
+            <div class="container">
+                <div class="docs-container">
+                    <iframe
+                        width="100%"
+                        height="700px"
+                        src="https://docs.google.com/document/d/e/2PACX-1vR0lpYrVRU9LmCakiPsW1bTqf3ZpHDyJV0C45gsR-BJsoMKOYG_zeFNiV1RIMJ3XSAoZ0LYrAiWRB4h/pub?embedded=true"
+                    >
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </template>
 
 <script>
     import mainHeader from '@/components/main-header.vue'
+    import * as translations from '@/translations/pages/general';
+    import {mapGetters} from 'vuex'
 
     export default {
         name: 'terms',
         components: {
 	    	mainHeader
-	    }
+	    },
+        computed: {
+            ...mapGetters(['language']),
+
+            'translations': function() {
+
+                if (this.language === 'en') {
+                    return translations.en
+                }
+                if (this.language === 'pt') {
+                    return translations.pt
+                }
+            }
+        }
     }
     </script>
 

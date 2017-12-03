@@ -33,7 +33,7 @@ button, a,
 .btn.btn-info:hover{
   background-color: #561F9F;
   border-color: #FFFD7B;
-  color: #FFFD7B;
+  color: #FFFD7B !important;
 }
 
 .btn.btn-danger,
@@ -119,4 +119,19 @@ button:active{
     background-color: transparent;
     border-color: #a039a8;
     color: #FFF;
+}
+
+.btn-xs{
+    height: 24px;
+    border-radius: 12px;
+    border-width: 1px !important;
+    padding: 2px 25px;
+    font-size: 12px;
+}
+
+.btn-sm{
+    height: 30px;
+    border-radius: 15px;
+    border-width: 1px !important;
+    padding: 5px 25px;
 }

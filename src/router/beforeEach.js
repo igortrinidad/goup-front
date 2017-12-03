@@ -19,16 +19,18 @@ const beforeEach = (to, from, next) => {
 
     $('#side-menu-global-id').removeClass('active')
 
+     store.dispatch('setLoading', {is_loading: false, message: ''})
+
     //Detect unathenticated user language
     if (!store.getters.isLogged) {
-        let systemLanguage = navigator.language || navigator.userLanguage
-        systemLanguage = _.split(systemLanguage, '-', 1)[0]
+        
+        let language = localStorage.getItem('language')
 
-        if(systemLanguage === 'en' || systemLanguage === 'pt'){
-            store.dispatch('setLanguage', systemLanguage)
+        if(!language){
+            store.dispatch('setLanguage', 'en')
         }else{
             //Fallback to english
-            store.dispatch('setLanguage', 'en')
+            store.dispatch('setLanguage', language)
         }
 
     }

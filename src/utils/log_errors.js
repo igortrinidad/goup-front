@@ -54,7 +54,7 @@ export function logErroRequest(response) {
 
     function postMessageToSlack(payload) {
 
-        axios.post("https://hooks.slack.com/services/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", payload)
+        axios.post("https://hooks.slack.com/services/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", payload)
             .then(function (response) {
                 console.log(response);
             })
@@ -89,7 +89,7 @@ function logErroJs(text) {
 
     function postMessageToSlack(payload) {
         var xmlhttp = new XMLHttpRequest(),
-            webhook_url = "https://hooks.slack.com/services/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";
+            webhook_url = "https://hooks.slack.com/services/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";
         xmlhttp.open('POST', webhook_url, false);
         xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xmlhttp.send(payload);
