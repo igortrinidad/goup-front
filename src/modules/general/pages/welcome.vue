@@ -93,15 +93,16 @@
                 <!-- TERMS AND PRIVACY -->
 
             </div>
+
         </div>
 
         <!-- Pulse Loading -->
-        <div class="text-center" style="margin-top: 200px" v-if="interactions.loading_location">
+        <div class="text-center" v-if="interactions.loading_location">
             <span class="pulse">
-                <i class="ion-navigate"></i>
+                <i class="ion-navigate m-0"></i>
             </span>
 
-            <!-- <p class="f-13 f-300">{{translations.loading_location}}</p> -->
+            <p class="pulse-msg f-14 f-300">{{translations.loading_location}}</p>
         </div>
 
     </div>
@@ -282,45 +283,37 @@
         font-size: 40px;
         width: 60px; height: 60px;
         cursor: pointer;
-        box-shadow: 0 0 0 rgba(255,255,255, 0.4);
         animation: pulse 2s infinite;
         position: absolute;
         left: calc(50% - 30px);
         top: calc(50% - 30px);
         margin-top: -20px;
+        padding: 0;
+    }
+    .pulse i {
+        position: relative;
+        left: -3px; top: 2px;
     }
 
-    @-webkit-keyframes pulse {
-      0% {
-          -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0.4);
-          color: rgba(255, 255, 255, 0.4);
-      }
-      70% {
-          -webkit-box-shadow: 0 0 0 10px rgba(255,255,255, 0);
-          color: rgba(255, 255, 255, 0);
-      }
-      100% {
-          -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
-          color: rgba(255, 255, 255, 0);
-      }
+    .pulse-msg {
+        position: absolute;
+        width: 100%;
+        top: calc(50% + 30px);
+        left: 0; right: 0;
     }
+
     @keyframes pulse {
       0% {
-          -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.4);
-          box-shadow: 0 0 0 0 rgba(255,255,255, 0.4);
-          color: rgba(255, 255, 255, 0.4);
-
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
+        color: rgba(255, 255, 255, 0.4);
       }
       70% {
-          -moz-box-shadow: 0 0 0 10px rgba(255,255,255, 0);
-          box-shadow: 0 0 0 10px rgba(255,255,255, 0);
-          color: rgba(255, 255, 255, 0);
-
+        box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+        color: rgba(255, 255, 255, 0);
       }
       100% {
-          -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
-          box-shadow: 0 0 0 0 rgba(255,255,255, 0);
-          color: rgba(255, 255, 255, 0);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+        color: rgba(255, 255, 255, 0);
       }
     }
 
