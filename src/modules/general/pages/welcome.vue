@@ -4,12 +4,31 @@
 
 
         <!-- SE A LOCALIZAÇÃO NAO ESTIVER DISPONÍVEL -->
-        <div class="" v-if="!getUserLastGeoLocation.location_granted && !interactions.loading_location">
+        <div class="m-t-20" v-if="!getUserLastGeoLocation.location_granted && !interactions.loading_location">
 
-            <h1>{{translations.title}}</h1>
+            <img src="../../../assets/logos/LOGOS-02.png"style="width: 130px">
 
-            <p>{{translations.non_location}}</p>
+            <h3 class="m-t-20">{{translations.title}}</h3>
+
+            <p class="f-14 f-300 m-t-20">{{translations.non_location}}</p>
             <button class="btn btn-primary m-t-20" @click="getUserLocation()">{{translations.button_grant_location}}</button>
+
+            <div class="flags">
+                <img
+                    class="m-r-5 country-flag"
+                    src="../../../assets/img/brazil.png"
+                    width="32px"
+                    @click="setLanguage('pt')"
+                    :class="{ 'country-selected' : language ===  'pt' }"
+                >
+                <img
+                    class="m-r-5 country-flag"
+                    src="../../../assets/img/united-kingdom.png"
+                    width="32px"
+                    @click="setLanguage('en')"
+                    :class="{ 'country-selected' : language ===  'en' }"
+                >
+            </div>
             
         </div>
 
