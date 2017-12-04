@@ -1,6 +1,7 @@
 export const en = {
     select_category: 'Explorer places by type',
     end_list: 'No events nearby',
+    add_event: 'Add an event',
     up: 'Go Up',
     down: 'Go Down',
     skip: 'Skip',
@@ -38,6 +39,7 @@ export const en = {
 export const pt = {
     select_category: 'Explore eventos por tipo',
     end_list: 'Nenhum evento nas proximidades',
+    add_event: 'Adicione um evento',
     up: 'Go Up',
     down: 'Go Down',
     skip: 'Pular',

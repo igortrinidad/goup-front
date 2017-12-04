@@ -33,7 +33,7 @@
         </div>
 
         <!-- SE O USER NÃO TIVER LOGAD -->
-        <div class="" v-if="!isLogged && interactions.location_granted && !interactions.loading_location">
+        <div class="" v-if="interactions.location_granted && !interactions.loading_location">
 
             <div class="flags">
                 <img
@@ -158,7 +158,7 @@
             }
 
             //Usuário ainda nao tem localização
-            if(!userLastGeoLocation && this.isLogged){
+            if(!userLastGeoLocation && this.isLogged || !userLastGeoLocation && !this.isLogged){
                 this.interactions.location_granted = false;
                 this.interactions.loading_location = false;
                 this.initSwiperGallery();
@@ -209,6 +209,7 @@
                         newUserLastGeoLocation.lat = position.coords.latitude;
                         newUserLastGeoLocation.lng = position.coords.longitude;
                         newUserLastGeoLocation.location_granted = true;
+                        that.interactions.location_granted = true;
                         that.interactions.loading_location = false;
                         newUserLastGeoLocation.time = moment().format('DD/MM/YYYY HH:mm:ss');
 

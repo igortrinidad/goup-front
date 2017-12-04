@@ -21,7 +21,7 @@
     background-color: transparent !important;
     opacity: 1 !important;
     width: 8px !important; height: 8px !important;
-    border: 2px solid #88C657;
+    border: 1px solid #88C657;
 }
 .swiper-pagination.primary .swiper-pagination-bullet-active { background-color: #88C657 !important; opacity: 1 !important; }
 

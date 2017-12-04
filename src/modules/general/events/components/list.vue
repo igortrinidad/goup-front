@@ -117,6 +117,11 @@
                         </div>
                         <!-- /Events -->
 
+                        <div class="col-sm-12">
+                            <router-link :to="{name: 'general.events.create'}" class="btn btn-primary btn-block m-t-20">{{translations.add_event}}</router-link>
+                        </div>
+
+
                     </div>
 
                 </div>
