@@ -60,16 +60,6 @@
                 <!--Cities-->
 
                 <div class="container">
-                    <div class="row text-center">
-                        <button
-                            type="button"
-                            class="btn btn-xs btn-primary transparent m-t-30"
-                            @click.prevent="handleModalVisibility">
-                            {{ translations.more_filters }}
-                        </button>
-                    </div>
-
-
                     <div class="row m-t-30">
 
                         <div class="col-sm-12">
@@ -79,7 +69,12 @@
                         </div>
 
                         <!-- Events -->
-                        <div class="col-sm-12" v-for="(event, indexEvents) in events">
+
+                        <div class="col-sm-12" >
+                            <div class="card-placeholder placeholder-effect"></div>
+                        </div>
+
+                        <div class="col-sm-12" v-for="(event, indexEvents) in events" v-if="!interactions.is_loading">
                             <div class="card p-0">
                                 <!-- Card Header -->
                                 <div
