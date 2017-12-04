@@ -70,9 +70,7 @@
 
                         <!-- Events -->
 
-                        <div class="col-sm-12" >
-                            <div class="card-placeholder placeholder-effect"></div>
-                        </div>
+                        <card-placeholder v-if="interactions.is_loading" />
 
                         <div class="col-sm-12" v-for="(event, indexEvents) in events" v-if="!interactions.is_loading">
                             <div class="card p-0">
@@ -164,6 +162,8 @@
     import { mapGetters, mapActions } from 'vuex'
 
     import mainHeader from '@/components/main-header.vue'
+    import cardPlaceholder from '@/components/card-placeholder.vue'
+
     import { cleanPlaceModel } from '@/models/Place'
     import { cleanCategoriesArrayExample } from '@/models/Category'
     import * as translations from '@/translations/events/list'
@@ -176,6 +176,7 @@
         components: {
             mainHeader,
             vueSlider,
+            cardPlaceholder
         },
 
         data () {
@@ -390,6 +391,7 @@
     .divider {
         border-left: 1px solid #dfdfdf;
     }
+
     .event-ranking {
         position: absolute;
         top: 10px; left: 10px;
