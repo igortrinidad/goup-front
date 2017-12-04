@@ -34,7 +34,11 @@ export const setCities = ({ commit }) => {
 
 
     var userLastGeoLocation = JSON.parse(localStorage.getItem('user_last_geo_location'));
-    
+
+    if(!userLastGeoLocation){
+        return false
+    }
+
     window.$vueinstance.$http.post(`city/near_by_location`, {
         lat: userLastGeoLocation.lat,
         lng: userLastGeoLocation.lng,

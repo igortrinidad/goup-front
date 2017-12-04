@@ -7,6 +7,17 @@ const needAuth = (auth, token) => auth !== undefined && auth && isEmpty(token)
 const preventsLogged = prevents => prevents === true
 
 const beforeEach = (to, from, next) => {
+    
+    var checkUserLastLocation = window.checkUserLastLocation();
+
+    if(!checkUserLastLocation && to.path != '/'){
+        next('/')
+    }
+
+    if(checkUserLastLocation == 'is_invalid' && to.path != '/' ){
+        next('/')
+    }
+
 
     let token = store.state.Auth.token
     const auth = to.meta.requiresAuth

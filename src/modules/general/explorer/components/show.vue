@@ -245,18 +245,6 @@
 
             this.setCities();
 
-            var checkUserLastLocation = window.checkUserLastLocation();
-
-            if(!checkUserLastLocation){
-                this.$router.push('/');
-                return false;
-            }
-
-            if(checkUserLastLocation == 'is_invalid'){
-                this.$router.push('/');
-                return false;
-            }
-
             bus.$on('refresh_explorer', function(){
                 that.currentCategory = null;
                 that.interactions.finished_loading_category = false;

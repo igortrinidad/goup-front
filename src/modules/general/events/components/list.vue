@@ -223,6 +223,10 @@
 
         },
 
+        destroyed: function() {
+            $(window).off("scroll");
+        },
+
         methods: {
             ...mapActions(['setLoading']),
 

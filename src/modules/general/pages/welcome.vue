@@ -4,7 +4,7 @@
 
 
         <!-- SE A LOCALIZAÇÃO NAO ESTIVER DISPONÍVEL -->
-        <div class="m-t-20" v-if="!getUserLastGeoLocation.location_granted && !interactions.loading_location">
+        <div class="m-t-20" v-if="!interactions.location_granted && !interactions.loading_location">
 
             <img src="../../../assets/logos/LOGOS-02.png"style="width: 130px">
 
@@ -33,7 +33,7 @@
         </div>
 
         <!-- SE O USER NÃO TIVER LOGAD -->
-        <div class="" v-if="!isLogged && getUserLastGeoLocation.location_granted && !interactions.loading_location">
+        <div class="" v-if="!isLogged && interactions.location_granted && !interactions.loading_location">
 
             <div class="flags">
                 <img
@@ -146,8 +146,19 @@
 
             var userLastGeoLocation = window.checkUserLastLocation();
 
+            console.log(userLastGeoLocation);
+            console.log(this.isLogged);
+
             //Usuário ainda nao tem localização
             if(!userLastGeoLocation){
+                this.interactions.location_granted = false;
+                this.interactions.loading_location = false;
+                this.initSwiperGallery();
+
+            }
+
+            //Usuário ainda nao tem localização
+            if(!userLastGeoLocation && this.isLogged){
                 this.interactions.location_granted = false;
                 this.interactions.loading_location = false;
                 this.initSwiperGallery();
