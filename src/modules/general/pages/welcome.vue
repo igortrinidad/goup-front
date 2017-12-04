@@ -1,8 +1,6 @@
 <template lang="html">
     <div class="container m-t-30 text-center">
 
-
-
         <!-- SE A LOCALIZAÇÃO NAO ESTIVER DISPONÍVEL -->
         <div class="m-t-20" v-if="!interactions.location_granted && !interactions.loading_location">
 
@@ -29,7 +27,6 @@
                     :class="{ 'country-selected' : language ===  'en' }"
                 >
             </div>
-            
         </div>
 
         <!-- SE O USER NÃO TIVER LOGAD -->
@@ -98,15 +95,14 @@
             </div>
         </div>
 
-
+        <!-- Pulse Loading -->
         <div class="text-center" style="margin-top: 200px" v-if="interactions.loading_location">
+            <span class="pulse">
+                <i class="ion-navigate"></i>
+            </span>
 
-            <i class="ion-ios-navigate-outline pulse" style="font-size: 80px;"> </i>
-            <p class="f-13 f-300">{{translations.loading_location}}</p>
+            <!-- <p class="f-13 f-300">{{translations.loading_location}}</p> -->
         </div>
-
-
-
 
     </div>
 </template>
@@ -234,7 +230,7 @@
                         that.interactions.loading_location = false;
 
 
-                    }, 
+                    },
                     //options
                     { enableHighAccuracy: true }
 
@@ -277,46 +273,54 @@
         filter: grayscale(0%);
     }
 
-    .pulse:before{
-        top: -50px !important;
-    }
+    /* Pulse */
     .pulse {
-        display: block;
-          border-radius: 50%;
-          width: 60px;
-          height: 60px !important;
-          cursor: pointer;
-          box-shadow: 0 0 0 rgba(255,255,255, 0.4);
-          animation: pulse 2s infinite;
-          position: absolute;
-          left: calc(50% - 30px);
-          top: 40px;
-          margin-top: -20px;
-        }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 40px;
+        width: 60px; height: 60px;
+        cursor: pointer;
+        box-shadow: 0 0 0 rgba(255,255,255, 0.4);
+        animation: pulse 2s infinite;
+        position: absolute;
+        left: calc(50% - 30px);
+        top: calc(50% - 30px);
+        margin-top: -20px;
+    }
 
     @-webkit-keyframes pulse {
       0% {
-        -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0.4);
+          -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0.4);
+          color: rgba(255, 255, 255, 0.4);
       }
       70% {
           -webkit-box-shadow: 0 0 0 10px rgba(255,255,255, 0);
+          color: rgba(255, 255, 255, 0);
       }
       100% {
           -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
+          color: rgba(255, 255, 255, 0);
       }
     }
     @keyframes pulse {
       0% {
-        -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.4);
-        box-shadow: 0 0 0 0 rgba(255,255,255, 0.4);
+          -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.4);
+          box-shadow: 0 0 0 0 rgba(255,255,255, 0.4);
+          color: rgba(255, 255, 255, 0.4);
+
       }
       70% {
           -moz-box-shadow: 0 0 0 10px rgba(255,255,255, 0);
           box-shadow: 0 0 0 10px rgba(255,255,255, 0);
+          color: rgba(255, 255, 255, 0);
+
       }
       100% {
           -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
           box-shadow: 0 0 0 0 rgba(255,255,255, 0);
+          color: rgba(255, 255, 255, 0);
       }
     }
 
