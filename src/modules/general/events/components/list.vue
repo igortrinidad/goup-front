@@ -90,33 +90,32 @@
                                         borderRadius: '6px 6px 0 0'
                                     }"
                                 >
+                                    <span class="event-ranking">
+                                        {{ event.rank_position }}º
+                                    </span>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body card-padding">
-                                    <h4 class="m-b-20">{{ event.name }}</h4>
-
-                                    <div style="opacity: .6;">
-                                        <span class="d-block f-12">
+                                    <h4 class="m-b-5">{{ event.name }}</h4>
+                                    <div style="opacity: .8;">
+                                        <p class="m-b-5">{{ event.description }}</p>
+                                        <span class="d-block m-0 f-12">
                                             <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
-                                        </span>
-                                        <span class="d-block f-12 m-t-5">
-                                            <strong>{{ translations.approximate_distances }}: </strong>
-                                            {{ handleDistance(event.distance) }}
                                         </span>
                                     </div>
                                 </div>
                                 <!-- Card Footer -->
                                 <div class="card-footer p-10">
                                     <div class="row">
-                                        <div class="col-xs-6">
-                                            <span style="opacity: .6;">
-                                                <i class="ion-podium m-r-5"></i>{{ event.rank_position }}º
-                                            </span>
+                                        <div class="col-xs-6" style="opacity: .8;">
+                                            <small>
+                                                <i class="ion-location m-r-5"></i>{{ handleDistance(event.distance) }}
+                                            </small>
                                         </div>
                                         <div class="col-xs-6 text-right">
-                                            <span class="f-primary">
+                                            <small class="f-primary">
                                                 <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
-                                            </span>
+                                            </small>
                                         </div>
                                     </div>
                                 </div>
@@ -388,26 +387,19 @@
     }
 
     /* Event Card */
-    .picture-circle.absolute {
-        position: absolute;
-        top: 50%; left: 5px;
-        width: 90px;
-        height: 90px;
-        display: block;
-        margin-top: -46px;
-        border-radius: 6px !important
-    }
 
     .event-ranking {
         position: absolute;
-        bottom: 0; left: 0; right: 0;
+        top: 10px; left: 10px;
         background-color: #561F9F;
-        color: #8BF3FB;
+        color: #FFFD7B;
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 35px;
+        height: 40px;
+        width: 40px;
         font-weight: 700;
+        border-radius: 6px;
 
     }
 
@@ -415,12 +407,4 @@
         width: 50%;
         text-align: center;
     }
-    .event-ranking .divider {
-        border-left: 1px solid #FF4B89;
-    }
-
-    .ext-padding {
-        padding-left: 95px;
-    }
-
 </style>
