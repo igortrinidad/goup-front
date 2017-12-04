@@ -35,7 +35,6 @@
                 <!--Cities-->
                 <div class="row m-t-10">
                     <div class="col-sm-12 text-center">
-
                         <label class="f-13 f-300">{{ translations.nearCities }}</label>
                         <p v-if="!getCities.length" >Nenhuma cidade próxima.</p>
                         <div class="swiper-container" ref="citiesSlider">
@@ -44,7 +43,10 @@
                                     class="swiper-slide label transparent m-5 cursor-pointer"
                                     v-for="(city, $index) in getCities"
                                     :key="$index"
-                                    :class="{ 'cursor-pointer': currentCity != city.id, 'label-primary':currentCity == city }"
+                                    :class="{
+                                        'label-default': currentCity !== city.id,
+                                        'label-primary': currentCity === city.id
+                                    }"
                                 >
                                     <span v-if="currentCity == city.id">
                                         {{city.name}} - {{city.state}}
