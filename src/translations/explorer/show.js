@@ -7,9 +7,9 @@ export const en = {
     skip: 'Skip',
     favorite: 'Save',
     filter: 'Filter',
-
     nearCities: 'Cidades próximas',
     noCity: 'No city nearby.',
+    title_when: 'When',
     makeLogin: 'Sign in to interact with events',
     goToLogin: 'Go to login',
 
@@ -48,6 +48,7 @@ export const pt = {
 
     nearCities: 'Cidades próximas',
     noCity: 'Nenhuma cidade encontrada.',
+    title_when: 'Quando',
     makeLogin: 'Faça login para interagir com os eventos',
     goToLogin: 'Ir para login',
 

@@ -164,7 +164,32 @@
                     </div>
                     <!--Cities-->
 
-                    <router-link :to="{name: 'general.events.create'}" class="btn btn-primary btn-block m-t-20">{{translations.add_event}}</router-link>
+                    <!--DAYS SELECTEDS-->
+                    <div class="row m-t-20">
+                        <div class="col-sm-12 text-center">
+
+                            <label>{{ translations.title_when }}</label>
+
+                            <div class="week-row">
+                                <button 
+                                    class="btn btn-default btn-sm m-r-5" 
+                                    :class="{'btn-primary' : days_selecteds.indexOf(day) > -1}"
+                                    v-for="(day, $index) in current_week" 
+                                    @click="toggleDay(day)"
+                                >
+                                    {{day.format('dddd')}} | {{day.format('DD')}}
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--DAYS SELECTEDS-->
+
+                    <hr>
+
+                    <router-link :to="{name: 'general.events.create'}" class="btn btn-primary btn-block m-t-30">{{translations.add_event}}</router-link>
+
+                    <p class="text-center">{{days_selecteds_to_query}}</p>
 
                 </div>
 
@@ -222,7 +247,16 @@
                     newLocation: ''
                 },
                 currentCity: null,
-                currentCategory: null
+                currentCategory: null,
+                current_week: [],
+                days_selecteds: [],
+                days_selecteds_to_query: {
+                    monthly: [],
+                    weekly: [],
+                    get_by_date: false,
+                    init: moment().format('YYYY-MM-DD'), 
+                    end: moment().add(6, 'days').format('YYYY-MM-DD'), 
+                }
             }
         },
 
@@ -238,7 +272,7 @@
                 if (this.language === 'pt') {
                     return translations.pt
                 }
-            }
+            },
         },
 
         mounted(){
@@ -252,6 +286,12 @@
                 that.interactions.finished_loading_category = false;
                 that.interactions.is_loading = true;
             });
+
+            this.initWeek();
+
+            setTimeout(function() {
+                that.checkDaysToQuery();
+            }, 100);
             
         },
 
@@ -531,11 +571,70 @@
 
                 
             },
+
+            initWeek: function(){
+                let that = this
+            
+                for (var m = moment(); m.isBefore(moment().add(6, 'days')); m.add(1, 'days')) {
+
+                    var newM = m.clone();
+                    this.current_week.push(newM);
+                    this.days_selecteds.push(newM);
+
+                }
+            },
+
+            toggleDay: function(day){
+                let that = this
+            
+                this.days_selecteds.forEach( function($day, index, array){
+
+                    if($day.format('DD') == day.format('DD')){
+                        array.splice(index, 1);
+                        return
+                    }
+
+                    if(array.length == index+1){
+                        array.push(day)
+                    }
+
+                })
+
+                this.checkDaysToQuery();
+
+            },
+
+            checkDaysToQuery: function(){
+
+                var that = this;
+
+                that.days_selecteds_to_query.monthly = [];
+                that.days_selecteds_to_query.weekly = [];
+
+                that.days_selecteds.forEach( function($day){
+
+                    //Adiciona o dia do mês à query
+                    that.days_selecteds_to_query.monthly.push(Math.ceil(moment($day).format('DD') / 7) + '-' + moment($day).day());
+
+                    //Adiciona o dia da semana na query
+                    that.days_selecteds_to_query.weekly.push(moment($day).day());
+                });
+
+            }
         }
     }
 </script>
 
 <style scoped>
+
+    .week-row{
+        overflow-x: scroll;
+        white-space: nowrap;
+    }
+
+    ::-webkit-scrollbar { 
+        display: none; 
+    }
     .cards {
         position: relative;
         height: 388px;
@@ -617,7 +716,6 @@
         background-color: #FFFFFF;
         border-radius: 15px;
         cursor: pointer;
-        
     }
 
     .fadeout-500 {
