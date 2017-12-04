@@ -23,7 +23,8 @@
                                         'label-primary': currentCategory === category
                                     }"
                                     v-for="(category, $index) in getCategories"
-                                    :key="$index">
+                                    :key="$index"
+                                >
                                     {{ category[`name_${language}`] }}
                                 </div>
                             </div>
@@ -79,41 +80,47 @@
 
                         <!-- Events -->
                         <div class="col-sm-12" v-for="(event, indexEvents) in events">
-                            <router-link
-                                tag="div"
-                                class="card m-b-10 p-0"
-                                style="height: 100px;"
-                                :key="indexEvents"
-                                :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
-                            >
+                            <div class="card p-0">
+                                <!-- Card Header -->
+                                <div
+                                    class="card-header cover p-5"
+                                    :style="{
+                                        backgroundImage: `url(${ event.cover })`,
+                                        height: '150px',
+                                        borderRadius: '6px 6px 0 0'
+                                    }"
+                                >
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body card-padding">
+                                    <h4 class="m-b-20">{{ event.name }}</h4>
 
-                                <div class="card-body p-5">
-                                    <!-- Place Thumbnail -->
-                                    <div class="picture-circle rounded absolute" :style="{ backgroundImage: `url(${ event.cover })` }">
-                                        <div class="event-ranking">
-                                            <small>
-                                                <i class="ion-podium"></i> {{ event.rank_position }}º
-                                            </small>
-                                            <small class="divider">
-                                                <i class="ion-ios-star"></i> {{ event.favorited_count }}
-                                            </small>
-                                        </div>
-                                    </div>
-
-                                    <!-- /Place Thumbnail -->
-
-                                    <div class="ext-padding">
-                                        <h4 class="m-0 m-b-0 f-700 t-overflow">{{ event.name }}</h4>
-                                        <small class="d-block f-12 m-t-15">
+                                    <div style="opacity: .6;">
+                                        <span class="d-block f-12">
                                             <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
-                                        </small>
-
-                                        <small class="d-block f-14 m-t-5">
-                                            <span class="label label-xs label-primary">{{ handleDistance(event.distance) }}</span>
-                                        </small>
+                                        </span>
+                                        <span class="d-block f-12 m-t-5">
+                                            <strong>{{ translations.approximate_distances }}: </strong>
+                                            {{ handleDistance(event.distance) }}
+                                        </span>
                                     </div>
                                 </div>
-                            </router-link>
+                                <!-- Card Footer -->
+                                <div class="card-footer p-10">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <span style="opacity: .6;">
+                                                <i class="ion-podium m-r-5"></i>{{ event.rank_position }}º
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <span class="f-primary">
+                                                <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- /Events -->
 
@@ -393,15 +400,13 @@
 
     .event-ranking {
         position: absolute;
-        bottom: -2px; left: 0; right: 0;
-        background-color: rgba(255, 75, 137, .95);
-        border: 2px solid #FF4B89;
-        color: #fff;
+        bottom: 0; left: 0; right: 0;
+        background-color: #561F9F;
+        color: #8BF3FB;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 0 0 6px 6px;
-        height: 25px;
+        height: 35px;
         font-weight: 700;
 
     }
@@ -411,7 +416,7 @@
         text-align: center;
     }
     .event-ranking .divider {
-        border-left: 1px solid rgba(255, 255, 255, 0.7);
+        border-left: 1px solid #FF4B89;
     }
 
     .ext-padding {
