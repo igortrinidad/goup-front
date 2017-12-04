@@ -172,7 +172,7 @@
                 this.getUserLocation();
             }
 
-            
+            this.initSwiperGallery();
 
         },
         methods: {
