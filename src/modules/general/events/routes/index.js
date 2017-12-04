@@ -22,6 +22,12 @@ const Show = (resolve) => {
     })
 }
 
+const Edit = (resolve) => {
+    require.ensure(['../components/edit'], () => {
+        resolve(require('../components/edit')) // eslint-disable-line global-require
+    })
+}
+
 export default [
     {
         path: 'user',
@@ -32,19 +38,25 @@ export default [
                 name: 'general.events.create',
                 path: '/create',
                 component: Create,
-                meta: {requiresAuth: false}
+                meta: {requiresAuth: true}
             },
             {
                 name: 'general.events.list',
                 path: '/ranking',
                 component: List,
-                meta: {requiresAuth: false}
+                meta: {requiresAuth: true}
+            },
+            {
+                name: 'general.events.edit',
+                path: '/event/edit/:id',
+                component: Edit,
+                meta: {requiresAuth: true}
             },
             {
                 name: 'general.events.show',
-                path: '/place/:event_slug',
+                path: '/event/:event_slug',
                 component: Show,
-                meta: {requiresAuth: false}
+                meta: {requiresAuth: true}
             },
         ]
     }

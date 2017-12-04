@@ -22,6 +22,17 @@ const UserEditProfile = (resolve) => {
     })
 }
 
+const UserFavorites = (resolve) => {
+    require.ensure(['../components/favorites'], () => {
+        resolve(require('../components/favorites')) // eslint-disable-line global-require
+    })
+}
+
+const UserEvents = (resolve) => {
+    require.ensure(['../components/events'], () => {
+        resolve(require('../components/events')) // eslint-disable-line global-require
+    })
+}
 
 export default [
     {
@@ -45,6 +56,18 @@ export default [
                 name: 'general.user.settings.edit',
                 path: '/settings/edit-profile',
                 component: UserEditProfile,
+                meta: {requiresAuth: true}
+            },
+            {
+                name: 'general.user.favorites',
+                path: '/favorites',
+                component: UserFavorites,
+                meta: {requiresAuth: true}
+            },
+            {
+                name: 'general.user.events',
+                path: '/events',
+                component: UserEvents,
                 meta: {requiresAuth: true}
             },
         ]

@@ -1,5 +1,5 @@
 export const en = {
-    title: 'Add new event',
+    title: 'Edit event',
     form: {
         event_name: `Event's name`,
         event_description: `Event's description`,
@@ -36,12 +36,12 @@ export const en = {
     },
     yes: 'Yes',
     no: 'No',
-    submit: 'Register event',
-    success: 'New event added successfully'
+    submit: 'save event',
+    success: 'New event updated successfully'
 }
 
 export const pt = {
-    title: 'Adicionar novo evento',
+    title: 'Editar evento',
     form: {
         event_name: 'Nome do evento',
         event_description: 'Descrição do evento',
@@ -77,6 +77,6 @@ export const pt = {
     },
     yes: 'Sim',
     no: 'Não',
-    submit: 'Cadastrar evento',
-    success: 'Novo evento adicionado com sucesso.'
+    submit: 'Salvar evento',
+    success: 'Evento atualizado com sucesso.'
 }

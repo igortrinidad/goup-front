@@ -25,7 +25,7 @@
                                     v-for="(category, $index) in getCategories"
                                     :key="$index"
                                 >
-                                    {{ category[`name_${language}`] }}
+                                    {{ category[`name_${language}`]}}
                                 </div>
                             </div>
                         </div>
@@ -350,7 +350,7 @@
                         nextButton: '.swiper-button-next',
                         onSlideChangeEnd: swiper => {
 
-                            that.currentCity = that.getCities[swiper.realIndex].id
+                            that.currentCity = that.getCities[swiper.realIndex]
                             localStorage.setItem('city_index', swiper.realIndex)
                             that.getEvents();
 
@@ -412,5 +412,20 @@
     .event-ranking small {
         width: 50%;
         text-align: center;
+    }
+
+    .badge-city {
+        display: inline-block;
+        min-width: 10px;
+        padding: 3px 7px;
+        font-weight: bold;
+        color: #ec538b;
+        line-height: 1;
+        vertical-align: middle;
+        white-space: nowrap;
+        text-align: center;
+        background-color: #fff;
+        border-radius: 10px;
+        font-size: 11px;
     }
 </style>

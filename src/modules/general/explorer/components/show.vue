@@ -152,12 +152,7 @@
                                          v-for="(city, $index) in getCities"
                                          :key="$index"
                                          :class="{'cursor-pointer': currentCity != city, 'label-primary':currentCity == city}">
-                                         <span v-if="currentCity == city">
-                                             {{city.name}} - {{city.state}}
-                                         </span>
-                                        <span v-if="currentCity != city">
-                                            {{city.name}} - {{city.state}}
-                                        </span>
+                                        {{city.name}} - {{city.state}}  <span class="badge-city">{{city.categories[currentCategory.id]}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -270,7 +265,7 @@
 
         methods: {
 
-            ...mapActions(['setCities']),
+            ...mapActions(['setCities', 'handleUserInteraction']),
 
             mountHammer() {
                 let that = this
@@ -463,13 +458,12 @@
 
             getEvents() {
                 let that = this
-
                 that.$http.post('event/explorer/list', {
                     language: that.language,
                     lat: that.getUserLastGeoLocation.lat,
                     lng: that.getUserLastGeoLocation.lng,
-                    city_id: that.currentCity.id,
-                    category_id: that.currentCategory.id,
+                    city_id: that.currentCity ? that.currentCity.id : null,
+                    category_id: that.currentCategory.id
                 })
                     .then(function (response) {
 
@@ -505,6 +499,9 @@
 
             handleInteraction(interaction) {
                 let that = this
+
+                that.handleUserInteraction({city_id: that.currentCity.id, category_id: that.currentCategory.id})
+
                 that.$http.post('event/interaction/store', interaction)
                     .then(function (response) {
 
@@ -777,5 +774,35 @@
               box-shadow: 0 0 0 0 rgba(255,255,255, 0);
           }
         }
+
+    .badge-city {
+        display: inline-block;
+        min-width: 10px;
+        padding: 3px 7px;
+        font-weight: bold;
+        color: #ec538b;
+        line-height: 1;
+        vertical-align: middle;
+        white-space: nowrap;
+        text-align: center;
+        background-color: #fff;
+        border-radius: 10px;
+        font-size: 11px;
+    }
+
+    .badge-category {
+        display: inline-block;
+        min-width: 10px;
+        padding: 3px 7px;
+        font-weight: bold;
+        color: #fff;
+        line-height: 1;
+        vertical-align: middle;
+        white-space: nowrap;
+        text-align: center;
+        background-color: #ec538b;
+        border-radius: 10px;
+        font-size: 11px;
+    }
 
 </style>

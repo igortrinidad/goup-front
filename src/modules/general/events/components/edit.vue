@@ -90,8 +90,8 @@
                                     <i
                                         :class="{
                                                 'icon-select m-l-10 f-20': true,
-                                                'ion-ios-circle-filled': currentCategory === category,
-                                                'ion-ios-circle-outline': currentCategory !== category
+                                                'ion-ios-circle-filled': currentCategory.id === category.id,
+                                                'ion-ios-circle-outline': currentCategory.id !== category.id
                                             }"
                                     >
                                     </i>
@@ -124,7 +124,6 @@
                                     {{ translations.form.clear_search }}
                                 </button>
                             </div>
-
 
                         </div>
 
@@ -275,7 +274,7 @@
                             <button
                                 type="button"
                                 class="btn btn-primary btn-block transparent"
-                                @click="storeEvent()"
+                                @click="updateEvent()"
                                 :disabled="!event.name || !event.description || !event.category_id  || !event.google_place_id || !event.photos.length"
                             >
                                 {{ translations.submit }}
@@ -306,7 +305,7 @@
 
     import mainHeader from '@/components/main-header'
 
-    import * as translations from '@/translations/events/create.js'
+    import * as translations from '@/translations/events/edit'
     import { cleanEventModel } from '@/models/Event'
     import Vue from 'vue'
     import VueNumeric from 'vue-numeric'
@@ -314,7 +313,7 @@
     import {apiUrl} from '@/config/'
 
     export default {
-        name: 'general-events-create',
+        name: 'general-events-edit',
 
         components: {
             mainHeader,
@@ -360,27 +359,11 @@
                 this.isMobile = true
             }
             this.getCategories()
+            this.getEvent()
         },
 
         methods: {
             ...mapActions(['setLoading', 'addNewEvent']),
-
-            testePlaceId: function(){
-                let that = this
-
-                var service = new google.maps.places.PlacesService(document.getElementById('teste'));
-
-                service.getDetails({
-                  placeId: that.place.google_place_id
-                }, function(place, status) {
-                  if (status === google.maps.places.PlacesServiceStatus.OK) {
-
-                        console.log(place);
-
-                  }
-                });
-
-            },
 
             clearSearchAndPlace: function(){
                 let that = this
@@ -478,15 +461,27 @@
                     });
             },
 
-            storeEvent() {
+            getEvent() {
                 let that = this
 
-                that.$http.post('event/store', that.event)
+                that.$http.get(`event/show/${that.$route.params.id}`)
+                    .then(function (response) {
+                        that.event = response.data.event
+                        that.handleCategory(that.event.category)
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
+
+            updateEvent() {
+                let that = this
+
+                that.$http.post('event/update', that.event)
                     .then(function (response) {
                         that.addNewEvent(response.data.event)
-                        that.event = cleanEventModel()
                         successNotify('', that.translations.success)
-                        that.$router.push({path: '/ranking'})
+                        that.$router.push({path: '/events'})
                     })
                     .catch(function (error) {
                         console.log(error)
