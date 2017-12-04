@@ -10,15 +10,42 @@
 
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
-                <div class="container">
+
+                <div class="container" v-if="!interactions.finished_loading_category" :class="{'cat-is-selected' : currentCategory}">
+
+                    <p class="f-14 f-300 text-center m-t-10">{{translations.select_category}}</p>
+
+                    <div class="row p-10">
+                        <div class="col-xs-6 card-cat-col" v-for="category in getCategories">
+                            <div class="card-cat text-center" 
+                                @click="selectCategory(category)" 
+                                :class="{
+                                    'card-cat-selected' : currentCategory && currentCategory == category, 
+                                    'card-cat-non-selected' : currentCategory && currentCategory != category,  
+                                }">
+                                <div class="p-10">
+                                    <img :src="category.photo" width="70%">
+                                    <p class="f-default">{{category['name_' + language]}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="container" v-if="interactions.finished_loading_category">
 
 
                     <h4 class="text-center m-b-30 m-t-30" v-show="!events.length && !interactions.is_loading">
                         {{ translations.end_list }}
                     </h4>
 
+
+                    <!-- PLACEHOLDER  -->
+                    <div class="card-placeholder effect" v-if="interactions.is_loading"></div>
+
                     <!-- Cards -->
-                    <div class="cards m-t-20" v-if="events.length">
+                    <div class="cards m-t-20" v-if="events.length && !interactions.is_loading">
 
                         <!-- FIRST PLACE -->
                         <div id="card-animated" class="card m-0" ref="cardAnimated">
@@ -84,7 +111,7 @@
                         <div class="col-sm-12">
                             <div class="actions">
 
-                                <div v-if="events.length && isLogged">
+                                <div v-if="events.length && isLogged || interactions.is_loading">
                                     <span class="action skip" @click="skip()">
                                         <span class="ion-ios-rewind f-default"></span>
                                     </span>
@@ -117,7 +144,7 @@
                         <div class="col-sm-12 text-center">
 
                             <label>{{ translations.nearCities }}</label>
-                            <p v-if="!getCities.length && !interactions.is_loading">{{ translations.noCity }}</p>
+                            <p v-if="!getCities.length">{{ translations.noCity }}</p>
                             <div class="swiper-container" ref="citiesSlider">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide label transparent m-5 cursor-pointer"
@@ -138,6 +165,8 @@
                     <!--Cities-->
 
                 </div>
+
+
             </div>
         </transition>
 
@@ -154,7 +183,7 @@
     import elements from '@/components/elements.vue'
     import { cleanPlaceModel } from '@/models/Place'
 
-    import * as translations from '@/translations/pages/index'
+    import * as translations from '@/translations/explorer/show'
     import moment from 'moment'
 
     export default {
@@ -173,6 +202,7 @@
                     skip: false,
                     favorite: false,
                     is_loading: true,
+                    finished_loading_category: false,
                 },
                 starting: true,
                 placeholder: true,
@@ -188,6 +218,7 @@
                     newLocation: ''
                 },
                 currentCity: null,
+                currentCategory: null
             }
         },
 
@@ -221,14 +252,6 @@
                 this.$router.push('/');
                 return false;
             }
-
-            this.currentCategory = this.getCategories[0];
-            this.currentCity = this.getCities[0];
-            this.citiesSwiper();
-
-            setTimeout(function() {
-                that.getEvents();
-            }, 100);
             
 
         },
@@ -434,6 +457,7 @@
 
             getEvents() {
                 let that = this
+
                 that.$http.post('event/explorer/list', {
                     language: that.language,
                     lat: that.getUserLastGeoLocation.lat,
@@ -444,6 +468,7 @@
 
                         that.events = response.data.events
                         that.interactions.is_loading = false;
+
                         /*if (that.starting) {
 
                             that.starting = false
@@ -483,6 +508,25 @@
                 });
 
             },
+
+            selectCategory: function(category){
+                let that = this
+            
+                that.currentCategory = category;
+
+                setTimeout(function() {
+                    that.interactions.finished_loading_category = true;
+                }, 1400);
+
+
+                setTimeout(function() {
+                    that.currentCity = that.getCities[0];
+                    that.citiesSwiper();
+                    that.getEvents();
+                }, 1500);
+
+                
+            },
         }
     }
 </script>
@@ -502,6 +546,7 @@
 
     @media (max-width: 360px) {
         .cards{ height: 330px}
+        .card-placeholder{ height: 330px}
     }
 
     .card {
@@ -518,6 +563,33 @@
     }
 
     .cards #card-animated{ z-index: 10; }
+
+    .card-placeholder{
+        height: 388px;
+        background-color: #FFF;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+
+    .effect {
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: placeHolderShimmer;
+        animation-timing-function: linear;
+        background-color: #f6f7f8;
+        background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+        background-size: 800px 104px;
+    }
+
+    @keyframes placeHolderShimmer {
+        0% {
+            background-position: -468px 0
+        }
+        100% {
+            background-position: 468px 0
+        }
+    }
 
     .fadeInLeft{
         transition: 0.1s;
@@ -550,4 +622,173 @@
         padding: 10px;
         color: #fff !important;
     }
+
+    .card-cat-col{
+        padding-right: 10px;
+        padding-left: 10px;
+        margin-top: 20px;
+    }
+
+    .card-cat{
+        background-color: #FFFFFF;
+        border-radius: 15px;
+        cursor: pointer;
+        
+    }
+
+    .fadeout-500 {
+        -webkit-animation: fadeOut 500ms;
+        -moz-animation: fadeOut 500ms;
+        animation: fadeOut 500ms;
+    }
+
+    .card-cat:hover:not(.card-cat-selected), .card-cat:active{
+        animation: pulse 1.6s infinite;
+    }
+
+    .card-cat-non-selected{
+        z-index: 5;
+    }
+
+    .cat-is-selected{
+        animation: fade-out linear 1.5s;
+        animation-iteration-count: 1;
+    }
+
+    @keyframes fade-out{
+      0% {
+        opacity: 1;
+      }
+      70% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+}
+
+
+
+    .card-cat-selected{
+        -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
+        box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
+        z-index: 1000;
+        animation: card-cat-selected-animation linear 1s;
+        animation-iteration-count: 1;
+        transform-origin: 50% 50%;
+        -webkit-animation: card-cat-selected-animation linear 1s;
+        -webkit-animation-iteration-count: 1;
+        -webkit-transform-origin: 50% 50%;
+        -moz-animation: card-cat-selected-animation linear 1s;
+        -moz-animation-iteration-count: 1;
+        -moz-transform-origin: 50% 50%;
+        -o-animation: card-cat-selected-animation linear 1s;
+        -o-animation-iteration-count: 1;
+        -o-transform-origin: 50% 50%;
+        -ms-animation: card-cat-selected-animation linear 1s;
+        -ms-animation-iteration-count: 1;
+        -ms-transform-origin: 50% 50%;
+    }
+
+@keyframes card-cat-selected-animation{
+  0% {
+    transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
+  }
+  10% {
+    transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
+  }
+  20% {
+    transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
+  }
+  30% {
+    transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
+  }
+  40% {
+    transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
+  }
+  50% {
+    transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
+  }
+  60% {
+    transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
+  }
+  70% {
+    transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
+  }
+  80% {
+    transform:  rotate(-2deg) scaleX(1.10) scaleY(1.10) ;
+  }
+  90% {
+    transform:  rotate(2deg) scaleX(1.00) scaleY(1.00) ;
+  }
+  100% {
+    transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
+  }
+}
+
+
+@-webkit-keyframes card-cat-selected-animation {
+  0% {
+    -webkit-transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
+  }
+  10% {
+    -webkit-transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
+  }
+  20% {
+    -webkit-transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
+  }
+  30% {
+    -webkit-transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
+  }
+  40% {
+    -webkit-transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
+  }
+  50% {
+    -webkit-transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
+  }
+  60% {
+    -webkit-transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
+  }
+  70% {
+    -webkit-transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
+  }
+  80% {
+    -webkit-transform:  rotate(-2deg) scaleX(1.10) scaleY(1.10) ;
+  }
+  90% {
+    -webkit-transform:  rotate(2deg) scaleX(1.00) scaleY(1.00) ;
+  }
+  100% {
+    -webkit-transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
+  }
+}
+
+
+
+        @-webkit-keyframes pulse {
+          0% {
+            -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
+          }
+          70% {
+              -webkit-box-shadow: 0 0 0 10px rgba(255,255,255, 0);
+          }
+          100% {
+              -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
+          }
+        }
+        @keyframes pulse {
+          0% {
+            -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
+            box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
+          }
+          70% {
+              -moz-box-shadow: 0 0 0 10px rgba(255,255,255, 0);
+              box-shadow: 0 0 0 10px rgba(255,255,255, 0);
+          }
+          100% {
+              -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
+              box-shadow: 0 0 0 0 rgba(255,255,255, 0);
+          }
+        }
+
 </style>

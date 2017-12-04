@@ -1,4 +1,5 @@
 export const en = {
+    select_category: 'Explorer places by type',
     end_list: 'No events nearby',
     up: 'Go Up',
     down: 'Go Down',
@@ -35,6 +36,7 @@ export const en = {
 }
 
 export const pt = {
+    select_category: 'Explore eventos por tipo',
     end_list: 'Nenhum evento nas proximidades',
     up: 'Go Up',
     down: 'Go Down',
