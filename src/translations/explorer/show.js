@@ -8,7 +8,7 @@ export const en = {
     favorite: 'Save',
     filter: 'Filter',
 
-    nearCities: 'Cidades próximas',
+    nearCities: 'Nearby Cities',
     noCity: 'No city nearby.',
     makeLogin: 'Sign in to interact with events',
     goToLogin: 'Go to login',

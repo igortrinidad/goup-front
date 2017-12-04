@@ -52,7 +52,7 @@
         padding: 0;
     }
 
-    .pulse i {
+    .pulse .ion-navigate {
         position: relative;
         left: -3px; top: 2px;
     }

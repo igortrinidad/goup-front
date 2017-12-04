@@ -8,6 +8,11 @@
             :cursor="false"
         ></main-header>
 
+        <pulse
+            v-if="interactions.is_loading && interactions.finished_loading_category"
+            :icon="'ion-ios-refresh-empty'"
+        />
+
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
 
@@ -17,11 +22,11 @@
 
                     <div class="row p-10">
                         <div class="col-xs-6 card-cat-col" v-for="category in getCategories">
-                            <div class="card-cat text-center" 
-                                @click="selectCategory(category)" 
+                            <div class="card-cat text-center"
+                                @click="selectCategory(category)"
                                 :class="{
-                                    'card-cat-selected' : currentCategory && currentCategory == category, 
-                                    'card-cat-non-selected' : currentCategory && currentCategory != category,  
+                                    'card-cat-selected' : currentCategory && currentCategory == category,
+                                    'card-cat-non-selected' : currentCategory && currentCategory != category,
                                 }">
                                 <div class="p-10">
                                     <img :src="category.photo" width="70%">
@@ -39,10 +44,6 @@
                     <h4 class="text-center m-b-30 m-t-30" v-show="!events.length && !interactions.is_loading">
                         {{ translations.end_list }}
                     </h4>
-
-
-                    <!-- PLACEHOLDER  -->
-                    <div class="card-placeholder placeholder-effect" v-if="interactions.is_loading"></div>
 
                     <!-- Cards -->
                     <div class="cards m-t-20" v-if="events.length && !interactions.is_loading">
@@ -164,7 +165,13 @@
                     </div>
                     <!--Cities-->
 
-                    <router-link :to="{name: 'general.events.create'}" class="btn btn-primary btn-block m-t-20">{{translations.add_event}}</router-link>
+                    <router-link
+                        :to="{name: 'general.events.create'}"
+                        class="btn btn-primary btn-block m-t-20"
+                        v-if="!interactions.is_loading"
+                    >
+                        {{translations.add_event}} {{ interactions.is_loading }}
+                    </router-link>
 
                 </div>
 
@@ -182,7 +189,8 @@
     import { mapGetters, mapActions } from 'vuex'
 
     import mainHeader from '@/components/main-header.vue'
-    import elements from '@/components/elements.vue'
+    import pulse from '@/components/pulse.vue'
+
     import { cleanPlaceModel } from '@/models/Place'
 
     import * as translations from '@/translations/explorer/show'
@@ -195,7 +203,7 @@
 
         components: {
             mainHeader,
-            elements,
+            pulse
         },
 
         data () {
@@ -252,7 +260,7 @@
                 that.interactions.finished_loading_category = false;
                 that.interactions.is_loading = true;
             });
-            
+
         },
 
         destroyed(){
@@ -334,10 +342,6 @@
                 // Remove From Array
                 this.events.splice(0, 1)
                 $(this.$refs.cardAnimated).transition({ x: 0, y: 0, opacity: 1 }, 0)
-
-                // Update localStorage
-                /*localStorage.removeItem('events')
-                localStorage.setItem('events', JSON.stringify(this.events))*/
             },
 
             animateCurrentCard(e) {
@@ -424,7 +428,6 @@
                 return `${distance.toFixed(2)} km`
             },
 
-
             citiesSwiper() {
                 let that = this
 
@@ -473,7 +476,8 @@
                         that.events = response.data.events
                         that.interactions.is_loading = false;
 
-                        /*if (that.starting) {
+                        /*
+                        if (that.starting) {
 
                             that.starting = false
 
@@ -487,8 +491,7 @@
                             localStorage.removeItem('events')
                             localStorage.setItem('events', JSON.stringify(that.events))
                         }
-*/
-
+                        */
                         //Inicia o hammer
                         that.mountHammer();
 
@@ -515,7 +518,7 @@
 
             selectCategory: function(category){
                 let that = this
-            
+
                 that.currentCategory = category;
 
                 setTimeout(function() {
@@ -529,7 +532,7 @@
                     that.getEvents();
                 }, 1500);
 
-                
+
             },
         }
     }
@@ -617,7 +620,7 @@
         background-color: #FFFFFF;
         border-radius: 15px;
         cursor: pointer;
-        
+
     }
 
     .fadeout-500 {
