@@ -25,7 +25,7 @@ Vue.filter('limitChar', function(value, count, finish){
 
 accounting.settings = {
     currency: {
-        symbol : "R$ ",   // default currency symbol is '$'
+        symbol : "$ ",   // default currency symbol is '$'
         format: "%s%v", // controls output: %s = symbol, %v = value/number (can be object: see below)
         decimal : ",",  // decimal point separator
         thousand: ".",  // thousands separator
