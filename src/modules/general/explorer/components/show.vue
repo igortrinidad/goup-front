@@ -11,7 +11,7 @@
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
 
-                <div class="container" v-if="!interactions.finished_loading_category" :class="{'cat-is-selected' : currentCategory}">
+                <div class="container" v-show="!interactions.finished_loading_category" :class="{'cat-is-selected' : currentCategory}">
 
                     <p class="f-14 f-300 text-center m-t-10">{{translations.select_category}}</p>
 
@@ -42,7 +42,7 @@
 
 
                     <!-- PLACEHOLDER  -->
-                    <div class="card-placeholder effect" v-if="interactions.is_loading"></div>
+                    <div class="card-placeholder placeholder-effect" v-if="interactions.is_loading"></div>
 
                     <!-- Cards -->
                     <div class="cards m-t-20" v-if="events.length && !interactions.is_loading">
@@ -67,7 +67,7 @@
                                 <!-- / Current Action -->
 
                                 <div class="ch-content">
-                                    <h3 class="title f-700 t-overflow">{{ events[0].name }}</h3>
+                                    <h3 class="title f-700 t-overflow">{{ events[0].name }} ({{ events[0].category.name_pt }})</h3>
                                     <p class="title f-700 t-overflow" style="margin-bottom: 0px;"><i class="ion-ios-location m-r-5"></i> {{ events[0].city.name }} - {{events[0].city.state}}</p>
                                 </div>
 
@@ -186,6 +186,8 @@
     import * as translations from '@/translations/explorer/show'
     import moment from 'moment'
 
+    import bus from '@/utils/event-bus';
+
     export default {
         name: 'landing',
 
@@ -241,6 +243,8 @@
 
             var that = this;
 
+            this.setCities();
+
             var checkUserLastLocation = window.checkUserLastLocation();
 
             if(!checkUserLastLocation){
@@ -252,14 +256,23 @@
                 this.$router.push('/');
                 return false;
             }
-            
 
+            bus.$on('refresh_explorer', function(){
+                that.currentCategory = null;
+                that.interactions.finished_loading_category = false;
+                that.interactions.is_loading = true;
+            });
+            
+        },
+
+        destroyed(){
+            bus.$off('refresh_explorer');
         },
 
 
         methods: {
 
-            ...mapActions(['setLoading']),
+            ...mapActions(['setCities']),
 
             mountHammer() {
                 let that = this
@@ -463,6 +476,7 @@
                     lat: that.getUserLastGeoLocation.lat,
                     lng: that.getUserLastGeoLocation.lng,
                     city_id: that.currentCity.id,
+                    category_id: that.currentCategory.id,
                 })
                     .then(function (response) {
 
@@ -485,10 +499,10 @@
                         }
 */
 
+                        //Inicia o hammer
+                        that.mountHammer();
 
-                        if(that.isLogged){
-                            that.mountHammer()
-                        }
+
                     }).catch(function (error) {
                     console.log(error)
                     that.interactions.is_loading = false;
@@ -544,6 +558,13 @@
         z-index: 10;
     }
 
+    .card-placeholder{
+        height: 388px;
+        background-color: #FFF;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+
     @media (max-width: 360px) {
         .cards{ height: 330px}
         .card-placeholder{ height: 330px}
@@ -563,33 +584,6 @@
     }
 
     .cards #card-animated{ z-index: 10; }
-
-    .card-placeholder{
-        height: 388px;
-        background-color: #FFF;
-        border-radius: 5px;
-        margin-top: 20px;
-    }
-
-    .effect {
-        animation-duration: 1s;
-        animation-fill-mode: forwards;
-        animation-iteration-count: infinite;
-        animation-name: placeHolderShimmer;
-        animation-timing-function: linear;
-        background-color: #f6f7f8;
-        background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-        background-size: 800px 104px;
-    }
-
-    @keyframes placeHolderShimmer {
-        0% {
-            background-position: -468px 0
-        }
-        100% {
-            background-position: 468px 0
-        }
-    }
 
     .fadeInLeft{
         transition: 0.1s;

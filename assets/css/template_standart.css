@@ -17,6 +17,7 @@
 @import './modules/tooltip.css';
 @import './modules/actions.css';
 @import './modules/grid.css';
+@import './modules/placeholder.css';
 
 .text-muted { color: #4A5464; }
 

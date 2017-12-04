@@ -31,8 +31,8 @@
                     <!-- / Settings & Profile -->
 
                     <!-- Logo -->
-                    <div>
-                        <router-link tag="div" class="logo cursor-pointer" to="/explorer">
+                    <div @click="refreshExplorer()">
+                        <router-link tag="div" class="logo cursor-pointer" to="/explorer" >
                             <img v-if="title === 'home'" src="../assets/logos/LOGOS-07.png" alt="" style="width: 100%">
                             <img v-if="title !== 'home'" src="../assets/logos/LOGOS-08.png" alt="" style="width: 100%">
                         </router-link>
@@ -103,6 +103,10 @@
         methods:{
             back: function(){
                 window.history.back()
+            },
+
+            refreshExplorer: function(){
+                bus.$emit('refresh_explorer'); 
             },
 
         }

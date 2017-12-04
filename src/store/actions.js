@@ -2,24 +2,6 @@ import * as TYPES from './mutation-types'
 import moment from 'moment';
 import store from '../store'
 
-var checkUserLastLocation = function(){
-    var userLastGeoLocation = JSON.parse(localStorage.getItem('user_last_geo_location'));
-
-    if(!userLastGeoLocation){
-        return false
-    }
-
-    if(moment().subtract(3, 'hours').isBefore(moment(userLastGeoLocation.time, 'DD/MM/YYYY HH:mm:ss'))){
-        return 'is_valid'
-    }
-
-    if(moment().subtract(3, 'hours').isAfter(moment(userLastGeoLocation.time, 'DD/MM/YYYY HH:mm:ss'))){
-        return 'is_invalid'
-    }
-
-
-}
-
 export const setEnv = ({ commit }, env) => {
     /**
      * Commit the mutations
@@ -51,64 +33,27 @@ export const setLanguage = ({ commit }, language) => {
 export const setCities = ({ commit }) => {
 
 
-    var cities = JSON.parse(localStorage.getItem('cities'));
-
     var userLastGeoLocation = JSON.parse(localStorage.getItem('user_last_geo_location'));
+    
+    window.$vueinstance.$http.post(`city/near_by_location`, {
+        lat: userLastGeoLocation.lat,
+        lng: userLastGeoLocation.lng,
+        radius: 100
+    })
+        .then(function (response) {
+            var cities = response.data.cities
 
-    //Se não encontrar categorias salvas
-    if(!cities || !cities.length){
-        window.$vueinstance.$http.post(`city/near_by_location`, {
-            lat: userLastGeoLocation.lat,
-            lng: userLastGeoLocation.lng,
-            radius: 100
-        })
-            .then(function (response) {
-                var cities = response.data.cities
+            localStorage.setItem('cities', JSON.stringify(cities));
 
-                localStorage.setItem('cities', JSON.stringify(cities));
-
-                commit(TYPES.SET_CITIES, {
-                    cities
-                })
-
-            })
-            .catch(function (error) {
-                console.log(error)
-            });
-
-    //Se encontrar categorias salvas
-    } else {
-
-        //Se a localização for encontrada na localstorage e for válida (menor que 3 horas) retorna a localização
-        if(checkUserLastLocation() == 'is_valid'){
-
-           commit(TYPES.SET_CITIES, {
+            commit(TYPES.SET_CITIES, {
                 cities
             })
 
-        } else {
+        })
+        .catch(function (error) {
+            console.log(error)
+        });
 
-            window.$vueinstance.$http.post(`city/near_by_location`, {
-                lat: userLastGeoLocation.lat,
-                lng: userLastGeoLocation.lng,
-                radius: 100
-            })
-                .then(function (response) {
-                    var cities = response.data.cities
-
-                    localStorage.setItem('cities', JSON.stringify(cities));
-
-                    commit(TYPES.SET_CITIES, {
-                        cities
-                    })
-
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-        }
-
-    }
 
 }
 
@@ -140,7 +85,7 @@ export const setCategories = ({ commit }) => {
         var userLastGeoLocation = JSON.parse(localStorage.getItem('user_last_geo_location'));
 
         //Se a localização for encontrada na localstorage e for válida (menor que 3 horas) retorna a localização
-        if(checkUserLastLocation() == 'is_valid'){
+        if(window.checkUserLastLocation() == 'is_valid'){
             
 
            commit(TYPES.SET_CATEGORIES, {
@@ -177,7 +122,7 @@ export const setUserLastGeolocation = ({ commit }) => {
     var userLastGeoLocation = JSON.parse(localStorage.getItem('user_last_geo_location'));
 
     //Se a localização for encontrada na localstorage e for válida (menor que 3 horas) retorna a localização
-    if(checkUserLastLocation() == 'is_valid'){
+    if(window.checkUserLastLocation() == 'is_valid'){
         
         window.console.log('Localização encontrada na localStorage e é anterior a 3 horas. (válida)');
 
@@ -188,7 +133,7 @@ export const setUserLastGeolocation = ({ commit }) => {
 
     //Se a localização for encontrada na localStorage e NAO for valida (maior que 3 horas) tenta buscar a localização
     //Se não conseguir, retornar a localização que já encontrou
-    if(checkUserLastLocation() == 'is_invalid'){
+    if(window.checkUserLastLocation() == 'is_invalid'){
 
 
         window.console.log('Localização é anterior à 3 horas. (inválida)');
@@ -252,7 +197,7 @@ export const setUserLastGeolocation = ({ commit }) => {
     //Se não encontrar, retornará o objeto vazio que será utilizado para direcionar o user para a página welcome: '/'
     } 
 
-    if(checkUserLastLocation() == false){
+    if(window.checkUserLastLocation() == false){
 
         window.console.log('Localização ainda não foi salva ou não foi permitida');
 

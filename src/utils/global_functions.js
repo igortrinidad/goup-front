@@ -29,11 +29,11 @@ export default function(){
             return false
         }
 
-        if(moment().subtract(3, 'hours').isBefore(moment(userLastGeoLocation.time, 'DD/MM/YYYY HH:mm:ss'))){
+        if(moment().subtract(1, 'hours').isBefore(moment(userLastGeoLocation.time, 'DD/MM/YYYY HH:mm:ss'))){
             return 'is_valid'
         }
 
-        if(moment().subtract(3, 'hours').isAfter(moment(userLastGeoLocation.time, 'DD/MM/YYYY HH:mm:ss'))){
+        if(moment().subtract(1, 'hours').isAfter(moment(userLastGeoLocation.time, 'DD/MM/YYYY HH:mm:ss'))){
             return 'is_invalid'
         }
 
