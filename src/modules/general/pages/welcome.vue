@@ -97,13 +97,11 @@
         </div>
 
         <!-- Pulse Loading -->
-        <div class="text-center" v-if="interactions.loading_location">
-            <span class="pulse">
-                <i class="ion-navigate m-0"></i>
-            </span>
-
-            <p class="pulse-msg f-14 f-300">{{translations.loading_location}}</p>
-        </div>
+        <pulse
+            v-if="interactions.loading_location"
+            :icon="'ion-navigate'"
+            :msg="translations.loading_location"
+        />
 
     </div>
 </template>
@@ -114,9 +112,12 @@
     import moment from 'moment';
     import * as translations from '@/translations/pages/welcome';
 
+    import pulse from '@/components/pulse.vue'
+
     export default {
         name: 'welcome',
         components: {
+            pulse
         },
         data() {
             return {
@@ -272,49 +273,6 @@
 
     .country-selected{
         filter: grayscale(0%);
-    }
-
-    /* Pulse */
-    .pulse {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        font-size: 40px;
-        width: 60px; height: 60px;
-        cursor: pointer;
-        animation: pulse 2s infinite;
-        position: absolute;
-        left: calc(50% - 30px);
-        top: calc(50% - 30px);
-        margin-top: -20px;
-        padding: 0;
-    }
-    .pulse i {
-        position: relative;
-        left: -3px; top: 2px;
-    }
-
-    .pulse-msg {
-        position: absolute;
-        width: 100%;
-        top: calc(50% + 30px);
-        left: 0; right: 0;
-    }
-
-    @keyframes pulse {
-      0% {
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
-        color: rgba(255, 255, 255, 0.4);
-      }
-      70% {
-        box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
-        color: rgba(255, 255, 255, 0);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-        color: rgba(255, 255, 255, 0);
-      }
     }
 
 </style>
