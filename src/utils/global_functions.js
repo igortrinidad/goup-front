@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 
 export default function(){
 
@@ -16,8 +18,27 @@ export default function(){
 
     }
 
-    //Then redefine the old console
+    //Then redefine the old clear
     window.clearAndMaintain = clear;
+
+
+    window.checkUserLastLocation = function(){
+        var userLastGeoLocation = JSON.parse(localStorage.getItem('user_last_geo_location'));
+
+        if(!userLastGeoLocation){
+            return false
+        }
+
+        if(moment().subtract(3, 'hours').isBefore(moment(userLastGeoLocation.time, 'DD/MM/YYYY HH:mm:ss'))){
+            return 'is_valid'
+        }
+
+        if(moment().subtract(3, 'hours').isAfter(moment(userLastGeoLocation.time, 'DD/MM/YYYY HH:mm:ss'))){
+            return 'is_invalid'
+        }
+
+
+    }
 
 
     //Submenu toggle

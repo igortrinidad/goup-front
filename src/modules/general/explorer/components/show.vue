@@ -156,7 +156,6 @@
 
     import * as translations from '@/translations/pages/index'
     import moment from 'moment'
-    import {language} from "../../../../store/getters";
 
     export default {
         name: 'landing',
@@ -194,7 +193,7 @@
 
         computed: {
 
-            ...mapGetters(['language', 'language', 'isLogged', 'currentUser', 'getUserLastGeoLocation', 'getCities', 'getCategories']),
+            ...mapGetters(['language', 'isLogged', 'currentUser', 'getUserLastGeoLocation', 'getCities', 'getCategories']),
 
             'translations': function() {
 
@@ -211,10 +210,26 @@
 
             var that = this;
 
+            var checkUserLastLocation = window.checkUserLastLocation();
+
+            if(!checkUserLastLocation){
+                this.$router.push('/');
+                return false;
+            }
+
+            if(checkUserLastLocation == 'is_invalid'){
+                this.$router.push('/');
+                return false;
+            }
+
             this.currentCategory = this.getCategories[0];
             this.currentCity = this.getCities[0];
             this.citiesSwiper();
-            this.getEvents();
+
+            setTimeout(function() {
+                that.getEvents();
+            }, 100);
+            
 
         },
 

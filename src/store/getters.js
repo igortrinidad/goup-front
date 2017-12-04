@@ -13,7 +13,8 @@ export const language = (state) => {
     
     const language = !_.isEmpty(state.language) ? state.language : localStorage.getItem('language')
 
-    if (language === 'en' || !language) {
+    if (language === 'en' || !language || language == "undefined") {
+        localStorage.setItem('language', 'en');
         return 'en'
     }
     if (language === 'pt') {

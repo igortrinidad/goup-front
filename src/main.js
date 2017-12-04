@@ -20,6 +20,17 @@ initFcmPushNotifications()
 
 require('moment/locale/pt-br')
 
+    //Define a linguagem do usuário;
+    var language = localStorage.getItem('language');
+
+    if(!language || language == "undefined"){
+        language = 'en';
+        var language = localStorage.setItem('language', language);
+        store.dispatch('setLanguage', language);
+    } else {
+        store.dispatch('setLanguage', language);
+    }
+
     global_functions();
 
     global_filters();
@@ -189,13 +200,5 @@ require('moment/locale/pt-br')
 
     store.dispatch('setUserLastGeolocation');
 
-    //Define a linguagem do usuário;
-    var language = localStorage.getItem('language');
-    if(!language){
-        language = 'en';
-        var language = localStorage.setItem('language', language);
-        store.dispatch('setLanguage', language);
-    } else {
-        store.dispatch('setLanguage', language);
-    }
+
 
