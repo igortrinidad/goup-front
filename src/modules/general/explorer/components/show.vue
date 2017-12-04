@@ -170,7 +170,7 @@
                         class="btn btn-primary btn-block m-t-20"
                         v-if="!interactions.is_loading"
                     >
-                        {{translations.add_event}} {{ interactions.is_loading }}
+                        {{translations.add_event}}
                     </router-link>
 
                 </div>
