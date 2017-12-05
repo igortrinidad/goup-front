@@ -73,15 +73,12 @@
                             <ul class="list-group list-rounded m-b-0 m-t-10">
                                 <li class="list-group-item">
                                     <i class="icon ion-android-calendar m-r-5 f-primary"></i>
-                                    <span><strong>{{ translations.best_day }}:</strong> {{ event.best_day }}</span>
-                                </li>
-                                <li class="list-group-item">
-                                    <i class="icon ion-wineglass m-r-5 f-primary"></i>
-                                    <span><strong>{{ translations.style }}:</strong> {{ event.style }}</span>
+                                    <span><strong>{{ translations.date }}:</strong> {{ event.date }} {{ event.time }}</span>
                                 </li>
                                 <li class="list-group-item">
                                     <i class="icon ion-android-time m-r-5 f-primary"></i>
-                                    <span><strong>{{ translations.is_opened }}</strong> {{ translations.yes }}</span>
+                                    <span v-if="event.place.open_now"><strong>{{ translations.is_opened }}</strong> {{ translations.yes }}</span>
+                                    <span v-if="!event.place.open_now"><strong>{{ translations.is_opened }}</strong> {{ translations.no }}</span>
                                 </li>
                             </ul>
 
@@ -101,10 +98,6 @@
                                     <i class="tab-icon ion-ios-people m-r-5"></i>
                                     {{ translations.tabs.friends }}
                                 </div>
-                                <div :class="{ 'swiper-slide tab': true, 'active': false }">
-                                    <i class="tab-icon ion-quote m-r-5"></i>
-                                    {{ translations.tabs.comments }}
-                                </div>
                             </div>
 
                         </div>
@@ -115,16 +108,12 @@
                     <div class="m-t-30">
                         <div class="">
                             <!-- Tab Location -->
-                            <tab-location :event="event" v-if="currentTab === 0"></tab-location>
+                            <tab-location :event="event" v-show="currentTab === 0"></tab-location>
                             <!-- Tab Location -->
 
                             <!-- Tab Friends -->
-                            <tab-friends  v-if="currentTab === 1"></tab-friends>
+                            <tab-friends  v-show="currentTab === 1"></tab-friends>
                             <!-- Tab Friends -->
-
-                            <!-- Tab Comments -->
-                            <tab-comments :event="event" v-if="currentTab === 2"></tab-comments>
-                            <!-- Tab Comments -->
                         </div>
                         <!-- / Tab Content -->
                     </div>
@@ -141,7 +130,6 @@
     import { mapGetters } from 'vuex'
     import mainHeader from '@/components/main-header.vue'
     import tabLocation from './show_partials/tab-location.vue'
-    import tabComments from './show_partials/tab-comments.vue'
     import tabFriends from './show_partials/tab-friends.vue'
 
     import * as translations from '@/translations/events/show'
@@ -153,7 +141,6 @@
         components: {
             mainHeader,
             tabLocation,
-            tabComments,
             tabFriends
         },
 
@@ -161,7 +148,7 @@
             return {
                 eventholder: true,
                 event: {},
-                currentTab: 1,
+                currentTab: 0,
                 interactions: {
                     eventNotFound: false
                 }
@@ -193,7 +180,7 @@
 
                 setTimeout(() => {
                     that.swiperTabs = new Swiper(that.$refs.tabs, {
-                        initialSlide: 1,
+                        initialSlide: 0,
                         slidesPerView: 2,
                         spaceBetween: 5,
                         centeredSlides: true,

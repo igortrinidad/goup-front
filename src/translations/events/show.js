@@ -1,7 +1,7 @@
 export const en = {
     back: 'Back',
     title: 'Event',
-    best_day: 'Best Day',
+    date: 'Date',
     style: 'Style',
     is_opened: 'Is opened now ?',
     yes: 'Yes',
@@ -14,9 +14,11 @@ export const en = {
     tabs: {
         comments: 'Comments',
         location: 'Location',
-        friends: 'Friends',
+        friends: 'Who liked',
         users: 'More users'
     },
+
+    no_interactions: 'This event does not have any interactions yet',
 
     // About Section
     about: {
@@ -38,7 +40,7 @@ export const en = {
 export const pt = {
     back: 'Voltar',
     title: 'Evento',
-    best_day: 'Melhor dia',
+    date: 'Data',
     style: 'Estilo',
     is_opened: 'Esta aberto agora ?',
     yes: 'Sim',
@@ -51,9 +53,11 @@ export const pt = {
     tabs: {
         comments: 'Comentários',
         location: 'Localização',
-        friends: 'Amigos',
+        friends: 'Quem curtiu',
         users: 'Mais usuários'
     },
+
+    no_interactions: 'Este evento ainda não possui nenhuma interação',
 
     // About Section
     about: {

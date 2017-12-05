@@ -3,27 +3,29 @@
         <div class="m-t-30 text-center">
             <h3 class="m-t-0 m-b-30">{{ translations.tabs.location }}</h3>
 
-            <div v-if="place.address.full_address">
-                <span>{{ place.address.full_address }}</span>
+            <div v-if="event.place.full_address">
+                <span>{{ event.place.full_address }}</span>
             </div>
 
-            <div class="m-t-30 rounded">
-                <GmapMap
-                    :center="{ lat: place.lat, lng: place.lng }"
-                    :zoom="map.zoom"
-                    :options="map.options"
-                    style="width: 100%; height: 300px"
-                >
-
-                    <GmapMarker
-                        :position="{ lat: place.lat, lng: place.lng }"
-                        :title="place.name"
-                        :clickable="true"
-                        :icon="map.icon"
+            <div class="col-sm-12">
+                <div class="m-t-30 rounded">
+                    <GmapMap
+                        :center="{ lat: event.place.geometry.location.lat, lng: event.place.geometry.location.lng }"
+                        :zoom="map.zoom"
+                        :options="map.options"
+                        style="width: 100%; height: 300px"
                     >
-                    </GmapMarker>
 
-                </GmapMap>
+                        <GmapMarker
+                            :position="{ lat: event.place.geometry.location.lat, lng: event.place.geometry.location.lng }"
+                            :title="event.place.name"
+                            :clickable="true"
+                            :icon="map.icon"
+                        >
+                        </GmapMarker>
+
+                    </GmapMap>
+                </div>
             </div>
 
         </div>
@@ -42,7 +44,7 @@
         },
 
         props: {
-            place: {
+            event: {
                 type: Object,
                 required: true
             }

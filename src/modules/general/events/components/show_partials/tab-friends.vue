@@ -6,38 +6,27 @@
                 <!-- Friends -->
                 <h3 class="m-t-0 m-b-30">{{ translations.tabs.friends }}</h3>
 
-                <div class="swiper-container" ref="swiperFriends" v-if="users.length">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide" v-for="user in users">
-                            <div
-                                class="picture-circle picture-circle-m border-picture-eletric-blue"
-                                :style="{ backgroundImage: `url(${ user.avatar })` }"
-                            >
-                            </div>
-                            <h4 class="text-center t-overflow">{{ user.full_name }}</h4>
+
+                <p v-show="!interactions.length">{{translations.no_interactions}}</p>
+
+                <div v-for="interaction in interactions">
+                    <div
+                        class="picture-circle picture-circle-m border-picture-eletric-blue"
+                        :style="{ backgroundImage: `url(${ interaction.user.avatar })` }"
+                    >
+                    </div>
+                    <h4 class="text-center t-overflow">{{ interaction.user.full_name }}</h4>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12" v-show="interactions.length">
+                        <div class="text-center">
+                            <pagination :source="pagination" @navigate="getInteractions" :range="6"></pagination>
                         </div>
                     </div>
                 </div>
-                <div class="swiper-pagination swiper-pagination-success"></div>
+
                 <!-- Friends -->
-
-                <!-- Users -->
-                <h3 class="m-t-30 m-b-30">{{ translations.tabs.users }}</h3>
-
-                <div class="swiper-container" ref="swiperUsers" v-if="users.length">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide" v-for="user in users">
-                            <div
-                                class="picture-circle picture-circle-m border-picture-eletric-yellow"
-                                :style="{ backgroundImage: `url(${ user.avatar })` }"
-                            >
-                            </div>
-                            <h4 class="text-center t-overflow">{{ user.full_name }}</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-pagination swiper-pagination-info"></div>
-                <!-- Users -->
 
             </div>
         </div>
@@ -49,11 +38,12 @@
 
     import UserModel from '@/models/User'
     import * as translations from '@/translations/events/show'
-
+    import pagination from '@/components/pagination'
     export default {
         name: 'general-places-show-tab-friends',
 
         components: {
+            pagination
         },
 
         props: {
@@ -64,7 +54,9 @@
             return {
                 placeholder: true,
                 place: {},
-                users: []
+                users: [],
+                interactions: [],
+                pagination: {}
             }
         },
 
@@ -83,35 +75,26 @@
         },
 
         mounted(){
-            this.getUsers()
+            this.getInteractions()
         },
 
         methods: {
 
-            initSwiper() {
+
+            getInteractions(page) {
                 let that = this
+                page = page ? page : 1
 
-                setTimeout(() => {
-                    that.swiperFriends = new Swiper(that.$refs.swiperFriends, {
-                        slidesPerView: 2,
-                        spaceBetween: 10,
-                        pagination: '.swiper-pagination-success',
-                        paginationClickable: true,
+                that.$http.get(`event/interactions/${that.$route.params.event_slug}?page=${page}`)
+                    .then(function (response) {
+                        that.interactions = response.data.interactions
+                        that.pagination = response.data.pagination
                     })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
 
-                    that.swiperUsers = new Swiper(that.$refs.swiperUsers, {
-                        slidesPerView: 2,
-                        spaceBetween: 10,
-                        pagination: '.swiper-pagination-info',
-                        paginationClickable: true,
-                    })
 
-                }, 200);
-            },
-
-            getUsers() {
-                this.users = [ UserModel, UserModel, UserModel, UserModel ]
-                this.initSwiper()
             }
         }
     }

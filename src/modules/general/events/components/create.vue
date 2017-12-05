@@ -43,60 +43,53 @@
                             <!-- / Name -->
 
                             <div class="form-group">
-                                <label class="f-700 f-primary" for="event-date">{{ translations.form.event_date }}</label>
-                                <input
-                                    type="tel"
-                                    id="event-date"
-                                    class="form-control"
-                                    v-model="event.date"
-                                    :placeholder="translations.form.event_date"
-                                    data-mask="00/00/0000"
-                                >
-                            </div>
+                                <label class="f-700 f-primary">{{ translations.form.recurrency_type }}</label>
 
-
-                            <div class="form-group">
-                                <label class="f-700 f-primary" for="event-date">{{ translations.form.event_time }}</label>
-                                <input
-                                    type="tel"
-                                    id="event-time"
-                                    class="form-control"
-                                    v-model="event.time"
-                                    :placeholder="translations.form.event_time"
-                                    data-mask="00:00"
-                                >
-                            </div>
-
-                            <div class="form-group">
-                                <label class="f-700 f-primary" for="event-value">{{ translations.form.event_value }}</label>
-                                <vue-numeric type="tel" id="event-value" class="form-control" :currency="language == 'en'? '$': 'R$'" :min="0" :separator="language == 'en'? ',': '.'"  :precision="2" v-model="event.value" :placeholder="translations.form.event_value"></vue-numeric>
+                                <ul class="list-group list-rounded m-t-10 m-0 text-left">
+                                    <li
+                                        class="list-group-item transparent"
+                                        :class="{ 'active': currentRecurrencyType === recurrency_type }"
+                                        @click="handleCurrencyType(recurrency_type)"
+                                        v-for="recurrency_type in recurrency_types"
+                                    >
+                                        {{ recurrency_type[`label_${language}`] }}
+                                        <i
+                                            :class="{
+                                                'icon-select m-l-10 f-20': true,
+                                                'ion-ios-circle-filled': currentRecurrencyType === recurrency_type,
+                                                'ion-ios-circle-outline': currentRecurrencyType !== recurrency_type
+                                            }"
+                                        >
+                                        </i>
+                                    </li>
+                                </ul>
                             </div>
 
                         </div>
                         <!-- /Event Informations -->
 
-                        <!-- Categories -->
-                        <div class="form-group">
-                            <label class="f-700 f-primary">{{ translations.form.categories }}</label>
 
-                            <ul class="list-group list-rounded m-t-10 m-0 text-left">
-                                <li
-                                    class="list-group-item transparent"
-                                    :class="{ 'active': currentCategory === category }"
-                                    @click="handleCategory(category)"
-                                    v-for="category in categories"
-                                >
-                                    {{ category[`name_${language}`] }}
-                                    <i
-                                        :class="{
-                                                'icon-select m-l-10 f-20': true,
-                                                'ion-ios-circle-filled': currentCategory === category,
-                                                'ion-ios-circle-outline': currentCategory !== category
-                                            }"
-                                    >
-                                    </i>
-                                </li>
-                            </ul>
+                        <!-- Categories -->
+                        <div class="border-inside-card default m-b-20">
+                            <div class="row m-t-20 m-b-20">
+                                <div class="col-sm-12 text-center">
+
+                                    <label class="f-700 f-primary">{{ translations.form.categories }}</label>
+
+                                    <p>{{translations.form.categories_max}}</p>
+
+                                    <div class="category-row">
+                                        <button
+                                            class="btn btn-default btn-sm m-r-5"
+                                            :class="{'btn-primary' : event.categories.indexOf(category.id) > -1}"
+                                            v-for="(category, $index) in getCategories"
+                                            @click="toggleCategory(category.id)"
+                                        >
+                                            {{ category[`name_${language}`]}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- / Categories -->
 
@@ -333,16 +326,21 @@
                 categories: [],
 
                 not_valid: [],
-                currentCategory: '',
-                subcategories: [],
+                currentRecurrencyType: '',
                 newTag: {
                     name: ''
                 },
+                recurrency_types:[
+                    {label_en: 'Daily', label_pt: 'Diário', value: 'daily'},
+                    {label_en: 'Weekly', label_pt: 'Semanal', value: 'weekly'},
+                    {label_en: 'Monthly', label_pt: 'Mensal', value: 'monthly'},
+                    {label_en: 'Date', label_pt: 'Data', value: 'date'}
+                ]
             }
         },
 
         computed: {
-            ...mapGetters(['language', 'AuthToken']),
+            ...mapGetters(['language', 'AuthToken', 'getCategories']),
 
             'translations': function() {
 
@@ -359,7 +357,6 @@
             if(window.cordova){
                 this.isMobile = true
             }
-            this.getCategories()
         },
 
         methods: {
@@ -456,26 +453,6 @@
                     }
                 });
 
-            },
-
-            handleCategory(category) {
-                this.currentCategory = category
-
-                if(category){
-                    this.event.category_id = category.id
-                }
-            },
-
-            getCategories() {
-                let that = this
-
-                that.$http.get(`event/categories/${that.language}`)
-                    .then(function (response) {
-                        that.categories = response.data.categories
-                    })
-                    .catch(function (error) {
-                        console.log(error)
-                    });
             },
 
             storeEvent() {
@@ -648,6 +625,26 @@
                 this.event.tags = this.event.tags.filter(function (tag) {
                     return tag.name != name;
                 });
+            },
+
+            handleCurrencyType(recurrency_type){
+                console.log(recurrency_type)
+            },
+
+            toggleCategory(category_id){
+                let that = this
+                var index = _.indexOf(that.event.categories, category_id);
+
+                if(index !== -1) {
+                    that.event.categories.splice(index, 1);
+                } else {
+                    
+                    if(that.event.categories.length >=3){
+                        infoNotify('', that.translations.form.categories_max_warning)
+                        return false
+                    }
+                    that.event.categories.push(category_id);
+                }
             }
 
         }
@@ -689,5 +686,14 @@
         width: 100%;
         font-weight: 700;
         margin-top: 20px;
+    }
+
+    .category-row{
+        overflow-x: scroll;
+        white-space: nowrap;
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
     }
 </style>

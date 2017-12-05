@@ -7,9 +7,15 @@ export default{
     name: '',
     slug: '',
     description: '',
+    recurrency_type: '',
+    recurrency_info: '',
     date: '',
     time: '',
+    value_uninformed: true,
     value: 0,
+    whatsapp: '',
+    website: '',
+    email: '',
     lat: 0,
     lng: 0,
 
@@ -20,10 +26,7 @@ export default{
         lng: 0,
     },
 
-    category: {
-        name_en: '',
-        name_pt: '',
-    },
+    categories:[],
 
     place:{
 
@@ -40,9 +43,15 @@ export function cleanEventModel() {
         name: '',
         slug: '',
         description: '',
+        recurrency_type: '',
+        recurrency_info: '',
         date: '',
         time: '',
+        value_uninformed: true,
         value: 0,
+        whatsapp: '',
+        website: '',
+        email: '',
         lat: 0,
         lng: 0,
 
@@ -53,15 +62,11 @@ export function cleanEventModel() {
             lng: 0,
         },
 
-        category: {
-            name_en: '',
-            name_pt: '',
-        },
+        categories:[],
 
         place:{
 
         },
-
         tags:[],
         photos:[]
 
