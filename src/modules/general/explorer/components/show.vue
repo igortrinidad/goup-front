@@ -199,10 +199,6 @@
 
                 </div>
 
-                <button type="button" data-target="#modal-action" data-toggle="modal">
-                    Dispach action
-                </button>
-
                 <!-- Modal Action -->
                 <div class="modal" id="modal-action">
                     <div class="modal-dialog" role="document">
@@ -386,21 +382,28 @@
                     if (that.top < -75) {
                         that.action = 'up'
                         $('#card-animated').transition({ y: -200, opacity: 0 }, 300, () => that.resetPosition())
+
+                        this.handleActionModal('up')
                     }
                     // DOWN
                     if (that.top > 75) {
                         that.action = 'down'
                         $('#card-animated').transition({ y: 200, opacity: 0 }, 300, () => that.resetPosition())
+
+                        this.handleActionModal('down')
                     }
                     // Skip
                     if (that.left > 75) {
                         that.action = 'save'
                         $('#card-animated').transition({ x: 300, opacity: 0 }, 300, () => that.resetPosition())
+
                     }
                     // Favorite
                     if (that.left < -75) {
                         that.action = 'skip'
                         $('#card-animated').transition({ x: -300, opacity: 0 }, 300, () => that.resetPosition())
+
+                        this.handleActionModal('save')
                     }
                 }
             },
@@ -488,17 +491,19 @@
             // Button Action UP
             goUp() {
                 this.interactions.up = true
-
+                this.handleActionModal('up')
                 $('#card-animated').transition({ x: 0, y: -100, opacity: 0 }, 1000, () => this.resetPosition())
             },
             // Button Action DOWN
             goDown() {
                 this.interactions.down = true
+                this.handleActionModal('down')
                 $('#card-animated').transition({ x: 0, y: 100, opacity: 0 }, 1000, () => this.resetPosition())
             },
             // Button Action FAVORITE
             favorite() {
                 this.interactions.favorite = true
+                this.handleActionModal('save')
                 $('#card-animated').transition({ x: 100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
             },
             // Button Action SKIP
@@ -507,6 +512,10 @@
                 $('#card-animated').transition({ x: -100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
             },
 
+            handleActionModal(action) {
+                this.interactions.action = action
+                $('#modal-action').modal('show')
+            },
 
             handleDistance(distance){
                 distance = parseFloat(distance);
