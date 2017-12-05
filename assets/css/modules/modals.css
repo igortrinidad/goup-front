@@ -4,7 +4,8 @@
     border: none;
     box-shadow: none;
     border-radius: 0;
-    padding: 100px 0;
+    padding: 160px 0;
+    height: calc(100vh - 20px);
 }
 
 .modal .modal-header,
@@ -23,6 +24,13 @@
 .modal .modal-footer .btn {
     border-width: 2px !important;
     font-weight: 700;
+}
+
+.modal .modal-footer .btn.fixed {
+    position: fixed;
+    margin: 0;
+    bottom: 0; left: 0; right: 0;
+    width: 100%;
 }
 
 .modal-backdrop {

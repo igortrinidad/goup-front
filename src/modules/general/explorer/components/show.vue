@@ -210,13 +210,16 @@
                             <div class="modal-header">
                                 <h2 class="modal-title up" v-show="interactions.action === 'up'">
                                     GO UP!<br>
-                                    <i class="ion-happy-outline f-info"></i>
+                                    <i class="ion-happy-outline f-info f-40"></i>
                                 </h2>
                                 <h2 class="modal-title down" v-show="interactions.action === 'down'">
                                     GO DOWN<br>
-                                    <i class="ion-sad-outline f-info"></i>
+                                    <i class="ion-sad-outline f-info f-40"></i>
                                 </h2>
-                                <h2 class="modal-title" v-show="interactions.action === 'save'">{{ translations.saved }}!</h2>
+                                <h2 class="modal-title" v-show="interactions.action === 'save'">
+                                    {{ translations.saved }}!<br>
+                                    <i class="ion-ios-star f-info f-40"></i>
+                                </h2>
                             </div>
                             <div class="modal-body">
                                 <p v-show="interactions.action === 'up'">
@@ -232,7 +235,7 @@
                                 </p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary outline" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary fixed" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
@@ -277,7 +280,7 @@
                     favorite: false,
                     is_loading: true,
                     finished_loading_category: false,
-                    action: 'down'
+                    action: 'up'
                 },
                 starting: true,
                 placeholder: true,
