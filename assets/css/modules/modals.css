@@ -1,4 +1,7 @@
+/*                 */
 /* Bootstrap Modal */
+/*                 */
+
 .modal-content {
     background-color: transparent;
     border: none;
@@ -38,6 +41,8 @@
    opacity: 1 !important;
 }
 
+/* OS KEYFRAMES DAS ANIMAÇÕES ABAIXO ESTÃO EM "css/modules/keyframes.css" */
+
 .modal.in .modal-title.up {
     animation: ease 1s goUp forwards;
 }
@@ -54,7 +59,9 @@
     animation: ease 2s fadeIn forwards;
 }
 
+/*                 */
 /* WePlanner Modal */
+/*                 */
 
 .modal-wp-wrapper { z-index: 9999 !important; }
 
