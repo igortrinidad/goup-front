@@ -1,12 +1,12 @@
 export const en = {
     back: 'Back',
-    title: 'Profile',
+    title: 'Event',
     best_day: 'Best Day',
     style: 'Style',
     is_opened: 'Is opened now ?',
     yes: 'Yes',
     no: 'No',
-    place_not_found: 'Unfortunately we could not find this place now',
+    event_not_found: 'Unfortunately we could not find this event now',
     call: 'Call now',
     share: 'Compartilhe with your friends',
 
@@ -37,13 +37,13 @@ export const en = {
 
 export const pt = {
     back: 'Voltar',
-    title: 'Perfil',
+    title: 'Evento',
     best_day: 'Melhor dia',
     style: 'Estilo',
     is_opened: 'Esta aberto agora ?',
     yes: 'Sim',
     no: 'Não',
-    place_not_found: 'Infelizmente não conseguimos encontrar esse lugar agora',
+    event_not_found: 'Infelizmente não conseguimos encontrar esse evento agora',
     call: 'Ligue agora',
     share: 'Compartilhe com seus amigos',
 

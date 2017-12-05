@@ -43,8 +43,33 @@
                             <!-- / Name -->
 
                             <div class="form-group">
+                                <label class="f-700 f-primary" for="event-date">{{ translations.form.event_date }}</label>
+                                <input
+                                    type="tel"
+                                    id="event-date"
+                                    class="form-control"
+                                    v-model="event.date"
+                                    :placeholder="translations.form.event_date"
+                                    data-mask="00/00/0000"
+                                >
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="f-700 f-primary" for="event-date">{{ translations.form.event_time }}</label>
+                                <input
+                                    type="tel"
+                                    id="event-time"
+                                    class="form-control"
+                                    v-model="event.time"
+                                    :placeholder="translations.form.event_time"
+                                    data-mask="00:00"
+                                >
+                            </div>
+
+                            <div class="form-group">
                                 <label class="f-700 f-primary" for="event-value">{{ translations.form.event_value }}</label>
-                                <vue-numeric type="tel" class="form-control" :currency="language == 'en'? '$': 'R$'" :min="0" :separator="language == 'en'? ',': '.'"  :precision="2" v-model="event.value" :placeholder="translations.form.event_value"></vue-numeric>
+                                <vue-numeric type="tel" id="event-value" class="form-control" :currency="language == 'en'? '$': 'R$'" :min="0" :separator="language == 'en'? ',': '.'"  :precision="2" v-model="event.value" :placeholder="translations.form.event_value"></vue-numeric>
                             </div>
 
                         </div>
@@ -338,7 +363,7 @@
         },
 
         methods: {
-            ...mapActions(['setLoading']),
+            ...mapActions(['setLoading', 'addNewEvent']),
 
             testePlaceId: function(){
                 let that = this
@@ -458,6 +483,7 @@
 
                 that.$http.post('event/store', that.event)
                     .then(function (response) {
+                        that.addNewEvent(response.data.event)
                         that.event = cleanEventModel()
                         successNotify('', that.translations.success)
                         that.$router.push({path: '/ranking'})

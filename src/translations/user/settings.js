@@ -3,6 +3,8 @@ export const en = {
         about: 'About',
         edit: 'Edit profile',
         add_new_event: 'Add new event',
+        my_events: 'My events',
+        my_favorites: 'My favorites',
         logout: 'Log out'
     },
     save_success: 'Settings saved',
@@ -14,6 +16,8 @@ export const pt = {
         about: 'Sobre',
         edit: 'Editar perfil',
         add_new_event: 'Adicionar novo evento',
+        my_events: 'Meus eventos',
+        my_favorites: 'Meus favoritos',
         logout: 'Sair'
     },
     save_success: 'Configurações salvas',

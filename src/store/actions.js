@@ -90,7 +90,7 @@ export const setCategories = ({ commit }) => {
 
         //Se a localização for encontrada na localstorage e for válida (menor que 3 horas) retorna a localização
         if(window.checkUserLastLocation() == 'is_valid'){
-            
+
 
            commit(TYPES.SET_CATEGORIES, {
                 categories
@@ -127,11 +127,13 @@ export const setUserLastGeolocation = ({ commit }) => {
 
     //Se a localização for encontrada na localstorage e for válida (menor que 3 horas) retorna a localização
     if(window.checkUserLastLocation() == 'is_valid'){
-        
+
         window.console.log('Localização encontrada na localStorage e é anterior a 3 horas. (válida)');
 
+        if (store.getters.isLogged) {
             store.dispatch('setCities');
-            store.dispatch('setCategories');
+        }
+        store.dispatch('setCategories');
 
     }
 
@@ -156,7 +158,9 @@ export const setUserLastGeolocation = ({ commit }) => {
 
                     window.console.log('Achou a localização, retornando dados e salvando na localStorage');
 
-                    store.dispatch('setCities');
+                    if (store.getters.isLogged) {
+                        store.dispatch('setCities');
+                    }
                     store.dispatch('setCategories');
 
                 },
@@ -191,7 +195,7 @@ export const setUserLastGeolocation = ({ commit }) => {
 
                     }
 
-                }, 
+                },
                 //options
                 { enableHighAccuracy: true }
 
@@ -199,7 +203,7 @@ export const setUserLastGeolocation = ({ commit }) => {
 
 
     //Se não encontrar, retornará o objeto vazio que será utilizado para direcionar o user para a página welcome: '/'
-    } 
+    }
 
     if(window.checkUserLastLocation() == false){
 
@@ -241,6 +245,25 @@ export const setFcmTokenBrowser = ({ commit }, token) => {
      */
     commit(TYPES.SET_FCM_TOKEN_BROWSER, token)
 }
+
+export const handleUserInteraction = ({ commit }, payload ) => {
+
+    /**
+     * Commit the mutations
+     */
+    commit(TYPES.HANDLE_USER_INTERACTION, payload)
+}
+
+export const addNewEvent = ({ commit }, event ) => {
+
+    /**
+     * Commit the mutations
+     */
+    commit(TYPES.ADD_NEW_EVENT, event)
+}
+
+
+
 
 
 

@@ -1,0 +1,688 @@
+<template>
+    <div class="first-container">
+
+        <main-header
+            :title="translations.title"
+            :type="'back'"
+            :cursor="false"
+        ></main-header>
+
+        <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+            <div class="main">
+
+                <div class="container bg m-t-20 text-center">
+
+                    <form>
+                        <!-- Event Informations -->
+                        <div class="border-inside-card default m-b-20">
+                            <!-- Name -->
+                            <div class="form-group">
+                                <label class="f-700 f-primary" for="event-name">{{ translations.form.event_name }}</label>
+                                <input
+                                    type="text"
+                                    id="event-name"
+                                    class="form-control"
+                                    v-model="event.name"
+                                    :placeholder="translations.form.event_name"
+                                >
+                            </div>
+                            <!-- / Name -->
+
+                            <!-- Name -->
+                            <div class="form-group">
+                                <label class="f-700 f-primary" for="event-description">{{ translations.form.event_description }}</label>
+                                <textarea
+                                    type="text"
+                                    id="event-description"
+                                    class="form-control"
+                                    v-model="event.description"
+                                    :placeholder="translations.form.event_description"
+                                >
+                                </textarea>
+                            </div>
+                            <!-- / Name -->
+
+                            <div class="form-group">
+                                <label class="f-700 f-primary" for="event-date">{{ translations.form.event_date }}</label>
+                                <input
+                                    type="tel"
+                                    id="event-date"
+                                    class="form-control"
+                                    v-model="event.date"
+                                    :placeholder="translations.form.event_date"
+                                    data-mask="00/00/0000"
+                                >
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="f-700 f-primary" for="event-date">{{ translations.form.event_time }}</label>
+                                <input
+                                    type="tel"
+                                    id="event-time"
+                                    class="form-control"
+                                    v-model="event.time"
+                                    :placeholder="translations.form.event_time"
+                                    data-mask="00:00"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label class="f-700 f-primary" for="event-value">{{ translations.form.event_value }}</label>
+                                <vue-numeric type="tel" id="event-value" class="form-control" :currency="language == 'en'? '$': 'R$'" :min="0" :separator="language == 'en'? ',': '.'"  :precision="2" v-model="event.value" :placeholder="translations.form.event_value"></vue-numeric>
+                            </div>
+
+                        </div>
+                        <!-- /Event Informations -->
+
+                        <!-- Categories -->
+                        <div class="form-group">
+                            <label class="f-700 f-primary">{{ translations.form.categories }}</label>
+
+                            <ul class="list-group list-rounded m-t-10 m-0 text-left">
+                                <li
+                                    class="list-group-item transparent"
+                                    :class="{ 'active': currentCategory === category }"
+                                    @click="handleCategory(category)"
+                                    v-for="category in categories"
+                                >
+                                    {{ category[`name_${language}`] }}
+                                    <i
+                                        :class="{
+                                                'icon-select m-l-10 f-20': true,
+                                                'ion-ios-circle-filled': currentCategory.id === category.id,
+                                                'ion-ios-circle-outline': currentCategory.id !== category.id
+                                            }"
+                                    >
+                                    </i>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- / Categories -->
+
+                        <!-- Place Informations -->
+                        <div class="border-inside-card default">
+
+                            <!-- Google Place Select -->
+                            <div class="form-group m-t-15">
+                                <label class="f-700 f-primary" for="place-address">{{ translations.form.google_select }}</label>
+                                <GmapAutocomplete
+                                    :value="event.place.name"
+                                    class="form-control"
+                                    :select-first-on-enter="true"
+                                    @place_changed="setPlaceAdress"
+                                    :placeholder="translations.form.google_select"
+                                    :options="{ language: 'pt-BR', componentRestrictions: { country: 'br' } }"
+                                >
+                                </GmapAutocomplete>
+
+                                <button
+                                    type="button"
+                                    class="btn btn-sm btn-primary transparent m-t-10"
+                                    @click="clearSearchAndPlace()"
+                                >
+                                    {{ translations.form.clear_search }}
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div v-if="interactions.placeSelected" class="border-inside-card default m-t-20">
+
+                            <!-- Name -->
+                            <div class="form-group">
+                                <label class="f-700 f-primary" for="place-name">{{ translations.form.place_name }}</label>
+                                <input
+                                    type="text"
+                                    id="place-name"
+                                    class="form-control"
+                                    v-model="event.place.name"
+                                    :placeholder="translations.form.place_name"
+                                    disabled
+                                >
+                            </div>
+                            <!-- / Name -->
+
+                            <!-- Address -->
+                            <div class="form-group">
+                                <label class="f-700 f-primary" for="place-address">{{ translations.form.address }}</label>
+                                <input
+                                    type="text"
+                                    id="place-address"
+                                    class="form-control"
+                                    v-model="event.place.address"
+                                    :placeholder="translations.form.address"
+                                    disabled
+                                >
+                            </div>
+                            <!-- / Address -->
+
+                            <!-- Phone -->
+                            <div class="form-group">
+                                <label class="f-700 f-primary" for="place-phone">{{ translations.form.phone }}</label>
+                                <input
+                                    type="text"
+                                    id="place-phone"
+                                    class="form-control"
+                                    :placeholder="translations.form.phone"
+                                    v-model="event.place.phone"
+                                    disabled
+                                >
+                            </div>
+                            <!-- / Phone -->
+
+                        </div>
+                        <!-- /Place Informations -->
+
+
+                        <!-- Tags -->
+                        <div class="form-group border-inside-card default m-t-20">
+
+                            <!-- TAGS -->
+                            <div class="form-group">
+                                <label class="f-700 f-primary" for="place-style">{{ translations.form.tags }}</label>
+                                <input
+                                    type="text"
+                                    id="place-style"
+                                    class="form-control"
+                                    :placeholder="translations.form.tagsPlaceholder"
+                                    v-model="newTag.name"
+                                    @keyup.enter="addNewTag"
+                                >
+                            </div>
+                            <!-- / TAGS -->
+
+                            <button
+                                type="button"
+                                class="btn btn-sm btn-primary transparent"
+                                @click.prevent="addNewTag"
+                                :disabled="!newTag.name"
+                            >
+                                {{ translations.form.add_new_tag }}
+                            </button>
+
+                            <div class="row m-t-20">
+
+                                <label class="f-700 f-primary" for="place-style">{{ translations.form.addedTags }}</label>
+
+                                <p class="f-300" v-if="!event.tags.length">{{translations.form.noTags}}</p>
+
+                                <span class="small label label-success m-5 tag" v-for="tag in event.tags">
+                                    {{tag.name}} <i class="ion-close m-l-5 f-primary cursor-pointer" @click.prevent="removeTag(tag.name)"></i>
+                                </span>
+                            </div>
+
+                        </div>
+                        <!-- / Tags -->
+
+
+                        <!-- Photos -->
+                        <div class="form-group border-inside-card default">
+
+                            <label class="f-700 f-primary" for="subcategory">{{ translations.form.photos }}</label>
+
+                            <div class="row" v-if="isMobile">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6">
+                                        <div class="new-image m-t-30 m-b-30 cursor-pointer" @click="getPicture()">
+                                            <i class="ion-ios-camera-outline"></i>
+                                            <span>{{ translations.form.takePicture }}</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="new-image m-t-30 m-b-30 cursor-pointer" @click="getCameraRoll()">
+                                            <i class="ion-ios-film-outline"></i>
+                                            <span>{{ translations.form.openGalery }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="new-image m-t-30 m-b-30 cursor-pointer" @click="showPhotoUploader = true"  v-if="!isMobile">
+                                <i class="ion-plus-round"></i>
+                                <span>{{ translations.form.upload_image }}</span>
+                            </div>
+
+
+                            <div class="row">
+
+                                <p class="f-300" v-if="!event.photos.length">{{translations.form.photo_cover_warning}}</p>
+
+                                <div class="col-md-3 col-sm-6" v-for="photo in event.photos">
+                                    <span class="cursor-pointer" @click="setAsCover(photo.id)">
+                                        <i :class="{
+                                            'f-20': true,
+                                            'ion-ios-circle-filled': photo.is_cover,
+                                            'ion-ios-circle-outline': !photo.is_cover
+                                        }"></i>
+                                        {{translations.form.setAsCover}}
+                                    </span>
+
+                                    <img  class="img-responsive thumbnail m-b-5" :src="photo.photo_url">
+
+                                    <span class="label label-primary small cursor-pointer" @click.prevent="removeImage(photo.id)">{{translations.form.removeImage}}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- / Photos -->
+
+                        <div class="form-group m-t-20">
+
+                            <button
+                                type="button"
+                                class="btn btn-primary btn-block transparent"
+                                @click="updateEvent()"
+                                :disabled="!event.name || !event.description || !event.category_id  || !event.google_place_id || !event.photos.length"
+                            >
+                                {{ translations.submit }}
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div id="teste" v-show="false"></div>
+
+            </div>
+        </transition>
+
+        <photo-uploader
+            :isvisible.sync="showPhotoUploader"
+            :send-action="storeImage"
+            @close-photo-uploader-modal="handleUploaderVisibility"
+        ></photo-uploader>
+
+    </div>
+</template>
+
+<script>
+    import { mapGetters, mapActions } from 'vuex'
+
+    import mainHeader from '@/components/main-header'
+
+    import * as translations from '@/translations/events/edit'
+    import { cleanEventModel } from '@/models/Event'
+    import Vue from 'vue'
+    import VueNumeric from 'vue-numeric'
+    import photoUploader from '@/components/photo-uploader.vue'
+    import {apiUrl} from '@/config/'
+
+    export default {
+        name: 'general-events-edit',
+
+        components: {
+            mainHeader,
+            VueNumeric,
+            photoUploader
+        },
+
+        data () {
+            return {
+                isMobile: false,
+                showPhotoUploader: false,
+                interactions: {
+                    placeSelected: false,
+                },
+                event: cleanEventModel(),
+                categories: [],
+
+                not_valid: [],
+                currentCategory: '',
+                subcategories: [],
+                newTag: {
+                    name: ''
+                },
+            }
+        },
+
+        computed: {
+            ...mapGetters(['language', 'AuthToken']),
+
+            'translations': function() {
+
+                if (this.language === 'en') {
+                    return translations.en
+                }
+                if (this.language === 'pt') {
+                    return translations.pt
+                }
+            }
+        },
+
+        mounted(){
+            if(window.cordova){
+                this.isMobile = true
+            }
+            this.getCategories()
+            this.getEvent()
+        },
+
+        methods: {
+            ...mapActions(['setLoading', 'addNewEvent']),
+
+            clearSearchAndPlace: function(){
+                let that = this
+
+                that.event.place = {};
+                that.interactions.placeSelected = false;
+
+            },
+
+            validField(value, inputName) {
+                const index = this.not_valid.indexOf(inputName);
+                if (!value) {
+                    errorNotify('', this.translations.form.required)
+                    if (index < 0) {
+                        this.not_valid.push(inputName)
+                    }
+                } else {
+                    if(index > -1){
+                        this.not_valid.splice(index, 1)
+                    }
+                }
+            },
+
+            setPlaceAdress(place) {
+                let that = this
+
+                if (place.geometry !== undefined) {
+
+                    that.interactions.placeSelected = true;
+                    that.event.google_place_id = place.place_id;
+                    that.event.place.name = place.name;
+                    that.event.place.address = place.vicinity;
+                    that.event.place.phone = place.formatted_phone_number;
+
+                    that.event.lat = place.geometry.location.lat()
+                    that.event.lng = place.geometry.location.lng()
+
+                    place.address_components.map((current) =>{
+                        current.types.map((type) => {
+                            if(type == 'administrative_area_level_1'){
+                                that.event.city.state = current.short_name
+                            }
+                            if(type == 'administrative_area_level_2'){
+                                that.event.city.name  = current.short_name
+                            }
+                        })
+                    })
+
+                    that.getCityCoordinates()
+
+                }
+            },
+
+            getCityCoordinates(){
+
+                let that = this
+
+                let geocoder = new google.maps.Geocoder;
+
+                geocoder.geocode({
+                    'address': `${that.event.city.name} - ${that.event.city.state}`
+                }, function (results, status) {
+
+                    if (status === google.maps.GeocoderStatus.OK) {
+
+                        if (results) {
+                            that.event.city.lat = results[0].geometry.location.lat()
+                            that.event.city.lng = results[0].geometry.location.lng()
+
+                        } else {
+                            errorNotify('', 'Não foi possivel definir a cidade.');
+                        }
+                    }
+                });
+
+            },
+
+            handleCategory(category) {
+                this.currentCategory = category
+
+                if(category){
+                    this.event.category_id = category.id
+                }
+            },
+
+            getCategories() {
+                let that = this
+
+                that.$http.get(`event/categories/${that.language}`)
+                    .then(function (response) {
+                        that.categories = response.data.categories
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
+
+            getEvent() {
+                let that = this
+
+                that.$http.get(`event/show/${that.$route.params.id}`)
+                    .then(function (response) {
+                        that.event = response.data.event
+                        that.handleCategory(that.event.category)
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
+
+            updateEvent() {
+                let that = this
+
+                that.$http.post('event/update', that.event)
+                    .then(function (response) {
+                        that.addNewEvent(response.data.event)
+                        successNotify('', that.translations.success)
+                        that.$router.push({path: '/events'})
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+
+            },
+
+            handleUploaderVisibility(visibility){
+                let that = this
+                that.showPhotoUploader = visibility
+            },
+
+            //Get from device camera
+            getPicture: function () {
+                let that = this
+
+                navigator.camera.getPicture(onSuccess, onFail, {
+                    quality: 50,
+                    destinationType: Camera.DestinationType.FILE_URI
+                });
+
+                function onSuccess(imageURI) {
+
+                    that.storeImageMobile(imageURI);
+
+                }
+
+                function onFail(message) {
+                    alert('Failed because: ' + message);
+                }
+            },
+
+            //Camera roll
+            getCameraRoll: function(){
+                let that = this
+
+                navigator.camera.getPicture(function cameraSuccess(imageURI) {
+
+                        that.storeImageMobile(imageURI);
+
+                    },
+                    function (message) {
+                        errorNotify('', message)
+                    },
+                    {
+                        quality: 50,
+                        destinationType: navigator.camera.DestinationType.FILE_URI,
+                        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+                    }
+                )
+            },
+
+            storeImageMobile(imageURI) {
+                let that = this
+
+                var win = function (response) {
+
+                    let api_response = JSON.parse(response.response)
+
+                    if(!that.event.photos.length){
+                        api_response.photo.is_cover = true
+                    }
+
+                    that.event.photos.push(api_response.photo)
+                    that.setLoading({is_loading: false, message: ''})
+                    successNotify('', 'Imagem enviada com sucesso')
+
+                }
+
+                var fail = function (error) {
+
+                    that.setLoading({is_loading: false, message: ''})
+                    errorNotify('', 'Houve um erro ao enviar a imagem')
+                    console.log(error);
+                }
+
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                options.fileName = "myphoto.jpg";
+                options.mimeType = "image/jpeg";
+                options.headers = {'Authorization': that.AuthToken};
+
+                var params = new Object();
+
+                params.event_id = that.event.id;
+
+                options.params = params;
+                var ft = new FileTransfer();
+
+                that.setLoading({is_loading: true, message: 'Enviando, aguarde'})
+
+                ft.upload(imageURI, encodeURI(`${apiUrl}/event/photo/upload`), win, fail, options);
+            },
+
+            storeImage: function(imageData){
+
+                let that = this
+
+                let formData = new FormData();
+                formData.append('event_id', that.event.id)
+                formData.append('file', imageData.file)
+
+                that.$http.post('event/photo/upload', formData , {headers: {'Content-Type': 'multipart/form-data'}})
+                    .then(function (response) {
+
+                        if(!that.event.photos.length){
+                            response.data.photo.is_cover = true
+                        }
+
+                        that.event.photos.push(response.data.photo)
+
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
+
+             setAsCover(photo_id){
+                let that = this
+
+                that.event.photos.map((photo) => {
+                    photo.is_cover = false
+
+                    if(photo.id == photo_id ){
+                        photo.is_cover = true
+                    }
+                })
+            },
+
+            removeImage(photo_id){
+                let that = this
+
+                that.$http.get(`event/photo/destroy/${photo_id}`)
+                    .then(function (response) {
+
+                        that.event.photos = that.event.photos.filter(function (photo) {
+                            return photo.id != photo_id;
+                        });
+
+                        successNotify('', 'Imagem removida com sucesso')
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
+
+            addNewTag(){
+
+                let exists = _.find(this.event.tags, {name: this.newTag.name})
+
+                if(!exists){
+                    this.event.tags.push(_.cloneDeep(this.newTag));
+                }
+
+                this.newTag.name = ''
+            },
+
+            removeTag(name){
+                this.event.tags = this.event.tags.filter(function (tag) {
+                    return tag.name != name;
+                });
+            }
+
+        }
+    }
+</script>
+
+<style scoped>
+    .icon-select {
+        color: #FFF;
+        float: right
+    }
+
+    .tag { text-transform: uppercase; }
+
+    .img-responsive.rounded {
+        border-radius: 20px;
+    }
+    new-image {
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+        width: 100%; height: 100%;
+        justify-content: center;
+        text-align: center;
+        padding-top: 80px;
+        border-bottom: 2px solid #FF4B89
+    }
+
+    .new-image i {
+        font-size: 24px;
+        display: inline-flex;
+        width: 40px; height: 40px;
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #FF4B89;
+    }
+    .new-image span {
+        display: block;
+        width: 100%;
+        font-weight: 700;
+        margin-top: 20px;
+    }
+</style>

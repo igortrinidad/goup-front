@@ -1,17 +1,19 @@
 export const en = {
     select_category: 'Explorer places by type',
     end_list: 'No events nearby',
+    add_event_title: "Didn't your event? Add one!",
     add_event: 'Add an event',
     up: 'Go Up',
     down: 'Go Down',
     skip: 'Skip',
     favorite: 'Save',
     filter: 'Filter',
-    nearCities: 'Cidades próximas',
+    nearCities: 'Nearby Cities',
     noCity: 'No city nearby.',
     title_when: 'When',
     makeLogin: 'Sign in to interact with events',
     goToLogin: 'Go to login',
+    search_button: 'Search',
 
     location:{
         label: 'Current location',
@@ -40,18 +42,18 @@ export const pt = {
     select_category: 'Explore eventos por tipo',
     end_list: 'Nenhum evento nas proximidades',
     add_event: 'Adicione um evento',
+    add_event_title: "Não encontrou seu evento? Adicione um!",
     up: 'Go Up',
     down: 'Go Down',
     skip: 'Pular',
     favorite: 'Salvar',
     filter: 'Filtro',
-
     nearCities: 'Cidades próximas',
     noCity: 'Nenhuma cidade encontrada.',
     title_when: 'Quando',
     makeLogin: 'Faça login para interagir com os eventos',
     goToLogin: 'Ir para login',
-
+    search_button: 'Pesquisar',
     location:{
         label: 'Localização atual',
         notSupported: 'Seu browser não suporta geolocalização, você pode alterar sua localização clicando na opção alterar localização.',

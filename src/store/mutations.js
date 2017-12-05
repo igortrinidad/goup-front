@@ -23,7 +23,7 @@ export default {
     },
 
     [TYPES.SET_USER_LAST_GEOLOCATION](state, payload) {
-        
+
         state.user_last_geolocation = payload.userLastGeoLocation
     },
 
@@ -41,5 +41,44 @@ export default {
 
     [TYPES.SET_FCM_TOKEN_BROWSER](state, token) {
         state.fcm_token_browser = token
+    },
+
+    [TYPES.HANDLE_USER_INTERACTION](state, {city_id, category_id}) {
+
+        let category = _.find(state.categories, {id: category_id})
+        category.events_count = category.events_count - 1
+        localStorage.setItem('categories', JSON.stringify(state.categories));
+
+        let city = _.find(state.cities, {id: city_id})
+        city.categories[category_id] =  city.categories[category_id] - 1
+        localStorage.setItem('cities', JSON.stringify(state.cities));
+    },
+
+
+    [TYPES.ADD_NEW_EVENT](state, event) {
+        let city = _.find(state.cities, {id: event.city.id})
+
+        if(!city){
+            let new_city = event.city
+
+            let categories = []
+            state.categories.map((category) => {
+                categories[category.id] = 0
+            })
+            new_city. categories = categories
+
+            state.cities.push(new_city)
+
+            new_city.categories[event.category_id] =  new_city.categories[event.category_id] +1
+
+
+            localStorage.setItem('cities', JSON.stringify(state.cities));
+        }
+
+        if(city){
+            city.categories[event.category_id] =  city.categories[event.category_id] + 1
+            localStorage.setItem('cities', JSON.stringify(state.cities));
+        }
+
     },
 }

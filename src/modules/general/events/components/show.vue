@@ -12,19 +12,19 @@
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
 
-                <div v-if="interactions.placeNotFound">
-                    <h3 class="text-center m-t-30">{{ translations.place_not_found }}</h3>
+                <div v-if="interactions.eventNotFound">
+                    <h3 class="text-center m-t-30">{{ translations.event_not_found }}</h3>
                 </div>
 
                 <!-- Place Content -->
-                <div class="m-b-30" v-if="!interactions.placeNotFound && place.id">
+                <div class="m-b-30" v-if="!interactions.eventNotFound && event.id">
                     <!-- Photos -->
                     <div class="p-relative">
                         <div class="swiper-container swiper-gallery" ref="galleryPhotos">
                             <div class="swiper-wrapper">
                                 <div
                                     class="swiper-slide"
-                                    v-for="(photo, index) in place.photos"
+                                    v-for="(photo, index) in event.photos"
                                     :style="{ backgroundImage: `url(${ photo.photo_url })` }"
                                     :key="index"
                                 >
@@ -39,18 +39,18 @@
 
                     <!-- Place Name, Description, City And State -->
                     <div class="text-center">
-                        <h3 class="m-t-30">{{ place.name }}</h3>
+                        <h3 class="m-t-30">{{ event.name }}</h3>
 
-                        <p>{{ place.description }}</p>
+                        <p>{{ event.description }}</p>
 
                         <h5>
                             <i class="ion-ios-location m-r-5"></i>
-                            {{ `${ place.city } - ${ place.state }` }}
+                            {{ `${ event.city.name } - ${ event.city.state }` }}
                         </h5>
 
                         <!-- Call -->
-                        <div class="m-t-30" v-if="place.phone">
-                            <a :href="`tel:${ place.phone }`" class="btn btn-info transparent">
+                        <div class="m-t-30" v-if="event.phone">
+                            <a :href="`tel:${ event.phone }`" class="btn btn-info transparent">
                                 <i class="ion-ios-telephone m-r-5"></i>{{ translations.call }}
                             </a>
                         </div>
@@ -73,11 +73,11 @@
                             <ul class="list-group list-rounded m-b-0 m-t-10">
                                 <li class="list-group-item">
                                     <i class="icon ion-android-calendar m-r-5 f-primary"></i>
-                                    <span><strong>{{ translations.best_day }}:</strong> {{ place.best_day }}</span>
+                                    <span><strong>{{ translations.best_day }}:</strong> {{ event.best_day }}</span>
                                 </li>
                                 <li class="list-group-item">
                                     <i class="icon ion-wineglass m-r-5 f-primary"></i>
-                                    <span><strong>{{ translations.style }}:</strong> {{ place.style }}</span>
+                                    <span><strong>{{ translations.style }}:</strong> {{ event.style }}</span>
                                 </li>
                                 <li class="list-group-item">
                                     <i class="icon ion-android-time m-r-5 f-primary"></i>
@@ -115,7 +115,7 @@
                     <div class="m-t-30">
                         <div class="">
                             <!-- Tab Location -->
-                            <tab-location :place="place" v-if="currentTab === 0"></tab-location>
+                            <tab-location :event="event" v-if="currentTab === 0"></tab-location>
                             <!-- Tab Location -->
 
                             <!-- Tab Friends -->
@@ -123,7 +123,7 @@
                             <!-- Tab Friends -->
 
                             <!-- Tab Comments -->
-                            <tab-comments :place="place" v-if="currentTab === 2"></tab-comments>
+                            <tab-comments :event="event" v-if="currentTab === 2"></tab-comments>
                             <!-- Tab Comments -->
                         </div>
                         <!-- / Tab Content -->
@@ -148,7 +148,7 @@
     import PlaceModel from '@/models/Place'
 
     export default {
-        name: 'general-places-show',
+        name: 'general-events-show',
 
         components: {
             mainHeader,
@@ -159,11 +159,11 @@
 
         data () {
             return {
-                placeholder: true,
-                place: {},
+                eventholder: true,
+                event: {},
                 currentTab: 1,
                 interactions: {
-                    placeNotFound: false
+                    eventNotFound: false
                 }
             }
         },
@@ -221,12 +221,19 @@
             },
 
             getPlace() {
+                let that = this
 
-                this.place = {}
+                that.$http.get(`event/show/public/${that.$route.params.event_slug}`)
+                    .then(function (response) {
+                        that.event = response.data.event
+                        that.initSwiperGallery()
+                        that.initSwiperTabs()
+                        //this.interactions.eventNotFound = true
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
 
-                this.initSwiperGallery()
-                this.initSwiperTabs()
-                this.interactions.placeNotFound = true
             }
         }
     }

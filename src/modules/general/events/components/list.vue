@@ -25,7 +25,7 @@
                                     v-for="(category, $index) in getCategories"
                                     :key="$index"
                                 >
-                                    {{ category[`name_${language}`] }}
+                                    {{ category[`name_${language}`]}}
                                 </div>
                             </div>
                         </div>
@@ -35,7 +35,6 @@
                 <!--Cities-->
                 <div class="row m-t-10">
                     <div class="col-sm-12 text-center">
-
                         <label class="f-13 f-300">{{ translations.nearCities }}</label>
                         <p v-if="!getCities.length" >Nenhuma cidade próxima.</p>
                         <div class="swiper-container" ref="citiesSlider">
@@ -44,7 +43,10 @@
                                     class="swiper-slide label transparent m-5 cursor-pointer"
                                     v-for="(city, $index) in getCities"
                                     :key="$index"
-                                    :class="{ 'cursor-pointer': currentCity != city.id, 'label-primary':currentCity == city }"
+                                    :class="{
+                                        'label-default': currentCity !== city.id,
+                                        'label-primary': currentCity === city.id
+                                    }"
                                 >
                                     <span v-if="currentCity == city.id">
                                         {{city.name}} - {{city.state}}
@@ -60,16 +62,6 @@
                 <!--Cities-->
 
                 <div class="container">
-                    <div class="row text-center">
-                        <button
-                            type="button"
-                            class="btn btn-xs btn-primary transparent m-t-30"
-                            @click.prevent="handleModalVisibility">
-                            {{ translations.more_filters }}
-                        </button>
-                    </div>
-
-
                     <div class="row m-t-30">
 
                         <div class="col-sm-12">
@@ -79,7 +71,10 @@
                         </div>
 
                         <!-- Events -->
-                        <div class="col-sm-12" v-for="(event, indexEvents) in events">
+
+                        <card-placeholder v-if="interactions.is_loading" />
+
+                        <div class="col-sm-12" v-for="(event, indexEvents) in events" v-if="!interactions.is_loading">
                             <div class="card p-0">
                                 <!-- Card Header -->
                                 <div
@@ -107,12 +102,16 @@
                                 <!-- Card Footer -->
                                 <div class="card-footer p-10">
                                     <div class="row">
-                                        <div class="col-xs-6" style="opacity: .8;">
+                                        <div class="col-xs-8" style="opacity: .8;">
                                             <small>
                                                 <i class="ion-location m-r-5"></i>{{ handleDistance(event.distance) }}
                                             </small>
+                                            <small class="divider p-l-10 m-l-10">
+                                                <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
+                                                <span v-show="event.value === 0">{{ translations.free }}</span>
+                                            </small>
                                         </div>
-                                        <div class="col-xs-6 text-right">
+                                        <div class="col-xs-4 text-right">
                                             <small class="f-primary">
                                                 <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
                                             </small>
@@ -126,7 +125,6 @@
                         <div class="col-sm-12">
                             <router-link :to="{name: 'general.events.create'}" class="btn btn-primary btn-block m-t-20">{{translations.add_event}}</router-link>
                         </div>
-
 
                     </div>
 
@@ -166,6 +164,8 @@
     import { mapGetters, mapActions } from 'vuex'
 
     import mainHeader from '@/components/main-header.vue'
+    import cardPlaceholder from '@/components/card-placeholder.vue'
+
     import { cleanPlaceModel } from '@/models/Place'
     import { cleanCategoriesArrayExample } from '@/models/Category'
     import * as translations from '@/translations/events/list'
@@ -178,6 +178,7 @@
         components: {
             mainHeader,
             vueSlider,
+            cardPlaceholder
         },
 
         data () {
@@ -263,6 +264,7 @@
                     .then(function (response) {
                         that.events = response.data.events
                         that.interactions.is_loading = false;
+                        console.log(that.events);
                     }).catch(function (error) {
                     that.interactions.is_loading = false;
                 });
@@ -348,7 +350,7 @@
                         nextButton: '.swiper-button-next',
                         onSlideChangeEnd: swiper => {
 
-                            that.currentCity = that.getCities[swiper.realIndex].id
+                            that.currentCity = that.getCities[swiper.realIndex]
                             localStorage.setItem('city_index', swiper.realIndex)
                             that.getEvents();
 
@@ -388,6 +390,10 @@
 
     /* Event Card */
 
+    .divider {
+        border-left: 1px solid #dfdfdf;
+    }
+
     .event-ranking {
         position: absolute;
         top: 10px; left: 10px;
@@ -406,5 +412,20 @@
     .event-ranking small {
         width: 50%;
         text-align: center;
+    }
+
+    .badge-city {
+        display: inline-block;
+        min-width: 10px;
+        padding: 3px 7px;
+        font-weight: bold;
+        color: #ec538b;
+        line-height: 1;
+        vertical-align: middle;
+        white-space: nowrap;
+        text-align: center;
+        background-color: #fff;
+        border-radius: 10px;
+        font-size: 11px;
     }
 </style>

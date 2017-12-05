@@ -35,6 +35,18 @@
                         </div>
 
                         <div class="col-xs-12 m-t-20">
+                            <router-link :to="{ name: 'general.user.events' }" tag="button" class="btn btn-primary btn-block transparent">
+                                <i class="ion-ios-list-outline m-r-5"></i> {{ translations.buttons.my_events }}
+                            </router-link>
+                        </div>
+
+                        <div class="col-xs-12 m-t-20">
+                            <router-link :to="{ name: 'general.user.favorites' }" tag="button" class="btn btn-primary btn-block transparent">
+                                <i class="ion-android-star-outline m-r-5"></i> {{ translations.buttons.my_favorites }}
+                            </router-link>
+                        </div>
+
+                        <div class="col-xs-12 m-t-20">
                             <router-link :to="{ name: 'general.user.settings.about' }" tag="button" class="btn btn-primary btn-block transparent">
                                 <i class="ion-help-circled m-r-5"></i> {{ translations.buttons.about }}
                             </router-link>

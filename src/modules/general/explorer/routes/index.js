@@ -14,13 +14,13 @@ export default [
     {
         path: 'explorer',
         component: Main,
-        meta: {requiresAuth: false},
+        meta: {requiresAuth: true},
         children: [
             {
                 name: 'general.index',
                 path: '',
                 component: Show,
-                meta: {requiresAuth: false}
+                meta: {requiresAuth: true}
             }
         ]
     }

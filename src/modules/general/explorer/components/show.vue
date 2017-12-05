@@ -8,6 +8,11 @@
             :cursor="false"
         ></main-header>
 
+        <pulse
+            v-if="interactions.is_loading && interactions.finished_loading_category"
+            :icon="'ion-navigate'"
+        />
+
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
 
@@ -17,11 +22,11 @@
 
                     <div class="row p-10">
                         <div class="col-xs-6 card-cat-col" v-for="category in getCategories">
-                            <div class="card-cat text-center" 
-                                @click="selectCategory(category)" 
+                            <div class="card-cat text-center"
+                                @click="selectCategory(category)"
                                 :class="{
-                                    'card-cat-selected' : currentCategory && currentCategory == category, 
-                                    'card-cat-non-selected' : currentCategory && currentCategory != category,  
+                                    'card-cat-selected' : currentCategory && currentCategory == category,
+                                    'card-cat-non-selected' : currentCategory && currentCategory != category,
                                 }">
                                 <div class="p-10">
                                     <img :src="category.photo" width="70%">
@@ -33,16 +38,12 @@
 
                 </div>
 
-                <div class="container" v-if="interactions.finished_loading_category">
+                <div class="container" v-if="interactions.finished_loading_category && !interactions.is_loading">
 
 
                     <h4 class="text-center m-b-30 m-t-30" v-show="!events.length && !interactions.is_loading">
                         {{ translations.end_list }}
                     </h4>
-
-
-                    <!-- PLACEHOLDER  -->
-                    <div class="card-placeholder placeholder-effect" v-if="interactions.is_loading"></div>
 
                     <!-- Cards -->
                     <div class="cards m-t-20" v-if="events.length && !interactions.is_loading">
@@ -151,12 +152,7 @@
                                          v-for="(city, $index) in getCities"
                                          :key="$index"
                                          :class="{'cursor-pointer': currentCity != city, 'label-primary':currentCity == city}">
-                                         <span v-if="currentCity == city">
-                                             {{city.name}} - {{city.state}}
-                                         </span>
-                                        <span v-if="currentCity != city">
-                                            {{city.name}} - {{city.state}}
-                                        </span>
+                                        {{city.name}} - {{city.state}}  <span class="badge-city">{{city.categories[currentCategory.id]}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -185,11 +181,21 @@
                     </div>
                     <!--DAYS SELECTEDS-->
 
+                    <button class="btn btn-primary btn-block m-t-30 m-b-30" :disabled="!days_selecteds_to_query.monthly">{{translations.search_button}}</button>
+
                     <hr>
 
-                    <router-link :to="{name: 'general.events.create'}" class="btn btn-primary btn-block m-t-30">{{translations.add_event}}</router-link>
+                    <p class="f-14 f-300 text-center">{{translations.add_event_title}}</p>
 
-                    <p class="text-center">{{days_selecteds_to_query}}</p>
+                    <router-link
+                        :to="{name: 'general.events.create'}"
+                        class="btn btn-primary btn-block"
+                        v-if="!interactions.is_loading"
+                    >
+                        {{translations.add_event}}
+                    </router-link>
+
+                    <p class="text-center m-t-30">{{days_selecteds_to_query}}</p>
 
                 </div>
 
@@ -207,7 +213,8 @@
     import { mapGetters, mapActions } from 'vuex'
 
     import mainHeader from '@/components/main-header.vue'
-    import elements from '@/components/elements.vue'
+    import pulse from '@/components/pulse.vue'
+
     import { cleanPlaceModel } from '@/models/Place'
 
     import * as translations from '@/translations/explorer/show'
@@ -220,7 +227,7 @@
 
         components: {
             mainHeader,
-            elements,
+            pulse
         },
 
         data () {
@@ -292,7 +299,7 @@
             setTimeout(function() {
                 that.checkDaysToQuery();
             }, 100);
-            
+
         },
 
         destroyed(){
@@ -302,7 +309,7 @@
 
         methods: {
 
-            ...mapActions(['setCities']),
+            ...mapActions(['setCities', 'handleUserInteraction']),
 
             mountHammer() {
                 let that = this
@@ -374,10 +381,6 @@
                 // Remove From Array
                 this.events.splice(0, 1)
                 $(this.$refs.cardAnimated).transition({ x: 0, y: 0, opacity: 1 }, 0)
-
-                // Update localStorage
-                /*localStorage.removeItem('events')
-                localStorage.setItem('events', JSON.stringify(this.events))*/
             },
 
             animateCurrentCard(e) {
@@ -464,7 +467,6 @@
                 return `${distance.toFixed(2)} km`
             },
 
-
             citiesSwiper() {
                 let that = this
 
@@ -500,20 +502,20 @@
 
             getEvents() {
                 let that = this
-
                 that.$http.post('event/explorer/list', {
                     language: that.language,
                     lat: that.getUserLastGeoLocation.lat,
                     lng: that.getUserLastGeoLocation.lng,
-                    city_id: that.currentCity.id,
-                    category_id: that.currentCategory.id,
+                    city_id: that.currentCity ? that.currentCity.id : null,
+                    category_id: that.currentCategory.id
                 })
                     .then(function (response) {
 
                         that.events = response.data.events
                         that.interactions.is_loading = false;
 
-                        /*if (that.starting) {
+                        /*
+                        if (that.starting) {
 
                             that.starting = false
 
@@ -527,8 +529,7 @@
                             localStorage.removeItem('events')
                             localStorage.setItem('events', JSON.stringify(that.events))
                         }
-*/
-
+                        */
                         //Inicia o hammer
                         that.mountHammer();
 
@@ -542,6 +543,9 @@
 
             handleInteraction(interaction) {
                 let that = this
+
+                that.handleUserInteraction({city_id: that.currentCity.id, category_id: that.currentCategory.id})
+
                 that.$http.post('event/interaction/store', interaction)
                     .then(function (response) {
 
@@ -555,7 +559,7 @@
 
             selectCategory: function(category){
                 let that = this
-            
+
                 that.currentCategory = category;
 
                 setTimeout(function() {
@@ -569,7 +573,7 @@
                     that.getEvents();
                 }, 1500);
 
-                
+
             },
 
             initWeek: function(){
@@ -587,7 +591,18 @@
             toggleDay: function(day){
                 let that = this
             
+
+                if(!this.days_selecteds.length){
+
+                    this.days_selecteds.push(day)
+                    this.checkDaysToQuery();
+                    return
+                
+                }
+
+
                 this.days_selecteds.forEach( function($day, index, array){
+
 
                     if($day.format('DD') == day.format('DD')){
                         array.splice(index, 1);
@@ -601,6 +616,7 @@
                 })
 
                 this.checkDaysToQuery();
+
 
             },
 
@@ -716,6 +732,7 @@
         background-color: #FFFFFF;
         border-radius: 15px;
         cursor: pointer;
+
     }
 
     .fadeout-500 {
@@ -872,5 +889,35 @@
               box-shadow: 0 0 0 0 rgba(255,255,255, 0);
           }
         }
+
+    .badge-city {
+        display: inline-block;
+        min-width: 10px;
+        padding: 3px 7px;
+        font-weight: bold;
+        color: #ec538b;
+        line-height: 1;
+        vertical-align: middle;
+        white-space: nowrap;
+        text-align: center;
+        background-color: #fff;
+        border-radius: 10px;
+        font-size: 11px;
+    }
+
+    .badge-category {
+        display: inline-block;
+        min-width: 10px;
+        padding: 3px 7px;
+        font-weight: bold;
+        color: #fff;
+        line-height: 1;
+        vertical-align: middle;
+        white-space: nowrap;
+        text-align: center;
+        background-color: #ec538b;
+        border-radius: 10px;
+        font-size: 11px;
+    }
 
 </style>

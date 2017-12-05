@@ -6,6 +6,7 @@ export const en = {
     categories: 'Categories',
     nearCities: 'Nearby cities',
     approximate_distances: 'Approximate distances',
+    free: 'Free',
     add_event: 'Add an event',
 
     label: {
@@ -43,6 +44,7 @@ export const pt = {
     categories: 'Categorias',
     nearCities: 'Cidades próximas',
     approximate_distances: 'Distância aproximada',
+    free: 'Gratuito',
     add_event: 'Adicione um evento',
     label: {
         max_range: 'Max Range'
