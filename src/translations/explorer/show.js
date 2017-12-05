@@ -7,6 +7,7 @@ export const en = {
     down: 'Go Down',
     skip: 'Skip',
     favorite: 'Save',
+    saved: 'Saved',
     filter: 'Filter',
     nearCities: 'Nearby Cities',
     noCity: 'No city nearby.',
@@ -15,7 +16,7 @@ export const en = {
     goToLogin: 'Go to login',
     search_button: 'Search',
 
-    location:{
+    location: {
         label: 'Current location',
         notSupported: `Your browser doesn't support geolocation, you can change its location by clicking the change location option.`,
         permissionDenied: 'You can change your location by clicking the change location option.',
@@ -27,7 +28,7 @@ export const en = {
             cancel: 'cancel'
         },
 
-        notification:{
+        notification: {
             title:'Location',
             message: 'GoUp needs your permission to access your location and find events near you.',
             buttons: {
@@ -35,6 +36,13 @@ export const en = {
                 enable: 'Enable Location'
             },
         }
+    },
+
+    modal: {
+        up: 'You goup in this event',
+        down: 'You godown in this event',
+        save: 'Event marked as favorite',
+        close: 'Close'
     }
 }
 
@@ -47,6 +55,7 @@ export const pt = {
     down: 'Go Down',
     skip: 'Pular',
     favorite: 'Salvar',
+    saved: 'Salvo',
     filter: 'Filtro',
     nearCities: 'Cidades próximas',
     noCity: 'Nenhuma cidade encontrada.',
@@ -74,5 +83,12 @@ export const pt = {
                 enable: 'Ativar localização'
             },
         }
+    },
+
+    modal: {
+        up: 'Você deu um "goup" para esse evento',
+        down: 'Você deu um "goup" para esse evento',
+        save: 'Evento salvo nos favoritos',
+        close: 'Fechar'
     }
 }

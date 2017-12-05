@@ -167,10 +167,10 @@
                             <label>{{ translations.title_when }}</label>
 
                             <div class="week-row">
-                                <button 
-                                    class="btn btn-default btn-sm m-r-5" 
+                                <button
+                                    class="btn btn-default btn-sm m-r-5"
                                     :class="{'btn-primary' : days_selecteds.indexOf(day) > -1}"
-                                    v-for="(day, $index) in current_week" 
+                                    v-for="(day, $index) in current_week"
                                     @click="toggleDay(day)"
                                 >
                                     {{day.format('dddd')}} | {{day.format('DD')}}
@@ -195,10 +195,48 @@
                         {{translations.add_event}}
                     </router-link>
 
-                    <p class="text-center m-t-30">{{days_selecteds_to_query}}</p>
+                    <p class="text-center m-t-30">{{ days_selecteds_to_query }}</p>
 
                 </div>
 
+                <button type="button" data-target="#modal-action" data-toggle="modal">
+                    Dispach action
+                </button>
+
+                <!-- Modal Action -->
+                <div class="modal" id="modal-action">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title up" v-show="interactions.action === 'up'">
+                                    GO UP!<br>
+                                    <i class="ion-happy-outline f-info"></i>
+                                </h2>
+                                <h2 class="modal-title down" v-show="interactions.action === 'down'">
+                                    GO DOWN<br>
+                                    <i class="ion-sad-outline f-info"></i>
+                                </h2>
+                                <h2 class="modal-title" v-show="interactions.action === 'save'">{{ translations.saved }}!</h2>
+                            </div>
+                            <div class="modal-body">
+                                <p v-show="interactions.action === 'up'">
+                                    {{ translations.modal.up }}
+                                </p>
+
+                                <p v-show="interactions.action === 'down'">
+                                    {{ translations.modal.down }}
+                                </p>
+
+                                <p v-show="interactions.action === 'save'">
+                                    {{ translations.modal.save }}
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary outline" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </transition>
@@ -239,6 +277,7 @@
                     favorite: false,
                     is_loading: true,
                     finished_loading_category: false,
+                    action: 'down'
                 },
                 starting: true,
                 placeholder: true,
@@ -261,8 +300,8 @@
                     monthly: [],
                     weekly: [],
                     get_by_date: false,
-                    init: moment().format('YYYY-MM-DD'), 
-                    end: moment().add(6, 'days').format('YYYY-MM-DD'), 
+                    init: moment().format('YYYY-MM-DD'),
+                    end: moment().add(6, 'days').format('YYYY-MM-DD'),
                 }
             }
         },
@@ -342,18 +381,22 @@
                 } else {
                     // UP
                     if (that.top < -75) {
+                        that.action = 'up'
                         $('#card-animated').transition({ y: -200, opacity: 0 }, 300, () => that.resetPosition())
                     }
                     // DOWN
                     if (that.top > 75) {
+                        that.action = 'down'
                         $('#card-animated').transition({ y: 200, opacity: 0 }, 300, () => that.resetPosition())
                     }
                     // Skip
                     if (that.left > 75) {
+                        that.action = 'save'
                         $('#card-animated').transition({ x: 300, opacity: 0 }, 300, () => that.resetPosition())
                     }
                     // Favorite
                     if (that.left < -75) {
+                        that.action = 'skip'
                         $('#card-animated').transition({ x: -300, opacity: 0 }, 300, () => that.resetPosition())
                     }
                 }
@@ -578,7 +621,7 @@
 
             initWeek: function(){
                 let that = this
-            
+
                 for (var m = moment(); m.isBefore(moment().add(6, 'days')); m.add(1, 'days')) {
 
                     var newM = m.clone();
@@ -590,14 +633,14 @@
 
             toggleDay: function(day){
                 let that = this
-            
+
 
                 if(!this.days_selecteds.length){
 
                     this.days_selecteds.push(day)
                     this.checkDaysToQuery();
                     return
-                
+
                 }
 
 
@@ -648,8 +691,8 @@
         white-space: nowrap;
     }
 
-    ::-webkit-scrollbar { 
-        display: none; 
+    ::-webkit-scrollbar {
+        display: none;
     }
     .cards {
         position: relative;

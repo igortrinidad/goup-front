@@ -1,51 +1,66 @@
-/*
- * WE PLANNER MODAL
- */
-
- /* Modal */
-.modal { z-index: 99999; }
-
-.modal-dialog { margin: 0 !important; }
-
+/* Bootstrap Modal */
 .modal-content {
-    box-shadow: none !important;
-    border: none !important;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
     border-radius: 0;
-    height: 100vh;
+    padding: 100px 0;
 }
 
-.modal-content .btn { font-weight: 300; }
+.modal .modal-header,
+.modal .modal-footer,
+.modal .modal-content {
+    border: none;
+    text-align: center;
+}
 
-.modal .modal-title { font-weight: 300; text-align: center; }
+.modal .modal-title,
+.modal .modal-content {
+    color: #FFF;
+    font-weight: 700;
+}
 
 .modal .modal-footer .btn {
-    font-weight: 300;
-    display: block;
-    width: 45%;
-    margin: 0 !important;
-    background-color: transparent !important;
-    border-color: transparent !important;
-    padding: 0 !important;
-}
-
-
-.modal .modal-header .title { color: #383938 !important; margin: 0; }
-.modal .modal-header { position: relative; }
-.modal .modal-header .btn-close {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    padding: 5px 15px;
     border-width: 2px !important;
-    margin-top: -14.5px;
+    font-weight: 700;
 }
 
-.modal .modal-footer .btn.btn-default   { color: #383938; }
-.modal .modal-footer .btn.btn-primary   { color: #88C657; }
-.modal .modal-footer .btn.btn-success   { color: #00A369; }
-.modal .modal-footer .btn.btn-danger    { color: #E14A45; }
-.modal .modal-footer .btn.btn-warning   { color: #FFCC5F; }
-.modal .modal-footer .btn.btn-info      { color: #488FEE; }
+.modal-backdrop {
+   background-color: rgba(0, 0, 0, .9) !important;
+   opacity: 1 !important;
+}
+
+.modal.in .modal-title.up {
+    animation: ease 1s goUp forwards;
+}
+
+.modal.in .modal-title.down {
+    animation: ease 1s goDown forwards;
+}
+
+@keyframes goUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes goDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* WePlanner Modal */
 
 .modal-wp-wrapper { z-index: 9999 !important; }
 
