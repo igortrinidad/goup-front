@@ -211,29 +211,58 @@
                 <button type="button" data-target="#modal-action" data-toggle="modal">MODAL</button>
 
                 <!-- Modal Action -->
-                <div class="modal" id="modal-action">
+                <div class="modal delay" id="modal-action">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h2 class="modal-title up" v-show="interactions.action === 'up'">
                                     GO UP!<br>
-                                    <i class="ion-happy-outline f-info f-40"></i>
                                 </h2>
                                 <h2 class="modal-title down" v-show="interactions.action === 'down'">
                                     GO DOWN<br>
-                                    <i class="ion-sad-outline f-info f-40"></i>
                                 </h2>
                                 <h2 class="modal-title save" v-show="interactions.action === 'save'">
                                     {{ translations.saved }}!<br>
-                                    <i class="ion-ios-star f-info f-40"></i>
                                 </h2>
                             </div>
-                            <div class="modal-body fadein">
+
+                            <div class="blauw">
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                                <div class="punt"></div>
+                            </div>
+
+                            <div class="animate-group">
                                 <img
                                     id="action-goup"
-                                    src="http://s1.radikali.ru/uploads/2017/1/10/02034b983696cfb4c288189a149ebe7c-full.png" alt=""
+                                    class="action-icon"
+                                    src="../../../../assets/img/hand_icons-02.png"
                                     :class="{ 'active': interactions.action === 'up' }"
                                 />
+                            </div>
+
+                            <div class="modal-body fadein">
 
                                 <p v-show="interactions.action === 'up'">
                                     {{ translations.modal.up }}
@@ -1019,22 +1048,68 @@
         }
     }
 
+    .animate-group {
+        position: relative;
+        width: 70px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Action Icon */
+    .action-icon {
+        width: 70px;
+        height: auto;
+    }
     /* GOUP */
     #action-goup {
         position: absolute;
+        left: calc(50% - 35px);
+        z-index: 10;
     }
 
-    #action-goup.active { animation: animation 3.5s ease forwards; }
+    #action-goup.active { animation: toUp 2s ease forwards; }
 
-    @keyframes animation {
-        5% { transform: rotate(-8deg); }
-        8% { transform: rotate(8deg); }
-        11% { transform: rotate(-10deg); }
-        14% { transform: rotate(10deg); }
-        17% { transform: rotate(-12deg); }
-        20% { transform: rotate(12deg); top:calc(100% - 64px); }
+    @keyframes toUp {
+        /*0% { transform: scale(0) }
+        5% { transform: scale(.5) rotate(-8deg); }
+        8% { transform: scale(.6) rotate(8deg); }
+        11% { transform: scale(.7) rotate(-10deg); }
+        14% { transform: scale(.8) rotate(10deg); }
+        17% { transform: scale(.9) rotate(-12deg); }
+        20% { transform: scale(1) rotate(12deg); top:calc(100% - 64px); }
         40% { transform: rotate(-3deg); }
         70% { transform: rotate(0deg); }
-        100% { top: -100vh; }
+        100% { top: -300px; }*/
+
+        0%{ transform: translateY(0) }
+        100%{ transform: translateY(-200px); opacity: 0; }
     }
+
+    /* Teste */
+    .punt {
+        position: absolute;
+        left: 50px;
+        top: 50px;
+        height: 4px;
+        width: 4px;
+        border-radius: 2px;
+        opacity: 0;
+        animation-duration: 3s;
+        animation-iteration-count: 1;
+    }
+
+    .blauw {
+        position: absolute;
+        left:calc(50% - 50px);
+        top: 250px;
+        height: 200px;
+        width: 100px;
+    }
+
+    .blauw div {
+        background-color: #FFFD7B;
+    }
+
+
 </style>
