@@ -69,6 +69,16 @@ export default {
     background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
     background-size: 800px 104px;
 }
+
+@keyframes placeHolderShimmer {
+    0% {
+        background-position: -468px 0
+    }
+    100% {
+        background-position: 468px 0
+    }
+}
+
 .text-placeholder {
     border-radius: 4px;
     position: relative;
@@ -83,12 +93,5 @@ export default {
     opacity: 0;
 }
 
-@keyframes placeHolderShimmer {
-    0% {
-        background-position: -468px 0
-    }
-    100% {
-        background-position: 468px 0
-    }
-}
+
 </style>

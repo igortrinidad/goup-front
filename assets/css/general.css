@@ -38,6 +38,7 @@ legend + .form-group{
 
 .full { width: 100%; }
 
+
 /* Btn Group */
 .btn-group, .btn-group-vertical { display: flex; }
 .btn-group > .btn, .btn-group-vertical > .btn { width: 100%; }

@@ -48,10 +48,19 @@
                     <!-- Cards -->
                     <div class="cards m-t-20" v-if="events.length && !interactions.is_loading">
 
-                        <!-- FIRST PLACE -->
+                        <!-- FIRST EVENT -->
                         <div id="card-animated" class="card m-0" ref="cardAnimated">
                             <!-- Card Header -->
-                            <div class="card-header cover" :style="{ backgroundImage: `url(${ events[0].cover })` }">
+
+                            <div class="card-header placeholder effect" :style="{ height: '330px' }" v-if="interactions.lazy_image">
+                            </div>
+
+                            <div
+                                id="card-lazy-image"
+                                class="card-header cover"
+                                :style="{ backgroundImage: `url(${ events[0].cover })`}"
+                                v-show="!interactions.lazy_image"
+                            >
                                 <!-- Current Action -->
                                 <span class="card-action up" v-show="interactions.up">
                                     {{ translations.up }}
@@ -87,9 +96,9 @@
                             </div>
                             <!-- / Card Header -->
                         </div>
-                        <!-- / FIRST PLACE -->
+                        <!-- / FIRST EVENT -->
 
-                        <!-- SECOND PLACE -->
+                        <!-- SECOND EVENT -->
                         <div class="card m-0" v-if="events.length > 1">
                             <!-- Card Header -->
                             <div class="card-header cover" :style="{ backgroundImage: `url(${ events[1].cover })` }">
@@ -102,7 +111,7 @@
                             </div>
                             <!-- / Card Header -->
                         </div>
-                        <!-- SECOND PLACE -->
+                        <!-- SECOND EVENT -->
 
                     </div>
                     <!-- Cards -->
@@ -267,7 +276,7 @@
             pulse
         },
 
-        data () {
+        data() {
             return {
                 interactions: {
                     up: false,
@@ -276,7 +285,8 @@
                     favorite: false,
                     is_loading: true,
                     finished_loading_category: false,
-                    action: 'save'
+                    action: 'save',
+                    lazy_image: true
                 },
                 starting: true,
                 placeholder: true,
@@ -557,6 +567,9 @@
 
             getEvents() {
                 let that = this
+
+                that.interactions.lazy_image = true
+
                 that.$http.post('event/explorer/list', {
                     language: that.language,
                     lat: that.getUserLastGeoLocation.lat,
@@ -568,7 +581,9 @@
 
                         that.events = response.data.events
                         that.interactions.is_loading = false;
-
+                        setTimeout(function () {
+                            that.interactions.lazy_image = false
+                        }, 200);
                         /*
                         if (that.starting) {
 
@@ -974,5 +989,27 @@
         border-radius: 10px;
         font-size: 11px;
     }
+
+    /* Effect */
+    .effect {
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: placeHolderShimmer;
+        animation-timing-function: linear;
+        background-color: #f6f7f8;
+        background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+        background-size: 800px 104px;
+    }
+
+    @keyframes placeHolderShimmer {
+        0% {
+            background-position: -468px 0
+        }
+        100% {
+            background-position: 468px 0
+        }
+    }
+
 
 </style>
