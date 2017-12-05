@@ -216,12 +216,12 @@
                                     GO DOWN<br>
                                     <i class="ion-sad-outline f-info f-40"></i>
                                 </h2>
-                                <h2 class="modal-title" v-show="interactions.action === 'save'">
+                                <h2 class="modal-title save" v-show="interactions.action === 'save'">
                                     {{ translations.saved }}!<br>
                                     <i class="ion-ios-star f-info f-40"></i>
                                 </h2>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body fadein">
                                 <p v-show="interactions.action === 'up'">
                                     {{ translations.modal.up }}
                                 </p>
@@ -280,7 +280,7 @@
                     favorite: false,
                     is_loading: true,
                     finished_loading_category: false,
-                    action: 'up'
+                    action: 'save'
                 },
                 starting: true,
                 placeholder: true,

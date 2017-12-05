@@ -46,26 +46,12 @@
     animation: ease 1s goDown forwards;
 }
 
-@keyframes goUp {
-    0% {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.modal.in .modal-title.save {
+    animation: ease 1s save forwards;
 }
 
-@keyframes goDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.modal.in .modal-body {
+    animation: ease 2s fadeIn forwards;
 }
 
 /* WePlanner Modal */
