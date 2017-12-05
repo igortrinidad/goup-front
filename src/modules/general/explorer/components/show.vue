@@ -208,6 +208,8 @@
 
                 </div>
 
+                <button type="button" data-target="#modal-action" data-toggle="modal">MODAL</button>
+
                 <!-- Modal Action -->
                 <div class="modal" id="modal-action">
                     <div class="modal-dialog" role="document">
@@ -227,6 +229,12 @@
                                 </h2>
                             </div>
                             <div class="modal-body fadein">
+                                <img
+                                    id="action-goup"
+                                    src="http://s1.radikali.ru/uploads/2017/1/10/02034b983696cfb4c288189a149ebe7c-full.png" alt=""
+                                    :class="{ 'active': interactions.action === 'up' }"
+                                />
+
                                 <p v-show="interactions.action === 'up'">
                                     {{ translations.modal.up }}
                                 </p>
@@ -285,7 +293,7 @@
                     favorite: false,
                     is_loading: true,
                     finished_loading_category: false,
-                    action: 'save',
+                    action: 'up',
                     lazy_image: true
                 },
                 starting: true,
@@ -1011,5 +1019,22 @@
         }
     }
 
+    /* GOUP */
+    #action-goup {
+        position: absolute;
+    }
 
+    #action-goup.active { animation: animation 3.5s ease forwards; }
+
+    @keyframes animation {
+        5% { transform: rotate(-8deg); }
+        8% { transform: rotate(8deg); }
+        11% { transform: rotate(-10deg); }
+        14% { transform: rotate(10deg); }
+        17% { transform: rotate(-12deg); }
+        20% { transform: rotate(12deg); top:calc(100% - 64px); }
+        40% { transform: rotate(-3deg); }
+        70% { transform: rotate(0deg); }
+        100% { top: -100vh; }
+    }
 </style>
