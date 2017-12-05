@@ -74,7 +74,13 @@
 
                         <card-placeholder v-if="interactions.is_loading" />
 
-                        <div class="col-sm-12" v-for="(event, indexEvents) in events" v-if="!interactions.is_loading">
+                        <router-link
+                            tag="div"
+                            class="col-sm-12"
+                            v-for="(event, indexEvents) in events" v-if="!interactions.is_loading"
+                            :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
+                            :key="indexEvents"
+                        >
                             <div class="card p-0">
                                 <!-- Card Header -->
                                 <div
@@ -119,7 +125,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </router-link>
                         <!-- /Events -->
 
                         <div class="col-sm-12">
