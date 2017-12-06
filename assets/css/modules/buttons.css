@@ -5,7 +5,7 @@
     border-width: 1px !important;
     padding: 10px 25px;
 }
-
+/*
 .btn:active{
     -webkit-animation: anim-effect-jelena 0.4s ease-out forwards;
     animation: anim-effect-jelena 0.4s ease-out forwards;
@@ -14,7 +14,7 @@
 .bounce-effect:active{
     -webkit-animation: anim-effect-jelena 0.4s ease-out forwards;
     animation: anim-effect-jelena 0.4s ease-out forwards;
-}
+}*/
 
 @-webkit-keyframes anim-effect-jelena {
   0% {
