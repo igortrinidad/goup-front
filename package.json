@@ -59,6 +59,7 @@
     "vue": "^2.2.2",
     "vue-awesome-swiper": "^2.4.2",
     "vue-axios": "^2.0.1",
+    "vue-bspicker": "^1.0.4",
     "vue-form-wizard": "^0.4.0",
     "vue-full-calendar": "^1.2.0",
     "vue-instant": "^1.0.0",
