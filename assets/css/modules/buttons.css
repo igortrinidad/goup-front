@@ -48,35 +48,35 @@ button, a,
 
 .btn.btn-default,
 .btn.btn-default:hover{
-  background-color: #561F9F;
+  background-color: transparent;
   border-color: #F7F5FA !important;
   color: #F7F5FA;
 }
 
 .btn.btn-primary,
 .btn.btn-primary:hover{
-  background-color: #561F9F;
+  background-color: transparent;
   border-color: #FF4B89 !important;
   color: #FF4B89 !important;
 }
 
 .btn.btn-success,
 .btn.btn-success:hover{
-    background-color: #561F9F;
+    background-color: transparent;
     border-color: #8BF3FB;
     color: #8BF3FB;
 }
 
 .btn.btn-info,
 .btn.btn-info:hover{
-  background-color: #561F9F;
+  background-color: transparent;
   border-color: #FFFD7B;
   color: #FFFD7B !important;
 }
 
 .btn.btn-danger,
 .btn.btn-danger:hover{
-  background-color: #561F9F;
+  background-color: transparent;
   border-color: #FE0022;
   color: #FE0022;
 }
@@ -85,65 +85,12 @@ button:active{
   border: 1px solid green;
 }
 
-
-
 .btn.btn-facebook,
 .btn.btn-facebook:hover{
     background-color: #561F9F;
     border-color: #4267b2;
     color: #FFF;
 }
-
-/* Transparent */
-.btn.btn-default.transparent,
-.btn.btn-default.transparent:hover{
-  background-color: transparent;
-  border-color: #383938 !important;
-  color: #383938;
-}
-
-.btn.btn-transparent,
-.btn.btn-transparent:hover{
-    background-color: transparent;
-    border-color: transparent;
-    color: #FFF;
-}
-
-.btn.btn-primary.transparent,
-.btn.btn-primary.transparent:hover{
-  background-color: transparent;
-  border-color: #FF4B89;
-  color: #FF4B89 !important;
-}
-
-.btn.btn-success.transparent,
-.btn.btn-success.transparent:hover{
-    background-color: transparent;
-    border-color: #8BF3FB;
-    color: #8BF3FB;
-}
-
-.btn.btn-info.transparent,
-.btn.btn-info.transparent:hover{
-  background-color: transparent;
-  border-color: #FFFD7B;
-  color: #FFFD7B;
-}
-
-.btn.btn-danger.transparent,
-.btn.btn-danger.transparent:hover{
-  background-color: transparent;
-  border-color: #FE0022;
-  color: #FE0022;
-}
-
-.btn.btn-facebook.transparent,
-.btn.btn-facebook.transparent:hover{
-    background-color: transparent;
-    border-color: #4267b2;
-    color: #FFF;
-}
-
 
 .btn.btn-whatsapp,
 .btn.btn-whatsapp:hover{
