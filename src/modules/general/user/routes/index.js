@@ -49,7 +49,7 @@ export default [
         children: [
             {
                 name: 'general.user.show',
-                path: '/user/:user_slug',
+                path: ':user_slug',
                 component: Show,
                 meta: {requiresAuth: true}
             },

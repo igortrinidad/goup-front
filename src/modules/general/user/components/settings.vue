@@ -15,8 +15,8 @@
                     <router-link
                         tag="div"
                         class="picture-circle picture-circle-xxl border-picture-eletric-blue"
-                        :to="{ name: 'general.user.show', params: { user_slug: user.slug } }"
                         :style="{ backgroundImage: `url(${ user.avatar })` }"
+                        :to="{ name: 'general.user.show', params: { user_slug: user.slug } }"
                     >
                     </router-link>
 
