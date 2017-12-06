@@ -8,7 +8,8 @@
         ></main-header>
 
         <div
-            class="picture-circle picture-circle-l border-picture-eletric-blue"
+            class="picture-circle border-picture-eletric-blue"
+            :class="{ 'picture-circle-l': currentEvent === 0, 'picture-circle-m': currentEvent > 0 }"
             :style="{ backgroundImage: `url(${ user.avatar })` }"
         >
         </div>
@@ -17,30 +18,37 @@
             <div class="main">
                 <div class="container bg m-t-20">
 
+                    <!-- No Events -->
+                    <div class="m-t-30" v-if="!events.length">
+                        <h3 class="text-center">{{ translations.no_events }}</h3>
+                    </div>
+                    <!-- / No Events -->
 
-                    <div class="row m-t-30">
-
-                        <div class="col-sm-12" v-if="!events.length">
-                            <h3 class="text-center">{{ translations.no_events }}</h3>
-                        </div>
-
-                        <div class="col-sm-12" v-for="event in events">
-                            <div class="card">
-                                <!-- Card Header -->
-                                <div class="card-header cover" :style="{ backgroundImage: `url(${ event.avatar })`}">
-                                    <div class="ch-content">
-                                        <h3 class="title f-700 t-overflow">{{ event.name }}</h3>
-                                        <p class="title f-700 t-overflow" style="margin-bottom: 0px;"><i class="ion-ios-location m-r-5"></i>
-                                            {{ event.city.name }} - {{event.city.state}}
-                                        </p>
+                    <!-- Swiper Events Vertical -->
+                    <div class="m-t-30" v-if="events.length">
+                        <div class="swiper-container swiper-vertical" ref="swiperVertical">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" v-for="event in events" style="height: 338px;">
+                                    <div class="card m-b-0">
+                                        <!-- Card Header -->
+                                        <div class="card-header cover" :style="{ backgroundImage: `url(${ event.avatar })`}">
+                                            <div class="ch-content">
+                                                <h3 class="title f-700 t-overflow">{{ event.name }}</h3>
+                                                <p class="title f-700 t-overflow" style="margin-bottom: 0px;"><i class="ion-ios-location m-r-5"></i>
+                                                    {{ event.city.name }} - {{event.city.state}}
+                                                </p>
+                                            </div>
+                                            <span class="icon-information ion-ios-information">
+                                            </span>
+                                        </div>
+                                        <!-- / Card Header -->
                                     </div>
-                                    <span class="icon-information ion-ios-information">
-                                    </span>
                                 </div>
-                                <!-- / Card Header -->
                             </div>
                         </div>
                     </div>
+                    <!-- / Swiper Events Vertical -->
+
                 </div>
             </div>
         </transition>
@@ -68,7 +76,8 @@
             return {
                 interactions: {},
                 user: {},
-                events: []
+                events: [],
+                currentEvent: 0
             }
         },
 
@@ -114,6 +123,24 @@
                 event.avatar = 'https://s3.amazonaws.com/goup-assets/img/categories/party.png'
 
                 that.events = [ event, event ]
+
+                that.initSwiperVertical()
+            },
+
+            initSwiperVertical() {
+                let that = this
+
+                setTimeout(function () {
+                    that.swiperVertical = new Swiper(that.$refs.swiperVertical, {
+                        direction: 'vertical',
+                        spaceBetween: 10,
+                        centeredSlides: true,
+                        onSlideChangeEnd: swiper => {
+                            that.currentEvent = swiper.realIndex
+                        },
+                    });
+                }, 200);
+
             }
 
         }
@@ -121,10 +148,19 @@
 </script>
 
 <style scoped>
+    .swiper-container.swiper-vertical {
+        overflow: visible !important;
+    }
+    .swiper-container.swiper-vertical .swiper-wrapper {
+        align-items: center;
+    }
+
     .picture-circle {
         position: fixed;
         top: 10px;
-        left: calc(50% - 50px);
         z-index: 10;
     }
+
+    .picture-circle-l { left: calc(50% - 50px) }
+    .picture-circle-m { left: calc(50% - 43px) }
 </style>
