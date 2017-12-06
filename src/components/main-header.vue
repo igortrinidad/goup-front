@@ -108,7 +108,7 @@
             },
 
             refreshExplorer: function(){
-                bus.$emit('refresh_explorer'); 
+                bus.$emit('refresh_explorer');
             },
 
         }

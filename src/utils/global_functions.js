@@ -7,7 +7,7 @@ export default function(){
     //Altera o console para pegar os erros de javascript também
 
     var clear = function(){
-        
+
         var user_last_geolocation = localStorage.getItem('user_last_geo_location');
         var language = localStorage.getItem('language');
 
@@ -47,6 +47,14 @@ export default function(){
         $(this).next().slideToggle(200);
         $(this).parent().toggleClass('toggled');
     });
+
+    // Jelena effect
+    $('.btn-circle').on('click', function() {
+        $(this).addClass('jelena-click')
+        setTimeout(function () {
+            $(this).removeClass('jelena-click')
+        }, 300);
+    })
 
     //Waves effect
     Waves.attach('.waves', ['waves-button', 'waves-float']);
