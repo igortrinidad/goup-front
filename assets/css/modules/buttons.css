@@ -49,8 +49,8 @@ button, a,
 .btn.btn-default,
 .btn.btn-default:hover{
   background-color: transparent;
-  border-color: #383938 !important;
-  color: #383938;
+  border-color: #F7F5FA !important; 
+  color: #F7F5FA; 
 }
 
 .btn.btn-primary,
@@ -81,8 +81,8 @@ button, a,
   color: #FE0022;
 }
 
-.btn.btn-default,
-.btn.btn-default:hover{
+.btn.btn-dark,
+.btn.btn-dark:hover{
   background-color: transparent;
   border-color: #383938 !important;
   color: #383938;

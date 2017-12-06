@@ -48,6 +48,7 @@ export default function(){
         $(this).parent().toggleClass('toggled');
     });
 
+
     //Retorna o index de um array baseado em um identificador (ex. 1 *id) e uma ancora (ex. ID)
     Array.prototype.toggleSelected = function arrayObjectIndexOf(id) {
 

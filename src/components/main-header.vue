@@ -20,7 +20,7 @@
 
                 <!-- Header Type === Main -->
                 <div v-if="type === 'main'">
-                    <!-- Settings & Profile -->
+                    <!-- LEFT -->
                     <router-link
                         tag="button"
                         class="bounce-effect circle-profile left"
@@ -28,19 +28,21 @@
                         :class="{'active': title === 'settings' }"
                     >
                         <i class="ion-person"></i>
+                        <span class="button-layer-left"></span>
                     </router-link>
-                    <!-- / Settings & Profile -->
+                    <!-- / LEFT -->
 
-                    <!-- Logo -->
-                    <div @click="refreshExplorer()">
+                    <!-- CENTER -->
+                    <div>
                         <router-link tag="div" class="logo cursor-pointer bounce-effect" to="/explorer" >
                             <img v-if="title === 'home'" src="../assets/logos/LOGOS-07.png" alt="" style="width: 100%">
                             <img v-if="title !== 'home'" src="../assets/logos/LOGOS-08.png" alt="" style="width: 100%">
+                            <span class="button-layer"  @click="refreshExplorer()"></span>
                         </router-link>
                     </div>
-                    <!-- / Logo -->
+                    <!-- / CENTER -->
 
-                    <!-- Search -->
+                    <!-- RIGHT -->
                     <router-link
                         tag="button"
                         class="circle-profile right bounce-effect"
@@ -48,8 +50,9 @@
                         :class="{'active': title === 'ranking' }"
                     >
                         <i class="ion-podium"></i>
+                        <span class="button-layer-right"></span>
                     </router-link>
-                    <!-- / Search -->
+                    <!-- / RIGHT -->
                 </div>
                 <!-- / Header Type === Main -->
             </div>
@@ -116,6 +119,55 @@
 </script>
 
 <style scoped>
+
+    .button-layer{
+        display: block;
+        width: 80px;
+        height: 70px;
+        left: 10px;
+        top: -70px;
+        position: relative;
+        cursor: pointer;
+        opacity: 0;
+    }
+
+    .button-layer:active{
+        -webkit-animation: anim-effect-jelena 0.4s ease-out forwards;
+        animation: anim-effect-jelena 0.4s ease-out forwards;
+    }
+
+    .button-layer-left{
+        display: block;
+        width: 70px;
+        height: 70px;
+        left: -10px;
+        top: -20px;
+        position: absolute;
+        cursor: pointer;
+        opacity: 0;
+    }
+
+    .button-layer-left:active{
+        -webkit-animation: anim-effect-jelena 0.4s ease-out forwards;
+        animation: anim-effect-jelena 0.4s ease-out forwards;
+    }
+
+    .button-layer-right{
+        display: block;
+        width: 70px;
+        height: 70px;
+        left: -30px;
+        top: -20px;
+        position: absolute;
+        cursor: pointer;
+        opacity: 0;
+    }
+
+    .button-layer-right:active{
+        -webkit-animation: anim-effect-jelena 0.4s ease-out forwards;
+        animation: anim-effect-jelena 0.4s ease-out forwards;
+    }
+
     .navbar {
         margin-bottom: 0;
         background-color: #561F9F;
