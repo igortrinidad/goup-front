@@ -226,55 +226,8 @@
                                 </h2>
                             </div>
 
-                            <div class="blauw">
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                            </div>
-
-                            <div class="animate-group">
-                                <img
-                                    id="action-goup"
-                                    class="action-icon"
-                                    src="../../../../assets/img/hand_icons-02.png"
-                                    :class="{ 'active': interactions.action === 'up' }"
-                                />
-                            </div>
-
                             <div class="modal-body fadein">
 
-                                <p v-show="interactions.action === 'up'">
-                                    {{ translations.modal.up }}
-                                </p>
-
-                                <p v-show="interactions.action === 'down'">
-                                    {{ translations.modal.down }}
-                                </p>
-
-                                <p v-show="interactions.action === 'save'">
-                                    {{ translations.modal.save }}
-                                </p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary fixed" data-dismiss="modal">Close</button>
@@ -1005,69 +958,4 @@
         .cards{ height: 330px}
         .card-placeholder{ height: 330px}
     }
-
-    .animate-group {
-        position: relative;
-        width: 70px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    /* Action Icon */
-    .action-icon {
-        width: 70px;
-        height: auto;
-    }
-    /* GOUP */
-    #action-goup {
-        position: absolute;
-        left: calc(50% - 35px);
-        z-index: 10;
-    }
-
-    #action-goup.active { animation: toUp 2s ease forwards; }
-
-    @keyframes toUp {
-        /*0% { transform: scale(0) }
-        5% { transform: scale(.5) rotate(-8deg); }
-        8% { transform: scale(.6) rotate(8deg); }
-        11% { transform: scale(.7) rotate(-10deg); }
-        14% { transform: scale(.8) rotate(10deg); }
-        17% { transform: scale(.9) rotate(-12deg); }
-        20% { transform: scale(1) rotate(12deg); top:calc(100% - 64px); }
-        40% { transform: rotate(-3deg); }
-        70% { transform: rotate(0deg); }
-        100% { top: -300px; }*/
-
-        0%{ transform: translateY(0) }
-        100%{ transform: translateY(-200px); opacity: 0; }
-    }
-
-    /* Teste */
-    .punt {
-        position: absolute;
-        left: 50px;
-        top: 50px;
-        height: 4px;
-        width: 4px;
-        border-radius: 2px;
-        opacity: 0;
-        animation-duration: 3s;
-        animation-iteration-count: 1;
-    }
-
-    .blauw {
-        position: absolute;
-        left:calc(50% - 50px);
-        top: 250px;
-        height: 200px;
-        width: 100px;
-    }
-
-    .blauw div {
-        background-color: #FFFD7B;
-    }
-
-
 </style>
