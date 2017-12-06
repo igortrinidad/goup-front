@@ -7,7 +7,7 @@
                 <div v-if="type === 'back'">
                     <button
                         type="button"
-                        class="circle-profile left active back"
+                        class="circle-profile left active back bounce-effect"
                         @click="back()"
                     >
                         <i class="ion-ios-arrow-back"></i>
@@ -23,8 +23,9 @@
                     <!-- Settings & Profile -->
                     <router-link
                         tag="button"
+                        class="bounce-effect circle-profile left"
                         :to="{ name: 'general.user.settings' }"
-                        :class="{ 'circle-profile left': true, 'active': title === 'settings' }"
+                        :class="{'active': title === 'settings' }"
                     >
                         <i class="ion-person"></i>
                     </router-link>
@@ -32,7 +33,7 @@
 
                     <!-- Logo -->
                     <div @click="refreshExplorer()">
-                        <router-link tag="div" class="logo cursor-pointer" to="/explorer" >
+                        <router-link tag="div" class="logo cursor-pointer bounce-effect" to="/explorer" >
                             <img v-if="title === 'home'" src="../assets/logos/LOGOS-07.png" alt="" style="width: 100%">
                             <img v-if="title !== 'home'" src="../assets/logos/LOGOS-08.png" alt="" style="width: 100%">
                         </router-link>
@@ -42,8 +43,9 @@
                     <!-- Search -->
                     <router-link
                         tag="button"
+                        class="circle-profile right bounce-effect"
                         :to="{ name: 'general.events.list' }"
-                        :class="{ 'circle-profile right': true, 'active': title === 'ranking' }"
+                        :class="{'active': title === 'ranking' }"
                     >
                         <i class="ion-podium"></i>
                     </router-link>
