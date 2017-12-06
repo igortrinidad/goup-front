@@ -4,6 +4,14 @@ import moment from 'moment';
 export default function(){
 
 
+    //Logas quais eventos são ligados no app
+    var f = EventTarget.prototype.addEventListener; // store original
+    EventTarget.prototype.addEventListener = function(type, fn, capture) {
+      this.f = f;
+      this.f(type, fn, capture); // call original method
+      console.info('Added Event Listener: on' + type);
+    }
+
     //Altera o console para pegar os erros de javascript também
 
     var clear = function(){
@@ -47,10 +55,6 @@ export default function(){
         $(this).next().slideToggle(200);
         $(this).parent().toggleClass('toggled');
     });
-
-    //Waves effect
-    Waves.attach('.waves', ['waves-button', 'waves-float']);
-    Waves.init();
 
     //Retorna o index de um array baseado em um identificador (ex. 1 *id) e uma ancora (ex. ID)
     Array.prototype.toggleSelected = function arrayObjectIndexOf(id) {

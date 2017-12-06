@@ -16,6 +16,7 @@
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
 
+                <!-- CATEGORIES -->
                 <div class="container" v-show="!interactions.finished_loading_category" :class="{'cat-is-selected' : currentCategory}">
 
                     <p class="f-14 f-300 text-center m-t-10">{{translations.select_category}}</p>
@@ -37,7 +38,9 @@
                     </div>
 
                 </div>
+                <!-- CATEGORIES -->
 
+                <!-- EXPLORER -->
                 <div class="container" v-if="interactions.finished_loading_category && !interactions.is_loading">
 
 
@@ -205,8 +208,8 @@
                     </router-link>
 
                     <p class="text-center m-t-30">{{ days_selecteds_to_query }}</p>
-
                 </div>
+                <!-- EXPLORER -->
 
                 <button type="button" data-target="#modal-action" data-toggle="modal">MODAL</button>
 

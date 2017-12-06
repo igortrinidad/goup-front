@@ -18,7 +18,7 @@
                         <div class="modal-wp-body">
 
                             <div id="upload-box" class="upload-box">
-                                <a class="btn btn-primary waves-effect file-btn btn-lg">
+                                <a class="btn btn-primary file-btn btn-lg">
                                     {{translations.buttons.filePick}}
                                     <input type="file" value="Select a file"
                                            @change="loadFile($event)"
