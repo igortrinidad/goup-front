@@ -80,8 +80,10 @@
                                 <!-- / Current Action -->
 
                                 <div class="ch-content">
-                                    <h3 class="title f-700 t-overflow">{{ events[0].name }} ({{ events[0].category.name_pt }})</h3>
+                                    <h3 class="title f-700 t-overflow">{{ events[0].name }}</h3>
                                     <p class="title f-700 t-overflow" style="margin-bottom: 0px;"><i class="ion-ios-location m-r-5"></i> {{ events[0].city.name }} - {{events[0].city.state}}</p>
+
+                                    <span class="label label-primary" v-for="category in events[0].categories" v-if="category.id == currentCategory.id">{{category[`name_${language}`]}}</span>
                                 </div>
 
                                 <router-link

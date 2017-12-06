@@ -4,9 +4,14 @@ export const en = {
         event_name: `Moment's name`,
         event_description: `Moment's description`,
         recurrency_type: `Recurrency type`,
+        selected_recurrency_type: `Recurrency selected`,
+        day_of_week: 'Weekly at',
+        monthly: 'Every month at',
         event_date: `Moment's date`,
+        time_uninformed: 'Time uninformed',
         event_time: 'Moment time',
-        event_value: `Ticket start at (leave 0 if it's free)`,
+        value_uninformed: 'Ticket value uninformed',
+        event_value: "Ticket value",
         categories: `Moment's types`,
         categories_max: 'Select up to three types of moments',
         categories_max_warning: 'You must select at most three types of moments',
@@ -39,8 +44,18 @@ export const en = {
     },
     yes: 'Yes',
     no: 'No',
+    confirm: 'Confirm',
+    cancel: 'Cancel',
     submit: 'Register moment',
-    success: 'New moment added successfully'
+    success: 'New moment added successfully',
+
+    monthWeeks:{
+        first: 'Fist week',
+        second: 'Second week',
+        third: 'Third week',
+        fourthy: 'Fourthy week',
+        fifth: 'Fifth week',
+    }
 }
 
 export const pt = {
@@ -48,9 +63,15 @@ export const pt = {
     form: {
         event_name: 'Nome do momento',
         event_description: 'Descrição do momento',
+        recurrency_type: `Recorrência do momento`,
+        selected_recurrency_type: `Recorrência selectionada`,
+        day_of_week: 'Semanalmente na',
+        monthly: 'Todo mês em',
         event_date: 'Data do momento',
-        event_time: 'Horário do momento',
-        event_value: 'Valor do ingresso (deixe 0 para gratuito)',
+        time_uninformed: 'Horário não informado',
+        event_time: 'Horário',
+        value_uninformed: 'Valor do ingresso não informado',
+        event_value: 'Valor do ingresso',
         categories: 'Tipos de momento',
         categories_max: 'Selecione até três tipos de momento',
         categories_max_warning: 'Você deve selecionar no máximo três tipos de momentos',
@@ -82,6 +103,16 @@ export const pt = {
     },
     yes: 'Sim',
     no: 'Não',
+    confirm: 'Confirmar',
+    cancel: 'Cancelar',
     submit: 'Cadastrar momento',
-    success: 'Novo momento adicionado com sucesso.'
+    success: 'Novo momento adicionado com sucesso.',
+
+    monthWeeks:{
+        first: 'Primeira semana',
+        second: 'Segunda semana',
+        third: 'Terceira semana',
+        fourthy: 'Quarta semana',
+        fifth: 'Quinta semana',
+    }
 }
