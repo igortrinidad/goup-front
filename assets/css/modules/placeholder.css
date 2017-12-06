@@ -17,3 +17,10 @@
             background-position: 468px 0
         }
     }
+
+    .card-placeholder{
+        height: 388px;
+        background-color: #FFF;
+        border-radius: 5px;
+        margin-top: 20px;
+    }

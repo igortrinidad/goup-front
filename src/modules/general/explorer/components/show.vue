@@ -770,18 +770,6 @@
         z-index: 10;
     }
 
-    .card-placeholder{
-        height: 388px;
-        background-color: #FFF;
-        border-radius: 5px;
-        margin-top: 20px;
-    }
-
-    @media (max-width: 360px) {
-        .cards{ height: 330px}
-        .card-placeholder{ height: 330px}
-    }
-
     .card {
         position: absolute;
         width: 100%;
@@ -1027,25 +1015,9 @@
         font-size: 11px;
     }
 
-    /* Effect */
-    .effect {
-        animation-duration: 1s;
-        animation-fill-mode: forwards;
-        animation-iteration-count: infinite;
-        animation-name: placeHolderShimmer;
-        animation-timing-function: linear;
-        background-color: #f6f7f8;
-        background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-        background-size: 800px 104px;
-    }
-
-    @keyframes placeHolderShimmer {
-        0% {
-            background-position: -468px 0
-        }
-        100% {
-            background-position: 468px 0
-        }
+    @media (max-width: 360px) {
+        .cards{ height: 330px}
+        .card-placeholder{ height: 330px}
     }
 
     .animate-group {
