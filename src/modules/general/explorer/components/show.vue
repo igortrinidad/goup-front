@@ -208,34 +208,6 @@
 
                 </div>
 
-                <button type="button" data-target="#modal-action" data-toggle="modal">MODAL</button>
-
-                <!-- Modal Action -->
-                <div class="modal delay" id="modal-action">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h2 class="modal-title up" v-show="interactions.action === 'up'">
-                                    GO UP!<br>
-                                </h2>
-                                <h2 class="modal-title down" v-show="interactions.action === 'down'">
-                                    GO DOWN<br>
-                                </h2>
-                                <h2 class="modal-title save" v-show="interactions.action === 'save'">
-                                    {{ translations.saved }}!<br>
-                                </h2>
-                            </div>
-
-                            <div class="modal-body fadein">
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary fixed" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </transition>
 
@@ -382,15 +354,11 @@
                     if (that.top < -75) {
                         that.action = 'up'
                         $('#card-animated').transition({ y: -200, opacity: 0 }, 300, () => that.resetPosition())
-
-                        this.handleActionModal('up')
                     }
                     // DOWN
                     if (that.top > 75) {
                         that.action = 'down'
                         $('#card-animated').transition({ y: 200, opacity: 0 }, 300, () => that.resetPosition())
-
-                        this.handleActionModal('down')
                     }
                     // Skip
                     if (that.left > 75) {
@@ -402,8 +370,6 @@
                     if (that.left < -75) {
                         that.action = 'skip'
                         $('#card-animated').transition({ x: -300, opacity: 0 }, 300, () => that.resetPosition())
-
-                        this.handleActionModal('save')
                     }
                 }
             },
@@ -491,30 +457,22 @@
             // Button Action UP
             goUp() {
                 this.interactions.up = true
-                this.handleActionModal('up')
                 $('#card-animated').transition({ x: 0, y: -100, opacity: 0 }, 1000, () => this.resetPosition())
             },
             // Button Action DOWN
             goDown() {
                 this.interactions.down = true
-                this.handleActionModal('down')
                 $('#card-animated').transition({ x: 0, y: 100, opacity: 0 }, 1000, () => this.resetPosition())
             },
             // Button Action FAVORITE
             favorite() {
                 this.interactions.favorite = true
-                this.handleActionModal('save')
                 $('#card-animated').transition({ x: 100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
             },
             // Button Action SKIP
             skip() {
                 this.interactions.skip = true
                 $('#card-animated').transition({ x: -100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
-            },
-
-            handleActionModal(action) {
-                this.interactions.action = action
-                $('#modal-action').modal('show')
             },
 
             handleDistance(distance){
