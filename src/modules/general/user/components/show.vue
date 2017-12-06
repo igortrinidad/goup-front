@@ -133,6 +133,7 @@
                 setTimeout(function () {
                     that.swiperVertical = new Swiper(that.$refs.swiperVertical, {
                         direction: 'vertical',
+                        slidesPerView: 1,
                         spaceBetween: 10,
                         centeredSlides: true,
                         onSlideChangeEnd: swiper => {
@@ -150,15 +151,17 @@
 <style scoped>
     .swiper-container.swiper-vertical {
         overflow: visible !important;
+        border: 1px solid pink;
     }
     .swiper-container.swiper-vertical .swiper-wrapper {
-        align-items: center;
+
     }
 
     .picture-circle {
         position: fixed;
         top: 10px;
         z-index: 10;
+        transition: ease .1s;
     }
 
     .picture-circle-l { left: calc(50% - 50px) }
