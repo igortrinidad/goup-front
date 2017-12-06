@@ -15,10 +15,11 @@
                     <router-link
                         tag="div"
                         class="picture-circle picture-circle-xxl border-picture-eletric-blue"
-                        :to="{ name: 'general.user.settings.edit' }"
+                        :to="{ name: 'general.user.show', params: { user_slug: user.slug } }"
                         :style="{ backgroundImage: `url(${ user.avatar })` }"
                     >
                     </router-link>
+
                     <h4 class="f-300 text-center m-t-20">{{ user.full_name }}</h4>
 
                     <div class="row m-t-30 text-center">

@@ -16,6 +16,13 @@ const About = (resolve) => {
     })
 }
 
+const Show = (resolve) => {
+    require.ensure(['../components/show'], () => {
+        resolve(require('../components/show')) // eslint-disable-line global-require
+    })
+}
+
+
 const UserEditProfile = (resolve) => {
     require.ensure(['../components/dashboard/edit-profile'], () => {
         resolve(require('../components/dashboard/edit-profile')) // eslint-disable-line global-require
@@ -40,6 +47,12 @@ export default [
         component: Main,
         meta: {requiresAuth: false},
         children: [
+            {
+                name: 'general.user.show',
+                path: '/user/:user_slug',
+                component: Show,
+                meta: {requiresAuth: true}
+            },
             {
                 name: 'general.user.settings',
                 path: '/settings/:settings_saved?',

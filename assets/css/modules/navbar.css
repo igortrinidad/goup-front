@@ -159,3 +159,10 @@
 }
 
 /* NAV BAR BREAKPOINT TO COLLAPSE ON IPAD AND OTHERS SMALL SCREENS */
+
+
+/* NavBar Transparent */
+.navbar.navbar-default.transparent {
+    background-color: transparent !important;
+    box-shadow: none;
+}
