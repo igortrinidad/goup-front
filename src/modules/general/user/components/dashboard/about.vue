@@ -18,16 +18,16 @@
 
                             <p class=" f-22 f-400">{{ translations.share.title }}</p>
                             <p class=" f-12 f-400">{{ translations.share.subtitle }}</p>
-                            <button class="btn btn-default transparent" @click="openShareFacebook()">{{ translations.share.facebook }}</button>
+                            <button class="btn btn-dark" @click="openShareFacebook()">{{ translations.share.facebook }}</button>
                             <br>
-                            <button class="btn btn-default transparent m-t-10" @click="openShareWhatsapp()">{{ translations.share.whatsapp }}</button>
+                            <button class="btn btn-dark m-t-10" @click="openShareWhatsapp()">{{ translations.share.whatsapp }}</button>
 
                             <hr>
 
                             <p class=" f-22 f-400">{{ translations.legal.title }}</p>
-                            <router-link tag="button" :to="{name: 'general.terms'}" class="btn btn-default transparent">{{ translations.legal.terms }}</router-link>
+                            <router-link tag="button" :to="{name: 'general.terms'}" class="btn btn-dark">{{ translations.legal.terms }}</router-link>
                             <br>
-                            <router-link tag="button" :to="{name: 'general.privacy'}" class="btn btn-default transparent m-t-10">{{ translations.legal.privacy }}</router-link>
+                            <router-link tag="button" :to="{name: 'general.privacy'}" class="btn btn-dark m-t-10">{{ translations.legal.privacy }}</router-link>
 
 
                         </div>

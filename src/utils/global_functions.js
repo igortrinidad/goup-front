@@ -4,18 +4,10 @@ import moment from 'moment';
 export default function(){
 
 
-    //Logas quais eventos são ligados no app
-    var f = EventTarget.prototype.addEventListener; // store original
-    EventTarget.prototype.addEventListener = function(type, fn, capture) {
-      this.f = f;
-      this.f(type, fn, capture); // call original method
-      console.info('Added Event Listener: on' + type);
-    }
-
     //Altera o console para pegar os erros de javascript também
 
     var clear = function(){
-        
+
         var user_last_geolocation = localStorage.getItem('user_last_geo_location');
         var language = localStorage.getItem('language');
 

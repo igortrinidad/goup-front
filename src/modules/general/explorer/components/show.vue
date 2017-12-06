@@ -211,81 +211,6 @@
                 </div>
                 <!-- EXPLORER -->
 
-                <button type="button" data-target="#modal-action" data-toggle="modal">MODAL</button>
-
-                <!-- Modal Action -->
-                <div class="modal delay" id="modal-action">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h2 class="modal-title up" v-show="interactions.action === 'up'">
-                                    GO UP!<br>
-                                </h2>
-                                <h2 class="modal-title down" v-show="interactions.action === 'down'">
-                                    GO DOWN<br>
-                                </h2>
-                                <h2 class="modal-title save" v-show="interactions.action === 'save'">
-                                    {{ translations.saved }}!<br>
-                                </h2>
-                            </div>
-
-                            <div class="blauw">
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                                <div class="punt"></div>
-                            </div>
-
-                            <div class="animate-group">
-                                <img
-                                    id="action-goup"
-                                    class="action-icon"
-                                    src="../../../../assets/img/hand_icons-02.png"
-                                    :class="{ 'active': interactions.action === 'up' }"
-                                />
-                            </div>
-
-                            <div class="modal-body fadein">
-
-                                <p v-show="interactions.action === 'up'">
-                                    {{ translations.modal.up }}
-                                </p>
-
-                                <p v-show="interactions.action === 'down'">
-                                    {{ translations.modal.down }}
-                                </p>
-
-                                <p v-show="interactions.action === 'save'">
-                                    {{ translations.modal.save }}
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary fixed" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </transition>
 
@@ -432,15 +357,11 @@
                     if (that.top < -75) {
                         that.action = 'up'
                         $('#card-animated').transition({ y: -200, opacity: 0 }, 300, () => that.resetPosition())
-
-                        this.handleActionModal('up')
                     }
                     // DOWN
                     if (that.top > 75) {
                         that.action = 'down'
                         $('#card-animated').transition({ y: 200, opacity: 0 }, 300, () => that.resetPosition())
-
-                        this.handleActionModal('down')
                     }
                     // Skip
                     if (that.left > 75) {
@@ -452,8 +373,6 @@
                     if (that.left < -75) {
                         that.action = 'skip'
                         $('#card-animated').transition({ x: -300, opacity: 0 }, 300, () => that.resetPosition())
-
-                        this.handleActionModal('save')
                     }
                 }
             },
@@ -541,30 +460,22 @@
             // Button Action UP
             goUp() {
                 this.interactions.up = true
-                this.handleActionModal('up')
                 $('#card-animated').transition({ x: 0, y: -100, opacity: 0 }, 1000, () => this.resetPosition())
             },
             // Button Action DOWN
             goDown() {
                 this.interactions.down = true
-                this.handleActionModal('down')
                 $('#card-animated').transition({ x: 0, y: 100, opacity: 0 }, 1000, () => this.resetPosition())
             },
             // Button Action FAVORITE
             favorite() {
                 this.interactions.favorite = true
-                this.handleActionModal('save')
                 $('#card-animated').transition({ x: 100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
             },
             // Button Action SKIP
             skip() {
                 this.interactions.skip = true
                 $('#card-animated').transition({ x: -100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
-            },
-
-            handleActionModal(action) {
-                this.interactions.action = action
-                $('#modal-action').modal('show')
             },
 
             handleDistance(distance){
@@ -869,110 +780,122 @@
     .card-cat-selected{
         -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
         box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
-    -webkit-animation: anim-effect-jelena 0.4s ease-out forwards;
-    animation: anim-effect-jelena 0.4s ease-out forwards;
+        z-index: 1000; 
+        animation: card-cat-selected-animation linear 1s; 
+        animation-iteration-count: 1; 
+        transform-origin: 50% 50%; 
+        -webkit-animation: card-cat-selected-animation linear 1s; 
+        -webkit-animation-iteration-count: 1; 
+        -webkit-transform-origin: 50% 50%; 
+        -moz-animation: card-cat-selected-animation linear 1s; 
+        -moz-animation-iteration-count: 1; 
+        -moz-transform-origin: 50% 50%; 
+        -o-animation: card-cat-selected-animation linear 1s; 
+        -o-animation-iteration-count: 1; 
+        -o-transform-origin: 50% 50%; 
+        -ms-animation: card-cat-selected-animation linear 1s; 
+        -ms-animation-iteration-count: 1; 
+        -ms-transform-origin: 50% 50%; 
     }
 
-@keyframes card-cat-selected-animation{
-  0% {
-    transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
-  }
-  10% {
-    transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
-  }
-  20% {
-    transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
-  }
-  30% {
-    transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
-  }
-  40% {
-    transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
-  }
-  50% {
-    transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
-  }
-  60% {
-    transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
-  }
-  70% {
-    transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
-  }
-  80% {
-    transform:  rotate(-2deg) scaleX(1.10) scaleY(1.10) ;
-  }
-  90% {
-    transform:  rotate(2deg) scaleX(1.00) scaleY(1.00) ;
-  }
-  100% {
-    transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
-  }
-}
+    @keyframes card-cat-selected-animation{
+      0% {
+        transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
+      }
+      10% {
+        transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
+      }
+      20% {
+        transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
+      }
+      30% {
+        transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
+      }
+      40% {
+        transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
+      }
+      50% {
+        transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
+      }
+      60% {
+        transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
+      }
+      70% {
+        transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
+      }
+      80% {
+        transform:  rotate(-2deg) scaleX(1.10) scaleY(1.10) ;
+      }
+      90% {
+        transform:  rotate(2deg) scaleX(1.00) scaleY(1.00) ;
+      }
+      100% {
+        transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
+      }
+    }
 
+    @-webkit-keyframes card-cat-selected-animation {
+      0% {
+        -webkit-transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
+      }
+      10% {
+        -webkit-transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
+      }
+      20% {
+        -webkit-transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
+      }
+      30% {
+        -webkit-transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
+      }
+      40% {
+        -webkit-transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
+      }
+      50% {
+        -webkit-transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
+      }
+      60% {
+        -webkit-transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
+      }
+      70% {
+        -webkit-transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
+      }
+      80% {
+        -webkit-transform:  rotate(-2deg) scaleX(1.10) scaleY(1.10) ;
+      }
+      90% {
+        -webkit-transform:  rotate(2deg) scaleX(1.00) scaleY(1.00) ;
+      }
+      100% {
+        -webkit-transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
+      }
+    }
 
-@-webkit-keyframes card-cat-selected-animation {
-  0% {
-    -webkit-transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
-  }
-  10% {
-    -webkit-transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
-  }
-  20% {
-    -webkit-transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
-  }
-  30% {
-    -webkit-transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
-  }
-  40% {
-    -webkit-transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
-  }
-  50% {
-    -webkit-transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
-  }
-  60% {
-    -webkit-transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
-  }
-  70% {
-    -webkit-transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
-  }
-  80% {
-    -webkit-transform:  rotate(-2deg) scaleX(1.10) scaleY(1.10) ;
-  }
-  90% {
-    -webkit-transform:  rotate(2deg) scaleX(1.00) scaleY(1.00) ;
-  }
-  100% {
-    -webkit-transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
-  }
-}
-
-
-
-        @-webkit-keyframes pulse {
-          0% {
-            -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
-          }
-          70% {
-              -webkit-box-shadow: 0 0 0 10px rgba(255,255,255, 0);
-          }
-          100% {
-              -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
-          }
-        }
-        @keyframes pulse {
-          0% {
-            -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
-            box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
-          }
-          70% {
-              -moz-box-shadow: 0 0 0 10px rgba(255,255,255, 0);
-              box-shadow: 0 0 0 10px rgba(255,255,255, 0);
-          }
-          100% {
-              -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
-              box-shadow: 0 0 0 0 rgba(255,255,255, 0);
-          }
-        }
+    @-webkit-keyframes pulse {
+      0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
+      }
+      70% {
+          -webkit-box-shadow: 0 0 0 10px rgba(255,255,255, 0);
+      }
+      100% {
+          -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
+      }
+    }
+    
+    @keyframes pulse {
+      0% {
+        -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
+        box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
+      }
+      70% {
+          -moz-box-shadow: 0 0 0 10px rgba(255,255,255, 0);
+          box-shadow: 0 0 0 10px rgba(255,255,255, 0);
+      }
+      100% {
+          -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
+          box-shadow: 0 0 0 0 rgba(255,255,255, 0);
+      }
+    }
 
     .badge-city {
         display: inline-block;
@@ -1008,69 +931,4 @@
         .cards{ height: 330px}
         .card-placeholder{ height: 330px}
     }
-
-    .animate-group {
-        position: relative;
-        width: 70px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    /* Action Icon */
-    .action-icon {
-        width: 70px;
-        height: auto;
-    }
-    /* GOUP */
-    #action-goup {
-        position: absolute;
-        left: calc(50% - 35px);
-        z-index: 10;
-    }
-
-    #action-goup.active { animation: toUp 2s ease forwards; }
-
-    @keyframes toUp {
-        /*0% { transform: scale(0) }
-        5% { transform: scale(.5) rotate(-8deg); }
-        8% { transform: scale(.6) rotate(8deg); }
-        11% { transform: scale(.7) rotate(-10deg); }
-        14% { transform: scale(.8) rotate(10deg); }
-        17% { transform: scale(.9) rotate(-12deg); }
-        20% { transform: scale(1) rotate(12deg); top:calc(100% - 64px); }
-        40% { transform: rotate(-3deg); }
-        70% { transform: rotate(0deg); }
-        100% { top: -300px; }*/
-
-        0%{ transform: translateY(0) }
-        100%{ transform: translateY(-200px); opacity: 0; }
-    }
-
-    /* Teste */
-    .punt {
-        position: absolute;
-        left: 50px;
-        top: 50px;
-        height: 4px;
-        width: 4px;
-        border-radius: 2px;
-        opacity: 0;
-        animation-duration: 3s;
-        animation-iteration-count: 1;
-    }
-
-    .blauw {
-        position: absolute;
-        left:calc(50% - 50px);
-        top: 250px;
-        height: 200px;
-        width: 100px;
-    }
-
-    .blauw div {
-        background-color: #FFFD7B;
-    }
-
-
 </style>
