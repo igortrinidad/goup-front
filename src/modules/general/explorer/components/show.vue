@@ -866,22 +866,8 @@
     .card-cat-selected{
         -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
         box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
-        z-index: 1000;
-        animation: card-cat-selected-animation linear 1s;
-        animation-iteration-count: 1;
-        transform-origin: 50% 50%;
-        -webkit-animation: card-cat-selected-animation linear 1s;
-        -webkit-animation-iteration-count: 1;
-        -webkit-transform-origin: 50% 50%;
-        -moz-animation: card-cat-selected-animation linear 1s;
-        -moz-animation-iteration-count: 1;
-        -moz-transform-origin: 50% 50%;
-        -o-animation: card-cat-selected-animation linear 1s;
-        -o-animation-iteration-count: 1;
-        -o-transform-origin: 50% 50%;
-        -ms-animation: card-cat-selected-animation linear 1s;
-        -ms-animation-iteration-count: 1;
-        -ms-transform-origin: 50% 50%;
+    -webkit-animation: anim-effect-jelena 0.4s ease-out forwards;
+    animation: anim-effect-jelena 0.4s ease-out forwards;
     }
 
 @keyframes card-cat-selected-animation{
