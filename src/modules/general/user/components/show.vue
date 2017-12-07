@@ -9,7 +9,7 @@
 
         <div
             class="picture-circle border-picture-eletric-blue"
-            :class="{ 'full': !interactions.scroll, 'picture-circle-p': interactions.scroll }"
+            :class="{ 'picture-circle-l': !interactions.scroll, 'picture-circle-p': interactions.scroll }"
             :style="{ backgroundImage: `url(${ user.avatar })` }"
         >
         </div>
@@ -211,7 +211,7 @@
     #cards {
         position: relative;
         width: 100%;
-        margin-top: 110px;
+        margin-top: 70px;
     }
 
     #cards .card {
@@ -265,7 +265,7 @@
     /* Badge */
     .goup-badge {
         width: 220px;
-        margin: 0 auto;
+        margin: 128px auto 0 auto;
         position: relative;
     }
 
@@ -278,11 +278,13 @@
     .goup-badge .btn {
         text-align: left;
         padding: 3px 3px 3px 75px !important;
+        font-size: 15px;
     }
 
     .goup-badge .level {
         display: block;
         color: #fff;
+        font-size: 13px;
     }
 
 </style>
