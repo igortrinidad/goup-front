@@ -29,19 +29,49 @@
                         <div class="swiper-container swiper-vertical" ref="swiperVertical">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide" v-for="(event, eventIndex) in events">
-                                    <div class="card m-b-0" :class="{ 'top': eventIndex < verticalIndex }">
+                                    <div class="card p-0" :class="{ 'top' : eventIndex < verticalIndex }">
                                         <!-- Card Header -->
-                                        <div class="card-header cover" :style="{ backgroundImage: `url(${ event.avatar })`}">
-                                            <div class="ch-content">
-                                                <h3 class="title f-700 t-overflow">{{ event.name }}</h3>
-                                                <p class="title f-700 t-overflow" style="margin-bottom: 0px;"><i class="ion-ios-location m-r-5"></i>
-                                                    {{ event.city.name }} - {{event.city.state}}
-                                                </p>
-                                            </div>
-                                            <span class="icon-information ion-ios-information">
+                                        <div
+                                            class="card-header cover p-5"
+                                            :style="{
+                                                backgroundImage: `url(${ event.cover })`,
+                                                height: '150px',
+                                                borderRadius: '6px 6px 0 0'
+                                            }"
+                                        >
+                                            <span class="event-ranking">
+                                                {{ event.rank_position }}º
                                             </span>
                                         </div>
-                                        <!-- / Card Header -->
+                                        <!-- Card Body -->
+                                        <div class="card-body card-padding">
+                                            <h4 class="m-b-5">{{ event.name }}</h4>
+                                            <div style="opacity: .8;">
+                                                <p class="m-b-5">{{ event.description }}</p>
+                                                <span class="d-block m-0 f-12">
+                                                    <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <!-- Card Footer -->
+                                        <div class="card-footer p-10">
+                                            <div class="row">
+                                                <div class="col-xs-8" style="opacity: .8;">
+                                                    <small>
+                                                        <i class="ion-location m-r-5"></i>{{ handleDistance(event.distance) }}
+                                                    </small>
+                                                    <small class="divider p-l-10 m-l-10">
+                                                        <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
+                                                        <span v-show="event.value === 0">{{ translations.free }}</span>
+                                                    </small>
+                                                </div>
+                                                <div class="col-xs-4 text-right">
+                                                    <small class="f-primary">
+                                                        <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +88,7 @@
 
 <script>
     import { mapGetters } from 'vuex'
-    import { cleanPlaceModel } from '@/models/Place'
+    import { cleanEventModel } from '@/models/Event'
 
     import * as translations from '@/translations/user/show'
 
@@ -116,11 +146,16 @@
 
             getUserEvents() {
                 let that = this
-                let event = cleanPlaceModel()
+                let event = cleanEventModel()
 
                 event.name = 'Party',
                 event.slug = 'party',
-                event.avatar = 'https://s3.amazonaws.com/goup-assets/img/categories/party.png'
+                event.cover = 'https://s3.amazonaws.com/goup-assets/img/categories/party.png'
+                event.city.name = 'Belo Horizonte'
+                event.city.state = 'MG'
+                event.value = 0
+                event.distance = 59
+                event.favorited_count = 1
 
                 that.events = [ event, event, event, event, event ]
 
@@ -141,7 +176,12 @@
                     });
                 }, 200);
 
-            }
+            },
+
+            handleDistance(distance){
+                distance = parseFloat(distance);
+                return `${distance.toFixed(2)} km`
+            },
 
         }
     }
@@ -150,10 +190,14 @@
 <style scoped>
     .swiper-container.swiper-vertical {
         overflow: visible !important;
-        height: 338px;
+        height: 255px;
     }
     .swiper-container.swiper-vertical .swiper-wrapper {
         align-items: center
+    }
+
+    .divider {
+        border-left: 1px solid #dfdfdf;
     }
 
     .card { transition: ease .5s; }
