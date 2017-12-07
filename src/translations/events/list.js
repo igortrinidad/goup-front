@@ -27,13 +27,15 @@ export const en = {
 
         notification:{
             title:'Location',
-            message: 'GoUp needs your permission to access your location and find events near you.',
+            message: 'GoUp needs your permission to access your location and find moments near you.',
             buttons: {
                 notNow: 'Later',
                 enable: 'Enable Location'
             },
         }
-    }
+    },
+
+    load_complete: 'All moments are loaded :)'
 }
 
 export const pt = {
@@ -64,11 +66,13 @@ export const pt = {
 
         notification:{
             title:'Localização',
-            message: 'GoUp precisa da sua permissão para acessar sua localização e encontrar eventos próximos a você.',
+            message: 'GoUp precisa da sua permissão para acessar sua localização e encontrar momentos próximos a você.',
             buttons: {
                 notNow: 'Depois',
                 enable: 'Ativar localização'
             },
-        }
+        },
+
+        load_complete: 'Todos os momentos foram carregados :)'
     }
 }
