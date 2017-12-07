@@ -9,7 +9,7 @@
 
         <div
             class="picture-circle border-picture-eletric-blue"
-            :class="{ 'picture-circle-l': currentEvent === 0, 'picture-circle-m': currentEvent > 0 }"
+            :class="{ 'picture-circle-l': verticalIndex === 0, 'picture-circle-m': verticalIndex > 0 }"
             :style="{ backgroundImage: `url(${ user.avatar })` }"
         >
         </div>
@@ -28,8 +28,8 @@
                     <div class="m-t-30" v-if="events.length">
                         <div class="swiper-container swiper-vertical" ref="swiperVertical">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide" v-for="event in events" style="height: 338px;">
-                                    <div class="card m-b-0">
+                                <div class="swiper-slide" v-for="(event, eventIndex) in events">
+                                    <div class="card m-b-0" :class="{ 'top': eventIndex < verticalIndex }">
                                         <!-- Card Header -->
                                         <div class="card-header cover" :style="{ backgroundImage: `url(${ event.avatar })`}">
                                             <div class="ch-content">
@@ -77,7 +77,7 @@
                 interactions: {},
                 user: {},
                 events: [],
-                currentEvent: 0
+                verticalIndex: 0
             }
         },
 
@@ -122,7 +122,7 @@
                 event.slug = 'party',
                 event.avatar = 'https://s3.amazonaws.com/goup-assets/img/categories/party.png'
 
-                that.events = [ event, event ]
+                that.events = [ event, event, event, event, event ]
 
                 that.initSwiperVertical()
             },
@@ -135,9 +135,8 @@
                         direction: 'vertical',
                         slidesPerView: 1,
                         spaceBetween: 10,
-                        centeredSlides: true,
                         onSlideChangeEnd: swiper => {
-                            that.currentEvent = swiper.realIndex
+                            that.verticalIndex = swiper.realIndex
                         },
                     });
                 }, 200);
@@ -151,10 +150,29 @@
 <style scoped>
     .swiper-container.swiper-vertical {
         overflow: visible !important;
-        border: 1px solid pink;
+        height: 338px;
     }
     .swiper-container.swiper-vertical .swiper-wrapper {
+        align-items: center
+    }
 
+    .card { transition: ease .5s; }
+    .card:before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        box-shadow: inset 0 0  0 rgba(0, 0, 0, .7);
+        z-index: 10;
+        border-radius: 6px;
+        transition: ease .5s;
+    }
+    .card.top {
+        transform: scale(.96);
+        transition: ease .5s;
+    }
+    .card.top:before {
+        box-shadow: inset 0 0  150px rgba(0, 0, 0, .7);
+        transition: ease .5s;
     }
 
     .picture-circle {
