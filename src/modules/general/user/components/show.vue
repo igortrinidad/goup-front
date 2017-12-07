@@ -9,7 +9,7 @@
 
         <div
             class="picture-circle border-picture-eletric-blue"
-            :class="{ 'picture-circle-l': !interactions.scroll, 'picture-circle-p': interactions.scroll }"
+            :class="{ 'full': !interactions.scroll, 'picture-circle-p': interactions.scroll }"
             :style="{ backgroundImage: `url(${ user.avatar })` }"
         >
         </div>
@@ -24,10 +24,6 @@
                     </div>
                     <!-- / No Events -->
 
-                    <!-- Events -->
-                    <div class="saved-places-title">
-                        <h3 class="text-center">{{ translations.saved }}</h3>
-                    </div>
 
                     <!-- Cards -->
                     <div id="cards" :style="{ height: `${ 275 * events.length }px` }">
@@ -203,7 +199,7 @@
     #cards {
         position: relative;
         width: 100%;
-        margin-top: 40px;
+        margin-top: 110px;
     }
 
     #cards .card {
@@ -228,14 +224,29 @@
         box-shadow: inset 0 0  100px rgba(0, 0, 0, .4);
     }
 
-    .picture-circle {
-        position: fixed;
-        top: 90px;
-        transition: ease .2s;
-        z-index: 5;
+    /* Picture */
+    .picture-circle { position: fixed; transition: ease .3s; }
+
+    .picture-circle.full {
+        width: 100%;
+        height: 60%;
+        border-radius: 0;
+        left: 0;
+        top: 80px;
+        z-index: 0;
+        border: none;
     }
 
-    .picture-circle-l { left: calc(50% - 50px) }
-    .picture-circle-m { left: calc(50% - 43px) }
-    .picture-circle-p { left: calc(50% - 33px) }
+    .picture-circle.full:before {
+        content: '';
+        position: absolute;
+        left: 0; bottom: 0; right: 0;
+        width: 100%;
+        height: 40%;
+        background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(87,31,159,1) 100%);
+    }
+
+    .picture-circle-l { top: 100px; left: calc(50% - 50px); z-index: 10; }
+    .picture-circle-m { top: 100px; left: calc(50% - 43px); z-index: 10; }
+    .picture-circle-p { top: 100px; left: calc(50% - 33px); z-index: 10; }
 </style>
