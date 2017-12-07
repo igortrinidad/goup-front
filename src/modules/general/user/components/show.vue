@@ -2,14 +2,14 @@
     <div class="first-container">
 
         <main-header
-            :title="''"
+            :title="user.full_name"
             :type="'back'"
             :cursor="false"
         ></main-header>
 
         <div
             class="picture-circle border-picture-eletric-blue"
-            :class="{ 'picture-circle-l': !scroll, 'picture-circle-m': scroll }"
+            :class="{ 'picture-circle-l': !interactions.scroll, 'picture-circle-p': interactions.scroll }"
             :style="{ backgroundImage: `url(${ user.avatar })` }"
         >
         </div>
@@ -18,14 +18,15 @@
             <div class="main">
                 <div class="container bg m-t-20">
 
-                    <div class="text-center">
-                        <h3>{{ user.full_name }}</h3>
-                        <span>{{ user.city.name }} - {{ user.city.state }}</span>
-                    </div>
-
                     <!-- No Events -->
                     <div class="m-t-30" v-if="!events.length">
                         <h3 class="text-center">{{ translations.no_events }}</h3>
+                    </div>
+                    <!-- / No Events -->
+
+                    <!-- No Events -->
+                    <div class="saved-places-title">
+                        <h3 class="text-center">Locais salvos</h3>
                     </div>
                     <!-- / No Events -->
 
@@ -34,11 +35,12 @@
                         <div
                             class="card"
                             v-for="(event, indexEvents) in events"
-                            :class="{ 'stacked': !scroll }"
-                            :style="[ scroll ? { top: `${ 275 * indexEvents }px` } : { top: 0 } ]"
+                            :class="{ 'stacked': !interactions.scroll }"
+                            :style="[ interactions.scroll ? { top: `${ 275 * indexEvents }px` } : { top: 0 } ]"
                         >
                             <!-- Card Header -->
                             <div
+                                v-if="interactions.scrollFinished || indexEvents <= 2"
                                 class="card-header cover p-5"
                                 :style="{
                                     backgroundImage: `url(${ event.cover })`,
@@ -47,7 +49,7 @@
                                 }"
                             >
                                 <span class="event-ranking">
-                                    {{ event.rank_position }}º
+                                    {{ indexEvents }}º
                                 </span>
                             </div>
                             <!-- Card Body -->
@@ -108,10 +110,13 @@
 
         data () {
             return {
-                interactions: {},
+                interactions: {
+                    scroll: false,
+                    scrollAnimationFinished: false,
+                },
                 user: {},
                 events: [],
-                scroll: false
+                
             }
         },
 
@@ -140,9 +145,14 @@
                 let scrollTop = $(document).scrollTop();
 
                 if (scrollTop > 100) {
-                    that.scroll = true
+
+                    that.interactions.scroll = true
+                    setTimeout(function() {
+                        that.interactions.scrollAnimationFinished = true
+                    }, 400);
+
                 } else {
-                    that.scroll = false
+                    that.interactions.scroll = false
                 }
             })
         },
@@ -187,56 +197,51 @@
 </script>
 
 <style scoped>
-    .swiper-container.swiper-vertical {
-        overflow: visible !important;
-        height: 255px;
-    }
-    .swiper-container.swiper-vertical .swiper-wrapper {
-        align-items: center
-    }
-
-    .swiper-slide.invisible { opacity: 0; }
 
     .divider {
         border-left: 1px solid #dfdfdf;
     }
 
+    .saved-places-title{
+        margin-top: 100px;
+    }
     /* Cards */
     #cards {
         position: relative;
         width: 100%;
-        margin-top: 60px;
+        margin-top: 40px;
     }
 
     #cards .card {
         position: absolute;
         margin-bottom: 0;
         height: 255px;
-        transition: ease .3s;
+        transition: ease-in .4s;
         top: 0; left: 0; right: 0;
     }
 
-    #cards .card.stacked:nth-child(1) { z-index: 20; }
+    .card:nth-child(1){z-index: 3;}
+    .card:nth-child(2){z-index: 2;}
+    .card:nth-child(3){z-index: 1;}
 
     #cards .card.stacked:nth-child(2) {
         transform: scale(.95) translateY(-20px);
-        z-index: 10;
         box-shadow: inset 0 0  50px rgba(0, 0, 0, .2);
     }
 
     #cards .card.stacked:nth-child(3) {
         transform: scale(.90) translateY(-40px);
-        z-index: 5;
         box-shadow: inset 0 0  100px rgba(0, 0, 0, .4);
     }
 
     .picture-circle {
         position: fixed;
-        top: 10px;
-        z-index: 10;
-        transition: ease .1s;
+        top: 90px;
+        transition: ease .2s;
+        z-index: 5;
     }
 
     .picture-circle-l { left: calc(50% - 50px) }
     .picture-circle-m { left: calc(50% - 43px) }
+    .picture-circle-p { left: calc(50% - 33px) }
 </style>
