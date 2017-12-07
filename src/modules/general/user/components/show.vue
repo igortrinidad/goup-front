@@ -24,7 +24,10 @@
                     </div>
                     <!-- / No Events -->
 
-                    <h3 class="text-center m-0 m-t-10">{{ user.full_name }}</h3>
+                    <div class="m-t-10 text-center" v-show="verticalIndex === 0">
+                        <h3 class="m-0 m-b-10">{{ user.full_name }}</h3>
+                        <span>{{ user.city.name }} - {{ user.city.state }}</span>
+                    </div>
 
                     <!-- Swiper Events Vertical -->
                     <div class="m-t-30" v-if="events.length">
@@ -32,7 +35,7 @@
                             <div class="swiper-wrapper">
 
                                 <!-- Fake List -->
-                                <div class="swiper-slide m-t-30" :class="{ 'invisible': verticalIndex > 0 }">
+                                <div class="swiper-slide" :class="{ 'invisible': verticalIndex > 0, 'm-t-30': verticalIndex === 0 }">
 
                                     <div class="card fake one"></div>
                                     <div class="card fake two"></div>
