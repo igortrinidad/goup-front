@@ -24,12 +24,69 @@
                     </div>
                     <!-- / No Events -->
 
+                    <h3 class="text-center m-0 m-t-10">{{ user.full_name }}</h3>
+
                     <!-- Swiper Events Vertical -->
                     <div class="m-t-30" v-if="events.length">
                         <div class="swiper-container swiper-vertical" ref="swiperVertical">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide" v-for="(event, eventIndex) in events">
-                                    <div class="card p-0" :class="{ 'top' : eventIndex < verticalIndex }">
+
+                                <!-- Fake List -->
+                                <div class="swiper-slide m-t-30" :class="{ 'invisible': verticalIndex > 0 }">
+
+                                    <div class="card fake one"></div>
+                                    <div class="card fake two"></div>
+
+                                    <div class="card p-0 main-card">
+                                        <!-- Card Header -->
+                                        <div
+                                            class="card-header cover p-5"
+                                            :style="{
+                                                backgroundImage: `url(${firstEvent.cover })`,
+                                                height: '150px',
+                                                borderRadius: '6px 6px 0 0'
+                                            }"
+                                        >
+                                            <span class="event-ranking">
+                                                {{ firstEvent.rank_position }}º
+                                            </span>
+                                        </div>
+                                        <!-- Card Body -->
+                                        <div class="card-body card-padding">
+                                            <h4 class="m-b-5">{{ firstEvent.name }}</h4>
+                                            <div style="opacity: .8;">
+                                                <p class="m-b-5">{{ firstEvent.description }}</p>
+                                                <span class="d-block m-0 f-12">
+                                                    <strong>{{ firstEvent.city.name }} - {{ firstEvent.city.state }}</strong>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <!-- Card Footer -->
+                                        <div class="card-footer p-10">
+                                            <div class="row">
+                                                <div class="col-xs-8" style="opacity: .8;">
+                                                    <small>
+                                                        <i class="ion-location m-r-5"></i>{{ handleDistance(firstEvent.distance) }}
+                                                    </small>
+                                                    <small class="divider p-l-10 m-l-10">
+                                                        <span v-show="firstEvent.value > 0">{{ firstEvent.value | formatCurrency }}</span>
+                                                        <span v-show="firstEvent.value === 0">{{ translations.free }}</span>
+                                                    </small>
+                                                </div>
+                                                <div class="col-xs-4 text-right">
+                                                    <small class="f-primary">
+                                                        <i class="ion-ios-star m-r-5"></i>{{ firstEvent.favorited_count }}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- / Fake List -->
+
+                                <!-- True List -->
+                                <div class="swiper-slide" :class="{ 'invisible': verticalIndex === 0 }" v-for="(event, eventIndex) in events">
+                                    <div class="card p-0" :class="{ 'top' : eventIndex < verticalIndex - 1 }">
                                         <!-- Card Header -->
                                         <div
                                             class="card-header cover p-5"
@@ -73,6 +130,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- / True List -->
                                 </div>
                             </div>
                         </div>
@@ -107,6 +165,7 @@
                 interactions: {},
                 user: {},
                 events: [],
+                firstEvent: {},
                 verticalIndex: 0
             }
         },
@@ -158,6 +217,7 @@
                 event.favorited_count = 1
 
                 that.events = [ event, event, event, event, event ]
+                that.firstEvent = that.events[0]
 
                 that.initSwiperVertical()
             },
@@ -196,10 +256,31 @@
         align-items: center
     }
 
+    .swiper-slide.invisible { opacity: 0; }
+
     .divider {
         border-left: 1px solid #dfdfdf;
     }
 
+    /* Fake Cards */
+    .swiper-slide { position: relative; }
+    .card.fake {
+        position: absolute;
+        width: 100%; height: 255px;
+    }
+    .card.main-card { z-index: 20; }
+    .card.fake.one {
+        transform: scale(.95) translateY(-20px);
+        z-index: 10;
+        box-shadow: inset 0 0  50px rgba(0, 0, 0, .2);
+    }
+    .card.fake.two {
+        transform: scale(.90) translateY(-40px);
+        z-index: 5;
+        box-shadow: inset 0 0  100px rgba(0, 0, 0, .4);
+    }
+
+    /* Evento Pra Cima */
     .card { transition: ease .5s; }
     .card:before {
         content: '';
