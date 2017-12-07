@@ -29,6 +29,7 @@
                     </div>
                     <!-- / No Events -->
 
+                    <!-- Cards -->
                     <div id="cards" :style="{ height: `${ 275 * events.length }px` }">
                         <div
                             class="card"
@@ -36,9 +37,51 @@
                             :class="{ 'stacked': !scroll }"
                             :style="[ scroll ? { top: `${ 275 * indexEvents }px` } : { top: 0 } ]"
                         >
-                            <h3 class="f-default m-0">{{ event.name }} - {{ indexEvents }}</h3>
+                            <!-- Card Header -->
+                            <div
+                                class="card-header cover p-5"
+                                :style="{
+                                    backgroundImage: `url(${ event.cover })`,
+                                    height: '150px',
+                                    borderRadius: '6px 6px 0 0'
+                                }"
+                            >
+                                <span class="event-ranking">
+                                    {{ event.rank_position }}º
+                                </span>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body card-padding">
+                                <h4 class="m-b-5">{{ event.name }}</h4>
+                                <div style="opacity: .8;">
+                                    <p class="m-b-5">{{ event.description }}</p>
+                                    <span class="d-block m-0 f-12">
+                                        <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Card Footer -->
+                            <div class="card-footer p-10">
+                                <div class="row">
+                                    <div class="col-xs-8" style="opacity: .8;">
+                                        <small>
+                                            <i class="ion-location m-r-5"></i>{{ handleDistance(event.distance) }}
+                                        </small>
+                                        <small class="divider p-l-10 m-l-10">
+                                            <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
+                                            <span v-show="event.value === 0">{{ translations.free }}</span>
+                                        </small>
+                                    </div>
+                                    <div class="col-xs-4 text-right">
+                                        <small class="f-primary">
+                                            <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!-- /CARDS -->
 
                 </div>
             </div>
