@@ -52,10 +52,6 @@ button, a,
   color: #383938;
 }
 
-button:active{
-  border: 1px solid green;
-}
-
 .btn.btn-facebook,
 .btn.btn-facebook:hover{
     background-color: #561F9F;
