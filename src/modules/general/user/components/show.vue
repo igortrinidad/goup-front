@@ -39,7 +39,7 @@
                         >
                             <!-- Card Header -->
                             <div
-                                v-if="interactions.scrollFinished || indexEvents <= 2"
+                                v-if="interactions.scrollAnimationFinished || indexEvents <= 2"
                                 class="card-header cover p-5"
                                 :style="{
                                     backgroundImage: `url(${ event.cover })`,
@@ -52,7 +52,9 @@
                                 </span>
                             </div>
                             <!-- Card Body -->
-                            <div class="card-body card-padding">
+                            <div class="card-body card-padding"  
+                                v-if="interactions.scrollAnimationFinished || indexEvents <= 2"
+                            >
                                 <h4 class="m-b-5">{{ event.name }}</h4>
                                 <div style="opacity: .8;">
                                     <p class="m-b-5">{{ event.description }}</p>
@@ -62,7 +64,7 @@
                                 </div>
                             </div>
                             <!-- Card Footer -->
-                            <div class="card-footer p-10">
+                            <div class="card-footer p-10" v-if="interactions.scrollAnimationFinished || indexEvents <= 2">
                                 <div class="row">
                                     <div class="col-xs-8" style="opacity: .8;">
                                         <small>
@@ -146,10 +148,11 @@
                     that.interactions.scroll = true
                     setTimeout(function() {
                         that.interactions.scrollAnimationFinished = true
-                    }, 400);
+                    }, 1000);
 
                 } else {
                     that.interactions.scroll = false
+                    that.interactions.scrollAnimationFinished = false;
                 }
             })
         },
