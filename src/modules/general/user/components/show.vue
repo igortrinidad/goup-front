@@ -24,11 +24,10 @@
                     </div>
                     <!-- / No Events -->
 
-                    <!-- No Events -->
+                    <!-- Events -->
                     <div class="saved-places-title">
-                        <h3 class="text-center">Locais salvos</h3>
+                        <h3 class="text-center">{{ translations.saved }}</h3>
                     </div>
-                    <!-- / No Events -->
 
                     <!-- Cards -->
                     <div id="cards" :style="{ height: `${ 275 * events.length }px` }">
@@ -116,7 +115,7 @@
                 },
                 user: {},
                 events: [],
-                
+
             }
         },
 
@@ -137,8 +136,6 @@
         mounted(){
             let that = this
 
-            $('.navbar.navbar-default').addClass('transparent')
-
             that.getUser()
 
             $(document).scroll(function() {
@@ -155,10 +152,6 @@
                     that.interactions.scroll = false
                 }
             })
-        },
-
-        beforeDestroy() {
-            $('.navbar.navbar-default').removeClass('transparent')
         },
 
         methods: {
