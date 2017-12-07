@@ -1,5 +1,5 @@
 /* Default Fixes */
-.asd { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
 html,
 body {

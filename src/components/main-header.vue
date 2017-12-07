@@ -131,10 +131,6 @@
         opacity: 0;
     }
 
-    .button-layer:active{
-        -webkit-animation: anim-effect-jelena 0.4s ease-out forwards;
-        animation: anim-effect-jelena 0.4s ease-out forwards;
-    }
 
     .button-layer-left{
         display: block;
@@ -147,10 +143,6 @@
         opacity: 0;
     }
 
-    .button-layer-left:active{
-        -webkit-animation: anim-effect-jelena 0.4s ease-out forwards;
-        animation: anim-effect-jelena 0.4s ease-out forwards;
-    }
 
     .button-layer-right{
         display: block;
@@ -161,11 +153,6 @@
         position: absolute;
         cursor: pointer;
         opacity: 0;
-    }
-
-    .button-layer-right:active{
-        -webkit-animation: anim-effect-jelena 0.4s ease-out forwards;
-        animation: anim-effect-jelena 0.4s ease-out forwards;
     }
 
     .navbar {
