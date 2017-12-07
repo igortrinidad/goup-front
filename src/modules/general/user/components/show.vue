@@ -24,6 +24,18 @@
                     </div>
                     <!-- / No Events -->
 
+                    <!-- User Badge -->
+                    <div class="goup-badge">
+                        <!-- Circle -->
+                        <span class="circle-profile primary xl icon">
+                            <i class="ion-ios-heart"></i>
+                        </span>
+                        <button type="button" class="btn btn-primary btn-block">
+                            Romântico
+                            <i class="level">Nível 1</i>
+                        </button>
+                        <!-- Button -->
+                    </div>
 
                     <!-- Cards -->
                     <div id="cards" :style="{ height: `${ 275 * events.length }px` }">
@@ -249,4 +261,28 @@
     .picture-circle-l { top: 100px; left: calc(50% - 50px); z-index: 10; }
     .picture-circle-m { top: 100px; left: calc(50% - 43px); z-index: 10; }
     .picture-circle-p { top: 100px; left: calc(50% - 33px); z-index: 10; }
+
+    /* Badge */
+    .goup-badge {
+        width: 220px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .goup-badge .icon {
+        position: absolute;
+        top: calc(50% - 30px);
+        left: 0;
+    }
+
+    .goup-badge .btn {
+        text-align: left;
+        padding: 3px 3px 3px 75px !important;
+    }
+
+    .goup-badge .level {
+        display: block;
+        color: #fff;
+    }
+
 </style>

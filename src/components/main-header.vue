@@ -169,20 +169,12 @@
     }
 
     .logo.full { width: 100%; padding: 32px 50px; }
+
     .circle-profile {
         position: absolute;
         top: 55%;
         margin-top: -22px;
-        background-color: transparent;
-        border: 0;
         color: rgba(255, 255, 255, .8);
-        width: 40px; height: 40px;
-        border-radius: 50%;
-        background: transparent;
-        font-size: 22px;
-        display: flex;
-        align-items: center;
-        padding: 0;
         border: 2px solid rgba(255, 255, 255, .8);
     }
 

@@ -1,0 +1,26 @@
+.circle-profile {
+    background-color: transparent;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: transparent;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.circle-profile.xl {
+    width: 60px; height: 60px;
+}
+
+.circle-profile.default {
+    color: rgba(255, 255, 255, .8);
+    border: 2px solid rgba(255, 255, 255, .8);
+}
+
+.circle-profile.primary {
+    color: #FFF;
+    background: #FF4B89;
+    border: 2px solid #FF4B89;
+}
