@@ -18,6 +18,11 @@
             <div class="main">
                 <div class="container bg m-t-20">
 
+                    <div class="text-center">
+                        <h3>{{ user.full_name }}</h3>
+                        <span>{{ user.city.name }} - {{ user.city.state }}</span>
+                    </div>
+
                     <!-- No Events -->
                     <div class="m-t-30" v-if="!events.length">
                         <h3 class="text-center">{{ translations.no_events }}</h3>
