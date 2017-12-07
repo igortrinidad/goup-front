@@ -9,7 +9,7 @@
 
         <div
             class="picture-circle border-picture-eletric-blue"
-            :class="{ 'picture-circle-l': verticalIndex === 0, 'picture-circle-m': verticalIndex > 0 }"
+            :class="{ 'picture-circle-l': !scroll, 'picture-circle-m': scroll }"
             :style="{ backgroundImage: `url(${ user.avatar })` }"
         >
         </div>
@@ -18,127 +18,70 @@
             <div class="main">
                 <div class="container bg m-t-20">
 
+                    <div class="text-center">
+                        <h3>{{ user.full_name }}</h3>
+                        <span>{{ user.city.name }} - {{ user.city.state }}</span>
+                    </div>
+
                     <!-- No Events -->
                     <div class="m-t-30" v-if="!events.length">
                         <h3 class="text-center">{{ translations.no_events }}</h3>
                     </div>
                     <!-- / No Events -->
 
-                    <div class="m-t-10 text-center" v-show="verticalIndex === 0">
-                        <h3 class="m-0 m-b-10">{{ user.full_name }}</h3>
-                        <span>{{ user.city.name }} - {{ user.city.state }}</span>
-                    </div>
-
-                    <!-- Swiper Events Vertical -->
-                    <div class="m-t-30" v-if="events.length">
-                        <div class="swiper-container swiper-vertical" ref="swiperVertical">
-                            <div class="swiper-wrapper">
-
-                                <!-- Fake List -->
-                                <div class="swiper-slide" :class="{ 'invisible': verticalIndex > 0, 'm-t-30': verticalIndex === 0 }">
-
-                                    <div class="card fake one"></div>
-                                    <div class="card fake two"></div>
-
-                                    <div class="card p-0 main-card">
-                                        <!-- Card Header -->
-                                        <div
-                                            class="card-header cover p-5"
-                                            :style="{
-                                                backgroundImage: `url(${firstEvent.cover })`,
-                                                height: '150px',
-                                                borderRadius: '6px 6px 0 0'
-                                            }"
-                                        >
-                                            <span class="event-ranking">
-                                                {{ firstEvent.rank_position }}º
-                                            </span>
-                                        </div>
-                                        <!-- Card Body -->
-                                        <div class="card-body card-padding">
-                                            <h4 class="m-b-5">{{ firstEvent.name }}</h4>
-                                            <div style="opacity: .8;">
-                                                <p class="m-b-5">{{ firstEvent.description }}</p>
-                                                <span class="d-block m-0 f-12">
-                                                    <strong>{{ firstEvent.city.name }} - {{ firstEvent.city.state }}</strong>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <!-- Card Footer -->
-                                        <div class="card-footer p-10">
-                                            <div class="row">
-                                                <div class="col-xs-8" style="opacity: .8;">
-                                                    <small>
-                                                        <i class="ion-location m-r-5"></i>{{ handleDistance(firstEvent.distance) }}
-                                                    </small>
-                                                    <small class="divider p-l-10 m-l-10">
-                                                        <span v-show="firstEvent.value > 0">{{ firstEvent.value | formatCurrency }}</span>
-                                                        <span v-show="firstEvent.value === 0">{{ translations.free }}</span>
-                                                    </small>
-                                                </div>
-                                                <div class="col-xs-4 text-right">
-                                                    <small class="f-primary">
-                                                        <i class="ion-ios-star m-r-5"></i>{{ firstEvent.favorited_count }}
-                                                    </small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <!-- Cards -->
+                    <div id="cards" :style="{ height: `${ 275 * events.length }px` }">
+                        <div
+                            class="card"
+                            v-for="(event, indexEvents) in events"
+                            :class="{ 'stacked': !scroll }"
+                            :style="[ scroll ? { top: `${ 275 * indexEvents }px` } : { top: 0 } ]"
+                        >
+                            <!-- Card Header -->
+                            <div
+                                class="card-header cover p-5"
+                                :style="{
+                                    backgroundImage: `url(${ event.cover })`,
+                                    height: '150px',
+                                    borderRadius: '6px 6px 0 0'
+                                }"
+                            >
+                                <span class="event-ranking">
+                                    {{ event.rank_position }}º
+                                </span>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body card-padding">
+                                <h4 class="m-b-5">{{ event.name }}</h4>
+                                <div style="opacity: .8;">
+                                    <p class="m-b-5">{{ event.description }}</p>
+                                    <span class="d-block m-0 f-12">
+                                        <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
+                                    </span>
                                 </div>
-                                <!-- / Fake List -->
-
-                                <!-- True List -->
-                                <div class="swiper-slide" :class="{ 'invisible': verticalIndex === 0 }" v-for="(event, eventIndex) in events">
-                                    <div class="card p-0" :class="{ 'top' : eventIndex < verticalIndex - 1 }">
-                                        <!-- Card Header -->
-                                        <div
-                                            class="card-header cover p-5"
-                                            :style="{
-                                                backgroundImage: `url(${ event.cover })`,
-                                                height: '150px',
-                                                borderRadius: '6px 6px 0 0'
-                                            }"
-                                        >
-                                            <span class="event-ranking">
-                                                {{ event.rank_position }}º
-                                            </span>
-                                        </div>
-                                        <!-- Card Body -->
-                                        <div class="card-body card-padding">
-                                            <h4 class="m-b-5">{{ event.name }}</h4>
-                                            <div style="opacity: .8;">
-                                                <p class="m-b-5">{{ event.description }}</p>
-                                                <span class="d-block m-0 f-12">
-                                                    <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <!-- Card Footer -->
-                                        <div class="card-footer p-10">
-                                            <div class="row">
-                                                <div class="col-xs-8" style="opacity: .8;">
-                                                    <small>
-                                                        <i class="ion-location m-r-5"></i>{{ handleDistance(event.distance) }}
-                                                    </small>
-                                                    <small class="divider p-l-10 m-l-10">
-                                                        <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
-                                                        <span v-show="event.value === 0">{{ translations.free }}</span>
-                                                    </small>
-                                                </div>
-                                                <div class="col-xs-4 text-right">
-                                                    <small class="f-primary">
-                                                        <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
-                                                    </small>
-                                                </div>
-                                            </div>
-                                        </div>
+                            </div>
+                            <!-- Card Footer -->
+                            <div class="card-footer p-10">
+                                <div class="row">
+                                    <div class="col-xs-8" style="opacity: .8;">
+                                        <small>
+                                            <i class="ion-location m-r-5"></i>{{ handleDistance(event.distance) }}
+                                        </small>
+                                        <small class="divider p-l-10 m-l-10">
+                                            <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
+                                            <span v-show="event.value === 0">{{ translations.free }}</span>
+                                        </small>
                                     </div>
-                                    <!-- / True List -->
+                                    <div class="col-xs-4 text-right">
+                                        <small class="f-primary">
+                                            <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- / Swiper Events Vertical -->
+                    <!-- /CARDS -->
 
                 </div>
             </div>
@@ -150,11 +93,11 @@
 <script>
     import { mapGetters } from 'vuex'
     import { cleanEventModel } from '@/models/Event'
+    import UserModel from '@/models/User'
 
     import * as translations from '@/translations/user/show'
 
     import mainHeader from '@/components/main-header'
-    import UserModel from '@/models/User'
 
     export default {
         name: 'general-user-show',
@@ -168,8 +111,7 @@
                 interactions: {},
                 user: {},
                 events: [],
-                firstEvent: {},
-                verticalIndex: 0
+                scroll: false
             }
         },
 
@@ -188,8 +130,21 @@
         },
 
         mounted(){
+            let that = this
+
             $('.navbar.navbar-default').addClass('transparent')
-            this.getUser()
+
+            that.getUser()
+
+            $(document).scroll(function() {
+                let scrollTop = $(document).scrollTop();
+
+                if (scrollTop > 100) {
+                    that.scroll = true
+                } else {
+                    that.scroll = false
+                }
+            })
         },
 
         beforeDestroy() {
@@ -201,7 +156,6 @@
             getUser() {
                 let that = this
 
-                console.log(that.$route.params);
                 that.user = UserModel
                 that.getUserEvents()
             },
@@ -220,24 +174,6 @@
                 event.favorited_count = 1
 
                 that.events = [ event, event, event, event, event ]
-                that.firstEvent = that.events[0]
-
-                that.initSwiperVertical()
-            },
-
-            initSwiperVertical() {
-                let that = this
-
-                setTimeout(function () {
-                    that.swiperVertical = new Swiper(that.$refs.swiperVertical, {
-                        direction: 'vertical',
-                        slidesPerView: 1,
-                        spaceBetween: 10,
-                        onSlideChangeEnd: swiper => {
-                            that.verticalIndex = swiper.realIndex
-                        },
-                    });
-                }, 200);
 
             },
 
@@ -265,42 +201,33 @@
         border-left: 1px solid #dfdfdf;
     }
 
-    /* Fake Cards */
-    .swiper-slide { position: relative; }
-    .card.fake {
-        position: absolute;
-        width: 100%; height: 255px;
+    /* Cards */
+    #cards {
+        position: relative;
+        width: 100%;
+        margin-top: 60px;
     }
-    .card.main-card { z-index: 20; }
-    .card.fake.one {
+
+    #cards .card {
+        position: absolute;
+        margin-bottom: 0;
+        height: 255px;
+        transition: ease .3s;
+        top: 0; left: 0; right: 0;
+    }
+
+    #cards .card.stacked:nth-child(1) { z-index: 20; }
+
+    #cards .card.stacked:nth-child(2) {
         transform: scale(.95) translateY(-20px);
         z-index: 10;
         box-shadow: inset 0 0  50px rgba(0, 0, 0, .2);
     }
-    .card.fake.two {
+
+    #cards .card.stacked:nth-child(3) {
         transform: scale(.90) translateY(-40px);
         z-index: 5;
         box-shadow: inset 0 0  100px rgba(0, 0, 0, .4);
-    }
-
-    /* Evento Pra Cima */
-    .card { transition: ease .5s; }
-    .card:before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        box-shadow: inset 0 0  0 rgba(0, 0, 0, .7);
-        z-index: 10;
-        border-radius: 6px;
-        transition: ease .5s;
-    }
-    .card.top {
-        transform: scale(.96);
-        transition: ease .5s;
-    }
-    .card.top:before {
-        box-shadow: inset 0 0  150px rgba(0, 0, 0, .7);
-        transition: ease .5s;
     }
 
     .picture-circle {
