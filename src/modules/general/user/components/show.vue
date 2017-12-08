@@ -213,14 +213,6 @@
 
 <style scoped>
 
-    #thing {
-    	width:55px;
-    	height:55px;
-    	border-radius:16px;
-    	background:#000;
-        margin-top: 300px;
-    }
-
     .divider {
         border-left: 1px solid #dfdfdf;
     }
@@ -232,7 +224,7 @@
     #cards {
         position: relative;
         width: 100%;
-        margin-top: 70px;
+        margin-top: 66px;
     }
 
     #cards .card {
@@ -276,14 +268,14 @@
         background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(87,31,159,1) 100%);
     }
 
-    .picture-circle-l { top: 90px; left: calc(50% - 50px); z-index: 10; }
-    .picture-circle-m { top: 90px; left: calc(50% - 43px); z-index: 10; }
-    .picture-circle-p { top: 90px; left: calc(50% - 33px); z-index: 10; }
+    .picture-circle-l { top: 100px; left: calc(50% - 50px); z-index: 10; }
+    .picture-circle-m { top: 100px; left: calc(50% - 43px); z-index: 10; }
+    .picture-circle-p { top: 100px; left: calc(50% - 33px); z-index: 10; }
 
     /* Badge */
     .goup-badge {
         width: 220px;
-        margin: 92px auto 0 auto;
+        margin: 122px auto 0 auto;
         position: relative;
     }
 
