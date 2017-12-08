@@ -50,6 +50,8 @@
                             :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
                             :class="{ 'stacked': !interactions.scroll }"
                             :style="[ interactions.scroll ? { top: `${ 275 * indexEvents }px` } : { top: 0 } ]"
+                            :data-0="`top: 0`"
+                            :data-100="`top: ${ 275 * indexEvents }px`"
                         >
                             <!-- Card Header -->
                             <div
