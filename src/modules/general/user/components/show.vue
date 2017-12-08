@@ -151,20 +151,21 @@
 
             that.getUser()
 
-            $(document).on('scroll', function() {
-                let scrollTop = $(document).scrollTop();
-
-                if (scrollTop > 150) {
-                    that.interactions.scroll = true
-                    setTimeout(function() {
-                        that.interactions.scrollAnimationFinished = true
-                    }, 1000);
-
-                } else {
-                    that.interactions.scroll = false
-                    that.interactions.scrollAnimationFinished = false;
-                }
-            })
+            that.skrollr = skrollr.init()
+            // $(document).on('scroll', function() {
+            //     let scrollTop = $(document).scrollTop();
+            //
+            //     if (scrollTop > 150) {
+            //         that.interactions.scroll = true
+            //         setTimeout(function() {
+            //             that.interactions.scrollAnimationFinished = true
+            //         }, 1000);
+            //
+            //     } else {
+            //         that.interactions.scroll = false
+            //         that.interactions.scrollAnimationFinished = false;
+            //     }
+            // })
         },
 
         methods: {
