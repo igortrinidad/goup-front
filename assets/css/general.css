@@ -1,5 +1,7 @@
 /* Default Fixes */
-* { box-sizing: border-box; }
+* { 
+    box-sizing: border-box; 
+}
 
 html,
 body {
@@ -9,7 +11,11 @@ body {
     color: #fff;
     background-color: #561F9F;
     background-image: url("https://s3.amazonaws.com/goup-assets/img/pattern-goup-transp.png");
+<<<<<<< HEAD
     background-attachment: fixed;
+=======
+
+>>>>>>> test_welcome_screen
 }
 
 label {

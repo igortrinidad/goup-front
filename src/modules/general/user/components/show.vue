@@ -150,6 +150,7 @@
 
             that.getUser()
 
+<<<<<<< HEAD
             // $(document).on('scroll', function() {
             //     let scrollTop = $(document).scrollTop();
             //
@@ -164,6 +165,23 @@
             //         that.interactions.scrollAnimationFinished = false;
             //     }
             // })
+=======
+            window.addEventListener( "scroll", function( event ) {
+                let scrollTop = $(document).scrollTop();
+
+                if (scrollTop > 100) {
+
+                    that.interactions.scroll = true
+                    setTimeout(function() {
+                        that.interactions.scrollAnimationFinished = true
+                    }, 1000);
+
+                } else {
+                    that.interactions.scroll = false
+                    that.interactions.scrollAnimationFinished = false;
+                }
+            })
+>>>>>>> test_welcome_screen
         },
 
         methods: {
