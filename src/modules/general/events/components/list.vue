@@ -211,6 +211,7 @@
                 events: [],
                 pagination: {},
                 nextPage: 1,
+                nextSet: 0,
                 currentCategory: null,
                 currentCity: null,
                 radius: 100,
@@ -261,26 +262,33 @@
         methods: {
             ...mapActions(['setLoading']),
 
-            changeCurrentCategory(category) {
-                this.currentCategory = category
+
+            resetBeforeChange(){
                 this.events = []
                 this.nextPage = 1
+                this.nextSet = 0
 
                 this.$nextTick(() => {
                     this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
                 });
             },
 
+            changeCurrentCategory(category) {
+                this.currentCategory = category
+                this.resetBeforeChange()
+            },
+
             getEvents($state) {
                 let that = this
 
-                that.$http.post(`event/rank/list?page=${that.nextPage}`, {
+                that.$http.post(`event/rank/list`, {
                     language: that.language,
                     category_id: that.currentCategory.id,
                     lat: that.getUserLastGeoLocation.lat,
                     lng: that.getUserLastGeoLocation.lng,
-                    radius: that.radius,
                     city_id: that.currentCity.id,
+                    page: that.nextPage,
+                    next_set: that.nextSet,
                 })
                     .then(function (response) {
 
@@ -293,7 +301,8 @@
                         }
 
                         if(that.pagination.current_page < that.pagination.last_page){
-                            that.nextPage =  that.nextPage +1
+                            that.nextPage =  that.nextPage + 1
+                            that.nextSet =  that.pagination.to
                             $state.loaded()
                         }else{
                             $state.loaded()
@@ -389,12 +398,7 @@
                             that.currentCity = that.getCities[swiper.realIndex]
                             localStorage.setItem('city_index', swiper.realIndex)
 
-                            this.events = []
-                            this.nextPage = 1
-
-                            this.$nextTick(() => {
-                                this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
-                            });
+                            that.resetBeforeChange()
                         },
                         breakpoints: {
                             350: {

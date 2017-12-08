@@ -48,12 +48,6 @@ export default [
         meta: {requiresAuth: false},
         children: [
             {
-                name: 'general.user.show',
-                path: ':user_slug',
-                component: Show,
-                meta: {requiresAuth: true}
-            },
-            {
                 name: 'general.user.settings',
                 path: '/settings/:settings_saved?',
                 component: Settings,
@@ -81,6 +75,12 @@ export default [
                 name: 'general.user.events',
                 path: '/events',
                 component: UserEvents,
+                meta: {requiresAuth: true}
+            },
+            {
+                name: 'general.user.show',
+                path: ':user_slug',
+                component: Show,
                 meta: {requiresAuth: true}
             },
         ]
