@@ -149,11 +149,10 @@
 
             that.getUser()
 
-            $(document).scroll(function() {
+            $(document).on('scroll', function() {
                 let scrollTop = $(document).scrollTop();
 
                 if (scrollTop > 150) {
-
                     that.interactions.scroll = true
                     setTimeout(function() {
                         that.interactions.scrollAnimationFinished = true
