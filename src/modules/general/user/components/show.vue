@@ -39,10 +39,13 @@
 
                     <!-- Cards -->
                     <div id="cards" :style="{ height: `${ 275 * events.length }px` }">
-                        <div
+                        <router-link
+                            tag="div"
                             class="card"
                             v-for="(event, indexEvents) in events"
                             v-if="interactions.scrollAnimationFinished || indexEvents <= 2"
+                            :key="indexEvents"
+                            :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
                             :class="{ 'stacked': !interactions.scroll }"
                             :style="[ interactions.scroll ? { top: `${ 275 * indexEvents }px` } : { top: 0 } ]"
                         >
@@ -88,7 +91,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </router-link>
                     </div>
                     <!-- /CARDS -->
 
@@ -149,7 +152,7 @@
             $(document).scroll(function() {
                 let scrollTop = $(document).scrollTop();
 
-                if (scrollTop > 100) {
+                if (scrollTop > 150) {
 
                     that.interactions.scroll = true
                     setTimeout(function() {
