@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                             <!-- Card Footer -->
-                            <div class="card-footer p-10">
+                            <div class="card-footer p-5">
                                 <div class="row">
                                     <div class="col-xs-8" style="opacity: .8;">
                                         <small>
@@ -218,7 +218,7 @@
         position: absolute;
         margin-bottom: 0;
         height: 255px;
-        transition: ease-in .4s;
+        transition: ease-in .3s;
         top: 0; left: 0; right: 0;
     }
 
