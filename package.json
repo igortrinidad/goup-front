@@ -49,6 +49,7 @@
     "moment-range": "^3.0.3",
     "node-waves": "^0.7.5",
     "sanitize-html": "^1.14.1",
+    "scrollreveal": "^3.3.6",
     "skrollr": "^0.6.26",
     "slug": "^0.9.1",
     "swiper": "^4.0.5",

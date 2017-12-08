@@ -38,16 +38,13 @@
                     </div>
 
                     <!-- Cards -->
-                    <div id="cards" :style="{ height: `${ 275 * events.length }px` }">
+                    <div id="cards">
                         <router-link
                             tag="div"
                             class="card"
                             v-for="(event, indexEvents) in events"
-                            v-if="interactions.scrollAnimationFinished || indexEvents <= 2"
                             :key="indexEvents"
                             :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
-                            :class="{ 'stacked': !interactions.scroll }"
-                            :style="[ interactions.scroll ? { top: `${ 275 * indexEvents }px` } : { top: 0 } ]"
                         >
                             <!-- Card Header -->
                             <div
@@ -108,6 +105,7 @@
     import UserModel from '@/models/User'
 
     import skrollr from 'skrollr'
+    import ScrollReveal from 'scrollreveal'
 
     import * as translations from '@/translations/user/show'
 
@@ -191,6 +189,17 @@
                 event.favorited_count = 1
 
                 that.events = [ event, event, event, event, event ]
+
+                setTimeout(function () {
+                    that.sr = ScrollReveal({
+                        reset: true,
+                        mobile: true,
+                        rotate: { x: -10, y: -10, z: 10 },
+                    })
+
+                    that.sr.reveal('.card')
+                    console.log(that.sr.reveal('.card'));
+                }, 100);
             },
 
             handleDistance(distance){
@@ -227,11 +236,8 @@
     }
 
     #cards .card {
-        position: absolute;
-        margin-bottom: 0;
+        margin-bottom: 30px;
         height: 255px;
-        transition: ease-in-out .5s;
-        top: 0; left: 0; right: 0;
     }
 
     .card:nth-child(1){z-index: 3;}
