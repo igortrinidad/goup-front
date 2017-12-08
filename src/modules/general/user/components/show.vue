@@ -14,6 +14,8 @@
         >
         </div>
 
+        <div id="thing" ></div>
+
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main">
                 <div class="container bg m-t-20">
@@ -38,13 +40,18 @@
                     </div>
 
                     <!-- Cards -->
-                    <div id="cards" :style="{ height: `${ 275 * events.length }px` }">
-                        <div
+                    <div id="cards" :style="{ height: `${ 275 * events.length }px`, border: '1px solid red' }" data-0="background:rgba(0, 0, 0, 0);" data-700="background:rgba(0, 0, 0, 1);">
+                        <router-link
+                            tag="div"
                             class="card"
                             v-for="(event, indexEvents) in events"
                             v-if="interactions.scrollAnimationFinished || indexEvents <= 2"
+                            :key="indexEvents"
+                            :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
                             :class="{ 'stacked': !interactions.scroll }"
                             :style="[ interactions.scroll ? { top: `${ 275 * indexEvents }px` } : { top: 0 } ]"
+                            :data-0="`top: 0`"
+                            :data-100="`top: ${ 275 * indexEvents }px`"
                         >
                             <!-- Card Header -->
                             <div
@@ -88,7 +95,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </router-link>
                     </div>
                     <!-- /CARDS -->
 
@@ -104,9 +111,12 @@
     import { cleanEventModel } from '@/models/Event'
     import UserModel from '@/models/User'
 
+    import skrollr from 'skrollr'
+
     import * as translations from '@/translations/user/show'
 
     import mainHeader from '@/components/main-header'
+
 
     export default {
         name: 'general-user-show',
@@ -146,21 +156,22 @@
 
             that.getUser()
 
-            $(document).on('scroll', function() {
-                let scrollTop = $(document).scrollTop();
+            that.skrollr = skrollr.init();
 
-                if (scrollTop > 100) {
-
-                    that.interactions.scroll = true
-                    setTimeout(function() {
-                        that.interactions.scrollAnimationFinished = true
-                    }, 1000);
-
-                } else {
-                    that.interactions.scroll = false
-                    that.interactions.scrollAnimationFinished = false;
-                }
-            })
+            // $(document).on('scroll', function() {
+            //     let scrollTop = $(document).scrollTop();
+            //
+            //     if (scrollTop > 150) {
+            //         that.interactions.scroll = true
+            //         setTimeout(function() {
+            //             that.interactions.scrollAnimationFinished = true
+            //         }, 1000);
+            //
+            //     } else {
+            //         that.interactions.scroll = false
+            //         that.interactions.scrollAnimationFinished = false;
+            //     }
+            // })
         },
 
         methods: {
@@ -186,7 +197,6 @@
                 event.favorited_count = 1
 
                 that.events = [ event, event, event, event, event ]
-
             },
 
             handleDistance(distance){
@@ -199,6 +209,14 @@
 </script>
 
 <style scoped>
+
+    #thing {
+    	width:55px;
+    	height:55px;
+    	border-radius:16px;
+    	background:#000;
+        margin-top: 300px;
+    }
 
     .divider {
         border-left: 1px solid #dfdfdf;
