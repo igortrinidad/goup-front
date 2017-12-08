@@ -146,7 +146,7 @@
 
             that.getUser()
 
-            $(document).scroll(function() {
+            $(document).on('scroll', function() {
                 let scrollTop = $(document).scrollTop();
 
                 if (scrollTop > 100) {
@@ -218,7 +218,7 @@
         position: absolute;
         margin-bottom: 0;
         height: 255px;
-        transition: ease-in .3s;
+        transition: ease-in-out .5s;
         top: 0; left: 0; right: 0;
     }
 
@@ -258,14 +258,14 @@
         background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(87,31,159,1) 100%);
     }
 
-    .picture-circle-l { top: 100px; left: calc(50% - 50px); z-index: 10; }
-    .picture-circle-m { top: 100px; left: calc(50% - 43px); z-index: 10; }
-    .picture-circle-p { top: 100px; left: calc(50% - 33px); z-index: 10; }
+    .picture-circle-l { top: 90px; left: calc(50% - 50px); z-index: 10; }
+    .picture-circle-m { top: 90px; left: calc(50% - 43px); z-index: 10; }
+    .picture-circle-p { top: 90px; left: calc(50% - 33px); z-index: 10; }
 
     /* Badge */
     .goup-badge {
         width: 220px;
-        margin: 128px auto 0 auto;
+        margin: 92px auto 0 auto;
         position: relative;
     }
 
