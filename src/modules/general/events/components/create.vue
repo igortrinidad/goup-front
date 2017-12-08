@@ -816,7 +816,6 @@
             selectDow(){
                 this.event.recurrency_info = this.$refs.dowpicker.pickerSelectedItem[0].value
                 this.recurrencyTypeSelected =  this.weekdays[this.event.recurrency_info].text
-                console.log('selected dow: ' + this.event.recurrency_info)
             },
 
             cancelDow(){
@@ -827,11 +826,11 @@
             selectMonthly (){
                 this.event.recurrency_info = `${this.$refs.monthlypicker.pickerSelectedItem[0].value}-${this.$refs.monthlypicker.pickerSelectedItem[1].value}`
 
-                let indexes = this.event.recurrency_info.split('-')
+                let values = this.event.recurrency_info.split('-')
+                let month_index = _.findIndex(this.monthWeeks, {value: parseInt(values[0])})
 
-                this.recurrencyTypeSelected =  `${this.monthWeeks[indexes[0]].text} - ${this.weekdays[indexes[1]].text}`
+                this.recurrencyTypeSelected =  `${this.monthWeeks[month_index].text} - ${this.weekdays[values[1]].text}`
 
-                console.log('selected monthly: ' + this.event.recurrency_info)
             },
 
             cancelMonthly(){

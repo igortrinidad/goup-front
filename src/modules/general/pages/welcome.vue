@@ -144,9 +144,6 @@
 
             var userLastGeoLocation = window.checkUserLastLocation();
 
-            console.log(userLastGeoLocation);
-            console.log(this.isLogged);
-
             //Usuário ainda nao tem localização
             if(!userLastGeoLocation){
                 this.interactions.location_granted = false;

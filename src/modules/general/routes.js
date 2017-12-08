@@ -16,6 +16,7 @@ import { routes as auth } from './auth'
 import { routes as user } from './user'
 import { routes as events } from './events'
 import { routes as explorer } from './explorer'
+import { routes as secret } from './secret'
 
 // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/Spread_operator
 // Thus a new array is created, containing all objects that match the routes.
@@ -32,6 +33,7 @@ export default [
             ...auth,
             ...user,
             ...events,
+            ...secret,
             {
                 name: 'general.welcome',
                 path: '',

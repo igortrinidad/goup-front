@@ -13,6 +13,7 @@
 
 <script>
     import * as translations from '@/translations/auth/signup-success'
+    import {mapGetters} from 'vuex'
 
     export default {
         name: 'signup-success',

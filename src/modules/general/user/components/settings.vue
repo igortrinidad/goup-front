@@ -15,12 +15,12 @@
                     <router-link
                         tag="div"
                         class="picture-circle picture-circle-xxl border-picture-eletric-blue"
-                        :style="{ backgroundImage: `url(${ user.avatar })` }"
-                        :to="{ name: 'general.user.show', params: { user_slug: user.slug } }"
+                        :style="{ backgroundImage: `url(${ currentUser.avatar })` }"
+                        :to="{ name: 'general.user.show', params: { user_slug: currentUser.slug } }"
                     >
                     </router-link>
 
-                    <h4 class="f-300 text-center m-t-20">{{ user.full_name }}</h4>
+                    <h4 class="f-300 text-center m-t-20">{{ currentUser.full_name }}</h4>
 
                     <div class="row m-t-30 text-center">
                         <div class="col-xs-12 m-t-10">
@@ -102,10 +102,7 @@
         },
 
         mounted(){
-            this.user = _.cloneDeep(this.currentUser)
-            if (this.$route.params.settings_saved) {
-                successNotify('', this.translations.save_success)
-            }
+
         },
 
         methods: {

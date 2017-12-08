@@ -29,6 +29,7 @@
                             <br>
                             <router-link tag="button" :to="{name: 'general.privacy'}" class="btn btn-dark m-t-10">{{ translations.legal.privacy }}</router-link>
 
+                            <router-link tag="label" class="btn-block text-white" :to="{name: 'secret.categories'}">---</router-link>
 
                         </div>
                     </div>
@@ -77,14 +78,9 @@
         },
 
         mounted(){
-            this.getUser()
         },
 
         methods: {
-
-            getUser() {
-                this.user = User
-            },
 
             // Facebook share
             openShareFacebook() {
@@ -119,5 +115,7 @@
 </script>
 
 <style scoped>
-
+    .text-white {
+        color: white;
+    }
 </style>

@@ -23,10 +23,10 @@ export const en = {
         }
     },
     terms: {
-        first: 'Ao continuar você concorda com nossos',
-        terms_button: 'Termos de Uso',
-        and: 'e',
-        privacy_button: 'Política de privacidade.'
+        first: 'By continuing you agree to our',
+        terms_button: 'Terms of Use',
+        and: 'and',
+        privacy_button:'Privacy Policy.'
     }
 }
 

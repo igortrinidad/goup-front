@@ -42,21 +42,50 @@
                             </div>
                             <!-- / Name -->
 
+                            <!-- Recurrency types -->
                             <div class="form-group">
-                                <label class="f-700 f-primary" for="event-date">{{ translations.form.event_date }}</label>
-                                <input
-                                    type="tel"
-                                    id="event-date"
-                                    class="form-control"
-                                    v-model="event.date"
-                                    :placeholder="translations.form.event_date"
-                                    data-mask="00/00/0000"
-                                >
+                                <label class="f-700 f-primary">{{ translations.form.recurrency_type }}</label>
+
+                                <ul class="list-group list-rounded m-t-10 m-0 text-left">
+                                    <li
+                                        class="list-group-item transparent"
+                                        :class="{ 'active': currentRecurrencyType === recurrency_type }"
+                                        @click.prevent="handleCurrencyType(recurrency_type)"
+                                        v-for="recurrency_type in recurrency_types"
+                                    >
+                                        {{ recurrency_type[`label_${language}`] }}
+                                        <i
+                                            :class="{
+                                                'icon-select m-l-10 f-20': true,
+                                                'ion-ios-circle-filled': currentRecurrencyType === recurrency_type,
+                                                'ion-ios-circle-outline': currentRecurrencyType !== recurrency_type
+                                            }"
+                                        >
+                                        </i>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /Recurrency types -->
+
+
+                            <div class="form-group">
+                                <label class="f-700 f-primary">{{ translations.form.selected_recurrency_type }}</label>
+                                <p v-if="recurrencyTypeSelected == ''"><strong>{{handleRecurrencyTypeSelected}}</strong></p>
+                                <p v-if="recurrencyTypeSelected != ''"><strong>{{recurrencyTypeSelected}}</strong></p>
                             </div>
 
+                            <div class="form-group" v-if="currentRecurrencyType">
+                                <label class="f-700 f-primary" for="event-time">{{ translations.form.event_time }}</label>
 
-                            <div class="form-group">
-                                <label class="f-700 f-primary" for="event-date">{{ translations.form.event_time }}</label>
+                                <span class="cursor-pointer" @click="event.time_uninformed = !event.time_uninformed ">
+                                        <i :class="{
+                                            'f-20': true,
+                                            'ion-ios-circle-filled': event.time_uninformed ,
+                                            'ion-ios-circle-outline': !event.time_uninformed
+                                        }"></i>
+                                        {{translations.form.time_uninformed}}
+                                 </span>
+
                                 <input
                                     type="tel"
                                     id="event-time"
@@ -64,39 +93,57 @@
                                     v-model="event.time"
                                     :placeholder="translations.form.event_time"
                                     data-mask="00:00"
+                                    v-if="!event.time_uninformed"
                                 >
                             </div>
 
+
                             <div class="form-group">
-                                <label class="f-700 f-primary" for="event-value">{{ translations.form.event_value }}</label>
-                                <vue-numeric type="tel" id="event-value" class="form-control" :currency="language == 'en'? '$': 'R$'" :min="0" :separator="language == 'en'? ',': '.'"  :precision="2" v-model="event.value" :placeholder="translations.form.event_value"></vue-numeric>
+                                <label class="f-700 f-primary">{{ translations.form.event_value }}</label>
+
+                                <span class="cursor-pointer" @click="event.value_uninformed = !event.value_uninformed ">
+                                        <i :class="{
+                                            'f-20': true,
+                                            'ion-ios-circle-filled': event.value_uninformed ,
+                                            'ion-ios-circle-outline': !event.value_uninformed
+                                        }"></i>
+                                        {{translations.form.value_uninformed}}
+                                 </span>
+
+                                <vue-numeric type="tel" id="event-value" class="form-control m-t-10"
+                                             :currency="language == 'en'? '$': 'R$'" :min="0"
+                                             :separator="language == 'en'? ',': '.'" :precision="2"
+                                             v-model="event.value"
+                                             :placeholder="translations.form.event_value"
+                                             v-if="!event.value_uninformed"
+                                ></vue-numeric>
                             </div>
 
                         </div>
                         <!-- /Event Informations -->
 
-                        <!-- Categories -->
-                        <div class="form-group">
-                            <label class="f-700 f-primary">{{ translations.form.categories }}</label>
 
-                            <ul class="list-group list-rounded m-t-10 m-0 text-left">
-                                <li
-                                    class="list-group-item transparent"
-                                    :class="{ 'active': currentCategory === category }"
-                                    @click="handleCategory(category)"
-                                    v-for="category in categories"
-                                >
-                                    {{ category[`name_${language}`] }}
-                                    <i
-                                        :class="{
-                                                'icon-select m-l-10 f-20': true,
-                                                'ion-ios-circle-filled': currentCategory.id === category.id,
-                                                'ion-ios-circle-outline': currentCategory.id !== category.id
-                                            }"
-                                    >
-                                    </i>
-                                </li>
-                            </ul>
+                        <!-- Categories -->
+                        <div class="border-inside-card default m-b-20">
+                            <div class="row m-t-20 m-b-20">
+                                <div class="col-sm-12 text-center">
+
+                                    <label class="f-700 f-primary">{{ translations.form.categories }}</label>
+
+                                    <p>{{translations.form.categories_max}}</p>
+
+                                    <div class="category-row">
+                                        <button
+                                            class="btn btn-default btn-sm m-r-5"
+                                            :class="{'btn-primary' : event.categories.indexOf(category.id) > -1}"
+                                            v-for="(category, $index) in getCategories"
+                                            @click.prevent="toggleCategory(category.id)"
+                                        >
+                                            {{ category[`name_${language}`]}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- / Categories -->
 
@@ -124,6 +171,7 @@
                                     {{ translations.form.clear_search }}
                                 </button>
                             </div>
+
 
                         </div>
 
@@ -239,7 +287,6 @@
                                 </div>
                             </div>
 
-
                             <div class="new-image m-t-30 m-b-30 cursor-pointer" @click="showPhotoUploader = true"  v-if="!isMobile">
                                 <i class="ion-plus-round"></i>
                                 <span>{{ translations.form.upload_image }}</span>
@@ -247,7 +294,9 @@
 
 
                             <div class="row">
-
+                                <div class="col-md-3" v-if="interactions.showPhotoPlaceholder">
+                                    <div class="card-placeholder placeholder-effect"></div>
+                                </div>
                                 <p class="f-300" v-if="!event.photos.length">{{translations.form.photo_cover_warning}}</p>
 
                                 <div class="col-md-3 col-sm-6" v-for="photo in event.photos">
@@ -275,7 +324,7 @@
                                 type="button"
                                 class="btn btn-primary btn-block transparent"
                                 @click="updateEvent()"
-                                :disabled="!event.name || !event.description || !event.category_id  || !event.google_place_id || !event.photos.length"
+                                :disabled="!event.name || !event.description || !event.categories.length || !event.recurrency_type  || !event.google_place_id || !event.photos.length"
                             >
                                 {{ translations.submit }}
                             </button>
@@ -286,7 +335,24 @@
 
                 </div>
 
-                <div id="teste" v-show="false"></div>
+                <vue-picker ref="dowpicker" :title="translations.form.day_of_week" :cancel-txt="translations.cancel"
+                            :confirm-txt="translations.confirm"
+                            :data="[weekdays]" @select="selectDow" @cancel="cancelDow">
+
+                </vue-picker>
+
+                <vue-picker ref="monthlypicker" :title="translations.form.monthly" :cancel-txt="translations.cancel"
+                            :confirm-txt="translations.confirm"
+                            :data="[monthWeeks, weekdays]" @select="selectMonthly" @cancel="cancelMonthly">
+
+                </vue-picker>
+
+                <vue-picker ref="datepicker" :title="translations.form.event_date" :cancel-txt="translations.cancel"
+                            :confirm-txt="translations.confirm"
+                            :data="[monthDays, months, years]" :selected-index.sync="dateSelectedIndex"
+                            @select="selectDate" @cancel="cancelDate" @change="changeDate">
+
+                </vue-picker>
 
             </div>
         </transition>
@@ -303,6 +369,8 @@
 <script>
     import { mapGetters, mapActions } from 'vuex'
 
+    const moment  = require('moment')
+
     import mainHeader from '@/components/main-header'
 
     import * as translations from '@/translations/events/edit'
@@ -311,6 +379,7 @@
     import VueNumeric from 'vue-numeric'
     import photoUploader from '@/components/photo-uploader.vue'
     import {apiUrl} from '@/config/'
+    import vuePicker from 'vue-bspicker'
 
     export default {
         name: 'general-events-edit',
@@ -318,7 +387,8 @@
         components: {
             mainHeader,
             VueNumeric,
-            photoUploader
+            photoUploader,
+            vuePicker
         },
 
         data () {
@@ -327,21 +397,30 @@
                 showPhotoUploader: false,
                 interactions: {
                     placeSelected: false,
+                    showPhotoPlaceholder: false
                 },
                 event: cleanEventModel(),
                 categories: [],
 
                 not_valid: [],
-                currentCategory: '',
-                subcategories: [],
+                currentRecurrencyType: '',
                 newTag: {
                     name: ''
                 },
+                recurrency_types:[
+                    {label_en: 'Daily', label_pt: 'Diário', value: 'daily'},
+                    {label_en: 'Weekly', label_pt: 'Semanal', value: 'weekly'},
+                    {label_en: 'Monthly', label_pt: 'Mensal', value: 'monthly'},
+                    {label_en: 'Date', label_pt: 'Data', value: 'date'}
+                ],
+                monthDays:[],
+                dateSelectedIndex:[],
+                recurrencyTypeSelected: ''
             }
         },
 
         computed: {
-            ...mapGetters(['language', 'AuthToken']),
+            ...mapGetters(['language', 'AuthToken', 'getCategories']),
 
             'translations': function() {
 
@@ -351,6 +430,92 @@
                 if (this.language === 'pt') {
                     return translations.pt
                 }
+            },
+
+            weekdays(){
+                moment.locale(this.language)
+
+                let weekDays = moment.weekdays(true)
+
+                let result = []
+
+                weekDays.map((dayName, dow) =>{
+                    result.push({value: dow, text: dayName})
+                })
+
+                return result
+            },
+
+            months(){
+                moment.locale(this.language)
+
+                let months = moment.months()
+
+                let result = []
+
+                months.map((monthName, monthNumber) =>{
+                    result.push({value: monthNumber, text: monthName})
+                })
+
+                return result
+            },
+
+            months(){
+                moment.locale(this.language)
+
+                let months = moment.months()
+
+                let result = []
+
+                months.map((monthName, monthNumber) =>{
+                    result.push({value: (monthNumber+1).toString().padStart(2, '0'), text: monthName})
+                })
+
+                return result
+            },
+
+            monthWeeks(){
+                let monthWeeks = [
+                    {value: 1, text: this.translations.monthWeeks.first},
+                    {value: 2, text: this.translations.monthWeeks.second},
+                    {value: 3, text: this.translations.monthWeeks.third},
+                    {value: 4, text: this.translations.monthWeeks.fourthy},
+                    {value: 5, text: this.translations.monthWeeks.fifth},
+                ]
+
+                return monthWeeks
+            },
+
+            years(){
+                let years = []
+
+                const nowYear = (new Date()).getFullYear()
+
+                for (let i = 1991; i <= nowYear+5; i++) {
+                    years.push({value: i, text: i})
+                }
+
+                return years
+            },
+
+            handleRecurrencyTypeSelected(){
+
+                if(this.event.recurrency_type == 'weekly'){
+                    return this.weekdays[this.event.recurrency_info].text
+                }
+
+                if(this.event.recurrency_type == 'monthly'){
+                    if(this.event.recurrency_info){
+                        let values = this.event.recurrency_info.split('-')
+                        let month_index = _.findIndex(this.monthWeeks, {value: parseInt(values[0])})
+                        return  `${this.monthWeeks[month_index].text} - ${this.weekdays[values[1]].text}`
+                    }
+                }
+
+                if(this.event.recurrency_type == 'date'){
+                    return this.event.recurrency_info
+                }
+
             }
         },
 
@@ -358,7 +523,8 @@
             if(window.cordova){
                 this.isMobile = true
             }
-            this.getCategories()
+
+            this.handleMonthDays()
             this.getEvent()
         },
 
@@ -441,33 +607,18 @@
 
             },
 
-            handleCategory(category) {
-                this.currentCategory = category
-
-                if(category){
-                    this.event.category_id = category.id
-                }
-            },
-
-            getCategories() {
-                let that = this
-
-                that.$http.get(`event/categories/${that.language}`)
-                    .then(function (response) {
-                        that.categories = response.data.categories
-                    })
-                    .catch(function (error) {
-                        console.log(error)
-                    });
-            },
-
             getEvent() {
                 let that = this
 
                 that.$http.get(`event/show/${that.$route.params.id}`)
                     .then(function (response) {
                         that.event = response.data.event
-                        that.handleCategory(that.event.category)
+
+                        that.event.categories = that.event.categories.map((category) => category.id)
+
+                        let recurrency_index = _.findIndex(that.recurrency_types, {value: that.event.recurrency_type})
+
+                        that.currentRecurrencyType = that.recurrency_types[recurrency_index]
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -479,7 +630,6 @@
 
                 that.$http.post('event/update', that.event)
                     .then(function (response) {
-                        that.addNewEvent(response.data.event)
                         successNotify('', that.translations.success)
                         that.$router.push({path: '/events'})
                     })
@@ -546,14 +696,14 @@
                     }
 
                     that.event.photos.push(api_response.photo)
-                    that.setLoading({is_loading: false, message: ''})
+                    that.interactions.showPhotoPlaceholder = fasle
                     successNotify('', 'Imagem enviada com sucesso')
 
                 }
 
                 var fail = function (error) {
 
-                    that.setLoading({is_loading: false, message: ''})
+                    that.interactions.showPhotoPlaceholder = false
                     errorNotify('', 'Houve um erro ao enviar a imagem')
                     console.log(error);
                 }
@@ -571,7 +721,7 @@
                 options.params = params;
                 var ft = new FileTransfer();
 
-                that.setLoading({is_loading: true, message: 'Enviando, aguarde'})
+                that.interactions.showPhotoPlaceholder = true
 
                 ft.upload(imageURI, encodeURI(`${apiUrl}/event/photo/upload`), win, fail, options);
             },
@@ -579,6 +729,8 @@
             storeImage: function(imageData){
 
                 let that = this
+
+                that.interactions.showPhotoPlaceholder = true
 
                 let formData = new FormData();
                 formData.append('event_id', that.event.id)
@@ -593,13 +745,16 @@
 
                         that.event.photos.push(response.data.photo)
 
+                        that.interactions.showPhotoPlaceholder = false
+
                     })
                     .catch(function (error) {
                         console.log(error)
+                        that.interactions.showPhotoPlaceholder = false
                     });
             },
 
-             setAsCover(photo_id){
+            setAsCover(photo_id){
                 let that = this
 
                 that.event.photos.map((photo) => {
@@ -643,6 +798,142 @@
                 this.event.tags = this.event.tags.filter(function (tag) {
                     return tag.name != name;
                 });
+            },
+
+            handleCurrencyType(recurrency_type){
+                this.currentRecurrencyType = recurrency_type
+                this.event.recurrency_type = recurrency_type.value
+
+                if(recurrency_type.value == 'weekly'){
+                    this.$refs.dowpicker.show();
+                }
+
+                if(recurrency_type.value == 'monthly'){
+                    this.$refs.monthlypicker.show();
+                }
+
+                if(recurrency_type.value == 'date'){
+                    this.$refs.datepicker.show();
+                    this.initSelectedDateIndex()
+                }
+            },
+
+            toggleCategory(category_id){
+                let that = this
+                var index = _.indexOf(that.event.categories, category_id);
+
+                if(index !== -1) {
+                    that.event.categories.splice(index, 1);
+                } else {
+
+                    if(that.event.categories.length >=3){
+                        infoNotify('', that.translations.form.categories_max_warning)
+                        return false
+                    }
+                    that.event.categories.push(category_id);
+                }
+            },
+
+
+            selectDow(){
+                this.event.recurrency_info = this.$refs.dowpicker.pickerSelectedItem[0].value
+                this.recurrencyTypeSelected =  this.weekdays[this.event.recurrency_info].text
+            },
+
+            cancelDow(){
+                this.event.recurrency_info = null
+            },
+
+
+            selectMonthly (){
+                this.event.recurrency_info = `${this.$refs.monthlypicker.pickerSelectedItem[0].value}-${this.$refs.monthlypicker.pickerSelectedItem[1].value}`
+
+                let values = this.event.recurrency_info.split('-')
+                let month_index = _.findIndex(this.monthWeeks, {value: parseInt(values[0])})
+
+                this.recurrencyTypeSelected =  `${this.monthWeeks[month_index].text} - ${this.weekdays[values[1]].text}`
+
+            },
+
+            cancelMonthly(){
+                this.event.recurrency_info = null
+            },
+
+            initSelectedDateIndex(){
+                let monthIndex = _.findIndex(this.months, {value: moment().format('MM')})
+                let yearIndex = _.findIndex(this.years, {value: parseInt(moment().format('YYYY'))})
+                let dayIndex = _.findIndex(this.monthDays, {value: moment().format('DD')})
+
+                let indexes =  [dayIndex, monthIndex, yearIndex]
+
+                this.dateSelectedIndex = indexes
+
+                this.$refs.datepicker.pickerSelectedIndex = indexes
+            },
+
+            selectDate(){
+                this.event.recurrency_info = `${this.$refs.datepicker.pickerSelectedItem[0].value}/${this.$refs.datepicker.pickerSelectedItem[1].value}/${this.$refs.datepicker.pickerSelectedItem[2].value}`
+
+                this.recurrencyTypeSelected =  this.event.recurrency_info
+
+            },
+
+            cancelDate(){
+                this.event.recurrency_info = null
+            },
+
+            changeDate(index,  value_index){
+
+                let  year = ''
+                let  year_index = ''
+                let  month = ''
+                let  month_index = ''
+
+                //Month change
+                if(index == 1) {
+                    month = this.months[value_index].value
+                    month_index = value_index
+                    year = this.years[this.dateSelectedIndex[2]].value
+                    year_index =this.dateSelectedIndex[2]
+                    this.handleMonthDays(`${month}/${year}`)
+                }
+
+                //year change
+                if(index == 2) {
+                    month = this.months[this.dateSelectedIndex[1]].value
+                    month_index = this.dateSelectedIndex[1]
+                    year = this.years[value_index].value
+                    year_index = value_index
+                    this.handleMonthDays(`${month}/${year}`)
+
+                }
+
+                if(index > 0){
+
+                    let new_indexes = [this.dateSelectedIndex[0],month_index, year_index]
+                    console.log(new_indexes)
+
+                    this.dateSelectedIndex = new_indexes
+
+                    this.$refs.datepicker.pickerSelectedIndex = new_indexes
+                }
+            },
+
+            handleMonthDays(month_year){
+
+                var daysInMonth = [];
+
+                month_year = !month_year ? moment().format('MM/YYYY') : month_year
+
+                var monthDate = moment(month_year, 'MM/YYYY').startOf('month');
+                _.times(monthDate.daysInMonth(), function (n) {
+                    daysInMonth.push({value: monthDate.format('DD'), text: monthDate.format('DD')});
+                    monthDate.add(1, 'day');
+                });
+
+                this.monthDays = daysInMonth
+
+
             }
 
         }
@@ -684,5 +975,34 @@
         width: 100%;
         font-weight: 700;
         margin-top: 20px;
+    }
+
+    .category-row{
+        overflow-x: scroll;
+        white-space: nowrap;
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+</style>
+
+<style>
+    /*override picker styles*/
+    .picker--choose .confirm {
+        color: #561F9F !important;
+        text-align: right;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .picker--choose .cancel {
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .picker--choose h4{
+        text-align: center
     }
 </style>

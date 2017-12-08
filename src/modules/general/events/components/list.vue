@@ -44,14 +44,11 @@
                                     v-for="(city, $index) in getCities"
                                     :key="$index"
                                     :class="{
-                                        'label-default': currentCity !== city.id,
-                                        'label-primary': currentCity === city.id
+                                        'label-default': currentCity && currentCity.id !== city.id,
+                                        'label-primary':  currentCity && currentCity.id === city.id
                                     }"
                                 >
-                                    <span v-if="currentCity == city.id">
-                                        {{city.name}} - {{city.state}}
-                                    </span>
-                                    <span v-if="currentCity != city.id">
+                                    <span>
                                         {{city.name}} - {{city.state}}
                                     </span>
                                 </div>
@@ -72,60 +69,72 @@
 
                         <!-- Events -->
 
-                        <card-placeholder v-if="interactions.is_loading" />
-
-                        <router-link
-                            tag="div"
-                            class="col-sm-12"
-                            v-for="(event, indexEvents) in events" v-if="!interactions.is_loading"
-                            :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
-                            :key="indexEvents"
-                        >
-                            <div class="card p-0">
-                                <!-- Card Header -->
-                                <div
-                                    class="card-header cover p-5"
-                                    :style="{
+                        <div infinite-wrapper>
+                            <router-link
+                                tag="div"
+                                class="col-sm-12"
+                                v-for="(event, indexEvents) in events" v-if="!interactions.is_loading"
+                                :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
+                                :key="indexEvents"
+                            >
+                                <div class="card p-0">
+                                    <!-- Card Header -->
+                                    <div
+                                        class="card-header cover p-5"
+                                        :style="{
                                         backgroundImage: `url(${ event.cover })`,
                                         height: '150px',
                                         borderRadius: '6px 6px 0 0'
                                     }"
-                                >
+                                    >
                                     <span class="event-ranking">
                                         {{ event.rank_position }}º
                                     </span>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body card-padding">
-                                    <h4 class="m-b-5">{{ event.name }}</h4>
-                                    <div style="opacity: .8;">
-                                        <p class="m-b-5">{{ event.description }}</p>
-                                        <span class="d-block m-0 f-12">
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body card-padding">
+                                        <h4 class="m-b-5">{{ event.name }}</h4>
+                                        <div style="opacity: .8;">
+                                            <p class="m-b-5">{{ event.description }}</p>
+                                            <span class="d-block m-0 f-12">
                                             <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
                                         </span>
-                                    </div>
-                                </div>
-                                <!-- Card Footer -->
-                                <div class="card-footer p-10">
-                                    <div class="row">
-                                        <div class="col-xs-8" style="opacity: .8;">
-                                            <small>
-                                                <i class="ion-location m-r-5"></i>{{ handleDistance(event.distance) }}
-                                            </small>
-                                            <small class="divider p-l-10 m-l-10">
-                                                <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
-                                                <span v-show="event.value === 0">{{ translations.free }}</span>
-                                            </small>
-                                        </div>
-                                        <div class="col-xs-4 text-right">
-                                            <small class="f-primary">
-                                                <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
-                                            </small>
                                         </div>
                                     </div>
+                                    <!-- Card Footer -->
+                                    <div class="card-footer p-10">
+                                        <div class="row">
+                                            <div class="col-xs-8" style="opacity: .8;">
+                                                <small>
+                                                    <i class="ion-location m-r-5"></i>{{ handleDistance(event.distance) }}
+                                                </small>
+                                                <small class="divider p-l-10 m-l-10">
+                                                    <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
+                                                    <span v-show="event.value === 0">{{ translations.free }}</span>
+                                                </small>
+                                            </div>
+                                            <div class="col-xs-4 text-right">
+                                                <small class="f-primary">
+                                                    <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </router-link>
+                            </router-link>
+                        </div>
+
+                        <infinite-loading ref="infiniteLoading" @infinite="getEvents" force-use-infinite-wrapper="true">
+                            <span slot="no-more">
+                                 <span class="f-700 text-white" v-if="events.length">{{translations.load_complete}}</span>
+                            </span>
+
+                            <span slot="no-results"></span>
+
+                            <span slot="spinner">
+                                 <card-placeholder/>
+                            </span>
+                        </infinite-loading>
                         <!-- /Events -->
 
                         <div class="col-sm-12">
@@ -178,13 +187,16 @@
     import moment from 'moment'
     import vueSlider from 'vue-slider-component'
 
+    import InfiniteLoading from 'vue-infinite-loading';
+
     export default {
         name: 'general-events-list',
 
         components: {
             mainHeader,
             vueSlider,
-            cardPlaceholder
+            cardPlaceholder,
+            InfiniteLoading
         },
 
         data () {
@@ -192,11 +204,14 @@
                 interactions:{
                     changeLocation: false,
                     showFilters: false,
-                    is_loading: true,
+                    is_loading: false,
                 },
                 destroyed: false,
                 placeholder: true,
                 events: [],
+                pagination: {},
+                nextPage: 1,
+                nextSet: 0,
                 currentCategory: null,
                 currentCity: null,
                 radius: 100,
@@ -237,7 +252,6 @@
             this.citiesSwiper();
             this.currentCategory = this.getCategories[0];
             this.currentCity = this.getCities[0];
-            this.getEvents();
 
         },
 
@@ -248,37 +262,62 @@
         methods: {
             ...mapActions(['setLoading']),
 
-            changeCurrentCategory(category) {
-                this.currentCategory = category
-                this.getEvents();
+
+            resetBeforeChange(){
+                this.events = []
+                this.nextPage = 1
+                this.nextSet = 0
+
+                this.$nextTick(() => {
+                    this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+                });
             },
 
-            getEvents() {
+            changeCurrentCategory(category) {
+                this.currentCategory = category
+                this.resetBeforeChange()
+            },
+
+            getEvents($state) {
                 let that = this
 
-                that.events = [];
-                that.interactions.is_loading = true;
-
-                that.$http.post('event/rank/list', {
+                that.$http.post(`event/rank/list`, {
                     language: that.language,
                     category_id: that.currentCategory.id,
                     lat: that.getUserLastGeoLocation.lat,
                     lng: that.getUserLastGeoLocation.lng,
-                    radius: that.radius,
                     city_id: that.currentCity.id,
+                    page: that.nextPage,
+                    next_set: that.nextSet,
                 })
                     .then(function (response) {
-                        that.events = response.data.events
-                        that.interactions.is_loading = false;
-                        console.log(that.events);
+
+                        if(!that.events.length){
+                            that.events = response.data.events
+                            that.pagination = response.data.pagination
+                        }else{
+                            that.events = that.events.concat(response.data.events)
+                            that.pagination = response.data.pagination
+                        }
+
+                        if(that.pagination.current_page < that.pagination.last_page){
+                            that.nextPage =  that.nextPage + 1
+                            that.nextSet =  that.pagination.to
+                            $state.loaded()
+                        }else{
+                            $state.loaded()
+                            $state.complete()
+                        }
+
+
                     }).catch(function (error) {
-                    that.interactions.is_loading = false;
+                   console.log(error)
                 });
 
             },
 
             applyFilters(){
-                this.getEvents()
+                //this.getEvents()
 
                 $('#modal-filter').modal('hide')
             },
@@ -298,7 +337,7 @@
 
             handleRadius(val){
                 this.radius = val
-                this.getEvents()
+                //this.getEvents()
             },
 
 
@@ -358,8 +397,8 @@
 
                             that.currentCity = that.getCities[swiper.realIndex]
                             localStorage.setItem('city_index', swiper.realIndex)
-                            that.getEvents();
 
+                            that.resetBeforeChange()
                         },
                         breakpoints: {
                             350: {
