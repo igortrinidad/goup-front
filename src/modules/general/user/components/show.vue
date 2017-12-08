@@ -105,11 +105,13 @@
 <script>
     import { mapGetters } from 'vuex'
     import { cleanEventModel } from '@/models/Event'
+    import skrollr from 'skrollr'
     import UserModel from '@/models/User'
 
     import * as translations from '@/translations/user/show'
 
     import mainHeader from '@/components/main-header'
+
 
     export default {
         name: 'general-user-show',
