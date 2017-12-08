@@ -166,7 +166,8 @@
                                          v-for="(city, $index) in getCities"
                                          :key="$index"
                                          :class="{'cursor-pointer': currentCity != city, 'label-primary':currentCity == city}">
-                                        {{city.name}} - {{city.state}}  <span class="badge-city">{{city.categories[currentCategory.id]}}</span>
+                                        <span v-if="currentCity != city">{{city.name}} - {{city.state}}  <span class="badge-city">{{city.categories[currentCategory.id]}}</span></span>
+                                        <span v-if="currentCity == city">{{city.name}} - {{city.state}}  <span class="badge-city">{{events.length}}</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -195,7 +196,7 @@
                     </div>
                     <!--DAYS SELECTEDS-->
 
-                    <button class="btn btn-primary btn-block m-t-30 m-b-30" :disabled="!days_selecteds_to_query.monthly">{{translations.search_button}}</button>
+                    <button class="btn btn-primary btn-block m-t-30 m-b-30" :disabled="!days_selecteds_to_query.monthly" @click.prevent="getEvents">{{translations.search_button}}</button>
 
                     <hr>
 
@@ -276,8 +277,8 @@
                     monthly: [],
                     weekly: [],
                     get_by_date: false,
-                    init: moment().format('YYYY-MM-DD'),
-                    end: moment().add(6, 'days').format('YYYY-MM-DD'),
+                    init: moment().format('DD/MM/YYYY'),
+                    end: moment().add(6, 'days').format('DD/MM/YYYY'),
                 }
             }
         },
@@ -485,22 +486,27 @@
                 return `${distance.toFixed(2)} km`
             },
 
-            citiesSwiper() {
+            citiesSwiper(initial_slide) {
                 let that = this
+
+                initial_slide = !initial_slide ? 0 : initial_slide
 
                 setTimeout(() => {
                     that.swiperTabs = new Swiper(that.$refs.citiesSlider, {
                         spaceBetween: 0,
                         slidesPerView: 5,
-                        initialSlide: 0,
+                        initialSlide: initial_slide,
                         loop: false,
                         centeredSlides: true,
                         slideToClickedSlide: true,
                         prevButton: '.swiper-button-prev',
                         nextButton: '.swiper-button-next',
                         onSlideChangeEnd: swiper => {
-                            that.currentCity = that.getCities[swiper.realIndex]
-                            that.getEvents();
+
+                            if(initial_slide != swiper.realIndex){
+                                that.currentCity = that.getCities[swiper.realIndex]
+                                that.getEvents();
+                            }
                         },
                         breakpoints: {
                             350: {
@@ -528,7 +534,8 @@
                     lat: that.getUserLastGeoLocation.lat,
                     lng: that.getUserLastGeoLocation.lng,
                     city_id: that.currentCity ? that.currentCity.id : null,
-                    category_id: that.currentCategory.id
+                    category_id: that.currentCategory.id,
+                    filters: that.days_selecteds_to_query
                 })
                     .then(function (response) {
 
@@ -537,25 +544,11 @@
                         setTimeout(function () {
                             that.interactions.lazy_image = false
                         }, 200);
-                        /*
-                        if (that.starting) {
-
-                            that.starting = false
-
-                            if (localStorage.getItem('events')) {
-                                that.events = JSON.parse(localStorage.getItem('events'))
-                            } else {
-                                localStorage.setItem('events', JSON.stringify(that.events))
-                            }
-
-                        } else {
-                            localStorage.removeItem('events')
-                            localStorage.setItem('events', JSON.stringify(that.events))
-                        }
-                        */
-                        //Inicia o hammer
                         that.mountHammer();
 
+                        let initalSlide = _.findIndex(that.getCities, {id: that.currentCity.id})
+
+                        that.citiesSwiper(initalSlide);
 
                     }).catch(function (error) {
                     console.log(error)
@@ -589,10 +582,8 @@
                     that.interactions.finished_loading_category = true;
                 }, 1400);
 
-
                 setTimeout(function() {
                     that.currentCity = that.getCities[0];
-                    that.citiesSwiper();
                     that.getEvents();
                 }, 1500);
 
@@ -782,22 +773,22 @@
     .card-cat-selected{
         -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
         box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
-        z-index: 1000; 
-        animation: card-cat-selected-animation linear 1s; 
-        animation-iteration-count: 1; 
-        transform-origin: 50% 50%; 
-        -webkit-animation: card-cat-selected-animation linear 1s; 
-        -webkit-animation-iteration-count: 1; 
-        -webkit-transform-origin: 50% 50%; 
-        -moz-animation: card-cat-selected-animation linear 1s; 
-        -moz-animation-iteration-count: 1; 
-        -moz-transform-origin: 50% 50%; 
-        -o-animation: card-cat-selected-animation linear 1s; 
-        -o-animation-iteration-count: 1; 
-        -o-transform-origin: 50% 50%; 
-        -ms-animation: card-cat-selected-animation linear 1s; 
-        -ms-animation-iteration-count: 1; 
-        -ms-transform-origin: 50% 50%; 
+        z-index: 1000;
+        animation: card-cat-selected-animation linear 1s;
+        animation-iteration-count: 1;
+        transform-origin: 50% 50%;
+        -webkit-animation: card-cat-selected-animation linear 1s;
+        -webkit-animation-iteration-count: 1;
+        -webkit-transform-origin: 50% 50%;
+        -moz-animation: card-cat-selected-animation linear 1s;
+        -moz-animation-iteration-count: 1;
+        -moz-transform-origin: 50% 50%;
+        -o-animation: card-cat-selected-animation linear 1s;
+        -o-animation-iteration-count: 1;
+        -o-transform-origin: 50% 50%;
+        -ms-animation: card-cat-selected-animation linear 1s;
+        -ms-animation-iteration-count: 1;
+        -ms-transform-origin: 50% 50%;
     }
 
     @keyframes card-cat-selected-animation{
@@ -883,7 +874,7 @@
           -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
       }
     }
-    
+
     @keyframes pulse {
       0% {
         -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);

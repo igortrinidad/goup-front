@@ -6194,6 +6194,10 @@ vue-hot-reload-api@^2.0.11:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.1.0.tgz#9ca58a6e0df9078554ce1708688b6578754d86de"
 
+vue-infinite-loading@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/vue-infinite-loading/-/vue-infinite-loading-2.2.2.tgz#b08eccf333511d556a659c8ff0d0c908ca1c2ace"
+
 vue-instant@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/vue-instant/-/vue-instant-1.0.0.tgz#9d50206f9508d65d5525f025ee88cb842f10512a"

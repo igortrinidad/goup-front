@@ -62,6 +62,7 @@
     "vue-bspicker": "^1.0.4",
     "vue-form-wizard": "^0.4.0",
     "vue-full-calendar": "^1.2.0",
+    "vue-infinite-loading": "^2.2.2",
     "vue-instant": "^1.0.0",
     "vue-masked-input": "^0.5.1",
     "vue-moment": "^2.0.2",
