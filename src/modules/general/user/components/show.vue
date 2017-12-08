@@ -146,7 +146,7 @@
 
             that.getUser()
 
-            $(document).scroll(function() {
+            window.addEventListener( "scroll", function( event ) {
                 let scrollTop = $(document).scrollTop();
 
                 if (scrollTop > 100) {
