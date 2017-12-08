@@ -14,8 +14,6 @@
         >
         </div>
 
-        <div id="thing" ></div>
-
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main">
                 <div class="container bg m-t-20">
@@ -40,7 +38,7 @@
                     </div>
 
                     <!-- Cards -->
-                    <div id="cards" :style="{ height: `${ 275 * events.length }px`, border: '1px solid red' }" data-0="background:rgba(0, 0, 0, 0);" data-700="background:rgba(0, 0, 0, 1);">
+                    <div id="cards" :style="{ height: `${ 275 * events.length }px` }">
                         <router-link
                             tag="div"
                             class="card"
@@ -50,8 +48,6 @@
                             :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
                             :class="{ 'stacked': !interactions.scroll }"
                             :style="[ interactions.scroll ? { top: `${ 275 * indexEvents }px` } : { top: 0 } ]"
-                            :data-0="`top: 0`"
-                            :data-100="`top: ${ 275 * indexEvents }px`"
                         >
                             <!-- Card Header -->
                             <div
@@ -155,8 +151,6 @@
             let that = this
 
             that.getUser()
-
-            that.skrollr = skrollr.init();
 
             // $(document).on('scroll', function() {
             //     let scrollTop = $(document).scrollTop();
