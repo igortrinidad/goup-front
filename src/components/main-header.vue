@@ -34,10 +34,9 @@
 
                     <!-- CENTER -->
                     <div>
-                        <router-link tag="div" class="logo cursor-pointer bounce-effect" to="/explorer" >
-                            <img v-if="title === 'home'" src="../assets/logos/LOGOS-07.png" alt="" style="width: 100%">
-                            <img v-if="title !== 'home'" src="../assets/logos/LOGOS-08.png" alt="" style="width: 100%">
-                            <span class="button-layer"  @click="refreshExplorer()"></span>
+                        <router-link tag="div" class="logo cursor-pointer" to="/explorer" >
+                            <img v-if="title === 'home'" src="../assets/logos/LOGOS-07.png" alt="" style="width: 100%" @click="refreshExplorer()">
+                            <img v-if="title !== 'home'" src="../assets/logos/LOGOS-08.png" alt="" style="width: 100%" @click="refreshExplorer()">
                         </router-link>
                     </div>
                     <!-- / CENTER -->
