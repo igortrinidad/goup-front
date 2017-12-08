@@ -35,6 +35,7 @@ elixir(function(mix) {
         './node_modules/jquery-mask-plugin/dist/jquery.mask.js',
         './node_modules/unitegallery/dist/js/unitegallery.min.js',
         './node_modules/unitegallery/dist/themes/tiles/ug-theme-tiles.js',
+        // './node_modules/skrollr/dist/skrollr.min.js',
 		'./src/utils/notifications.js',
         './assets/js/hammer-time.js',
 

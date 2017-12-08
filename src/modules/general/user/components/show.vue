@@ -14,6 +14,8 @@
         >
         </div>
 
+        <div id="thing" data-0="background:rgba(0, 0, 0, 0);" data-100="background:rgba(0, 0, 0, 1);"></div>
+
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main">
                 <div class="container bg m-t-20">
@@ -38,7 +40,7 @@
                     </div>
 
                     <!-- Cards -->
-                    <div id="cards" :style="{ height: `${ 275 * events.length }px` }">
+                    <div id="cards" :style="{ height: `${ 275 * events.length }px`, border: '1px solid red' }">
                         <router-link
                             tag="div"
                             class="card"
@@ -105,8 +107,9 @@
 <script>
     import { mapGetters } from 'vuex'
     import { cleanEventModel } from '@/models/Event'
-    import skrollr from 'skrollr'
     import UserModel from '@/models/User'
+
+    import skrollr from 'skrollr'
 
     import * as translations from '@/translations/user/show'
 
@@ -151,7 +154,8 @@
 
             that.getUser()
 
-            that.skrollr = skrollr.init()
+            that.skrollr = skrollr.init();
+
             // $(document).on('scroll', function() {
             //     let scrollTop = $(document).scrollTop();
             //
@@ -191,7 +195,6 @@
                 event.favorited_count = 1
 
                 that.events = [ event, event, event, event, event ]
-
             },
 
             handleDistance(distance){
@@ -204,6 +207,13 @@
 </script>
 
 <style scoped>
+
+    #thing {
+    	width:32px;
+    	height:32px;
+    	border-radius:16px;
+    	background:#000;
+    }
 
     .divider {
         border-left: 1px solid #dfdfdf;
