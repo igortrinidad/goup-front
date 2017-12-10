@@ -19,10 +19,10 @@
                 <!-- CATEGORIES -->
                 <div class="container" v-show="!interactions.finished_loading_category" :class="{'cat-is-selected' : currentCategory}">
 
-                    <p class="f-14 f-300 text-center m-t-10">{{translations.select_category}}</p>
+                    <p class="f-16 f-300 text-center m-t-10">{{translations.select_category}}</p>
 
-                    <div class="row p-10">
-                        <div class="col-xs-6 card-cat-col" v-for="category in getCategories">
+                    <div class="col-row p-10">
+                        <div class="col" v-for="category in getCategories">
                             <div class="card-cat text-center"
                                 @click="selectCategory(category)"
                                 :class="{
@@ -30,8 +30,8 @@
                                     'card-cat-non-selected' : currentCategory && currentCategory != category,
                                 }">
                                 <div class="p-10">
-                                    <img :src="category.photo" width="70%">
-                                    <p class="f-default">{{category['name_' + language]}}</p>
+                                    <img :src="category.photo_url" width="60%">
+                                    <p class="f-default m-t-10">{{category['name_' + language]}}</p>
                                 </div>
                             </div>
                         </div>
@@ -210,7 +210,6 @@
                         {{translations.add_event}}
                     </router-link>
 
-                    <p class="text-center m-t-30">{{ days_selecteds_to_query }}</p>
                 </div>
                 <!-- EXPLORER -->
 
@@ -237,7 +236,7 @@
     import bus from '@/utils/event-bus';
 
     export default {
-        name: 'landing',
+        name: 'EXPLORER',
 
         components: {
             mainHeader,
@@ -303,6 +302,8 @@
             var that = this;
 
             this.setCities();
+            this.setCategories();
+            this.updateUserGeolocation();
 
             bus.$on('refresh_explorer', function(){
                 that.currentCategory = null;
@@ -320,12 +321,13 @@
 
         destroyed(){
             bus.$off('refresh_explorer');
+            bus.$emit('category-cleaned');
         },
 
 
         methods: {
 
-            ...mapActions(['setCities', 'handleUserInteraction']),
+            ...mapActions(['setCities', 'setCategories', 'updateUserGeolocation', 'handleUserInteraction']),
 
             mountHammer() {
                 let that = this
@@ -580,6 +582,9 @@
 
                 setTimeout(function() {
                     that.interactions.finished_loading_category = true;
+
+                    bus.$emit('category-selected', category);
+
                 }, 1400);
 
                 setTimeout(function() {
@@ -656,6 +661,24 @@
 </script>
 
 <style scoped>
+
+
+    .col-row {
+        width: 100%;
+        column-count: 2;
+        column-gap: 0;
+
+    }
+
+    .col {
+        width: 100%;
+        display: inline-block;
+        padding: 5px;
+    }
+
+    @media(min-width: 900px) {
+        .col-row{ column-count: 3; } 
+    }
 
     .week-row{
         overflow-x: scroll;

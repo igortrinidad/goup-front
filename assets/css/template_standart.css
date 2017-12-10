@@ -20,6 +20,7 @@
 @import './modules/actions.css';
 @import './modules/grid.css';
 @import './modules/placeholder.css';
+@import './modules/animations.css';
 
 .text-muted { color: #4A5464; }
 

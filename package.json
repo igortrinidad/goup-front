@@ -23,7 +23,7 @@
     "cordova-plugin-fcm": "^2.1.2",
     "cordova-plugin-file": "^5.0.0",
     "cordova-plugin-file-transfer": "^1.7.0",
-    "cordova-plugin-geolocation": "^2.4.3",
+    "cordova-plugin-geolocation": "^3.0.0",
     "cordova-plugin-inappbrowser": "^1.7.2",
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-statusbar": "^2.3.0",
@@ -135,16 +135,16 @@
       "cordova-plugin-whitelist": {},
       "com.bez4pieci.cookies": {},
       "cordova-plugin-statusbar": {},
-      "cordova-plugin-geolocation": {
-        "GEOLOCATION_USAGE_DESCRIPTION": "We need your location to show professionals near you"
-      },
       "cordova-plugin-camera": {
         "CAMERA_USAGE_DESCRIPTION": "We like to access your camera to you post picture of your progress on iSaudavel app",
         "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
       },
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-x-socialsharing": {},
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-geolocation": {
+        "GEOLOCATION_USAGE_DESCRIPTION": "We need your location to find moments for you"
+      }
     }
   }
 }

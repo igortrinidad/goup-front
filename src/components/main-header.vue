@@ -5,13 +5,14 @@
 
                 <!-- Header Type === Back -->
                 <div v-if="type === 'back'">
-                    <button
-                        type="button"
-                        class="circle-profile left active back bounce-effect"
-                        @click="back()"
-                    >
-                        <i class="ion-ios-arrow-back"></i>
-                    </button>
+
+                    <img 
+                            v-if="title !== 'settings'"
+                            class="left-icon"
+                            :class="{'bounce' : interactions.bounce == 'back' }"
+                            src="../assets/icons/header/left-arrow.svg"
+                            @click="back()"
+                        >
                     <div class="logo full text-center">
                         {{ title }}
                     </div>
@@ -21,36 +22,66 @@
                 <!-- Header Type === Main -->
                 <div v-if="type === 'main'">
                     <!-- LEFT -->
-                    <router-link
-                        tag="button"
-                        class="bounce-effect circle-profile left"
-                        :to="{ name: 'general.user.settings' }"
-                        :class="{'active': title === 'settings' }"
-                    >
-                        <i class="ion-person"></i>
-                        <span class="button-layer-left"></span>
-                    </router-link>
+                    <div>
+
+                        <img 
+                            v-if="title !== 'settings'"
+                            class="left-icon"
+                            :class="{'bounce' : interactions.bounce == 'profile' }"
+                            src="../assets/icons/header/profile_white.svg"
+                            @click="redirectTo('general.user.settings', 'profile')"
+                        >
+
+                        <img 
+                            v-if="title === 'settings'"
+                            class="left-icon"
+                            :class="{'bounce' : interactions.bounce == 'profile' }"
+                            src="../assets/icons/header/profile_pink.svg"
+                            @click="redirectTo('general.user.settings', 'profile')"
+                        >
+
+                    </div>
                     <!-- / LEFT -->
 
                     <!-- CENTER -->
                     <div>
-                        <router-link tag="div" class="logo cursor-pointer" to="/explorer" >
-                            <img v-if="title === 'home'" src="../assets/logos/LOGOS-07.png" alt="" style="width: 100%" @click="refreshExplorer()">
-                            <img v-if="title !== 'home'" src="../assets/logos/LOGOS-08.png" alt="" style="width: 100%" @click="refreshExplorer()">
-                        </router-link>
+                        <div class="logo cursor-pointer" @click="redirectTo('general.explorer', 'explorer')" :class="{'bounce' : interactions.bounce == 'explorer'}">
+                            <img 
+                                v-if="title === 'home' && !categorySelected" 
+                                src="../assets/icons/header/hand_pink.svg" 
+                                style="width: 90px; margin-top: -11px; margin-left: 5px;">
+                            <img 
+                                v-if="title !== 'home' && !categorySelected" 
+                                src="../assets/icons/header/hand_white.svg" 
+                                style="width: 90px; margin-top: -11px; margin-left: 5px;">
+
+                            <img 
+                                class="m-l-25 m-t-10 text-center" 
+                                v-if="categorySelected" 
+                                :src="categorySelected.photo_url" 
+                                style="height: 50px">
+                        </div>
                     </div>
                     <!-- / CENTER -->
 
                     <!-- RIGHT -->
-                    <router-link
-                        tag="button"
-                        class="circle-profile right bounce-effect"
-                        :to="{ name: 'general.events.list' }"
-                        :class="{'active': title === 'ranking' }"
-                    >
-                        <i class="ion-podium"></i>
-                        <span class="button-layer-right"></span>
-                    </router-link>
+                    <div @click="redirectTo('general.events.list', 'ranking')">
+
+                        <img 
+                            v-if="title !== 'ranking'"
+                            class="right-icon"
+                            :class="{'bounce' : interactions.bounce == 'ranking' }"
+                            src="../assets/icons/header/star_white.svg"
+                           
+                        >
+
+                        <img 
+                            v-if="title === 'ranking'"
+                            class="right-icon"
+                            :class="{'bounce' : interactions.bounce == 'ranking' }"
+                            src="../assets/icons/header/star_pink.svg"
+                        >
+                    </div>
                     <!-- / RIGHT -->
                 </div>
                 <!-- / Header Type === Main -->
@@ -92,24 +123,66 @@
         },
         data(){
             return {
-                sideMenuStatus: false
+                interactions: {
+                    bounce: null,
+                },
+                sideMenuStatus: false,
+                categorySelected: null
             }
         },
         computed: {
         },
 
         mounted: function(){
+            var that = this;
 
             bus.$on('close-menu', () => this.sideMenuStatus = false);
 
+            bus.$on('category-selected', function(category){
+                that.categorySelected = category;
+                that.bounceImg('explorer');
+            });
+            bus.$on('category-cleaned', () => this.categorySelected = null);
+
+        },
+
+        destroyed: function(){
+            bus.$off('category-selected');
+            bus.$off('category-cleaned');
         },
 
         methods:{
             back: function(){
+                this.bounceImg('back');
                 window.history.back()
             },
 
+            redirectTo: function(target, bounce){
+                let that = this
+                
+                if(bounce == 'explorer'){
+                    that.refreshExplorer();
+                }
+
+                that.bounceImg(bounce);
+                setTimeout(function() {
+                    that.$router.push({name: target});
+                }, 100);
+            },
+
+            bounceImg: function(type){
+                let that = this
+            
+                that.interactions.bounce = type;
+
+                setTimeout(function() {
+                    that.interactions.bounce = null;
+                }, 400);
+                
+            },
+
             refreshExplorer: function(){
+                this.categorySelected = null;
                 bus.$emit('refresh_explorer');
             },
 
@@ -119,40 +192,26 @@
 
 <style scoped>
 
-    .button-layer{
-        display: block;
-        width: 80px;
-        height: 70px;
-        left: 10px;
-        top: -70px;
-        position: relative;
-        cursor: pointer;
-        opacity: 0;
-    }
-
-
-    .button-layer-left{
-        display: block;
-        width: 70px;
-        height: 70px;
-        left: -10px;
-        top: -20px;
+    .left-icon{
+        width: 65px;
         position: absolute;
         cursor: pointer;
-        opacity: 0;
+        left: 4px;
+        top: 10px;
     }
 
-
-    .button-layer-right{
-        display: block;
-        width: 70px;
-        height: 70px;
-        left: -30px;
-        top: -20px;
+    .right-icon{
+        width: 65px;
         position: absolute;
+        right: 4px;
+        top: 10px;
         cursor: pointer;
-        opacity: 0;
     }
+
+    .active-header svg path, .active-header svg text{
+        color: red !important;
+    }
+
 
     .navbar {
         margin-bottom: 0;
@@ -164,7 +223,7 @@
     .container-fluid { position: relative; }
 
     .logo {
-        width: 120px; margin: 0 auto; padding: 7px 10px 5px 10px;
+        width: 120px; margin: 7px auto; padding: 0px 10px 5px 10px;
     }
 
     .logo.full { width: 100%; padding: 32px 50px; }
@@ -194,4 +253,5 @@
     .container-fluid{
         height: 80px;
     }
+
 </style>

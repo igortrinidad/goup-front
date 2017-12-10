@@ -178,7 +178,9 @@ require('moment/locale/pt-br')
     component.store = store
     window.$vueinstance = new Vue(component).$mount('#root');
 
-    store.dispatch('setUserLastGeolocation');
+    setTimeout(function() {
+        store.dispatch('setUserLastGeolocation');
+    }, 3000);
 
 
 

@@ -222,6 +222,49 @@ export const setUserLastGeolocation = ({ commit }) => {
     })
 }
 
+export const updateUserGeolocation = ({ commit }) => {
+
+    var userLastGeoLocation = {
+        location_granted: false,
+        lat: null,
+        lng: null,
+        time: null
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        //Success
+        function(position){
+
+            userLastGeoLocation.lat = position.coords.latitude;
+            userLastGeoLocation.lng = position.coords.longitude;
+            userLastGeoLocation.location_granted = true;
+            userLastGeoLocation.time = moment().format('DD/MM/YYYY HH:mm:ss');
+
+            localStorage.setItem('user_last_geo_location', JSON.stringify(userLastGeoLocation));
+
+            commit(TYPES.UPDATE_USER_GEOLOCATION, {
+                userLastGeoLocation
+            })
+
+            window.console.log('Localização atualizada com sucesso');
+
+
+        },
+        //On Error
+        function(error){
+
+            window.console.log('Não foi possível localizar o usuário, ou o usuário não permitiu.');
+
+        },
+
+        //options
+        { enableHighAccuracy: true }
+
+    );
+
+
+}
+
 export const disableLoader = ({ commit }, option) => {
 
     /**

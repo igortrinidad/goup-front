@@ -1,29 +1,9 @@
 <template lang="html">
     <div class="col-sm-12">
         <div class="card card-placeholder p-0">
-            <!-- Card Header -->
-            <div class="card-header effect p-5" style="height: 150px">
-            </div>
-            <!-- Card Body -->
-            <div class="card-body card-padding">
-                <div class="m-b-5">
-                    <h4 class="text-placeholder effect">
-                        <span class="invisible">{{ title }}</span>
-                    </h4>
+            <div class="card-body">
+                <div class="effect text-placeholder" style="width: 100%; height: 200px;">
                 </div>
-
-                <div class="effect text-placeholder" style="width: 100%; height: 50px;">
-                </div>
-
-            </div>
-            <!-- Card Footer -->
-            <div class="card-footer p-10">
-                <span class="text-placeholder effect">
-                    <span class="invisible">placeholder</span>
-                </span>
-                <span class="text-placeholder effect pull-right">
-                    <span class="invisible">placeholder</span>
-                </span>
             </div>
         </div>
     </div>
@@ -37,7 +17,6 @@ export default {
     },
     data() {
         return {
-            title: 'GoUp Placeholder'
         }
     },
     computed: {

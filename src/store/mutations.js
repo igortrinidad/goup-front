@@ -27,6 +27,11 @@ export default {
         state.user_last_geolocation = payload.userLastGeoLocation
     },
 
+    [TYPES.UPDATE_USER_GEOLOCATION](state, payload) {
+
+        state.user_last_geolocation = payload.userLastGeoLocation
+    },
+
     [TYPES.SET_ENV](state, payload) {
         state.env = payload
     },

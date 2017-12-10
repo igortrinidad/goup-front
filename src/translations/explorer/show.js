@@ -1,8 +1,8 @@
 export const en = {
-    select_category: 'Explorer places by type',
-    end_list: 'No events nearby',
-    add_event_title: "Didn't your event? Add one!",
-    add_event: 'Add an event',
+    select_category: 'Find your next great moment',
+    end_list: 'No moments nearby',
+    add_event_title: "Didn't find an moment? Add one!",
+    add_event: 'Add a moment',
     up: 'Go Up',
     down: 'Go Down',
     skip: 'Skip',
@@ -47,10 +47,10 @@ export const en = {
 }
 
 export const pt = {
-    select_category: 'Explore eventos por tipo',
-    end_list: 'Nenhum evento nas proximidades',
-    add_event: 'Adicione um evento',
-    add_event_title: "Não encontrou seu evento? Adicione um!",
+    select_category: 'Encontre sua próxima emoção',
+    end_list: 'Nenhum momento nas proximidades',
+    add_event: 'Adicione um momento',
+    add_event_title: "Não encontrou algum momento? Adicione um!",
     up: 'Go Up',
     down: 'Go Down',
     skip: 'Pular',
@@ -77,7 +77,7 @@ export const pt = {
 
         notification:{
             title:'Localização',
-            message: 'GoUp precisa da sua permissão para acessar sua localização e encontrar eventos próximos a você.',
+            message: 'GoUp precisa da sua permissão para acessar sua localização e encontrar momentos próximos a você.',
             buttons: {
                 notNow: 'Depois',
                 enable: 'Ativar localização'
