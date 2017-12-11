@@ -23,7 +23,7 @@
                     </p>
 
                     <!-- User Badge -->
-                    <div class="status">
+                    <div class="status" data-toggle="modal" data-target="#modal-badges">
                         <!-- Circle -->
                         <span class="circle-profile primary xl icon">
                             <img class="icon-img" src="../../../../assets/icons/status/rock-and-roll.svg" alt="">
@@ -89,6 +89,58 @@
                         </router-link>
                     </div>
                     <!-- /CARDS -->
+
+                    <!-- Modal User Badges -->
+                    <div id="modal-badges" class="modal we-fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">{{ translations.modal_badges.title }}</h3>
+                                </div>
+                                <!-- Modal Body -->
+                                <div class="modal-body">
+                                    <div class="status full">
+                                        <!-- Circle -->
+                                        <span class="circle-profile primary xl icon">
+                                            <img class="icon-img" src="../../../../assets/icons/status/rock-and-roll.svg" alt="">
+                                        </span>
+                                        <button type="button" class="btn btn-primary btn-block">
+                                            Rock Star
+                                            <i class="level">{{ translations.level }} 4</i>
+                                        </button>
+                                        <!-- Button -->
+                                    </div>
+                                    <div class="status full">
+                                        <!-- Circle -->
+                                        <span class="circle-profile primary xl icon">
+                                            <img class="icon-img" src="../../../../assets/icons/status/dj.svg" alt="">
+                                        </span>
+                                        <button type="button" class="btn btn-primary btn-block">
+                                            Baladeiro
+                                            <i class="level">{{ translations.level }} 2</i>
+                                        </button>
+                                        <!-- Button -->
+                                    </div>
+                                    <div class="status full">
+                                        <!-- Circle -->
+                                        <span class="circle-profile primary xl icon">
+                                            <img class="icon-img" src="../../../../assets/icons/status/005-home.svg" alt="">
+                                        </span>
+                                        <button type="button" class="btn btn-primary btn-block">
+                                            Família
+                                            <i class="level">{{ translations.level }} 1</i>
+                                        </button>
+                                        <!-- Button -->
+                                    </div>
+                                </div>
+                                <!-- / Modal Body -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">{{ translations.modal_badges.close }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / Modal User Badges -->
 
                 </div>
             </div>

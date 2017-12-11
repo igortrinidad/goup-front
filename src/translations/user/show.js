@@ -4,6 +4,10 @@ export const en = {
     free: 'Free',
     saved: 'Saved locations',
     level: 'Level',
+    modal_badges: {
+        title: 'Badges',
+        close: 'Close'
+    }
 }
 
 export const pt = {
@@ -12,4 +16,8 @@ export const pt = {
     free: 'Gratuito',
     saved: 'Locais salvos',
     level: 'Nível',
+    modal_badges: {
+        title: 'Medalhas',
+        close: 'Fechar'
+    }
 }

@@ -7,7 +7,7 @@
     border: none;
     box-shadow: none;
     border-radius: 0;
-    padding: 160px 0;
+    padding: 30px 0;
     height: calc(100vh - 20px);
 }
 
@@ -43,16 +43,15 @@
 
 /* OS KEYFRAMES DAS ANIMAÇÕES ABAIXO ESTÃO EM "css/modules/keyframes.css" */
 
-.modal.delay .modal-title,
-.modal.delay .modal-body,
-.modal.delay .modal-footer {
+.modal.we-fade .modal-title,
+.modal.we-fade .modal-body,
+.modal.we-fade .modal-footer {
     opacity: 0;
 }
 .modal.in .modal-title,
 .modal.in .modal-body,
 .modal.in .modal-footer {
     animation: ease 1s fadeIn forwards;
-    animation-delay: .5s;
 }
 
 /*                 */
