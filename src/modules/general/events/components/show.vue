@@ -107,12 +107,12 @@
                                     <router-link
                                         tag="div"
                                         class="picture-circle picture-circle-xl border-picture-eletric-blue m-t-5"
-                                        :style="{ backgroundImage: `url(${ event.user.avatar })` }"
-                                        :to="{ name: 'general.user.show', params: { user_slug: event.user.slug } }"
+                                        :style="{ backgroundImage: `url(${ event.created_by.avatar })` }"
+                                        :to="{ name: 'general.user.show', params: { user_slug: event.created_by.slug } }"
                                         >
                                     </router-link>
 
-                                    <h4 class="f-300 text-center m-t-20 f-success">{{ event.user.full_name }}</h4>
+                                    <h4 class="f-300 text-center m-t-20 f-success">{{ event.created_by.full_name }}</h4>
 
                                     
 

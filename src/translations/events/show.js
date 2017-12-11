@@ -10,7 +10,7 @@ export const en = {
     no: 'No',
     event_not_found: 'Unfortunately we could not find this event now',
     call: 'Call now',
-    share: 'Compartilhe with your friends',
+    share: 'Share with your friends',
     shared_by: 'This moment was shared by',
     open_maps: 'Open in Maps',
 

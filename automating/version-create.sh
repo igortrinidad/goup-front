@@ -19,7 +19,7 @@ wait;
 cordova build android --release;
 wait;
 
-cordova build ios;
+cordova prepare ios;
 wait;
 
 cd automating;

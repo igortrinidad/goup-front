@@ -28,9 +28,8 @@ export default{
 
     categories:[],
 
-    place:{
-
-    },
+    place:{},
+    created_by: {},
     tags:[],
     photos:[]
 }
@@ -64,9 +63,8 @@ export function cleanEventModel() {
 
         categories:[],
 
-        place:{
-
-        },
+        place:{},
+        created_by: {},
         tags:[],
         photos:[]
 
