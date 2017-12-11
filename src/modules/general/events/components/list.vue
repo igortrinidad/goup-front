@@ -10,7 +10,7 @@
         <pulse v-if="interactions.is_loading" :icon="'ion-navigate'"/></pulse>
 
         <transition appear mode="in-out" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft" v-if="!interactions.is_loading">
-            
+
             <div class="">
 
                 <!-- CATEGORIAS -->
@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
                 <!-- CATEGORIAS -->
@@ -175,10 +175,9 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 
-        
         </transition>
 
             <!-- Modal Filter -->
@@ -217,9 +216,9 @@
     import * as translations from '@/translations/events/list'
     import moment from 'moment'
 
-    import vueSlider from 'vue-slider-component' 
- 
-    import InfiniteLoading from 'vue-infinite-loading'; 
+    import vueSlider from 'vue-slider-component'
+
+    import InfiniteLoading from 'vue-infinite-loading'
 
     import bus from '@/utils/event-bus';
 
@@ -368,7 +367,7 @@
                             $state.complete()
                         }
 
-                        
+
 
                     }).catch(function (error) {
                    console.log(error)
@@ -460,7 +459,7 @@
 
                 that.events = [];
 
-                
+
 
             },
         }

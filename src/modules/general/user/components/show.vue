@@ -38,13 +38,10 @@
                     </div>
 
                     <!-- Cards -->
-                    <div id="cards" :style="{ height: `${ 275 * events.length }px` }">
+                    <div class="cards" infinite-wrapper>
                         <div
                             class="card"
                             v-for="(event, indexEvents) in events"
-                            v-if="interactions.scrollAnimationFinished || indexEvents <= 2"
-                            :class="{ 'stacked': !interactions.scroll }"
-                            :style="[ interactions.scroll ? { top: `${ 275 * indexEvents }px` } : { top: 0 } ]"
                         >
                             <!-- Card Header -->
                             <div
@@ -92,6 +89,22 @@
                     </div>
                     <!-- /CARDS -->
 
+                    <infinite-loading @infinite="getUserEvents" force-use-infinite-wrapper="true">
+                        <span slot="no-more">
+                            <span class="f-700 text-white" v-if="events.length">
+                                {{ translations.load_complete }}
+                            </span>
+                        </span>
+
+                        <span slot="no-results"></span>
+
+                        <span slot="spinner" v-show="interactions.is_loading">
+                            <card-placeholder />
+                            {{ interactions.is_loading }}
+                        </span>
+
+                    </infinite-loading>
+
                 </div>
             </div>
         </transition>
@@ -107,22 +120,26 @@
     import * as translations from '@/translations/user/show'
 
     import mainHeader from '@/components/main-header'
+    import cardPlaceholder from '@/components/card-placeholder'
+    import InfiniteLoading from 'vue-infinite-loading'
 
     export default {
         name: 'general-user-show',
 
         components: {
             mainHeader,
+            InfiniteLoading,
+            cardPlaceholder
         },
 
         data () {
             return {
                 interactions: {
-                    scroll: false,
-                    scrollAnimationFinished: false,
+                    is_loading: false
                 },
                 user: {},
                 events: [],
+                nextPage: 1
 
             }
         },
@@ -173,19 +190,36 @@
             },
 
             getUserEvents() {
+
                 let that = this
-                let event = cleanEventModel()
 
-                event.name = 'Party',
-                event.slug = 'party',
-                event.cover = 'https://s3.amazonaws.com/goup-assets/img/categories/party.png'
-                event.city.name = 'Belo Horizonte'
-                event.city.state = 'MG'
-                event.value = 0
-                event.distance = 59
-                event.favorited_count = 1
+                that.interactions.is_loading = true
+                that.$http.get(`user/events/list?page=${that.nextPage}`)
+                    .then(function (response) {
 
-                that.events = [ event, event, event, event, event ]
+                        that.interactions.is_loading = false
+
+                        if(!that.events.length){
+                            that.events = response.data.events
+                            that.pagination = response.data.pagination
+                        }else {
+                            that.events = that.events.concat(response.data.events)
+                            that.pagination = response.data.pagination
+                        }
+
+                        if(that.pagination.current_page < that.pagination.last_page){
+                            that.nextPage =  that.nextPage + 1
+                            $state.loaded()
+                        }else {
+                            $state.complete()
+                        }
+
+
+
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
 
             },
 
@@ -199,41 +233,13 @@
 </script>
 
 <style scoped>
+    /* Cards */
+    .cards {
+        margin-top: 60px;
+    }
 
     .divider {
         border-left: 1px solid #dfdfdf;
-    }
-
-    .saved-places-title{
-        margin-top: 100px;
-    }
-    /* Cards */
-    #cards {
-        position: relative;
-        width: 100%;
-        margin-top: 70px;
-    }
-
-    #cards .card {
-        position: absolute;
-        margin-bottom: 0;
-        height: 255px;
-        transition: ease-in .3s;
-        top: 0; left: 0; right: 0;
-    }
-
-    .card:nth-child(1){z-index: 3;}
-    .card:nth-child(2){z-index: 2;}
-    .card:nth-child(3){z-index: 1;}
-
-    #cards .card.stacked:nth-child(2) {
-        transform: scale(.95) translateY(-20px);
-        box-shadow: inset 0 0  50px rgba(0, 0, 0, .2);
-    }
-
-    #cards .card.stacked:nth-child(3) {
-        transform: scale(.90) translateY(-40px);
-        box-shadow: inset 0 0  100px rgba(0, 0, 0, .4);
     }
 
     /* Picture */
