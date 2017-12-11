@@ -163,6 +163,10 @@ export const setUserLastGeolocation = ({ commit }) => {
                     }
                     store.dispatch('setCategories');
 
+                    commit(TYPES.SET_USER_LAST_GEOLOCATION, {
+                        userLastGeoLocation
+                    })
+
                 },
                 //On Error
                 function(error){
@@ -215,11 +219,13 @@ export const setUserLastGeolocation = ({ commit }) => {
             lng: null,
             time: null
         }
+
+        commit(TYPES.SET_USER_LAST_GEOLOCATION, {
+            userLastGeoLocation
+        })
     }
 
-    commit(TYPES.SET_USER_LAST_GEOLOCATION, {
-        userLastGeoLocation
-    })
+    
 }
 
 export const updateUserGeolocation = ({ commit }) => {

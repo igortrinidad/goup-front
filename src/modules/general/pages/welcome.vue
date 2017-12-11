@@ -1,6 +1,9 @@
 <template lang="html">
     <div class="container m-t-30 text-center">
 
+        <!-- Pulse Loading -->
+        <pulse  v-if="interactions.loading_location" :icon="'ion-navigate'" :msg="translations.loading_location"></pulse>
+
         <!-- SE A LOCALIZAÇÃO NAO ESTIVER DISPONÍVEL -->
         <div class="m-t-20" v-if="!interactions.location_granted && !interactions.loading_location">
 
@@ -29,7 +32,7 @@
             </div>
         </div>
 
-        <!-- SE O USER NÃO TIVER LOGAD -->
+        <!-- SE O USER NÃO TIVER LOGADO -->
         <div class="" v-if="interactions.location_granted && !interactions.loading_location">
 
             <div class="flags">
@@ -52,7 +55,7 @@
             <img src="../../../assets/logos/LOGOS-02.png"style="width: 130px">
 
             <!-- SE A LOCALIZAÇÃO ESTIVER DISPONÍVEL -->
-            <div class="m-t-20" v-if="getUserLastGeoLocation.location_granted">
+            <div class="m-t-20" v-if="interactions.location_granted">
 
                 <div class="swiper-container swiper-gallery" ref="galleryPhotos">
                     <div class="swiper-wrapper">
@@ -93,15 +96,7 @@
                 <!-- TERMS AND PRIVACY -->
 
             </div>
-
         </div>
-
-        <!-- Pulse Loading -->
-        <pulse
-            v-if="interactions.loading_location"
-            :icon="'ion-navigate'"
-            :msg="translations.loading_location"
-        />
 
     </div>
 </template>
@@ -150,7 +145,7 @@
                 this.interactions.location_granted = false;
                 this.interactions.loading_location = false;
                 this.initSwiperGallery();
-
+                return
             }
 
             //Usuário ainda nao tem localização
@@ -158,7 +153,7 @@
                 this.interactions.location_granted = false;
                 this.interactions.loading_location = false;
                 this.initSwiperGallery();
-
+                return
             }
 
             //Usuário esta logado e é valido
@@ -170,16 +165,31 @@
                 this.interactions.loading_location = false;
             }
 
-            document.addEventListener("deviceready", function(){
+            //Esperar o device estar pronto para pegar a localização e não dar erro
+            if(window.cordova){
+
+                document.addEventListener("deviceready", function(){
+                    //Usuário esta logado e  é INvalido
+                    if(that.isLogged && userLastGeoLocation == 'is_invalid'){
+                        that.getUserLocation();
+
+                    //Usuário NAO esta logado e  é INvalido
+                    } else if(!that.isLogged && userLastGeoLocation == 'is_invalid'){
+                        that.getUserLocation();
+                    }
+                }, false);
+
+            } else {
+
                 //Usuário esta logado e  é INvalido
                 if(that.isLogged && userLastGeoLocation == 'is_invalid'){
-                    that.interactions.loading_location = false;
                     that.getUserLocation();
+
+                //Usuário NAO esta logado e  é INvalido
                 } else if(!that.isLogged && userLastGeoLocation == 'is_invalid'){
-                    that.interactions.loading_location = false;
                     that.getUserLocation();
                 }
-            }, false);
+            }
 
             this.initSwiperGallery();
 
@@ -207,14 +217,15 @@
                         newUserLastGeoLocation.lat = position.coords.latitude;
                         newUserLastGeoLocation.lng = position.coords.longitude;
                         newUserLastGeoLocation.location_granted = true;
-                        that.interactions.location_granted = true;
-                        that.interactions.loading_location = false;
+
                         newUserLastGeoLocation.time = moment().format('DD/MM/YYYY HH:mm:ss');
 
                         localStorage.setItem('user_last_geo_location', JSON.stringify(newUserLastGeoLocation));
 
+                        that.interactions.location_granted = true;
+                        that.interactions.loading_location = false;
 
-                        that.setUserLastGeolocation();
+                        //that.setUserLastGeolocation();
                         that.initSwiperGallery();
 
                         if(that.isLogged){
