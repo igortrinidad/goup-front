@@ -419,6 +419,7 @@
 
                 setTimeout(function() {
                     that.interactions.finished_loading_category = true;
+                    that.interactions.is_loading = false;
                     that.$router.push({ query: { category_id: category.id }})
                 }, 500);
 

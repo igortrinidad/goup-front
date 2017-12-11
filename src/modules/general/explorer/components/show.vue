@@ -278,7 +278,7 @@
                     weekly: [],
                     get_by_date: false,
                     init: moment().format('DD/MM/YYYY'),
-                    end: moment().add(6, 'days').format('DD/MM/YYYY'),
+                    end: moment().add(3, 'months').format('DD/MM/YYYY'),
                 },
                 initialCitySlide: 0
             }
