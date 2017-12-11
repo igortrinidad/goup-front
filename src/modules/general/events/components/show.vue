@@ -2,14 +2,16 @@
     <div class="first-container">
 
         <main-header
-            :title="translations.title"
+            :title="!interactions.is_loading ? event.name : translations.loading"
             :type="'back'"
             :cursor="false"
         ></main-header>
 
 
 
-        <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+        <pulse v-if="interactions.is_loading" :icon="'ion-ios-reload m-l-5'"/></pulse>
+
+        <transition v-if="!interactions.is_loading" appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
 
                 <div v-if="interactions.eventNotFound">
@@ -39,14 +41,31 @@
 
                     <!-- Place Name, Description, City And State -->
                     <div class="text-center">
-                        <h3 class="m-t-30">{{ event.name }}</h3>
+                        <h3 class="m-t-30 f-success">{{ event.name }}</h3>
 
                         <p>{{ event.description }}</p>
 
-                        <h5>
+                        <p class="f-success">
                             <i class="ion-ios-location m-r-5"></i>
                             {{ `${ event.city.name } - ${ event.city.state }` }}
-                        </h5>
+                        </p>
+
+                        <p>{{translations.categories_title}}</p>
+                        <div class="col-row">
+                            
+                            <div class="col" v-for="category in event.categories">
+                                <div class="card-cat text-center"
+                                    @click="selectCategory(category)"
+                                    :class="{
+                                        'bounce' : currentCategory && currentCategory == category
+                                    }">
+                                    <div class="p-10">
+                                        <img :src="category.photo_url" width="40px">
+                                        <p class="f-default m-t-10">{{category['name_' + language]}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Call -->
                         <div class="m-t-30" v-if="event.phone">
@@ -57,7 +76,7 @@
                         <!-- /Call -->
 
                         <!-- Share -->
-                        <h4 class="m-t-30">{{ translations.share }}</h4>
+                        <p class="m-t-30">{{ translations.share }}</p>
                         <a class="btn btn-facebook transparent m-5">
                             <i class="ion-social-facebook m-r-5"></i>
                         </a>
@@ -115,11 +134,20 @@
                             <tab-friends  v-show="currentTab === 1"></tab-friends>
                             <!-- Tab Friends -->
                         </div>
-                        <!-- / Tab Content -->
                     </div>
-                    <!-- / Place Content -->
+                    <!-- / Tab Content -->
 
                 </div>
+                <!-- / Place Content -->
+
+                <!-- See Also -->
+
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <h3 class="text-center f-success m-t-30">{{translations.see_more.title}}</h3>
+                    </div>
+                </div>
+                    <!-- / See Also -->
             </div>
         </transition>
 
@@ -141,17 +169,20 @@
         components: {
             mainHeader,
             tabLocation,
-            tabFriends
+            tabFriends,
+            pulse: require('@/components/pulse.vue')
         },
 
         data () {
             return {
+                interactions: {
+                    eventNotFound: false,
+                    is_loading: true,
+                },
                 eventholder: true,
                 event: {},
                 currentTab: 0,
-                interactions: {
-                    eventNotFound: false
-                }
+                currentCategory: null
             }
         },
 
@@ -170,7 +201,7 @@
         },
 
         mounted(){
-            this.getPlace()
+            this.getEvent()
         },
 
         methods: {
@@ -207,21 +238,30 @@
                 }, 200);
             },
 
-            getPlace() {
+            getEvent() {
                 let that = this
 
                 that.$http.get(`event/show/public/${that.$route.params.event_slug}`)
                     .then(function (response) {
                         that.event = response.data.event
-                        that.initSwiperGallery()
-                        that.initSwiperTabs()
-                        //this.interactions.eventNotFound = true
+                        that.initSwiperGallery();
+                        that.initSwiperTabs();
+                        that.interactions.is_loading = false;
                     })
                     .catch(function (error) {
                         console.log(error)
                     });
 
-            }
+            },
+
+            selectCategory: function(category){
+                var that = this;
+                that.currentCategory = category;
+
+                setTimeout( function(){
+                    that.$router.push({name: 'general.events.list', query: {category_id: category.id}}); 
+                }, 300)
+            },
         }
     }
 </script>
@@ -258,5 +298,25 @@
     }
 
     .list-rounded .list-group-item span { display: block; margin-top: 10px; }
+
+    .col-row {
+        display: flex;
+        width: 100%;
+        column-count: 4;
+        column-gap: 0;
+
+    }
+
+    .col {
+        width: 100%;
+        display: inline-block;
+        padding: 5px;
+    }
+
+    .card-cat{
+        background-color: #FFFFFF;
+        border-radius: 15px;
+        cursor: pointer;
+    }
 
 </style>

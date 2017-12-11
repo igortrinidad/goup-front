@@ -1,6 +1,8 @@
 export const en = {
     back: 'Back',
-    title: 'Event',
+    title: 'Moment',
+    loading: 'Loading',
+    categories_title: 'This Moment is good for',
     date: 'Date',
     style: 'Style',
     is_opened: 'Is opened now ?',
@@ -18,7 +20,7 @@ export const en = {
         users: 'More users'
     },
 
-    no_interactions: 'This event does not have any interactions yet',
+    no_interactions: 'No body liked this event yet',
 
     // About Section
     about: {
@@ -34,12 +36,19 @@ export const en = {
         commentPlaceholder: 'Leave your comment about',
         successComment: 'Comment successfully submitted!',
         length: 'Characters remaining'
+    },
+
+    //See more section
+    see_more: {
+        title: 'See also'
     }
 }
 
 export const pt = {
     back: 'Voltar',
     title: 'Evento',
+    loading: 'Carregando',
+    categories_title: 'Este Momento é recomendado para',
     date: 'Data',
     style: 'Estilo',
     is_opened: 'Esta aberto agora ?',
@@ -57,7 +66,7 @@ export const pt = {
         users: 'Mais usuários'
     },
 
-    no_interactions: 'Este evento ainda não possui nenhuma interação',
+    no_interactions: 'Este Momento ainda não possui nenhuma curtida',
 
     // About Section
     about: {
@@ -73,5 +82,10 @@ export const pt = {
         commentPlaceholder: 'Deixe seu comentário sobre',
         successComment: 'Comentários enviado com sucesso!',
         length: 'Caracteres restantes'
+    },
+
+    //See more section
+    see_more: {
+        title: 'Veja também'
     }
 }

@@ -3,11 +3,7 @@
         <div class="m-t-30 text-center">
             <div class="container">
 
-                <!-- Friends -->
-                <h3 class="m-t-0 m-b-30">{{ translations.tabs.friends }}</h3>
-
-
-                <p v-show="!interactions.length">{{translations.no_interactions}}</p>
+                <p class="f-info" v-show="!interactions.length">{{translations.no_interactions}}</p>
 
                 <div v-for="interaction in interactions">
                     <div

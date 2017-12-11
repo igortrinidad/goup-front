@@ -40,4 +40,54 @@
         -webkit-transform: scale3d(1, 1, 1); 
         transform: scale3d(1, 1, 1); 
       } 
-    } 
+    }
+
+
+    .animation-pulse{
+        animation: animation-pulse 1.6s infinite;
+    }
+
+        @-webkit-keyframes animation-pulse {
+      0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
+      }
+      70% {
+          -webkit-box-shadow: 0 0 0 10px rgba(255,255,255, 0);
+      }
+      100% {
+          -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
+      }
+    }
+
+    @keyframes animation-pulse {
+      0% {
+        -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
+        box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
+      }
+      70% {
+          -moz-box-shadow: 0 0 0 10px rgba(255,255,255, 0);
+          box-shadow: 0 0 0 10px rgba(255,255,255, 0);
+      }
+      100% {
+          -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
+          box-shadow: 0 0 0 0 rgba(255,255,255, 0);
+      }
+    }
+
+    .fadeout-500 {
+        -webkit-animation: fadeOut 500ms;
+        -moz-animation: fadeOut 500ms;
+        animation: fadeOut 500ms;
+    }
+
+    @keyframes fade-out{
+          0% {
+            opacity: 1;
+          }
+          70% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+          }
+    }

@@ -1,8 +1,6 @@
 <template>
     <div>
         <div class="m-t-30 text-center">
-            <h3 class="m-t-0 m-b-30">{{ translations.tabs.location }}</h3>
-
             <div v-if="event.place.full_address">
                 <span>{{ event.place.full_address }}</span>
             </div>

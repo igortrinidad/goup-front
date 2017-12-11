@@ -141,6 +141,7 @@
             }
         },
         mounted() {
+            var that = this;
 
             var userLastGeoLocation = window.checkUserLastLocation();
 
@@ -169,14 +170,16 @@
                 this.interactions.loading_location = false;
             }
 
-            //Usuário esta logado e  é INvalido
-            if(this.isLogged && userLastGeoLocation == 'is_invalid'){
-                this.interactions.loading_location = false;
-                this.getUserLocation();
-            } else if(!this.isLogged && userLastGeoLocation == 'is_invalid'){
-                this.interactions.loading_location = false;
-                this.getUserLocation();
-            }
+            document.addEventListener("deviceready", function(){
+                //Usuário esta logado e  é INvalido
+                if(that.isLogged && userLastGeoLocation == 'is_invalid'){
+                    that.interactions.loading_location = false;
+                    that.getUserLocation();
+                } else if(!that.isLogged && userLastGeoLocation == 'is_invalid'){
+                    that.interactions.loading_location = false;
+                    that.getUserLocation();
+                }
+            }, false);
 
             this.initSwiperGallery();
 

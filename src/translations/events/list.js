@@ -1,13 +1,17 @@
 export const en = {
-    title: 'Ranking',
+    title_category: 'Select a type of Moment to explore the best options by city or check ALL to see what people are loving near you.',
+    before_category_type: 'Best Moments of',
+    after_category_type: 'in',
     filters: 'Filters',
     more_filters: 'More filters',
-    noEvents: 'No event found near you, search in another category or nearby cities.',
-    categories: 'Categories',
+    noEvents: 'No Moment found near you, search in another Moment type or nearby cities.',
+    categories: 'Moments',
     nearCities: 'Nearby cities',
+    noCities: 'We dont find any city around you, please enable location on device settings and try again.',
     approximate_distances: 'Approximate distances',
     free: 'Free',
-    add_event: 'Add an event',
+    add_event_title: "Didn't find the Moment that you looking for? Share with others your suggestion of Moments",
+    add_event: 'Add a Moment',
 
     label: {
         max_range: 'Max Range'
@@ -39,15 +43,19 @@ export const en = {
 }
 
 export const pt = {
-    title: 'Ranking',
+    title_category: 'Selecione um tipo de Momento para ver o ranking por cidade ou escolha TODOS para ver o que as pessoas perto de você estão curtindo mais',
+    before_category_type: 'Melhores Momentos de',
+    after_category_type: 'em',
     filters: 'Filtros',
     more_filters: 'mais filtros',
-    noEvents: 'Nenhum evento encontrado próximo a você, procure em outra categoria ou cidades próximas',
-    categories: 'Categorias',
+    noEvents: 'Não encontramos nenhum Momento próximo a você, procure outros tipos de Momento ou cidades próximas',
+    categories: 'Momentos',
     nearCities: 'Cidades próximas',
+    noCities: 'Não encontramos nenhuma cidade próxima, por favor habilite a localização nas configurações do dispositivo.',
     approximate_distances: 'Distância aproximada',
     free: 'Gratuito',
-    add_event: 'Adicione um evento',
+    add_event_title: "Não encontrou o Momento que estava procurando, compartilhe com as outras pessoas suas sugestões de Momentos",
+    add_event: 'Adicione um momento',
     label: {
         max_range: 'Max Range'
     },

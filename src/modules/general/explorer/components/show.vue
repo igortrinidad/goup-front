@@ -8,10 +8,7 @@
             :cursor="false"
         ></main-header>
 
-        <pulse
-            v-if="interactions.is_loading && interactions.finished_loading_category"
-            :icon="'ion-navigate'"
-        />
+        <pulse v-if="interactions.is_loading && interactions.finished_loading_category" :icon="'ion-navigate'"/></pulse>
 
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
@@ -26,8 +23,7 @@
                             <div class="card-cat text-center"
                                 @click="selectCategory(category)"
                                 :class="{
-                                    'card-cat-selected' : currentCategory && currentCategory == category,
-                                    'card-cat-non-selected' : currentCategory && currentCategory != category,
+                                    'bounce' : currentCategory && currentCategory == category
                                 }">
                                 <div class="p-10">
                                     <img :src="category.photo_url" width="60%">
@@ -43,10 +39,9 @@
                 <!-- EXPLORER -->
                 <div class="container" v-if="interactions.finished_loading_category && !interactions.is_loading">
 
-
-                    <h4 class="text-center m-b-30 m-t-30" v-show="!events.length && !interactions.is_loading">
+                    <p class="f-info text-center m-b-30 m-t-30" v-show="!events.length && !interactions.is_loading">
                         {{ translations.end_list }}
-                    </h4>
+                    </p>
 
                     <!-- Cards -->
                     <div class="cards m-t-20" v-if="events.length && !interactions.is_loading">
@@ -122,7 +117,7 @@
                     <!-- Cards -->
 
                     <!-- Actions -->
-                    <div class="row" style="margin-top: -10px;">
+                    <div class="row m-t-10">
                         <div class="col-sm-12">
                             <div class="actions">
 
@@ -144,11 +139,6 @@
                                     </span>
                                 </div>
 
-                                <div v-if="!isLogged">
-                                   <p><strong>{{translations.makeLogin}}</strong></p>
-
-                                    <router-link type="button" class="btn btn-block btn-primary" :to="{name: 'general.auth.login'}">{{ translations.goToLogin }}</router-link>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -158,8 +148,8 @@
                     <div class="row m-t-20">
                         <div class="col-sm-12 text-center">
 
-                            <label>{{ translations.nearCities }}</label>
-                            <p v-if="!getCities.length">{{ translations.noCity }}</p>
+                            <label class="f-success">{{ translations.nearCities }}</label>
+                            <p class="f-info" v-if="!getCities.length">{{ translations.noCity }}</p>
                             <div class="swiper-container" ref="citiesSlider">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide label transparent m-5 cursor-pointer"
@@ -179,7 +169,7 @@
                     <div class="row m-t-20">
                         <div class="col-sm-12 text-center">
 
-                            <label>{{ translations.title_when }}</label>
+                            <label class="f-success">{{ translations.title_when }}</label>
 
                             <div class="week-row">
                                 <button
@@ -225,9 +215,6 @@
     import { transition } from 'jquery.transit'
     import { mapGetters, mapActions } from 'vuex'
 
-    import mainHeader from '@/components/main-header.vue'
-    import pulse from '@/components/pulse.vue'
-
     import { cleanPlaceModel } from '@/models/Place'
 
     import * as translations from '@/translations/explorer/show'
@@ -239,8 +226,8 @@
         name: 'EXPLORER',
 
         components: {
-            mainHeader,
-            pulse
+            mainHeader: require('@/components/main-header.vue'),
+            pulse: require('@/components/pulse.vue')
         },
 
         data() {
@@ -579,18 +566,16 @@
                 let that = this
 
                 that.currentCategory = category;
+                bus.$emit('category-selected', category);
 
                 setTimeout(function() {
                     that.interactions.finished_loading_category = true;
-
-                    bus.$emit('category-selected', category);
-
-                }, 1400);
+                }, 500);
 
                 setTimeout(function() {
                     that.currentCity = that.getCities[0];
                     that.getEvents();
-                }, 1500);
+                }, 600);
 
 
             },
@@ -758,159 +743,6 @@
         border-radius: 15px;
         cursor: pointer;
 
-    }
-
-    .fadeout-500 {
-        -webkit-animation: fadeOut 500ms;
-        -moz-animation: fadeOut 500ms;
-        animation: fadeOut 500ms;
-    }
-
-    .card-cat:hover:not(.card-cat-selected), .card-cat:active{
-        animation: pulse 1.6s infinite;
-    }
-
-    .card-cat-non-selected{
-        z-index: 5;
-    }
-
-    .cat-is-selected{
-        animation: fade-out linear 1.5s;
-        animation-iteration-count: 1;
-    }
-
-    @keyframes fade-out{
-      0% {
-        opacity: 1;
-      }
-      70% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-      }
-}
-
-
-
-    .card-cat-selected{
-        -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
-        box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
-        z-index: 1000;
-        animation: card-cat-selected-animation linear 1s;
-        animation-iteration-count: 1;
-        transform-origin: 50% 50%;
-        -webkit-animation: card-cat-selected-animation linear 1s;
-        -webkit-animation-iteration-count: 1;
-        -webkit-transform-origin: 50% 50%;
-        -moz-animation: card-cat-selected-animation linear 1s;
-        -moz-animation-iteration-count: 1;
-        -moz-transform-origin: 50% 50%;
-        -o-animation: card-cat-selected-animation linear 1s;
-        -o-animation-iteration-count: 1;
-        -o-transform-origin: 50% 50%;
-        -ms-animation: card-cat-selected-animation linear 1s;
-        -ms-animation-iteration-count: 1;
-        -ms-transform-origin: 50% 50%;
-    }
-
-    @keyframes card-cat-selected-animation{
-      0% {
-        transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
-      }
-      10% {
-        transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
-      }
-      20% {
-        transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
-      }
-      30% {
-        transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
-      }
-      40% {
-        transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
-      }
-      50% {
-        transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
-      }
-      60% {
-        transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
-      }
-      70% {
-        transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
-      }
-      80% {
-        transform:  rotate(-2deg) scaleX(1.10) scaleY(1.10) ;
-      }
-      90% {
-        transform:  rotate(2deg) scaleX(1.00) scaleY(1.00) ;
-      }
-      100% {
-        transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
-      }
-    }
-
-    @-webkit-keyframes card-cat-selected-animation {
-      0% {
-        -webkit-transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
-      }
-      10% {
-        -webkit-transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
-      }
-      20% {
-        -webkit-transform:  rotate(-3deg) scaleX(0.90) scaleY(0.90) ;
-      }
-      30% {
-        -webkit-transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
-      }
-      40% {
-        -webkit-transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
-      }
-      50% {
-        -webkit-transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
-      }
-      60% {
-        -webkit-transform:  rotate(-3deg) scaleX(1.10) scaleY(1.10) ;
-      }
-      70% {
-        -webkit-transform:  rotate(3deg) scaleX(1.10) scaleY(1.10) ;
-      }
-      80% {
-        -webkit-transform:  rotate(-2deg) scaleX(1.10) scaleY(1.10) ;
-      }
-      90% {
-        -webkit-transform:  rotate(2deg) scaleX(1.00) scaleY(1.00) ;
-      }
-      100% {
-        -webkit-transform:  rotate(0deg) scaleX(1.00) scaleY(1.00) ;
-      }
-    }
-
-    @-webkit-keyframes pulse {
-      0% {
-        -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
-      }
-      70% {
-          -webkit-box-shadow: 0 0 0 10px rgba(255,255,255, 0);
-      }
-      100% {
-          -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
-      }
-    }
-
-    @keyframes pulse {
-      0% {
-        -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
-        box-shadow: 0 0 0 0 rgba(255,255,255, 0.8);
-      }
-      70% {
-          -moz-box-shadow: 0 0 0 10px rgba(255,255,255, 0);
-          box-shadow: 0 0 0 10px rgba(255,255,255, 0);
-      }
-      100% {
-          -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
-          box-shadow: 0 0 0 0 rgba(255,255,255, 0);
-      }
     }
 
     .badge-city {

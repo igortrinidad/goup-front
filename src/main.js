@@ -180,7 +180,5 @@ require('moment/locale/pt-br')
 
     setTimeout(function() {
         store.dispatch('setUserLastGeolocation');
-    }, 3000);
-
-
+    }, 5000);
 
