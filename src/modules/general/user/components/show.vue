@@ -23,14 +23,14 @@
                     </p>
 
                     <!-- User Badge -->
-                    <div class="goup-badge">
+                    <div class="status">
                         <!-- Circle -->
                         <span class="circle-profile primary xl icon">
-                            <i class="ion-ios-heart"></i>
+                            <img class="icon-img" src="../../../../assets/icons/status/rock-and-roll.svg" alt="">
                         </span>
                         <button type="button" class="btn btn-primary btn-block">
-                            Romântico
-                            <i class="level">Nível 1</i>
+                            Rock Star
+                            <i class="level">{{ translations.level }} 4</i>
                         </button>
                         <!-- Button -->
                     </div>
@@ -205,30 +205,5 @@
     .picture-circle-l { left: calc(50% - 50px); }
     .picture-circle-m { left: calc(50% - 43px); }
     .picture-circle-p { left: calc(50% - 33px); }*/
-
-    /* Badge */
-    .goup-badge {
-        width: 220px;
-        margin: 30px auto 0 auto;
-        position: relative;
-    }
-
-    .goup-badge .icon {
-        position: absolute;
-        top: calc(50% - 30px);
-        left: 0;
-    }
-
-    .goup-badge .btn {
-        text-align: left;
-        padding: 3px 3px 3px 75px !important;
-        font-size: 15px;
-    }
-
-    .goup-badge .level {
-        display: block;
-        color: #fff;
-        font-size: 13px;
-    }
 
 </style>
