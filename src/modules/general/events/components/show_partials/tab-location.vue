@@ -6,7 +6,7 @@
             </div>
 
             <div class="col-sm-12">
-                <div class="m-t-30 rounded">
+                <div class="card p-0 rounded">
                     <GmapMap
                         :center="{ lat: event.place.geometry.location.lat, lng: event.place.geometry.location.lng }"
                         :zoom="map.zoom"
@@ -100,7 +100,7 @@
 
 <style scoped>
     .rounded {
-        border-radius: 20px;
+        border-radius: 6px;
         overflow: hidden !important;
         position: relative;
         z-index: 1000;
