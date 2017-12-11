@@ -180,31 +180,6 @@
 
         </transition>
 
-            <!-- Modal Filter -->
-            <div class="modal" id="modal-filter" tabindex="-1" role="dialog" aria-labelledby="modal-filter" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button
-                                type="button"
-                                class="btn btn-primary transparent btn-close"
-                                data-dismiss="modal"
-                            >
-                                <i class="ion-close-round"></i>
-                            </button>
-                            <h3 class="title text-center">{{ translations.filters }}</h3>
-                        </div>
-                        <div class="modal-body text-primary">
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="label label-primary" @click.prevent="applyFilters">Aplicar filtros</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- / Modal Filter -->
-
     </div>
 </template>
 

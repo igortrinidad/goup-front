@@ -189,7 +189,7 @@
                 that.getUserEvents()
             },
 
-            getUserEvents() {
+            getUserEvents($state) {
 
                 let that = this
 
@@ -213,8 +213,6 @@
                         }else {
                             $state.complete()
                         }
-
-
 
                     })
                     .catch(function (error) {
