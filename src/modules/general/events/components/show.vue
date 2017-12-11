@@ -11,7 +11,7 @@
 
         <pulse v-if="interactions.is_loading" :icon="'ion-ios-reload m-l-5'"/></pulse>
 
-        <transition v-if="!interactions.is_loading" appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+        <transition v-show="!interactions.is_loading" appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
 
                 <!-- Photos -->
@@ -86,13 +86,29 @@
                             <div class="container m-t-30">
                                 <ul class="list-group list-rounded m-b-0 m-t-10">
                                     <li class="list-group-item">
-                                        <i class="icon ion-android-calendar m-r-5 f-primary"></i>
-                                        <span><strong>{{ translations.date }}:</strong> {{ event.date }} {{ event.time }}</span>
+                                        <i class="icon ion-social-usd-outline m-r-5 f-primary"></i>
+                                        <span v-if="event.value_uninformed"><strong>{{translations.value_uninformed}}</strong></span>
+                                        <span v-if="!event.value_uninformed"><strong>{{translations.ticket_value}}</strong></span>
+                                        <span v-if="!event.value_uninformed">
+                                             <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
+                                             <span v-show="event.value === 0">{{ translations.free }}</span>
+                                        </span>
                                     </li>
                                     <li class="list-group-item">
-                                        <i class="icon ion-android-time m-r-5 f-primary"></i>
-                                        <span v-if="event.place.open_now"><strong>{{ translations.is_opened }}</strong> {{ translations.yes }}</span>
-                                        <span v-if="!event.place.open_now"><strong>{{ translations.is_opened }}</strong> {{ translations.no }}</span>
+                                        <i class="icon ion-android-calendar m-r-5 f-primary"></i>
+
+                                        <span v-if="event.recurrency_type == 'daily'"><strong>{{translations.daily}}</strong></span>
+                                        <span v-if="event.recurrency_type == 'weekly'"><strong>{{translations.weekly}}</strong></span>
+                                        <span v-if="event.recurrency_type == 'monthly'"><strong>{{translations.monthly}}</strong></span>
+                                        <span>{{handleRecurrencyType}}</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="icon ion-ios-clock-outline m-r-5 f-primary"></i>
+                                        <span v-if="event.time_uninformed"><strong>{{translations.time_uninformed}}</strong></span>
+                                        <span v-if="!event.time_uninformed"><strong>{{translations.time}}</strong></span>
+                                        <span v-if="!event.time_uninformed">
+                                             <span>{{ event.time }}</span>
+                                        </span>
                                     </li>
                                 </ul>
 
@@ -132,15 +148,73 @@
                     </div>
                     <!-- / Place Content -->
 
-                    <!-- See Also -->
+                </div>
+                <!-- / Place Content -->
 
-                    <div class="row">
-                        <div class="col-md-12 col-xs-12">
-                            <h3 class="text-center f-success m-t-30">{{translations.see_more.title}}</h3>
+                <!-- See Also -->
+
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <h3 class="text-center f-success m-t-30">{{translations.see_more.title}}</h3>
+
+                        <card-placeholder v-if="interactions.loading_related"></card-placeholder>
+                        <router-link
+                            tag="div"
+                            class="col-sm-12 cursor-pointer"
+                            v-for="(event, indexEvents) in relateds" v-if="!interactions.is_loading"
+                            :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
+                            :key="indexEvents"
+                        >
+                            <div class="card p-0">
+                                <!-- Card Header -->
+                                <div
+                                    class="card-header cover p-5"
+                                    :style="{
+                                            backgroundImage: `url(${ event.cover })`,
+                                            height: '150px',
+                                            borderRadius: '6px 6px 0 0'
+                                        }"
+                                >
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body card-padding">
+                                    <h4 class="m-b-5">{{ event.name }}</h4>
+                                    <div style="opacity: .8;">
+                                        <p class="m-b-5">{{ event.description }}</p>
+                                        <span class="d-block m-0 f-12">
+                                                <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
+                                            </span>
+                                    </div>
+                                </div>
+                                <!-- Card Footer -->
+                                <div class="card-footer p-10">
+                                    <div class="row">
+                                        <div class="col-xs-8" style="opacity: .8;">
+                                            <small class="p-l-10 m-l-10">
+                                                <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
+                                                <span v-show="event.value === 0">{{ translations.free }}</span>
+                                            </small>
+                                        </div>
+                                        <div class="col-xs-4 text-right">
+                                            <small class="f-primary">
+                                                <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </router-link>
+
+                        <div class="row">
+                            <div class="col-sm-12" v-show="!interactions.is_loading && relateds.length">
+                                <div class="text-center">
+                                    <pagination :source="pagination" @navigate="getRelateds" :range="6"></pagination>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                        <!-- / See Also -->
                 </div>
+                    <!-- / See Also -->
             </div>
         </transition>
 
@@ -152,9 +226,13 @@
     import mainHeader from '@/components/main-header.vue'
     import tabLocation from './show_partials/tab-location.vue'
     import tabFriends from './show_partials/tab-friends.vue'
+    import pagination from '@/components/pagination'
+    import cardPlaceholder from '@/components/card-placeholder'
+
 
     import * as translations from '@/translations/events/show'
     import PlaceModel from '@/models/Place'
+    import {recurrencTypes, weekdays, monthWeeks} from '@/models/RecurrencyTypes'
 
     export default {
         name: 'general-events-show',
@@ -163,7 +241,9 @@
             mainHeader,
             tabLocation,
             tabFriends,
-            pulse: require('@/components/pulse.vue')
+            pulse: require('@/components/pulse.vue'),
+            pagination,
+            cardPlaceholder
         },
 
         data () {
@@ -171,11 +251,17 @@
                 interactions: {
                     eventNotFound: false,
                     is_loading: true,
+                    loading_related: true,
                 },
                 eventholder: true,
                 event: {},
                 currentTab: 0,
-                currentCategory: null
+                currentCategory: null,
+                relateds: [],
+                pagination: {},
+                recurrencTypes: recurrencTypes(),
+                weekdays: weekdays(),
+                monthWeeks: monthWeeks()
             }
         },
 
@@ -190,11 +276,41 @@
                 if (this.language === 'pt') {
                     return translations.pt
                 }
+            },
+            handleRecurrencyType(){
+
+                if(this.event.recurrency_type == 'weekly'){
+                    return this.weekdays[this.event.recurrency_info].text
+                }
+
+                if(this.event.recurrency_type == 'monthly'){
+                    if(this.event.recurrency_info){
+                        let values = this.event.recurrency_info.split('-')
+                        let month_index = _.findIndex(this.monthWeeks, {value: parseInt(values[0])})
+                        return  `${this.monthWeeks[month_index][`label_${this.language}`]} - ${this.weekdays[values[1]].text}`
+                    }
+                }
+
+                if(this.event.recurrency_type == 'date'){
+                    return this.event.recurrency_info
+                }
+
+            }
+        },
+
+        watch:{
+            '$route.params.event_slug'() {
+                let that = this
+                that.interactions.is_loading = true
+                that.event = {}
+                that.getEvent()
+                that.getRelateds()
             }
         },
 
         mounted(){
             this.getEvent()
+            this.getRelateds()
         },
 
         methods: {
@@ -254,6 +370,24 @@
                 setTimeout( function(){
                     that.$router.push({name: 'general.events.list', query: {category_id: category.id}});
                 }, 300)
+            },
+
+            getRelateds(page) {
+                let that = this
+
+                page = page ? page : 1
+
+                that.$http.get(`event/related/${that.$route.params.event_slug}?page=${page}`)
+                    .then(function (response) {
+                        that.relateds = response.data.relateds
+                        that.pagination = response.data.pagination
+                        that.interactions.loading_related = false
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                        that.interactions.loading_related = false
+                    });
+
             },
         }
     }

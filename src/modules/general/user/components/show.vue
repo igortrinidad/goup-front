@@ -18,9 +18,9 @@
                     >
                     </div>
 
-                    <p class="text-center m-b-0 m-t-20" v-show="!interactions.is_loading">
+                    <!--<p class="text-center m-b-0 m-t-20" v-show="!interactions.is_loading">
                         {{ user.city.name }} - {{ user.city.state }}
-                    </p>
+                    </p>-->
 
                     <!-- User Badge -->
                     <div class="status" data-toggle="modal" data-target="#modal-badges">
@@ -45,6 +45,9 @@
                                 <div class="swiper-slide tab">
                                     {{ translations.saved }}
                                 </div>
+                                <div class="swiper-slide tab">
+                                    {{ translations.favorited }}
+                                </div>
                             </div>
 
                         </div>
@@ -56,6 +59,8 @@
                         <tab-interactions v-show="currentTab === 0"/>
                         <!-- Tab Saves -->
                         <tab-saves v-show="currentTab === 1"/>
+
+                        <tab-favorites v-show="currentTab === 2"/>
                     </div>
 
                     <!-- Modal User Badges -->
@@ -128,6 +133,8 @@
     import cardPlaceholder from '@/components/card-placeholder'
     import tabInteractions from './show_partials/tab-interactions'
     import tabSaves from './show_partials/tab-saves'
+    import tabFavorites from './show_partials/tab-favorites'
+    import bus from '@/utils/event-bus';
 
     export default {
         name: 'general-user-show',
@@ -136,7 +143,8 @@
             mainHeader,
             cardPlaceholder,
             tabInteractions,
-            tabSaves
+            tabSaves,
+            tabFavorites
         },
 
         data () {
@@ -172,9 +180,22 @@
         methods: {
 
             getUser() {
-                this.user = UserModel.Default()
-                this.interactions.is_loading = false
-                this.initSwiperTabs()
+                let that = this
+
+                that.$http.get(`user/show/${that.$route.params.user_slug}`)
+                    .then(function (response) {
+
+                        that.interactions.is_loading = false
+
+                        that.user = response.data.user
+
+                        that.initSwiperTabs()
+
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+
             },
 
             initSwiperTabs() {
@@ -190,6 +211,14 @@
                         slideToClickedSlide: true,
                         onSlideChangeEnd: swiper => {
                             that.currentTab = swiper.realIndex
+
+                            if( that.currentTab === 1){
+                                bus.$emit('load-created')
+                            }
+
+                            if( that.currentTab === 2){
+                                bus.$emit('load-favorite')
+                            }
                         },
                     })
                 }, 200);
