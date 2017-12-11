@@ -15,6 +15,7 @@ export const en = {
     makeLogin: 'Sign in to interact with events',
     goToLogin: 'Go to login',
     search_button: 'Search',
+    free: 'Free',
 
     modal: {
         up: 'You goup in this event',
@@ -41,6 +42,7 @@ export const pt = {
     makeLogin: 'Faça login para interagir com os eventos',
     goToLogin: 'Ir para login',
     search_button: 'Pesquisar',
+    free: 'Gratuito',
 
     modal: {
         up: 'Você deu um "goup" para esse evento',

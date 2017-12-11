@@ -10,7 +10,7 @@
         <pulse v-if="interactions.is_loading" :icon="'ion-navigate'"/></pulse>
 
         <transition appear mode="in-out" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft" v-if="!interactions.is_loading">
-            
+
             <div class="">
 
                 <!-- CATEGORIAS -->
@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
                 <!-- CATEGORIAS -->
@@ -115,9 +115,9 @@
                                             borderRadius: '6px 6px 0 0'
                                         }"
                                         >
-                                        <span class="event-ranking">
-                                            {{ event.rank_position }}º
-                                        </span>
+                                            <span class="event-ranking">
+                                                {{ event.rank_position }}º
+                                            </span>
                                         </div>
                                         <!-- Card Body -->
                                         <div class="card-body card-padding">
@@ -175,36 +175,10 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 
-        
         </transition>
-
-            <!-- Modal Filter -->
-            <div class="modal" id="modal-filter" tabindex="-1" role="dialog" aria-labelledby="modal-filter" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button
-                                type="button"
-                                class="btn btn-primary transparent btn-close"
-                                data-dismiss="modal"
-                            >
-                                <i class="ion-close-round"></i>
-                            </button>
-                            <h3 class="title text-center">{{ translations.filters }}</h3>
-                        </div>
-                        <div class="modal-body text-primary">
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="label label-primary" @click.prevent="applyFilters">Aplicar filtros</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- / Modal Filter -->
 
     </div>
 </template>
@@ -217,9 +191,9 @@
     import * as translations from '@/translations/events/list'
     import moment from 'moment'
 
-    import vueSlider from 'vue-slider-component' 
- 
-    import InfiniteLoading from 'vue-infinite-loading'; 
+    import vueSlider from 'vue-slider-component'
+
+    import InfiniteLoading from 'vue-infinite-loading'
 
     import bus from '@/utils/event-bus';
 
@@ -368,7 +342,7 @@
                             $state.complete()
                         }
 
-                        
+
 
                     }).catch(function (error) {
                    console.log(error)
@@ -460,7 +434,7 @@
 
                 that.events = [];
 
-                
+
 
             },
         }
@@ -482,10 +456,6 @@
     }
 
     /* Event Card */
-
-    .divider {
-        border-left: 1px solid #dfdfdf;
-    }
 
     .event-ranking {
         position: absolute;

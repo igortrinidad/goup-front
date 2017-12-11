@@ -50,36 +50,16 @@
                         <div id="card-animated" class="card m-0" ref="cardAnimated">
                             <!-- Card Header -->
 
-                            <div class="card-header placeholder effect" :style="{ height: '330px' }" v-if="interactions.lazy_image">
-                            </div>
-
                             <div
                                 id="card-lazy-image"
                                 class="card-header cover"
-                                :style="{ backgroundImage: `url(${ events[0].cover })`}"
+                                :style="{
+                                    backgroundImage: `url(${ events[0].cover })`,
+                                    height: '150px',
+                                    borderRadius: '6px 6px 0 0'
+                                }"
                                 v-show="!interactions.lazy_image"
                             >
-                                <!-- Current Action -->
-                                <span class="card-action up" v-show="interactions.up">
-                                    {{ translations.up }}
-                                </span>
-                                <span class="card-action down" v-show="interactions.down">
-                                    {{ translations.down }}
-                                </span>
-                                <span class="card-action skip" v-show="interactions.skip">
-                                    {{ translations.skip }}
-                                </span>
-                                <span class="card-action save" v-show="interactions.favorite">
-                                    {{ translations.favorite }}
-                                </span>
-                                <!-- / Current Action -->
-
-                                <div class="ch-content">
-                                    <h3 class="title f-700 t-overflow">{{ events[0].name }}</h3>
-                                    <p class="title f-700 t-overflow" style="margin-bottom: 0px;"><i class="ion-ios-location m-r-5"></i> {{ events[0].city.name }} - {{events[0].city.state}}</p>
-
-                                    <span class="label label-primary" v-for="category in events[0].categories" v-if="category.id == currentCategory.id">{{category[`name_${language}`]}}</span>
-                                </div>
 
                                 <router-link
                                     tag="span"
@@ -89,12 +69,51 @@
                                 >
                                 </router-link>
 
-                               <span class="icon-favorite">
-                                    <i class="ion-ios-star f-primary"></i> {{events[0].favorited_count}}
-                               </span>
-
                             </div>
                             <!-- / Card Header -->
+
+                            <!-- Current Action -->
+                            <span class="card-action up" v-show="interactions.up">
+                                {{ translations.up }}
+                            </span>
+                            <span class="card-action down" v-show="interactions.down">
+                                {{ translations.down }}
+                            </span>
+                            <span class="card-action skip" v-show="interactions.skip">
+                                {{ translations.skip }}
+                            </span>
+                            <span class="card-action save" v-show="interactions.favorite">
+                                {{ translations.favorite }}
+                            </span>
+                            <!-- / Current Action -->
+
+                            <!-- Card Body -->
+                            <div class="card-body card-padding">
+                                <h4 class="m-b-5">{{ events[0].name }}</h4>
+                                <div style="opacity: .8;">
+                                    <p class="m-b-5">{{ events[0].description }}</p>
+                                </div>
+                            </div>
+                            <!-- Card Footer -->
+                            <div class="card-footer p-10">
+                                <div class="row">
+                                    <div class="col-xs-8" style="opacity: .8;">
+                                        <small>
+                                            <i class="ion-location m-r-5"></i>{{ handleDistance(events[0].distance) }}
+                                        </small>
+                                        <small class="divider p-l-10 m-l-10">
+                                            <span v-show="events[0].value > 0">{{ events[0].value | formatCurrency }}</span>
+                                            <span v-show="events[0].value === 0">{{ translations.free }}</span>
+                                        </small>
+                                    </div>
+                                    <div class="col-xs-4 text-right">
+                                        <small class="f-primary">
+                                            <i class="ion-ios-star m-r-5"></i>{{ events[0].favorited_count }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <!-- / FIRST EVENT -->
 
@@ -639,8 +658,6 @@
 </script>
 
 <style scoped>
-
-
     .col-row {
         width: 100%;
         column-count: 2;
@@ -655,7 +672,7 @@
     }
 
     @media(min-width: 900px) {
-        .col-row{ column-count: 3; } 
+        .col-row{ column-count: 3; }
     }
 
     .week-row{
@@ -666,29 +683,16 @@
     ::-webkit-scrollbar {
         display: none;
     }
+
     .cards {
         position: relative;
         height: 388px;
-    }
-    .cards .card .card-header .card-header-container {
-        position: absolute;
-        top: 0; left: 0;
-        bottom: 0; right: 0;
-        width: 100%; height: 100%;
-        z-index: 10;
     }
 
     .card {
         position: absolute;
         width: 100%;
         left: 0;
-    }
-
-    .card .card-header.cover {
-        position: relative;
-        background-position: center center;
-        background-size: cover;
-        background-repeat: no-repeat;
     }
 
     .cards #card-animated{ z-index: 10; }
@@ -713,16 +717,6 @@
         font-size: 30px;
         color: #fff;
         z-index: 7;
-    }
-
-    .card .card-header .ch-content {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        text-align: left;
-        padding: 10px;
-        color: #fff !important;
     }
 
     .card-cat-col{
@@ -769,7 +763,7 @@
     }
 
     @media (max-width: 360px) {
-        .cards{ height: 330px}
-        .card-placeholder{ height: 330px}
+        .cards{ height: 260px }
+        .card-placeholder{ height: 260px }
     }
 </style>
