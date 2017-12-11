@@ -16,11 +16,9 @@
                 <!-- CATEGORIAS -->
                 <div class="main" v-show="!interactions.finished_loading_category && !$route.query.category_id">
 
-
+                    <p class="f-16 f-300 text-center m-t-10">{{translations.title_category}}</p>
+                    <!-- CATEGORIES -->
                     <div class="container">
-
-                        <p class="f-16 f-300 text-center m-t-10">{{translations.title_category}}</p>
-                        <!-- CATEGORIES -->
                         <div class="col-row">
                             <!-- ALL -->
                             <div class="col">
@@ -48,16 +46,17 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <!-- CATEGORIAS -->
 
-                <div class="main container text-center" v-if="interactions.finished_loading_category">
+                <div class="main" v-if="interactions.finished_loading_category">
 
-                    <p class="f-16 f-300 text-center m-t-10">{{translations.before_category_type}}</p>
-                    <h3 class="f-success m-t-0">{{currentCategory['name_'+language]}}</h3>
-                    <p class="f-16 f-300 text-center m-t-0">{{translations.after_category_type}}</p>
+                    <div class="text-center">
+                        <p class="f-16 f-300 text-center m-t-10">{{translations.before_category_type}}</p>
+                        <h3 class="f-success m-t-0">{{currentCategory['name_'+language]}}</h3>
+                        <p class="f-16 f-300 text-center m-t-0">{{translations.after_category_type}}</p>
+                    </div>
 
                     <!--Cities-->
                     <div class="row m-t-10">
@@ -90,7 +89,6 @@
 
                     <div class="container">
                         <div class="row m-t-30">
-
                             <div class="col-sm-12 text-center">
                                 <p class="f-info" v-if="!events.length && !interactions.is_loading">{{translations.noEvents}}</p>
                             </div>
@@ -442,8 +440,6 @@
 </script>
 
 <style scoped>
-
-    /*  */
 
     .modal-footer {
         border-radius: 0;

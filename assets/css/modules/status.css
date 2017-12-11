@@ -1,0 +1,29 @@
+.status {
+    width: 220px;
+    margin: 30px auto 0 auto;
+    position: relative;
+}
+
+.status .icon {
+    position: absolute;
+    top: calc(50% - 30px);
+    left: 0;
+}
+
+.status .icon-img {
+    max-width: 65%
+}
+
+.status .btn {
+    text-align: left;
+    padding: 3px 3px 3px 75px !important;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.status .level {
+    display: block;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 400;
+}
