@@ -105,10 +105,10 @@
                                     <p>{{translations.shared_by}}</p>
 
                                     <router-link
-                                            tag="div"
-                                            class="picture-circle picture-circle-xxl border-picture-eletric-blue m-t-5"
-                                            :style="{ backgroundImage: `url(${ event.user.avatar })` }"
-                                            :to="{ name: 'general.user.show', params: { user_slug: event.user.slug } }"
+                                        tag="div"
+                                        class="picture-circle picture-circle-xl border-picture-eletric-blue m-t-5"
+                                        :style="{ backgroundImage: `url(${ event.user.avatar })` }"
+                                        :to="{ name: 'general.user.show', params: { user_slug: event.user.slug } }"
                                         >
                                     </router-link>
 

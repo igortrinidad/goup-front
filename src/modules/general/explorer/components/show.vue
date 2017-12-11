@@ -14,7 +14,7 @@
             <div class="main">
 
                 <!-- CATEGORIES -->
-                <div class="container" v-show="!interactions.finished_loading_category" :class="{'cat-is-selected' : currentCategory}">
+                <div class="container" v-show="!interactions.finished_loading_category && !interactions.is_loading" :class="{'cat-is-selected' : currentCategory}">
 
                     <p class="f-16 f-300 text-center m-t-10">{{translations.select_category}}</p>
 
@@ -43,6 +43,8 @@
                         {{ translations.end_list }}
                     </p>
 
+                    <h3 class="text-center f-success">Explorer</h3>
+
                     <!-- Cards -->
                     <div class="cards m-t-20" v-if="events.length && !interactions.is_loading">
 
@@ -55,7 +57,7 @@
                                 class="card-header cover"
                                 :style="{
                                     backgroundImage: `url(${ events[0].cover })`,
-                                    height: '150px',
+                                    height: '200px',
                                     borderRadius: '6px 6px 0 0'
                                 }"
                                 v-show="!interactions.lazy_image"
@@ -63,7 +65,7 @@
 
                                 <router-link
                                     tag="span"
-                                    class="icon-information ion-ios-information"
+                                    class="icon-information ion-ios-information f-success cursor-pointer"
                                     v-if="events[0].slug"
                                     :to="{ name: 'general.events.show', params: { event_slug: events[0].slug } }"
                                 >
@@ -136,7 +138,7 @@
                     <!-- Cards -->
 
                     <!-- Actions -->
-                    <div class="row m-t-10">
+                    <div class="row">
                         <div class="col-sm-12">
                             <div class="actions">
 
@@ -256,7 +258,7 @@
                     down: false,
                     skip: false,
                     favorite: false,
-                    is_loading: true,
+                    is_loading: false,
                     finished_loading_category: false,
                     action: 'up',
                     lazy_image: true
@@ -300,14 +302,27 @@
 
             var that = this;
 
-            this.setCities();
-            this.setCategories();
-            this.updateUserGeolocation();
+            that.currentCity = that.getCities[0];
+
+            if(that.$route.query.category_id){
+
+                var index = that.getCategories.indexFromAttr('id', that.$route.query.category_id);
+                that.selectCategory(that.getCategories[index]);
+                that.interactions.is_loading = true;
+
+            } else {
+
+                this.setCities();
+                this.setCategories();
+                this.updateUserGeolocation();
+                
+            }
+
 
             bus.$on('refresh_explorer', function(){
                 that.currentCategory = null;
                 that.interactions.finished_loading_category = false;
-                that.interactions.is_loading = true;
+                that.interactions.is_loading = false;
             });
 
             this.initWeek();
@@ -581,7 +596,9 @@
                 bus.$emit('category-selected', category);
 
                 setTimeout(function() {
+                    that.interactions.is_loading = true;
                     that.interactions.finished_loading_category = true;
+                    that.$router.push({ query: { category_id: category.id }})
                 }, 500);
 
                 setTimeout(function() {
