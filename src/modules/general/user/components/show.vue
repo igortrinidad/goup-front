@@ -37,13 +37,10 @@
 
                     <!-- Tabs -->
                     <div class="m-t-30">
-                        <div class="swiper-container tabs text-center" ref="tabs">
+                        <div class="swiper-container no-overflow tabs text-center" ref="tabs">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide tab">
                                     {{ translations.last_interactions }}
-                                </div>
-                                <div class="swiper-slide tab">
-                                    {{ translations.saved }}
                                 </div>
                                 <div class="swiper-slide tab">
                                     {{ translations.saved }}
@@ -54,60 +51,12 @@
                     </div>
                     <!-- / Tabs -->
 
-                    <!-- Cards -->
-                    <div class="cards" infinite-wrapper>
-                        <router-link
-                            tag="div"
-                            class="card"
-                            v-for="(event, indexEvents) in events"
-                            :key="indexEvents"
-                            :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
-                        >
-                            <!-- Card Header -->
-                            <div
-                                class="card-header cover p-5"
-                                :style="{
-                                    backgroundImage: `url(${ event.cover })`,
-                                    height: '150px',
-                                    borderRadius: '6px 6px 0 0'
-                                }"
-                            >
-                                <span class="event-ranking">
-                                    {{ indexEvents }}º
-                                </span>
-                            </div>
-                            <!-- Card Body -->
-                            <div class="card-body card-padding">
-                                <h4 class="m-b-5">{{ event.name }}</h4>
-                                <div style="opacity: .8;">
-                                    <p class="m-b-5">{{ event.description }}</p>
-                                    <span class="d-block m-0 f-12">
-                                        <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
-                                    </span>
-                                </div>
-                            </div>
-                            <!-- Card Footer -->
-                            <div class="card-footer p-5">
-                                <div class="row">
-                                    <div class="col-xs-8" style="opacity: .8;">
-                                        <small>
-                                            <i class="ion-location m-r-5"></i>{{ handleDistance(event.distance) }}
-                                        </small>
-                                        <small class="divider p-l-10 m-l-10">
-                                            <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
-                                            <span v-show="event.value === 0">{{ translations.free }}</span>
-                                        </small>
-                                    </div>
-                                    <div class="col-xs-4 text-right">
-                                        <small class="f-primary">
-                                            <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
-                        </router-link>
+                    <div class="m-t-30">
+                        <!-- Tab Interactions -->
+                        <tab-interactions v-show="currentTab === 0"/>
+                        <!-- Tab Saves -->
+                        <tab-saves v-show="currentTab === 1"/>
                     </div>
-                    <!-- /CARDS -->
 
                     <!-- Modal User Badges -->
                     <div id="modal-badges" class="modal we-fade" tabindex="-1" role="dialog">
@@ -177,15 +126,17 @@
 
     import mainHeader from '@/components/main-header'
     import cardPlaceholder from '@/components/card-placeholder'
-    import InfiniteLoading from 'vue-infinite-loading'
+    import tabInteractions from './show_partials/tab-interactions'
+    import tabSaves from './show_partials/tab-saves'
 
     export default {
         name: 'general-user-show',
 
         components: {
             mainHeader,
-            InfiniteLoading,
-            cardPlaceholder
+            cardPlaceholder,
+            tabInteractions,
+            tabSaves
         },
 
         data () {
@@ -222,34 +173,8 @@
 
             getUser() {
                 this.user = UserModel.Default()
-                console.log(this.user)
-                this.getUserEvents()
-            },
-
-            getUserEvents($state) {
-
-                let that = this
-
-                that.interactions.is_loading = true
-                that.$http.get(`user/events/list?page=${that.nextPage}`)
-                    .then(function (response) {
-
-                        that.events = response.data.events
-                        that.pagination = response.data.pagination
-
-                        that.interactions.is_loading = false
-
-                        that.initSwiperTabs()
-                    })
-                    .catch(function (error) {
-                        console.log(error)
-                    });
-
-            },
-
-            handleDistance(distance){
-                distance = parseFloat(distance);
-                return `${distance.toFixed(2)} km`
+                this.interactions.is_loading = false
+                this.initSwiperTabs()
             },
 
             initSwiperTabs() {
@@ -275,15 +200,6 @@
 </script>
 
 <style scoped>
-    /* Cards */
-    .cards {
-        margin-top: 60px;
-    }
-
-    .divider {
-        border-left: 1px solid #dfdfdf;
-    }
-
     /* Picture */
     /*.picture-circle {
         position: absolute; transition: ease .3s;
@@ -294,26 +210,4 @@
     .picture-circle-l { left: calc(50% - 50px); }
     .picture-circle-m { left: calc(50% - 43px); }
     .picture-circle-p { left: calc(50% - 33px); }*/
-
-    /* Ranking */
-    .event-ranking {
-        position: absolute;
-        top: 10px; left: 10px;
-        background-color: #561F9F;
-        color: #FFFD7B;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 40px;
-        width: 40px;
-        font-weight: 700;
-        border-radius: 6px;
-
-    }
-
-    .event-ranking small {
-        width: 50%;
-        text-align: center;
-    }
-
 </style>

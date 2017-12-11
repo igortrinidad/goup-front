@@ -14,8 +14,25 @@ html, body {
     background-image: url("https://s3.amazonaws.com/goup-assets/img/pattern-goup-transp.png");
 }
 
+/* Ranking */
+.event-ranking {
+    position: absolute;
+    top: 10px; left: 10px;
+    background-color: #561F9F;
+    color: #FFFD7B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    font-weight: 700;
+    border-radius: 6px;
+}
 
-
+.event-ranking small {
+    width: 50%;
+    text-align: center;
+}
 
 /* Form */
 legend {
@@ -140,6 +157,3 @@ hr {
 
 /* Progress Bar */
 .progress-bar { background: linear-gradient(to left, #6EC058 0%, #88C657 100%); }
-
-
-

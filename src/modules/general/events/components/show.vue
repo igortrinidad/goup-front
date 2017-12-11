@@ -122,11 +122,8 @@
                             <div class="">
                                 <!-- Tab Location -->
                                 <tab-location :event="event" v-show="currentTab === 0"></tab-location>
-                                <!-- Tab Location -->
-
                                 <!-- Tab Friends -->
                                 <tab-friends  v-show="currentTab === 1"></tab-friends>
-                                <!-- Tab Friends -->
                             </div>
                         </div>
                         <!-- / Tab Content -->
