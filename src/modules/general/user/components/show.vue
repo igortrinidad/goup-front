@@ -7,22 +7,16 @@
             :cursor="false"
         ></main-header>
 
-        <div
-            class="picture-circle border-picture-eletric-blue"
-            :class="{ 'picture-circle-l': !interactions.scroll, 'picture-circle-p': interactions.scroll }"
-            :style="{ backgroundImage: `url(${ user.avatar })` }"
-        >
-        </div>
-
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main">
                 <div class="container bg m-t-20">
 
-                    <!-- No Events -->
-                    <div class="m-t-30" v-if="!events.length">
-                        <h3 class="text-center">{{ translations.no_events }}</h3>
+                    <div
+                        class="picture-circle border-picture-eletric-blue"
+                        :class="{ 'picture-circle-l': !interactions.scroll, 'picture-circle-p': interactions.scroll }"
+                        :style="{ backgroundImage: `url(${ user.avatar })` }"
+                    >
                     </div>
-                    <!-- / No Events -->
 
                     <!-- User Badge -->
                     <div class="goup-badge">
@@ -39,9 +33,12 @@
 
                     <!-- Cards -->
                     <div class="cards" infinite-wrapper>
-                        <div
+                        <router-link
+                            tag="div"
                             class="card"
                             v-for="(event, indexEvents) in events"
+                            :key="indexEvents"
+                            :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
                         >
                             <!-- Card Header -->
                             <div
@@ -85,7 +82,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </router-link>
                     </div>
                     <!-- /CARDS -->
 
@@ -241,30 +238,15 @@
     }
 
     /* Picture */
-    .picture-circle { position: fixed; transition: ease .3s; }
-
-    .picture-circle.full {
-        width: 100%;
-        height: 60%;
-        border-radius: 0;
-        left: 0;
-        top: 80px;
-        z-index: 0;
-        border: none;
+    .picture-circle {
+        position: absolute; transition: ease .3s;
+        top: 30px;
+        index: 10;
     }
 
-    .picture-circle.full:before {
-        content: '';
-        position: absolute;
-        left: 0; bottom: 0; right: 0;
-        width: 100%;
-        height: 40%;
-        background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(87,31,159,1) 100%);
-    }
-
-    .picture-circle-l { top: 100px; left: calc(50% - 50px); z-index: 10; }
-    .picture-circle-m { top: 100px; left: calc(50% - 43px); z-index: 10; }
-    .picture-circle-p { top: 100px; left: calc(50% - 33px); z-index: 10; }
+    .picture-circle-l { left: calc(50% - 50px); }
+    .picture-circle-m { left: calc(50% - 43px); }
+    .picture-circle-p { left: calc(50% - 33px); }
 
     /* Badge */
     .goup-badge {
