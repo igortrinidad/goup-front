@@ -39,10 +39,13 @@
                     <div class="m-t-30">
                         <div class="swiper-container tabs text-center" ref="tabs">
                             <div class="swiper-wrapper">
-                                <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                <div class="swiper-slide tab">
                                     {{ translations.last_interactions }}
                                 </div>
-                                <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                <div class="swiper-slide tab">
+                                    {{ translations.saved }}
+                                </div>
+                                <div class="swiper-slide tab">
                                     {{ translations.saved }}
                                 </div>
                             </div>

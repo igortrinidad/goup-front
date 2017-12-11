@@ -14,140 +14,143 @@
         <transition v-if="!interactions.is_loading" appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
 
-                <div v-if="interactions.eventNotFound">
-                    <h3 class="text-center m-t-30">{{ translations.event_not_found }}</h3>
-                </div>
-
-                <!-- Place Content -->
-                <div class="m-b-30" v-if="!interactions.eventNotFound && event.id">
-                    <!-- Photos -->
-                    <div class="p-relative">
-                        <div class="swiper-container swiper-gallery" ref="galleryPhotos">
-                            <div class="swiper-wrapper">
-                                <div
-                                    class="swiper-slide"
-                                    v-for="(photo, index) in event.photos"
-                                    :style="{ backgroundImage: `url(${ photo.photo_url })` }"
-                                    :key="index"
-                                >
-                                </div>
+                <!-- Photos -->
+                <div class="p-relative">
+                    <div class="swiper-container swiper-gallery" ref="galleryPhotos">
+                        <div class="swiper-wrapper">
+                            <div
+                                class="swiper-slide"
+                                v-for="(photo, index) in event.photos"
+                                :style="{ backgroundImage: `url(${ photo.photo_url })` }"
+                                :key="index"
+                            >
                             </div>
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-scrollbar"></div>
                         </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-scrollbar"></div>
                     </div>
-                    <!-- / Photos -->
+                </div>
+                <!-- / Photos -->
 
-                    <!-- Place Name, Description, City And State -->
-                    <div class="text-center">
-                        <h3 class="m-t-30 f-success">{{ event.name }}</h3>
+                <div class="container">
+                    <div v-if="interactions.eventNotFound">
+                        <h3 class="text-center m-t-30">{{ translations.event_not_found }}</h3>
+                    </div>
 
-                        <p>{{ event.description }}</p>
+                    <!-- Place Content -->
+                    <div class="m-b-30" v-if="!interactions.eventNotFound && event.id">
 
-                        <p class="f-success">
-                            <i class="ion-ios-location m-r-5"></i>
-                            {{ `${ event.city.name } - ${ event.city.state }` }}
-                        </p>
+                        <!-- Place Name, Description, City And State -->
+                        <div class="text-center">
+                            <h3 class="m-t-30 f-success">{{ event.name }}</h3>
 
-                        <p>{{translations.categories_title}}</p>
-                        <div class="col-row">
-                            
-                            <div class="col" v-for="category in event.categories">
-                                <div class="card-cat text-center"
-                                    @click="selectCategory(category)"
-                                    :class="{
-                                        'bounce' : currentCategory && currentCategory == category
-                                    }">
-                                    <div class="p-10">
-                                        <img :src="category.photo_url" width="40px">
-                                        <p class="f-default m-t-10">{{category['name_' + language]}}</p>
+                            <p>{{ event.description }}</p>
+
+                            <p class="f-success">
+                                <i class="ion-ios-location m-r-5"></i>
+                                {{ `${ event.city.name } - ${ event.city.state }` }}
+                            </p>
+
+                            <p>{{translations.categories_title}}</p>
+                            <div class="col-row">
+
+                                <div class="col" v-for="category in event.categories">
+                                    <div class="card-cat text-center"
+                                        @click="selectCategory(category)"
+                                        :class="{
+                                            'bounce' : currentCategory && currentCategory == category
+                                        }">
+                                        <div class="p-10">
+                                            <img :src="category.photo_url" width="40px">
+                                            <p class="f-default m-t-10">{{category['name_' + language]}}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Call -->
-                        <div class="m-t-30" v-if="event.phone">
-                            <a :href="`tel:${ event.phone }`" class="btn btn-info transparent">
-                                <i class="ion-ios-telephone m-r-5"></i>{{ translations.call }}
-                            </a>
-                        </div>
-                        <!-- /Call -->
-
-                        <!-- Share -->
-                        <p class="m-t-30">{{ translations.share }}</p>
-                        <a class="btn btn-facebook transparent m-5">
-                            <i class="ion-social-facebook m-r-5"></i>
-                        </a>
-                        <a class="btn btn-instagram transparent m-5">
-                            <i class="ion-social-instagram m-r-5"></i>
-                        </a>
-                        <a class="btn btn-whatsapp transparent m-5">
-                            <i class="ion-social-whatsapp m-r-5"></i>
-                        </a>
-                        <!-- /Share -->
-
-                        <div class="container m-t-30">
-                            <ul class="list-group list-rounded m-b-0 m-t-10">
-                                <li class="list-group-item">
-                                    <i class="icon ion-android-calendar m-r-5 f-primary"></i>
-                                    <span><strong>{{ translations.date }}:</strong> {{ event.date }} {{ event.time }}</span>
-                                </li>
-                                <li class="list-group-item">
-                                    <i class="icon ion-android-time m-r-5 f-primary"></i>
-                                    <span v-if="event.place.open_now"><strong>{{ translations.is_opened }}</strong> {{ translations.yes }}</span>
-                                    <span v-if="!event.place.open_now"><strong>{{ translations.is_opened }}</strong> {{ translations.no }}</span>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div>
-                    <!-- Place Name, Description, City And State -->
-
-                    <!-- Tabs -->
-                    <div class="m-t-30">
-                        <div class="swiper-container tabs text-center" ref="tabs">
-                            <div class="swiper-wrapper">
-                                <div :class="{ 'swiper-slide tab': true, 'active': false }">
-                                    <i class="tab-icon ion-ios-location m-r-5"></i>
-                                    {{ translations.tabs.location }}
-                                </div>
-                                <div :class="{ 'swiper-slide tab': true, 'active': false }">
-                                    <i class="tab-icon ion-ios-people m-r-5"></i>
-                                    {{ translations.tabs.friends }}
-                                </div>
+                            <!-- Call -->
+                            <div class="m-t-30" v-if="event.phone">
+                                <a :href="`tel:${ event.phone }`" class="btn btn-info transparent">
+                                    <i class="ion-ios-telephone m-r-5"></i>{{ translations.call }}
+                                </a>
                             </div>
+                            <!-- /Call -->
 
+                            <!-- Share -->
+                            <p class="m-t-30">{{ translations.share }}</p>
+                            <a class="btn btn-facebook transparent m-5">
+                                <i class="ion-social-facebook m-r-5"></i>
+                            </a>
+                            <a class="btn btn-instagram transparent m-5">
+                                <i class="ion-social-instagram m-r-5"></i>
+                            </a>
+                            <a class="btn btn-whatsapp transparent m-5">
+                                <i class="ion-social-whatsapp m-r-5"></i>
+                            </a>
+                            <!-- /Share -->
+
+                            <div class="container m-t-30">
+                                <ul class="list-group list-rounded m-b-0 m-t-10">
+                                    <li class="list-group-item">
+                                        <i class="icon ion-android-calendar m-r-5 f-primary"></i>
+                                        <span><strong>{{ translations.date }}:</strong> {{ event.date }} {{ event.time }}</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="icon ion-android-time m-r-5 f-primary"></i>
+                                        <span v-if="event.place.open_now"><strong>{{ translations.is_opened }}</strong> {{ translations.yes }}</span>
+                                        <span v-if="!event.place.open_now"><strong>{{ translations.is_opened }}</strong> {{ translations.no }}</span>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                        <!-- Place Name, Description, City And State -->
+
+                        <!-- Tabs -->
+                        <div class="m-t-30">
+                            <div class="swiper-container tabs text-center" ref="tabs">
+                                <div class="swiper-wrapper">
+                                    <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                        <i class="tab-icon ion-ios-location m-r-5"></i>
+                                        {{ translations.tabs.location }}
+                                    </div>
+                                    <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                        <i class="tab-icon ion-ios-people m-r-5"></i>
+                                        {{ translations.tabs.friends }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- / Tabs -->
+
+                        <!-- Tab Content -->
+                        <div class="m-t-30">
+                            <div class="">
+                                <!-- Tab Location -->
+                                <tab-location :event="event" v-show="currentTab === 0"></tab-location>
+                                <!-- Tab Location -->
+
+                                <!-- Tab Friends -->
+                                <tab-friends  v-show="currentTab === 1"></tab-friends>
+                                <!-- Tab Friends -->
+                            </div>
+                        </div>
+                        <!-- / Tab Content -->
+
+                    </div>
+                    <!-- / Place Content -->
+
+                    <!-- See Also -->
+
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12">
+                            <h3 class="text-center f-success m-t-30">{{translations.see_more.title}}</h3>
                         </div>
                     </div>
-                    <!-- / Tabs -->
-
-                    <!-- Tab Content -->
-                    <div class="m-t-30">
-                        <div class="">
-                            <!-- Tab Location -->
-                            <tab-location :event="event" v-show="currentTab === 0"></tab-location>
-                            <!-- Tab Location -->
-
-                            <!-- Tab Friends -->
-                            <tab-friends  v-show="currentTab === 1"></tab-friends>
-                            <!-- Tab Friends -->
-                        </div>
-                    </div>
-                    <!-- / Tab Content -->
-
+                        <!-- / See Also -->
                 </div>
-                <!-- / Place Content -->
-
-                <!-- See Also -->
-
-                <div class="row">
-                    <div class="col-md-12 col-xs-12">
-                        <h3 class="text-center f-success m-t-30">{{translations.see_more.title}}</h3>
-                    </div>
-                </div>
-                    <!-- / See Also -->
             </div>
         </transition>
 
@@ -259,7 +262,7 @@
                 that.currentCategory = category;
 
                 setTimeout( function(){
-                    that.$router.push({name: 'general.events.list', query: {category_id: category.id}}); 
+                    that.$router.push({name: 'general.events.list', query: {category_id: category.id}});
                 }, 300)
             },
         }
@@ -304,11 +307,11 @@
         width: 100%;
         column-count: 4;
         column-gap: 0;
-
+        justify-content: center;
     }
 
     .col {
-        width: 100%;
+        width: 50%;
         display: inline-block;
         padding: 5px;
     }
