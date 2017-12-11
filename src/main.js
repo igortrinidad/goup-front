@@ -165,7 +165,6 @@ require('moment/locale/pt-br')
         }
     });
 
-
     //Disable production tip
     Vue.config.productionTip = false
 

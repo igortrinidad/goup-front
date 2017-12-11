@@ -10,7 +10,26 @@
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main">
 
-                <div class="container bg m-t-20">
+
+                <div class="text-right flags m-r-10">
+                    <img
+                        class="m-r-5 country-flag"
+                        src="../../../../assets/img/brazil.png"
+                        width="32px"
+                        @click="bounceLanguage($event, 'pt')"
+                        :class="{ 'country-selected' : language ===  'pt' }"
+                    >
+                    <img
+                        class="m-r-5 country-flag"
+                        src="../../../../assets/img/united-kingdom.png"
+                        width="32px"
+                        @click="bounceLanguage($event, 'en')"
+                        :class="{ 'country-selected' : language ===  'en' }"
+                    >
+                </div>
+                <!-- / Select Language -->
+
+                <div class="container bg m-t-0">
 
                     <router-link
                         tag="div"
@@ -71,7 +90,7 @@
 
     import User from '@/models/User'
     import * as translations from '@/translations/user/settings'
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
 
     export default {
         name: 'general-user-settings',
@@ -106,7 +125,22 @@
         },
 
         methods: {
+            ...mapActions(['setLanguage']),
 
+            bounceLanguage: function(event, language){
+
+                setTimeout(function() {
+                    $(event.target).addClass('bounce');
+                }, 100);
+
+                setTimeout(function() {
+                    $(event.target).removeClass('bounce');
+                }, 300);
+
+                this.setLanguage(language);
+                
+                
+            },
         }
     }
 </script>

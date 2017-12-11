@@ -21,7 +21,7 @@
 
                         <p class="f-16 f-300 text-center m-t-10">{{translations.title_category}}</p>
                         <!-- CATEGORIES -->
-                        <div class="col-row p-10">
+                        <div class="col-row">
                             <!-- ALL -->
                             <div class="col">
                                 <div class="card-cat text-center"
@@ -167,7 +167,7 @@
 
                             <div class="col-sm-12">
 
-                                <p class="f-14 f-300 text-center m-t-10">{{translations.add_event_title}}</p>
+                                <p class="f-14 f-300 text-center m-t-20">{{translations.add_event_title}}</p>
 
                                 <router-link :to="{name: 'general.events.create'}" class="btn btn-primary btn-block m-t-20">{{translations.add_event}}</router-link>
                             </div>
@@ -444,12 +444,12 @@
 
                 that.currentCategory = category;
 
-                that.$router.push({ query: { category_id: category.id }})
 
                 setTimeout(function() {
                     that.interactions.finished_loading_category = true;
                     that.interactions.is_loading = true;
                     that.getEvents();
+                    that.$router.push({ query: { category_id: category.id }})
                 }, 500);
 
                 setTimeout(function() {

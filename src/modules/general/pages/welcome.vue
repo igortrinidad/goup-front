@@ -16,14 +16,14 @@
                     class="m-r-5 country-flag"
                     src="../../../assets/img/brazil.png"
                     width="32px"
-                    @click="setLanguage('pt')"
+                    @click="bounceLanguage($event, 'pt')"
                     :class="{ 'country-selected' : language ===  'pt' }"
                 >
                 <img
                     class="m-r-5 country-flag"
                     src="../../../assets/img/united-kingdom.png"
                     width="32px"
-                    @click="setLanguage('en')"
+                    @click="bounceLanguage($event, 'en')"
                     :class="{ 'country-selected' : language ===  'en' }"
                 >
             </div>
@@ -37,14 +37,14 @@
                     class="m-r-5 country-flag"
                     src="../../../assets/img/brazil.png"
                     width="32px"
-                    @click="setLanguage('pt')"
+                    @click="bounceLanguage($event, 'pt')"
                     :class="{ 'country-selected' : language ===  'pt' }"
                 >
                 <img
                     class="m-r-5 country-flag"
                     src="../../../assets/img/united-kingdom.png"
                     width="32px"
-                    @click="setLanguage('en')"
+                    @click="bounceLanguage($event, 'en')"
                     :class="{ 'country-selected' : language ===  'en' }"
                 >
             </div>
@@ -251,6 +251,20 @@
                         pagination: '.swiper-pagination',
                     })
                 }, 400);
+            },
+
+            bounceLanguage: function(event, language){
+
+                setTimeout(function() {
+                    $(event.target).addClass('bounce');
+                }, 100);
+
+                setTimeout(function() {
+                    $(event.target).removeClass('bounce');
+                }, 300);
+
+                this.setLanguage(language);
+                
             },
 
         }

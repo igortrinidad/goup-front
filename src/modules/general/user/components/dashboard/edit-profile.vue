@@ -51,27 +51,6 @@
                         <input type="tel" class="form-control" :placeholder="translations.placeholders.bday" v-model="user.bday"  data-mask="00/00/0000">
                     </div>
 
-                    <!-- / Select Language -->
-                    <p class=" f-22 f-400">{{ translations.language.title }}</p>
-
-                    <div class="flags m-b-20">
-                        <img
-                            class="m-r-10 country-flag"
-                            src="../../../../../assets/img/brazil.png"
-                            width="32px"
-                            @click="setLanguage('pt')"
-                            :class="{ 'country-selected' : language ===  'pt' }"
-                        >
-                        <img
-                            class="m-r-5 country-flag"
-                            src="../../../../../assets/img/united-kingdom.png"
-                            width="32px"
-                            @click="setLanguage('en')"
-                            :class="{ 'country-selected' : language ===  'en' }"
-                        >
-                    </div>
-                    <!-- / Select Language -->
-
                     <!-- Password -->
                     <p class=" f-22 f-400">{{ translations.password.title }}</p>
                     <button type="button" class="btn btn-info btn-block transparent m-t-30" @click="interactions.changePassword = true" v-if="!interactions.changePassword">
@@ -151,7 +130,7 @@
         },
 
         methods: {
-            ...mapActions(['setLanguage', 'authSetUser']),
+            ...mapActions(['authSetUser']),
 
             saveSettings() {
 
@@ -240,20 +219,6 @@
         width: 100%;
         font-weight: 700;
         margin-top: 20px;
-    }
-
-    .flags{
-        top: 17px;
-        right: 10px;
-        cursor: pointer;
-    }
-
-    .country-flag{
-        filter: grayscale(90%);
-    }
-
-    .country-selected{
-        filter: grayscale(0%);
     }
 
 </style>

@@ -3,9 +3,7 @@ import moment from 'moment';
 
 export default function(){
 
-
-    //Altera o console para pegar os erros de javascript também
-
+    //Cria uma função para limpar o localStorage porém manter alguns itens
     var clear = function(){
 
         var user_last_geolocation = localStorage.getItem('user_last_geo_location');

@@ -1,0 +1,7 @@
+/*
+* Table
+ */
+
+.table-vmiddle td {
+    vertical-align: middle !important;
+}

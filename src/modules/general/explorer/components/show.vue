@@ -18,7 +18,7 @@
 
                     <p class="f-16 f-300 text-center m-t-10">{{translations.select_category}}</p>
 
-                    <div class="col-row p-10">
+                    <div class="col-row">
                         <div class="col" v-for="category in getCategories">
                             <div class="card-cat text-center"
                                 @click="selectCategory(category)"
@@ -248,13 +248,6 @@
                 active: false,
                 top: 0,
                 left: 0,
-                currentLocation:{
-                    lat:-23.5505199,
-                    lng:-46.63330940000003,
-                    city: 'São Paulo',
-                    state: 'SP',
-                    newLocation: ''
-                },
                 currentCity: null,
                 currentCategory: null,
                 current_week: [],

@@ -8,7 +8,7 @@
     padding: 10px 20px;
 }
 
-/* Remove ios shadow */
+/* Remove ios shadow on forms*/
 * {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -32,3 +32,56 @@
 .has-error .ql-container.ql-snow {
     border: 2px solid #FE0022 !important;
 }
+
+.container-form {
+    max-width: 768px;
+    margin: 0 auto;
+}
+
+.form {
+    padding: 15px;
+}
+.form .container-form{
+    background: #88C657;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .4);
+    padding: 10px;
+}
+
+/* Fixes */
+.control-label,
+.has-error .control-label { color: #fff; }
+.help-block {
+    background: #fff;
+    padding: 3px;
+    display: inline-block;
+    border-radius: 4px;
+    color: #E14A45;
+}
+
+.has-error .form-control,
+.has-error .form-control:focus { border: none; box-shadow: none; }
+
+
+/* Fix Steps */
+.fa-file-text-o:before, .fa-file-txt-o:before {
+    color: #69A7BE !important;
+}
+
+@media(max-width: 768px) {
+    .vue-form-wizard .wizard-nav>li {
+        margin: 10px 0;
+    }
+    .vue-form-wizard .wizard-navigation .wizard-progress-with-circle {
+        display: none;
+    }
+    .vue-form-wizard .wizard-icon-circle {
+        flex-flow: row wrap;
+        width: 100px;
+        height: 100px;
+    }
+}
+
+
+/* Form Default Style */
+.form-control, input { border-width: 1px; font-weight: 300; }
+.has-error .form-control, .has-error .form-control:focus { border-width: 1px; }

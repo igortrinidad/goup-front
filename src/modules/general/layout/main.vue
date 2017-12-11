@@ -32,7 +32,6 @@
     @import '../../../../assets/css/general.css';
     @import '../../../../assets/css/custom.css';
 
-
     .fade-enter-active, .fade-leave-active {
       transition-property: opacity;
       transition-duration: .25s;

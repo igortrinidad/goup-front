@@ -1,0 +1,65 @@
+/* Time Line */
+.line {
+    width: 100%;
+    position: relative;
+    background: #fff;
+    padding: 4px;
+    border-radius: 4px 4px 0 0;
+}
+
+.line .line-padding{ padding-left: 110px; }
+
+.line.line-row{ margin: -4px 0;}
+
+.line .line-border {
+    position: absolute;
+    width: 2px; height: 100%;
+    top: 0; left: 40px; bottom: 0;
+    background: #e8e8e8;
+    z-index: 50;
+}
+
+.feed .line .line-date {
+    margin-top: 25px;
+    display: block;
+    width: 110px;
+    z-index: 1;
+    height: 28px;
+    text-align: right;
+    background: #f4f5f5;
+    border-radius: 4px;
+    position: absolute;
+    top: 50%; left: 20px;
+    margin-top: -14px;
+}
+
+.line .line-item {
+    padding: 10px 10px 10px 50px;
+    position: relative;
+    display: block;
+    background-color: transparent;
+    margin: 0;
+    z-index: 60;
+    margin: 30px 0;
+}
+.feed .line .line-icon {
+    position: absolute;
+    top: 50%; left: 29px;
+    width: 15px; height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -7.5px;
+    font-size: 30px;
+    border-radius: 50%;
+    border: 2px solid;
+    background-color: #f4f5f5;
+    z-index: 10;
+}
+
+.line .line-item .picture-circle.picture-circle-xs { width: 35px; height: 35px; }
+.line .line-item .line-icon.success { border-color: #00A369; }
+.line .line-item .line-icon.danger { border-color: #E14A45; }
+.line .line-item .line-icon.warning { border-color: #FFCC5F; }
+.line .line-item .line-icon.default { border-color: #383938; }
+.line .line-item .line-icon.info { border-color: #488FEE; }

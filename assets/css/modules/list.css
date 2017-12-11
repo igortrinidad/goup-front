@@ -1,0 +1,27 @@
+/* List  Rounded */
+.list-rounded .list-group-item:first-child {
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.list-rounded .list-group-item:last-child {
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.list-rounded .list-group-item {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .1);
+    font-size: 14px;
+}
+
+.list-rounded .list-group-item.active {
+    background: transparent;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, .1);
+}
+
+/* List Bootstrap */
+.list-group-item { border-color: #F4F5F5; cursor: pointer;}
+.list-title { background-color: #F4F5F5; }
+.list-group-item { border-color: rgba(57, 56, 56, .2) }

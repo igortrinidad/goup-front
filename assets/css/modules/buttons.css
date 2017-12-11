@@ -87,3 +87,7 @@ button, a,
     border-width: 1px !important;
     padding: 5px 25px;
 }
+
+/* Btn Group */
+.btn-group, .btn-group-vertical { display: flex; }
+.btn-group > .btn, .btn-group-vertical > .btn { width: 100%; }
