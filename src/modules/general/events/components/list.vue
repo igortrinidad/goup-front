@@ -178,6 +178,7 @@
 
             </div>
 
+
         </transition>
 
     </div>
@@ -418,11 +419,8 @@
 
                 that.currentCategory = category;
 
-
                 setTimeout(function() {
                     that.interactions.finished_loading_category = true;
-                    that.interactions.is_loading = true;
-                    that.getEvents();
                     that.$router.push({ query: { category_id: category.id }})
                 }, 500);
 
@@ -432,7 +430,9 @@
 
                 bus.$emit('ranking-category-selected', category);
 
-                that.events = [];
+                that.events = []
+                this.nextPage = 1
+                this.nextSet = 0
 
 
 
