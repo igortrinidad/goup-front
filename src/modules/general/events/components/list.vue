@@ -115,9 +115,9 @@
                                             borderRadius: '6px 6px 0 0'
                                         }"
                                         >
-                                        <span class="event-ranking">
-                                            {{ event.rank_position }}º
-                                        </span>
+                                            <span class="event-ranking">
+                                                {{ event.rank_position }}º
+                                            </span>
                                         </div>
                                         <!-- Card Body -->
                                         <div class="card-body card-padding">
@@ -456,10 +456,6 @@
     }
 
     /* Event Card */
-
-    .divider {
-        border-left: 1px solid #dfdfdf;
-    }
 
     .event-ranking {
         position: absolute;
