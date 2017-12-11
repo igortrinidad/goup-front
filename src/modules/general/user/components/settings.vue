@@ -147,10 +147,6 @@
 
 <style>
 
-    .border-picture-eletric-blue{
-        border: 2px solid #8BF3FB;
-    }
-
     .container.bg{
         padding-bottom: 30px;
         border-radius: 0 0 20px 20px;

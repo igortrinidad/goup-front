@@ -11,11 +11,13 @@ export const en = {
     event_not_found: 'Unfortunately we could not find this event now',
     call: 'Call now',
     share: 'Compartilhe with your friends',
+    shared_by: 'This moment was shared by',
+    open_maps: 'Open in Maps',
 
     // Tabs
     tabs: {
         comments: 'Comments',
-        location: 'Location',
+        location: 'Where',
         friends: 'Who liked',
         users: 'More users'
     },
@@ -57,11 +59,13 @@ export const pt = {
     event_not_found: 'Infelizmente não conseguimos encontrar esse evento agora',
     call: 'Ligue agora',
     share: 'Compartilhe com seus amigos',
+    shared_by: 'Este momento foi compartilhado por',
+    open_maps: 'Abrir no mapas',
 
     // Tabs
     tabs: {
         comments: 'Comentários',
-        location: 'Localização',
+        location: 'Onde',
         friends: 'Quem curtiu',
         users: 'Mais usuários'
     },

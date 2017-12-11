@@ -60,7 +60,7 @@
                                         'bounce' : currentCategory && currentCategory == category
                                     }">
                                     <div class="p-10">
-                                        <img :src="category.photo_url" width="40px">
+                                        <img :src="category.photo_url" height="50px">
                                         <p class="f-default m-t-10">{{category['name_' + language]}}</p>
                                     </div>
                                 </div>
@@ -92,12 +92,30 @@
                             <ul class="list-group list-rounded m-b-0 m-t-10">
                                 <li class="list-group-item">
                                     <i class="icon ion-android-calendar m-r-5 f-primary"></i>
-                                    <span><strong>{{ translations.date }}:</strong> {{ event.date }} {{ event.time }}</span>
+                                    <span>{{ translations.date }}: {{ event.date }} {{ event.time }}</span>
                                 </li>
                                 <li class="list-group-item">
                                     <i class="icon ion-android-time m-r-5 f-primary"></i>
-                                    <span v-if="event.place.open_now"><strong>{{ translations.is_opened }}</strong> {{ translations.yes }}</span>
-                                    <span v-if="!event.place.open_now"><strong>{{ translations.is_opened }}</strong> {{ translations.no }}</span>
+                                    <span v-if="event.place.open_now">{{ translations.is_opened }} {{ translations.yes }}</span>
+                                    <span v-if="!event.place.open_now">{{ translations.is_opened }} {{ translations.no }}</span>
+                                </li>
+
+                                <li class="list-group-item">
+
+                                    <p>{{translations.shared_by}}</p>
+
+                                    <router-link
+                                            tag="div"
+                                            class="picture-circle picture-circle-xxl border-picture-eletric-blue m-t-5"
+                                            :style="{ backgroundImage: `url(${ event.user.avatar })` }"
+                                            :to="{ name: 'general.user.show', params: { user_slug: event.user.slug } }"
+                                        >
+                                    </router-link>
+
+                                    <h4 class="f-300 text-center m-t-20 f-success">{{ event.user.full_name }}</h4>
+
+                                    
+
                                 </li>
                             </ul>
 
@@ -294,7 +312,7 @@
         border-radius: 10px;
         justify-content: center;
         align-items: center;
-        border: 2px solid #FF4B89;
+        border: 1px solid #FF4B89;
     }
 
     .list-rounded .list-group-item span { display: block; margin-top: 10px; }

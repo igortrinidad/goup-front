@@ -1,12 +1,26 @@
 <template>
     <div>
         <div class="m-t-30 text-center">
-            <div v-if="event.place.full_address">
-                <span>{{ event.place.full_address }}</span>
+
+            <p class="f-success f-20">
+                {{ event.place.name }}
+            </p>
+
+            <p class="">
+                <i class="ion-ios-location m-r-5"></i>
+                {{ `${ event.city.name } - ${ event.city.state }` }}
+            </p>
+
+            <div v-if="event.place.formatted_address">
+                <span>{{ event.place.formatted_address }}</span>
+            </div>
+
+            <div class="m-t-20">
+                <button class="btn btn-primary" @click="openMapsExternally()">{{translations.open_maps}}</button>
             </div>
 
             <div class="col-sm-12">
-                <div class="m-t-30 rounded">
+                <div class="m-t-20 rounded">
                     <GmapMap
                         :center="{ lat: event.place.geometry.location.lat, lng: event.place.geometry.location.lng }"
                         :zoom="map.zoom"
@@ -93,7 +107,13 @@
         },
 
         methods: {
+            openMapsExternally: function(){
+                let that = this
+            
+                var url = `https://www.google.com/maps/place/?q=place_id:${this.event.place.place_id}`;
 
+                window.open(url, '_system');
+            },
         }
     }
 </script>

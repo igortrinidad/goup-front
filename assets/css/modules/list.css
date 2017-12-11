@@ -11,14 +11,14 @@
 
 .list-rounded .list-group-item {
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, .1);
+    border: 1px solid rgba(255, 255, 255, .4);
     font-size: 14px;
 }
 
 .list-rounded .list-group-item.active {
     background: transparent;
     font-weight: 700;
-    border: 1px solid rgba(255, 255, 255, .1);
+    border: 1px solid rgba(255, 255, 255, .4);
 }
 
 /* List Bootstrap */
