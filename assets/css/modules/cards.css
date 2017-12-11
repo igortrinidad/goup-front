@@ -11,18 +11,10 @@
   box-shadow: 0px 5px 15px rgba(0, 0, 0, .2);
 }
 
-.container-para-teste-do-phraseapp {
-    border-radius: 6px;
-    padding: 20px;
-    -webkit-box-shadow: 0 2px 8px 0 rgba(35,47,53,.09);
-    box-shadow: 0 2px 8px 0 rgba(35,47,53,.09);
-}
-
 .card .card-header {
   position: relative;
   border-radius: 6px;
 }
-
 
 .card .card-header.cover {
     height: 388px;
@@ -37,19 +29,6 @@
     .card .card-header.cover { height: 330px; }
 }
 
-.card .card-header .card-header-title {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: auto;
-    color: #fff;
-    margin-bottom: 0;
-    background: linear-gradient(to bottom, rgba(248,80,50,0) 0%, rgba(22,22,22, .9) 80%);
-    padding: 15px 10px;
-    border-radius: 0 0 20px 20px
-}
-
 @media screen and (min-width: 768px) {
   .card .card-header:not(.ch-alt) {
     padding: 23px 25px;
@@ -60,10 +39,6 @@
   .card .card-header:not(.ch-alt) {
     padding: 18px;
   }
-}
-
-.card .card-header.ch-with-control {
-    padding-right: 45px !important;
 }
 
 .card .card-header h2 {
