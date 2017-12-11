@@ -9,7 +9,7 @@
 
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main">
-                <div class="container bg m-t-20">
+                <div class="container bg">
 
                     <div
                         class="picture-circle border-picture-eletric-blue"
@@ -17,6 +17,10 @@
                         :style="{ backgroundImage: `url(${ user.avatar })` }"
                     >
                     </div>
+
+                    <p class="text-center m-b-0 m-t-20" v-show="!interactions.is_loading">
+                        {{ user.city.name }} - {{ user.city.state }}
+                    </p>
 
                     <!-- User Badge -->
                     <div class="goup-badge">
@@ -86,22 +90,6 @@
                     </div>
                     <!-- /CARDS -->
 
-                    <infinite-loading @infinite="getUserEvents" force-use-infinite-wrapper="true">
-                        <span slot="no-more">
-                            <span class="f-700 text-white" v-if="events.length">
-                                {{ translations.load_complete }}
-                            </span>
-                        </span>
-
-                        <span slot="no-results"></span>
-
-                        <span slot="spinner" v-show="interactions.is_loading">
-                            <card-placeholder />
-                            {{ interactions.is_loading }}
-                        </span>
-
-                    </infinite-loading>
-
                 </div>
             </div>
         </transition>
@@ -112,7 +100,7 @@
 <script>
     import { mapGetters } from 'vuex'
     import { cleanEventModel } from '@/models/Event'
-    import UserModel from '@/models/User'
+    import * as UserModel from '@/models/User'
 
     import * as translations from '@/translations/user/show'
 
@@ -132,9 +120,9 @@
         data () {
             return {
                 interactions: {
-                    is_loading: false
+                    is_loading: true
                 },
-                user: {},
+                user: UserModel.CleanUserModel(),
                 events: [],
                 nextPage: 1
 
@@ -156,34 +144,15 @@
         },
 
         mounted(){
-            let that = this
-
-            that.getUser()
-
-            window.addEventListener( "scroll", function( event ) {
-                let scrollTop = $(document).scrollTop();
-
-                if (scrollTop > 100) {
-
-                    that.interactions.scroll = true
-                    setTimeout(function() {
-                        that.interactions.scrollAnimationFinished = true
-                    }, 1000);
-
-                } else {
-                    that.interactions.scroll = false
-                    that.interactions.scrollAnimationFinished = false;
-                }
-            })
+            this.getUser()
         },
 
         methods: {
 
             getUser() {
-                let that = this
-
-                that.user = UserModel
-                that.getUserEvents()
+                this.user = UserModel.Default()
+                console.log(this.user)
+                this.getUserEvents()
             },
 
             getUserEvents($state) {
@@ -194,23 +163,12 @@
                 that.$http.get(`user/events/list?page=${that.nextPage}`)
                     .then(function (response) {
 
+                        that.events = response.data.events
+                        that.pagination = response.data.pagination
+
                         that.interactions.is_loading = false
 
-                        if(!that.events.length){
-                            that.events = response.data.events
-                            that.pagination = response.data.pagination
-                        }else {
-                            that.events = that.events.concat(response.data.events)
-                            that.pagination = response.data.pagination
-                        }
-
-                        if(that.pagination.current_page < that.pagination.last_page){
-                            that.nextPage =  that.nextPage + 1
-                            $state.loaded()
-                        }else {
-                            $state.complete()
-                        }
-
+                        console.log(that.events);
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -238,7 +196,7 @@
     }
 
     /* Picture */
-    .picture-circle {
+    /*.picture-circle {
         position: absolute; transition: ease .3s;
         top: 30px;
         index: 10;
@@ -246,12 +204,12 @@
 
     .picture-circle-l { left: calc(50% - 50px); }
     .picture-circle-m { left: calc(50% - 43px); }
-    .picture-circle-p { left: calc(50% - 33px); }
+    .picture-circle-p { left: calc(50% - 33px); }*/
 
     /* Badge */
     .goup-badge {
         width: 220px;
-        margin: 128px auto 0 auto;
+        margin: 30px auto 0 auto;
         position: relative;
     }
 
