@@ -35,6 +35,22 @@
                         <!-- Button -->
                     </div>
 
+                    <!-- Tabs -->
+                    <div class="m-t-30">
+                        <div class="swiper-container tabs text-center" ref="tabs">
+                            <div class="swiper-wrapper">
+                                <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                    {{ translations.last_interactions }}
+                                </div>
+                                <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                    {{ translations.saved }}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- / Tabs -->
+
                     <!-- Cards -->
                     <div class="cards" infinite-wrapper>
                         <router-link
@@ -176,8 +192,8 @@
                 },
                 user: UserModel.CleanUserModel(),
                 events: [],
-                nextPage: 1
-
+                nextPage: 1,
+                currentTab: 0
             }
         },
 
@@ -220,7 +236,7 @@
 
                         that.interactions.is_loading = false
 
-                        console.log(that.events);
+                        that.initSwiperTabs()
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -231,6 +247,24 @@
             handleDistance(distance){
                 distance = parseFloat(distance);
                 return `${distance.toFixed(2)} km`
+            },
+
+            initSwiperTabs() {
+                let that = this
+
+                setTimeout(() => {
+                    that.swiperTabs = new Swiper(that.$refs.tabs, {
+                        initialSlide: 0,
+                        slidesPerView: 2,
+                        spaceBetween: 5,
+                        centeredSlides: true,
+                        slideActiveClass: 'active',
+                        slideToClickedSlide: true,
+                        onSlideChangeEnd: swiper => {
+                            that.currentTab = swiper.realIndex
+                        },
+                    })
+                }, 200);
             },
 
         }
@@ -257,5 +291,26 @@
     .picture-circle-l { left: calc(50% - 50px); }
     .picture-circle-m { left: calc(50% - 43px); }
     .picture-circle-p { left: calc(50% - 33px); }*/
+
+    /* Ranking */
+    .event-ranking {
+        position: absolute;
+        top: 10px; left: 10px;
+        background-color: #561F9F;
+        color: #FFFD7B;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        width: 40px;
+        font-weight: 700;
+        border-radius: 6px;
+
+    }
+
+    .event-ranking small {
+        width: 50%;
+        text-align: center;
+    }
 
 </style>

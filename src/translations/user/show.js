@@ -4,6 +4,8 @@ export const en = {
     free: 'Free',
     saved: 'Saved locations',
     level: 'Level',
+    last_interactions: 'Interactions',
+    saved: 'Saved Events',
     modal_badges: {
         title: 'Badges',
         close: 'Close'
@@ -16,6 +18,8 @@ export const pt = {
     free: 'Gratuito',
     saved: 'Locais salvos',
     level: 'Nível',
+    last_interactions: 'Últimas interações',
+    saved: 'Eventos salvos',
     modal_badges: {
         title: 'Medalhas',
         close: 'Fechar'
