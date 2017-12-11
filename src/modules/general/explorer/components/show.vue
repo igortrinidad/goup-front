@@ -279,7 +279,8 @@
                     get_by_date: false,
                     init: moment().format('DD/MM/YYYY'),
                     end: moment().add(6, 'days').format('DD/MM/YYYY'),
-                }
+                },
+                initialCitySlide: 0
             }
         },
 
@@ -502,16 +503,14 @@
                 return `${distance.toFixed(2)} km`
             },
 
-            citiesSwiper(initial_slide) {
+            citiesSwiper() {
                 let that = this
-
-                initial_slide = !initial_slide ? 0 : initial_slide
 
                 setTimeout(() => {
                     that.swiperTabs = new Swiper(that.$refs.citiesSlider, {
                         spaceBetween: 0,
                         slidesPerView: 5,
-                        initialSlide: initial_slide,
+                        initialSlide: that.initialCitySlide,
                         loop: false,
                         centeredSlides: true,
                         slideToClickedSlide: true,
@@ -519,10 +518,12 @@
                         nextButton: '.swiper-button-next',
                         onSlideChangeEnd: swiper => {
 
-                            if(initial_slide != swiper.realIndex){
-                                that.currentCity = that.getCities[swiper.realIndex]
-                                that.getEvents();
-                            }
+                          let city = that.getCities[swiper.realIndex]
+
+                          if(that.currentCity.id != city.id){
+                              that.currentCity = city
+                              that.getEvents();
+                          }
                         },
                         breakpoints: {
                             350: {
@@ -564,7 +565,10 @@
 
                         let initalSlide = _.findIndex(that.getCities, {id: that.currentCity.id})
 
-                        that.citiesSwiper(initalSlide);
+                        that.initialCitySlide = initalSlide
+
+                        that.citiesSwiper();
+
 
                     }).catch(function (error) {
                     console.log(error)
