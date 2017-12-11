@@ -78,16 +78,8 @@
                             <!-- /Call -->
 
                             <!-- Share -->
-                            <p class="m-t-30">{{ translations.share }}</p>
-                            <a class="btn btn-facebook transparent m-5">
-                                <i class="ion-social-facebook m-r-5"></i>
-                            </a>
-                            <a class="btn btn-instagram transparent m-5">
-                                <i class="ion-social-instagram m-r-5"></i>
-                            </a>
-                            <a class="btn btn-whatsapp transparent m-5">
-                                <i class="ion-social-whatsapp m-r-5"></i>
-                            </a>
+                            <button class="btn btn-success m-t-30">{{ translations.share }}</button>
+
                             <!-- /Share -->
 
                             <div class="container m-t-30">
