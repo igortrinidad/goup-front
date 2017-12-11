@@ -11,13 +11,19 @@ export const en = {
     event_not_found: 'Unfortunately we could not find this event now',
     call: 'Call now',
     share: 'Share with your friends',
-    shared_by: 'This moment was shared by',
-    open_maps: 'Open in Maps',
+    value_uninformed: 'Ticket value uninformed',
+    ticket_value: 'Ticket value',
+    free: 'Free',
+    daily: 'Happens daily',
+    weekly: 'Happens every week at',
+    monthly: 'Happens every month at',
+    time_uninformed: 'Time uninformed',
+    time: 'Time',
 
     // Tabs
     tabs: {
         comments: 'Comments',
-        location: 'Where',
+        location: 'Location',
         friends: 'Who liked',
         users: 'More users'
     },
@@ -59,13 +65,19 @@ export const pt = {
     event_not_found: 'Infelizmente não conseguimos encontrar esse evento agora',
     call: 'Ligue agora',
     share: 'Compartilhe com seus amigos',
-    shared_by: 'Este momento foi compartilhado por',
-    open_maps: 'Abrir no mapas',
+    value_uninformed: 'Valor não informado',
+    ticket_value: 'Valor do ingresso',
+    free: 'Grátis',
+    daily: 'Acontece diariamente',
+    weekly: 'Acontece toda semana na',
+    monthly: 'Acontece todo mês na',
+    time_uninformed: 'Horário não informado',
+    time: 'Horário',
 
     // Tabs
     tabs: {
         comments: 'Comentários',
-        location: 'Onde',
+        location: 'Localização',
         friends: 'Quem curtiu',
         users: 'Mais usuários'
     },

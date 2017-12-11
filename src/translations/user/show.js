@@ -5,7 +5,8 @@ export const en = {
     saved: 'Saved locations',
     level: 'Level',
     last_interactions: 'Interactions',
-    saved: 'Saved Events',
+    saved: 'Moments created',
+    favorited: 'Moments liked',
     modal_badges: {
         title: 'Badges',
         close: 'Close'
@@ -19,7 +20,8 @@ export const pt = {
     saved: 'Locais salvos',
     level: 'Nível',
     last_interactions: 'Últimas interações',
-    saved: 'Eventos salvos',
+    saved: 'Momentos criados',
+    favorited: 'Momentos curtidos',
     modal_badges: {
         title: 'Medalhas',
         close: 'Fechar'

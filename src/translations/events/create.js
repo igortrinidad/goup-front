@@ -50,7 +50,7 @@ export const en = {
     success: 'New moment added successfully',
 
     monthWeeks:{
-        first: 'Fist week',
+        first: 'First week',
         second: 'Second week',
         third: 'Third week',
         fourthy: 'Fourthy week',

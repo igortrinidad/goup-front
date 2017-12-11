@@ -3,30 +3,33 @@
         <router-link
             tag="div"
             class="card"
-            v-for="(event, indexEvents) in events"
-            :key="indexEvents"
-            :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
+            v-for="(interaction, interactionIndex) in user_interactions"
+            :key="interactionIndex"
+            :to="{ name: 'general.events.show', params: { event_slug: interaction.event.slug } }"
         >
             <!-- Card Header -->
             <div
                 class="card-header cover p-5"
                 :style="{
-                    backgroundImage: `url(${ event.cover })`,
+                    backgroundImage: `url(${ interaction.event.cover })`,
                     height: '150px',
                     borderRadius: '6px 6px 0 0'
                 }"
             >
                 <span class="event-ranking">
-                    {{ indexEvents }}º
+                    <i class="ion-ios-rewind" v-if="interaction.skip"></i>
+                    <i class="ion-chevron-down" v-if="interaction.down"></i>
+                    <i class="ion-chevron-up"  v-if="interaction.up"></i>
+                    <i class="ion-ios-star" v-if="interaction.favorite"></i>
                 </span>
             </div>
             <!-- Card Body -->
             <div class="card-body card-padding">
-                <h4 class="m-b-5">{{ event.name }}</h4>
+                <h4 class="m-b-5">{{ interaction.event.name }}</h4>
                 <div style="opacity: .8;">
-                    <p class="m-b-5">{{ event.description }}</p>
+                    <p class="m-b-5">{{ interaction.event.description }}</p>
                     <span class="d-block m-0 f-12">
-                        <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
+                        <strong>{{ interaction.event.city.name }} - {{ interaction.event.city.state }}</strong>
                     </span>
                 </div>
             </div>
@@ -34,17 +37,14 @@
             <div class="card-footer p-5">
                 <div class="row">
                     <div class="col-xs-8" style="opacity: .8;">
-                        <small>
-                            <i class="ion-location m-r-5"></i>{{ handleDistance(event.distance) }}
-                        </small>
-                        <small class="divider p-l-10 m-l-10">
-                            <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
-                            <span v-show="event.value === 0">{{ translations.free }}</span>
+                        <small class="p-l-10 m-l-10">
+                            <span v-show="interaction.event.value > 0">{{ interaction.event.value | formatCurrency }}</span>
+                            <span v-show="interaction.event.value === 0">{{ translations.free }}</span>
                         </small>
                     </div>
                     <div class="col-xs-4 text-right">
                         <small class="f-primary">
-                            <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
+                            <i class="ion-ios-star m-r-5"></i>{{ interaction.event.favorited_count }}
                         </small>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                 interactions: {
                     is_loading: true
                 },
-                events: []
+                user_interactions: []
             }
         },
 
@@ -95,20 +95,19 @@
         },
 
         mounted() {
-            this.getEvents()
+            this.getInteractions()
         },
 
         methods: {
-            getEvents() {
+            getInteractions() {
 
                 let that = this
 
                 that.interactions.is_loading = true
-                that.$http.get(`user/events/list?page=${that.nextPage}`)
+                that.$http.get(`user/show/${that.$route.params.user_slug}/interactions`)
                     .then(function (response) {
 
-                        that.events = response.data.events
-                        that.pagination = response.data.pagination
+                     that.user_interactions = response.data.interactions
 
                         that.interactions.is_loading = false
 
