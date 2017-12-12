@@ -370,7 +370,7 @@
             // Whatsapp share
             openShareWhatsapp() {
                 var that = this
-                var url = `https://api.whatsapp.com/send?text=${ that.translations.share_msg } ${ that.event.name } ${ that.translations.application }`;
+                var url = `https://api.whatsapp.com/send?text=${ that.translations.share_msg } ${ that.event.name } ${ that.translations.app }`;
                 window.open(url, '_system', null);
             },
 
