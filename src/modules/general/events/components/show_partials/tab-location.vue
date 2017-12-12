@@ -17,7 +17,9 @@
                 </div>
 
                 <div class="m-t-20">
-                    <button class="btn btn-primary" @click="openMapsExternally()">{{ translations.open_maps }}</button>
+                    <a class="btn btn-primary" :href="`geo:${ event.place.geometry.location.lat },${ event.place.geometry.location.lng }`">
+                        {{ translations.open_maps }}
+                    </a>
                 </div>
 
                 <div class="row m-t-30">
