@@ -73,9 +73,13 @@
                                 </div>
                                 <!-- Modal Body -->
                                 <div class="modal-body">
-                                    <div class="status full">
+                                    <div class="medal" data-toggle="modal" data-target="#modal-badges">
+                                        <svg class="svg-circle-container" viewBox="0 0 70 70">
+                                            <circle class="circle primary" :class="progress.progressLevel()" r="30" cx="35" cy="35">
+                                            </circle>
+                                        </svg>
                                         <!-- Circle -->
-                                        <span class="circle-profile primary xl icon">
+                                        <span class="icon">
                                             <img class="icon-img" src="../../../../assets/icons/status/rock-and-roll.svg" alt="">
                                         </span>
                                         <button type="button" class="btn btn-primary btn-block">
@@ -84,24 +88,47 @@
                                         </button>
                                         <!-- Button -->
                                     </div>
-                                    <div class="status full">
+                                    <div class="medal" data-toggle="modal" data-target="#modal-badges">
+                                        <svg class="svg-circle-container" viewBox="0 0 70 70">
+                                            <circle class="circle success" :class="progress.progressLevel()" r="30" cx="35" cy="35">
+                                            </circle>
+                                        </svg>
                                         <!-- Circle -->
-                                        <span class="circle-profile primary xl icon">
+                                        <span class="icon">
                                             <img class="icon-img" src="../../../../assets/icons/status/dj.svg" alt="">
                                         </span>
-                                        <button type="button" class="btn btn-primary btn-block">
+                                        <button type="button" class="btn btn-success btn-block">
                                             Baladeiro
                                             <i class="level">{{ translations.level }} 2</i>
                                         </button>
                                         <!-- Button -->
                                     </div>
-                                    <div class="status full">
+                                    <div class="medal" data-toggle="modal" data-target="#modal-badges">
+                                        <svg class="svg-circle-container" viewBox="0 0 70 70">
+                                            <circle class="circle secondary" :class="progress.progressLevel()" r="30" cx="35" cy="35">
+                                            </circle>
+                                        </svg>
                                         <!-- Circle -->
-                                        <span class="circle-profile primary xl icon">
+                                        <span class="icon">
                                             <img class="icon-img" src="../../../../assets/icons/status/005-home.svg" alt="">
                                         </span>
-                                        <button type="button" class="btn btn-primary btn-block">
+                                        <button type="button" class="btn btn-secondary btn-block">
                                             Família
+                                            <i class="level">{{ translations.level }} 1</i>
+                                        </button>
+                                        <!-- Button -->
+                                    </div>
+                                    <div class="medal" data-toggle="modal" data-target="#modal-badges">
+                                        <svg class="svg-circle-container" viewBox="0 0 70 70">
+                                            <circle class="circle info" :class="progress.progressLevel()" r="30" cx="35" cy="35">
+                                            </circle>
+                                        </svg>
+                                        <!-- Circle -->
+                                        <span class="icon">
+                                            <img class="icon-img" src="../../../../assets/icons/status/pacman.svg" alt="">
+                                        </span>
+                                        <button type="button" class="btn btn-info btn-block">
+                                            Gamer
                                             <i class="level">{{ translations.level }} 1</i>
                                         </button>
                                         <!-- Button -->

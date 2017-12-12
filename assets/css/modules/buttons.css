@@ -13,8 +13,8 @@ button, a,
 .btn.btn-default,
 .btn.btn-default:hover{
   background-color: transparent;
-  border-color: #F7F5FA !important; 
-  color: #F7F5FA; 
+  border-color: #F7F5FA !important;
+  color: #F7F5FA;
 }
 
 .btn.btn-primary,
@@ -22,6 +22,13 @@ button, a,
   background-color: transparent;
   border-color: #FF4B89 !important;
   color: #FF4B89 !important;
+}
+
+.btn.btn-secondary,
+.btn.btn-secondary:hover{
+  background-color: transparent;
+  border-color: #29F39F !important;
+  color: #29F39F !important;
 }
 
 .btn.btn-success,
