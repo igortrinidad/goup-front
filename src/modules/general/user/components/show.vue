@@ -18,12 +18,9 @@
                     >
                     </div>
 
-                    <!--<p class="text-center m-b-0 m-t-20" v-show="!interactions.is_loading">
-                        {{ user.city.name }} - {{ user.city.state }}
-                    </p>-->
                     <!-- User Badge -->
                     <div class="status" data-toggle="modal" data-target="#modal-badges">
-                        <svg class="svg-container" viewBox="0 0 70 70">
+                        <svg class="svg-circle-container" viewBox="0 0 70 70">
                             <circle class="circle circle-one" :class="progress.progressLevel()" r="30" cx="35" cy="35">
                             </circle>
                         </svg>
@@ -159,7 +156,7 @@
                 events: [],
                 nextPage: 1,
                 currentTab: 0,
-                progress: 15
+                progress: 75
             }
         },
 
@@ -232,21 +229,4 @@
 </script>
 
 <style scoped>
-    /* Picture */
-    /*.picture-circle {
-        position: absolute; transition: ease .3s;
-        top: 30px;
-        index: 10;
-    }
-
-    .picture-circle-l { left: calc(50% - 50px); }
-    .picture-circle-m { left: calc(50% - 43px); }
-    .picture-circle-p { left: calc(50% - 33px); }*/
-    .svg-container {
-        position: absolute;
-        width: 70px; height: 70px;
-        top: calc(50% - 35px);
-        left: -15px;
-        z-index: 1;
-    }
 </style>

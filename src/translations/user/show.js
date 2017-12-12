@@ -4,7 +4,7 @@ export const en = {
     free: 'Free',
     saved: 'Saved locations',
     level: 'Level',
-    last_interactions: 'Interactions',
+    last_interactions: 'Last interactions',
     saved: 'Moments created',
     favorited: 'Moments liked',
     modal_badges: {

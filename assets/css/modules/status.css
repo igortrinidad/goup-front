@@ -11,9 +11,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
+    z-index: 1;
     width: 60px;
     height: 60px;
+    background: #FFF;
+    border-radius: 50%;
+    border: 4px solid #cdcdcd;
+    transform: scale(1.05);
 }
 
 .icon-img {
@@ -37,40 +41,42 @@
 }
 
 /* SVG */
-.circle { stroke-width: 3; }
-
-.circle-bg {
-    stroke-width: 4;
-    fill: #FF4B89;
-    stroke: #efefef;
+.svg-circle-container {
+    position: absolute;
+    width: 70px; height: 70px;
+    top: calc(50% - 35px);
+    left: -15px;
+    z-index: 10;
 }
 
-.circle.per05 { animation: percent05 2s ease forwards; }
-.circle.per10 { animation: percent10 2s ease forwards; }
-.circle.per15 { animation: percent15 2s ease forwards; }
-.circle.per20 { animation: percent20 2s ease forwards; }
-.circle.per25 { animation: percent25 2s ease forwards; }
-.circle.per30 { animation: percent30 2s ease forwards; }
-.circle.per35 { animation: percent35 2s ease forwards; }
-.circle.per40 { animation: percent40 2s ease forwards; }
-.circle.per45 { animation: percent45 2s ease forwards; }
-.circle.per50 { animation: percent50 2s ease forwards; }
-.circle.per55 { animation: percent55 2s ease forwards; }
-.circle.per60 { animation: percent60 2s ease forwards; }
-.circle.per65 { animation: percent65 2s ease forwards; }
-.circle.per70 { animation: percent70 2s ease forwards; }
-.circle.per75 { animation: percent75 2s ease forwards; }
-.circle.per80 { animation: percent80 2s ease forwards; }
-.circle.per85 { animation: percent85 2s ease forwards; }
-.circle.per90 { animation: percent90 2s ease forwards; }
-.circle.per95 { animation: percent95 2s ease forwards; }
-.circle.per00 { animation: percent00 2s ease forwards; }
+.circle { stroke-width: 4; }
 
 .circle-one {
-    stroke: #29F39F;
-    fill: #FF4B89;
+    stroke: #FF4B89;
+    fill: transparent;
     stroke-dasharray: 190;
 }
+
+.circle.per05 { animation: percent05 2.5s ease forwards; }
+.circle.per10 { animation: percent10 2.5s ease forwards; }
+.circle.per15 { animation: percent15 2.5s ease forwards; }
+.circle.per20 { animation: percent20 2.5s ease forwards; }
+.circle.per25 { animation: percent25 2.5s ease forwards; }
+.circle.per30 { animation: percent30 2.5s ease forwards; }
+.circle.per35 { animation: percent35 2.5s ease forwards; }
+.circle.per40 { animation: percent40 2.5s ease forwards; }
+.circle.per45 { animation: percent45 2.5s ease forwards; }
+.circle.per50 { animation: percent50 2.5s ease forwards; }
+.circle.per55 { animation: percent55 2.5s ease forwards; }
+.circle.per60 { animation: percent60 2.5s ease forwards; }
+.circle.per65 { animation: percent65 2.5s ease forwards; }
+.circle.per70 { animation: percent70 2.5s ease forwards; }
+.circle.per75 { animation: percent75 2.5s ease forwards; }
+.circle.per80 { animation: percent80 2.5s ease forwards; }
+.circle.per85 { animation: percent85 2.5s ease forwards; }
+.circle.per90 { animation: percent90 2.5s ease forwards; }
+.circle.per95 { animation: percent95 2.5s ease forwards; }
+.circle.per00 { animation: percent00 2.5s ease forwards; }
 
 /* KEY FRAMES */
 @keyframes percent05 {
