@@ -7,11 +7,19 @@
 .status .icon {
     position: absolute;
     top: calc(50% - 30px);
-    left: 0;
+    left: -10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
 }
 
-.status .icon-img {
-    max-width: 65%
+.icon-img {
+    max-width: 65%;
+    position: relative;
+    z-index: 10;
 }
 
 .status .btn {
@@ -31,16 +39,22 @@
 /* SVG */
 .circle { stroke-width: 3; }
 
-.circle.per10 { animation: percent10 2s forwards; }
-.circle.per20 { animation: percent20 2s forwards; }
-.circle.per30 { animation: percent30 2s forwards; }
-.circle.per40 { animation: percent40 2s forwards; }
-.circle.per50 { animation: percent50 2s forwards; }
-.circle.per60 { animation: percent60 2s forwards; }
-.circle.per70 { animation: percent70 2s forwards; }
-.circle.per80 { animation: percent80 2s forwards; }
-.circle.per90 { animation: percent90 2s forwards; }
-.circle.per00 { animation: percent00 2s forwards; }
+.circle-bg {
+    stroke-width: 4;
+    fill: #FF4B89;
+    stroke: #efefef;
+}
+
+.circle.per10 { animation: percent10 2s ease forwards; }
+.circle.per20 { animation: percent20 2s ease forwards; }
+.circle.per30 { animation: percent30 2s ease forwards; }
+.circle.per40 { animation: percent40 2s ease forwards; }
+.circle.per50 { animation: percent50 2s ease forwards; }
+.circle.per60 { animation: percent60 2s ease forwards; }
+.circle.per70 { animation: percent70 2s ease forwards; }
+.circle.per80 { animation: percent80 2s ease forwards; }
+.circle.per90 { animation: percent90 2s ease forwards; }
+.circle.per00 { animation: percent00 2s ease forwards; }
 
 .circle-one {
     stroke: #29F39F;
@@ -49,7 +63,6 @@
 }
 
 /* KEY FRAMES */
-
 @keyframes percent10 {
     from {
         stroke-dashoffset: -190;
