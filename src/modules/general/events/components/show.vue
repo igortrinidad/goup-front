@@ -48,11 +48,6 @@
 
                             <p>{{ event.description }}</p>
 
-                            <p class="f-success">
-                                <i class="ion-ios-location m-r-5"></i>
-                                {{ `${ event.city.name } - ${ event.city.state }` }}
-                            </p>
-
                             <p>{{translations.categories_title}}</p>
                             <div class="col-row">
 

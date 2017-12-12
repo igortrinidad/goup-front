@@ -19,6 +19,7 @@ export const en = {
     monthly: 'Happens every month at',
     time_uninformed: 'Time uninformed',
     time: 'Time',
+    open_maps: 'Open maps',
 
     // Tabs
     tabs: {
@@ -73,6 +74,7 @@ export const pt = {
     monthly: 'Acontece todo mês na',
     time_uninformed: 'Horário não informado',
     time: 'Horário',
+    open_maps: 'Abrir mapa',
 
     // Tabs
     tabs: {
