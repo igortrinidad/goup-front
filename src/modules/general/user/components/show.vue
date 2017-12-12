@@ -24,7 +24,7 @@
                     <!-- User Badge -->
                     <div class="status" data-toggle="modal" data-target="#modal-badges">
                         <svg class="svg-container" viewBox="0 0 70 70">
-                            <circle class="circle circle-one per60" r="30" cx="35" cy="35">
+                            <circle class="circle circle-one" :class="progress.progressLevel()" r="30" cx="35" cy="35">
                             </circle>
                         </svg>
                         <!-- Circle -->
@@ -158,7 +158,8 @@
                 user: UserModel.CleanUserModel(),
                 events: [],
                 nextPage: 1,
-                currentTab: 0
+                currentTab: 0,
+                progress: 15
             }
         },
 
@@ -226,7 +227,6 @@
                     })
                 }, 200);
             },
-
         }
     }
 </script>

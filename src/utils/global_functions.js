@@ -46,6 +46,29 @@ export default function(){
         $(this).parent().toggleClass('toggled');
     });
 
+    // Retorna o valor
+    Number.prototype.progressLevel = function() {
+        if(this >= 1 && this <= 5) { return 'per05' }
+        if(this >= 6 && this <= 10) { return 'per10' }
+        if(this >= 11 && this <= 15) { return 'per15' }
+        if(this >= 16 && this <= 20) { return 'per20' }
+        if(this >= 21 && this <= 25) { return 'per25' }
+        if(this >= 26 && this <= 30) { return 'per30' }
+        if(this >= 31 && this <= 35) { return 'per35' }
+        if(this >= 36 && this <= 40) { return 'per40' }
+        if(this >= 41 && this <= 45) { return 'per45' }
+        if(this >= 46 && this <= 50) { return 'per50' }
+        if(this >= 51 && this <= 55) { return 'per55' }
+        if(this >= 56 && this <= 60) { return 'per60' }
+        if(this >= 61 && this <= 65) { return 'per65' }
+        if(this >= 66 && this <= 70) { return 'per70' }
+        if(this >= 71 && this <= 75) { return 'per75' }
+        if(this >= 76 && this <= 80) { return 'per80' }
+        if(this >= 81 && this <= 85) { return 'per85' }
+        if(this >= 86 && this <= 90) { return 'per90' }
+        if(this >= 91 && this <= 95) { return 'per95' }
+        if(this >= 96 && this <= 100) { return 'per00' }
+    }
 
     //Retorna o index de um array baseado em um identificador (ex. 1 *id) e uma ancora (ex. ID)
     Array.prototype.toggleSelected = function arrayObjectIndexOf(id) {
