@@ -150,12 +150,12 @@
 }
 
 @keyframes percent75 {
-    from { stroke-dashoffset: -270; }
+    from { stroke-dashoffset: -190; }
     to { stroke-dashoffset: -332.5; }
 }
 
 @keyframes percent80 {
-    from { stroke-dashoffset: -270; }
+    from { stroke-dashoffset: -190; }
     to { stroke-dashoffset: -342; }
 }
 
