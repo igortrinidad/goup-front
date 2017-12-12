@@ -222,48 +222,6 @@
                         </div>
                         <!-- /Place Informations -->
 
-
-                        <!-- Tags -->
-                        <div class="form-group border-inside-card default m-t-20">
-
-                            <!-- TAGS -->
-                            <div class="form-group">
-                                <label class="f-700 f-primary" for="place-style">{{ translations.form.tags }}</label>
-                                <input
-                                    type="text"
-                                    id="place-style"
-                                    class="form-control"
-                                    :placeholder="translations.form.tagsPlaceholder"
-                                    v-model="newTag.name"
-                                    @keyup.enter="addNewTag"
-                                >
-                            </div>
-                            <!-- / TAGS -->
-
-                            <button
-                                type="button"
-                                class="btn btn-sm btn-primary transparent"
-                                @click.prevent="addNewTag"
-                                :disabled="!newTag.name"
-                            >
-                                {{ translations.form.add_new_tag }}
-                            </button>
-
-                            <div class="row m-t-20">
-
-                                <label class="f-700 f-primary" for="place-style">{{ translations.form.addedTags }}</label>
-
-                                <p class="f-300" v-if="!event.tags.length">{{translations.form.noTags}}</p>
-
-                                <span class="small label label-success m-5 tag" v-for="tag in event.tags">
-                                    {{tag.name}} <i class="ion-close m-l-5 f-primary cursor-pointer" @click.prevent="removeTag(tag.name)"></i>
-                                </span>
-                            </div>
-
-                        </div>
-                        <!-- / Tags -->
-
-
                         <!-- Photos -->
                         <div class="form-group border-inside-card default">
 
@@ -781,23 +739,6 @@
                     .catch(function (error) {
                         console.log(error)
                     });
-            },
-
-            addNewTag(){
-
-                let exists = _.find(this.event.tags, {name: this.newTag.name})
-
-                if(!exists){
-                    this.event.tags.push(_.cloneDeep(this.newTag));
-                }
-
-                this.newTag.name = ''
-            },
-
-            removeTag(name){
-                this.event.tags = this.event.tags.filter(function (tag) {
-                    return tag.name != name;
-                });
             },
 
             handleCurrencyType(recurrency_type){

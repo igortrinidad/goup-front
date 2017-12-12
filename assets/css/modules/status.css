@@ -7,11 +7,19 @@
 .status .icon {
     position: absolute;
     top: calc(50% - 30px);
-    left: 0;
+    left: -10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
 }
 
-.status .icon-img {
-    max-width: 65%
+.icon-img {
+    max-width: 65%;
+    position: relative;
+    z-index: 10;
 }
 
 .status .btn {
@@ -26,4 +34,131 @@
     color: #fff;
     font-size: 13px;
     font-weight: 400;
+}
+
+/* SVG */
+.circle { stroke-width: 3; }
+
+.circle-bg {
+    stroke-width: 4;
+    fill: #FF4B89;
+    stroke: #efefef;
+}
+
+.circle.per10 { animation: percent10 2s ease forwards; }
+.circle.per20 { animation: percent20 2s ease forwards; }
+.circle.per30 { animation: percent30 2s ease forwards; }
+.circle.per40 { animation: percent40 2s ease forwards; }
+.circle.per50 { animation: percent50 2s ease forwards; }
+.circle.per60 { animation: percent60 2s ease forwards; }
+.circle.per70 { animation: percent70 2s ease forwards; }
+.circle.per80 { animation: percent80 2s ease forwards; }
+.circle.per90 { animation: percent90 2s ease forwards; }
+.circle.per00 { animation: percent00 2s ease forwards; }
+
+.circle-one {
+    stroke: #29F39F;
+    fill: #FF4B89;
+    stroke-dasharray: 190;
+}
+
+/* KEY FRAMES */
+@keyframes percent10 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -209;
+    }
+}
+
+@keyframes percent20 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -228;
+    }
+}
+
+@keyframes percent30 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -247;
+    }
+}
+
+@keyframes percent40 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -266;
+    }
+}
+
+@keyframes percent50 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -285;
+    }
+}
+
+@keyframes percent60 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -304;
+    }
+}
+
+@keyframes percent70 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -323;
+    }
+}
+
+@keyframes percent80 {
+    from {
+        stroke-dashoffset: -270;
+
+    }
+    to {
+        stroke-dashoffset: -342;
+    }
+}
+
+@keyframes percent90 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -361;
+    }
+}
+
+@keyframes percent00 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -380;
+    }
 }
