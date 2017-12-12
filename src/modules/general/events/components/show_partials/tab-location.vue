@@ -127,6 +127,6 @@
         border-radius: 6px;
         overflow: hidden !important;
         position: relative;
-        z-index: 1000;
+        z-index: 10;
     }
 </style>
