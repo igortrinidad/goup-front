@@ -17,7 +17,6 @@
     "copy-text-to-clipboard": "^1.0.2",
     "cordova-android": "^6.3.0",
     "cordova-camera-roll": "^0.2.1",
-    "cordova-ios": "^4.5.4",
     "cordova-plugin-camera": "^2.4.1",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-fcm": "^2.1.2",
@@ -73,7 +72,8 @@
     "vue2-google-maps": "^0.7.5",
     "vuejs-datepicker": "^0.9.13",
     "vuex": "^2.2.1",
-    "vuex-router-sync": "^4.2.0"
+    "vuex-router-sync": "^4.2.0",
+    "cordova-ios": "~4.5.4"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
@@ -127,8 +127,8 @@
   ],
   "cordova": {
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ],
     "plugins": {
       "cordova-plugin-splashscreen": {},
