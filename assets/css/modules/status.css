@@ -29,10 +29,18 @@
 }
 
 /* SVG */
-.circle {
-    stroke-width: 3;
-    animation: percent 3s forwards;
-}
+.circle { stroke-width: 3; }
+
+.circle.per10 { animation: percent10 2s forwards; }
+.circle.per20 { animation: percent20 2s forwards; }
+.circle.per30 { animation: percent30 2s forwards; }
+.circle.per40 { animation: percent40 2s forwards; }
+.circle.per50 { animation: percent50 2s forwards; }
+.circle.per60 { animation: percent60 2s forwards; }
+.circle.per70 { animation: percent70 2s forwards; }
+.circle.per80 { animation: percent80 2s forwards; }
+.circle.per90 { animation: percent90 2s forwards; }
+.circle.per00 { animation: percent00 2s forwards; }
 
 .circle-one {
     stroke: #29F39F;
@@ -42,7 +50,97 @@
 
 /* KEY FRAMES */
 
-@keyframes percent {
+@keyframes percent10 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -209;
+    }
+}
+
+@keyframes percent20 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -228;
+    }
+}
+
+@keyframes percent30 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -247;
+    }
+}
+
+@keyframes percent40 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -266;
+    }
+}
+
+@keyframes percent50 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -285;
+    }
+}
+
+@keyframes percent60 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -304;
+    }
+}
+
+@keyframes percent70 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -323;
+    }
+}
+
+@keyframes percent80 {
+    from {
+        stroke-dashoffset: -270;
+
+    }
+    to {
+        stroke-dashoffset: -342;
+    }
+}
+
+@keyframes percent90 {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -361;
+    }
+}
+
+@keyframes percent00 {
     from {
         stroke-dashoffset: -190;
 

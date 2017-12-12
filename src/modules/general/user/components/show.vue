@@ -22,7 +22,8 @@
                         {{ user.city.name }} - {{ user.city.state }}
                     </p>-->
                     <svg width="70" height="70" viewBox="0 0 70 70">
-                        <circle class="circle circle-one" r="30" cx="35" cy="35"></circle>
+                        <circle class="circle circle-one per50" r="30" cx="35" cy="35">
+                        </circle>
                     </svg>
 
                     <!-- User Badge -->
