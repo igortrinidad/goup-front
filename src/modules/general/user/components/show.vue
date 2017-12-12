@@ -21,7 +21,7 @@
                     <!-- User Badge -->
                     <div class="medal" data-toggle="modal" data-target="#modal-badges">
                         <svg class="svg-circle-container" viewBox="0 0 70 70">
-                            <circle class="circle circle-one" :class="progress.progressLevel()" r="30" cx="35" cy="35">
+                            <circle class="circle primary" :class="progress.progressLevel()" r="30" cx="35" cy="35">
                             </circle>
                         </svg>
                         <!-- Circle -->

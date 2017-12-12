@@ -14,8 +14,8 @@
     z-index: 1;
     width: 60px;
     height: 60px;
-    background: #FFF;
     border-radius: 50%;
+    background-color: #F7F5FA;
     border: 4px solid #cdcdcd;
     transform: scale(1.05);
 }
@@ -49,13 +49,18 @@
     z-index: 10;
 }
 
-.circle { stroke-width: 4; }
-
-.circle-one {
-    stroke: #FF4B89;
+.circle {
+    stroke-width: 4;
     fill: transparent;
     stroke-dasharray: 190;
 }
+
+.circle.default { stroke: #F7F5FA; }
+.circle.primary { stroke: #FF4B89; }
+.circle.secondary { stroke: #29F39F; }
+.circle.success { stroke: #8BF3FB; }
+.circle.info { stroke: #FFFD7B; }
+.circle.danger { stroke: #FE0022; }
 
 .circle.per05 { animation: percent05 2.5s ease forwards; }
 .circle.per10 { animation: percent10 2.5s ease forwards; }
