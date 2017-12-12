@@ -141,10 +141,11 @@
       },
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-x-socialsharing": {},
-      "cordova-plugin-inappbrowser": {},
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "We need your location to find moments for you"
-      }
+      },
+      "cordova-plugin-fcm": {},
+      "cordova-plugin-inappbrowser": {}
     }
   }
 }
