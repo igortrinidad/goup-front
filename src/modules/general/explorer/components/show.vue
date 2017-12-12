@@ -122,15 +122,55 @@
                         <!-- SECOND EVENT -->
                         <div class="card m-0" v-if="events.length > 1">
                             <!-- Card Header -->
-                            <div class="card-header cover" :style="{ backgroundImage: `url(${ events[1].cover })` }">
-                                <div class="ch-content">
-                                    <h3 class="title f-700 t-overflow">{{ events[1].name }}</h3>
-                                    <p class="title f-700 t-overflow" style="margin-bottom: 0px;"><i class="ion-ios-location m-r-5"></i> {{ events[1].city.name }} - {{events[1].city.state}}</p>
-                                </div>
-                                <span class="icon-information ion-ios-information">
-                                </span>
+                            <div
+                                id="card-lazy-image"
+                                class="card-header cover"
+                                :style="{
+                                    backgroundImage: `url(${ events[1].cover })`,
+                                    height: '200px',
+                                    borderRadius: '6px 6px 0 0'
+                                }"
+                                v-show="!interactions.lazy_image"
+                            >
+
+                                <router-link
+                                    tag="span"
+                                    class="icon-information ion-ios-information f-success cursor-pointer"
+                                    v-if="events[1].slug"
+                                    :to="{ name: 'general.events.show', params: { event_slug: events[1].slug } }"
+                                >
+                                </router-link>
+
                             </div>
                             <!-- / Card Header -->
+
+                            <!-- Card Body -->
+                            <div class="card-body card-padding">
+                                <h4 class="m-b-5">{{ events[1].name }}</h4>
+                                <div style="opacity: .8;">
+                                    <p class="m-b-5">{{ events[1].description }}</p>
+                                </div>
+                            </div>
+                            <!-- Card Footer -->
+                            <div class="card-footer p-10">
+                                <div class="row">
+                                    <div class="col-xs-8" style="opacity: .8;">
+                                        <small>
+                                            <i class="ion-location m-r-5"></i>{{ handleDistance(events[1].distance) }}
+                                        </small>
+                                        <small class="divider p-l-10 m-l-10">
+                                            <span v-show="events[1].value > 0">{{ events[1].value | formatCurrency }}</span>
+                                            <span v-show="events[1].value === 0">{{ translations.free }}</span>
+                                        </small>
+                                    </div>
+                                    <div class="col-xs-4 text-right">
+                                        <small class="f-primary">
+                                            <i class="ion-ios-star m-r-5"></i>{{ events[1].favorited_count }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <!-- SECOND EVENT -->
 
@@ -316,7 +356,7 @@
                 this.setCities();
                 this.setCategories();
                 this.updateUserGeolocation();
-                
+
             }
 
 
