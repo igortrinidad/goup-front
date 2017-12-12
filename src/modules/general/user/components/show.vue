@@ -19,7 +19,7 @@
                     </div>
 
                     <!-- User Badge -->
-                    <div class="status" data-toggle="modal" data-target="#modal-badges">
+                    <div class="medal" data-toggle="modal" data-target="#modal-badges">
                         <svg class="svg-circle-container" viewBox="0 0 70 70">
                             <circle class="circle circle-one" :class="progress.progressLevel()" r="30" cx="35" cy="35">
                             </circle>
@@ -34,6 +34,7 @@
                         </button>
                         <!-- Button -->
                     </div>
+                    <!-- User Badger -->
 
                     <!-- Tabs -->
                     <div class="m-t-30">
