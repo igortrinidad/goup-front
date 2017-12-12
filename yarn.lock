@@ -1550,9 +1550,9 @@ cordova-plugin-file@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/cordova-plugin-file/-/cordova-plugin-file-5.0.0.tgz#d397682321669c000be8c71f8ef4438aae8f925d"
 
-cordova-plugin-geolocation@^2.4.3:
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/cordova-plugin-geolocation/-/cordova-plugin-geolocation-2.4.3.tgz#1dd00023d1f1a2ce330f8767ed08f7b738fe7184"
+cordova-plugin-geolocation@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-geolocation/-/cordova-plugin-geolocation-3.0.0.tgz#e63e0d457c1a2fbab0dc029ddea65b8f04921410"
 
 cordova-plugin-inappbrowser@^1.7.2:
   version "1.7.2"
