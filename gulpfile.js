@@ -23,8 +23,6 @@ elixir(function(mix) {
         './assets/bootstrap-checkbox/bootstrap-checkbox.css',
         './node_modules/izitoast/dist/css/iziToast.css',
         './node_modules/vue-multiselect/dist/vue-multiselect.min.css',
-        '../../../node_modules/unitegallery/dist/css/unite-gallery.css',
-        '../../../node_modules/unitegallery/dist/themes/default/ug-theme-default.css',
 
 	], './static/build/css/vendor.css');
 
@@ -32,16 +30,14 @@ elixir(function(mix) {
 		'./node_modules/jquery/dist/jquery.js',
 		'./assets/flatly/js/bootstrap.js',
         './node_modules/izitoast/dist/js/iziToast.js',
+        './node_modules/jquery.easing/jquery.easing.js',
         './node_modules/jquery-mask-plugin/dist/jquery.mask.js',
-        './node_modules/unitegallery/dist/js/unitegallery.min.js',
-        './node_modules/unitegallery/dist/themes/tiles/ug-theme-tiles.js',
 		'./src/utils/notifications.js',
         './assets/js/hammer-time.js',
 
 	], './static/build/js/vendor.js');
 
     mix.copy([
-        '/node_modules/font-awesome/fonts',
         '/node_modules/ionicons/fonts',
         '/node_modules/lightgallery/dist/fonts',
         '/assets/fonts'
