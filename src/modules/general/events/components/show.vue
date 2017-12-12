@@ -74,7 +74,7 @@
                             <!-- /Call -->
 
                             <!-- Share -->
-                            <button class="btn btn-success m-t-30">{{ translations.share }}</button>
+                            <button class="btn btn-success m-t-30" @click="openShareWhatsapp()">{{ translations.share }}</button>
 
                             <!-- /Share -->
 
@@ -365,6 +365,13 @@
                 setTimeout( function(){
                     that.$router.push({name: 'general.events.list', query: {category_id: category.id}});
                 }, 300)
+            },
+
+            // Whatsapp share
+            openShareWhatsapp() {
+                var that = this
+                var url = `https://api.whatsapp.com/send?text=${ that.translations.share_msg } ${ that.event.name } ${ that.translations.application }`;
+                window.open(url, '_system', null);
             },
 
             getRelateds(page) {

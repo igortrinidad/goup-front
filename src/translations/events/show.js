@@ -20,6 +20,8 @@ export const en = {
     time_uninformed: 'Time uninformed',
     time: 'Time',
     open_maps: 'Open maps',
+    share_msg: `I've found `,
+    app: 'in GoUp App',
 
     // Tabs
     tabs: {
@@ -75,6 +77,8 @@ export const pt = {
     time_uninformed: 'Horário não informado',
     time: 'Horário',
     open_maps: 'Abrir mapa',
+    share_msg: `Encontrei: `,
+    app: 'no App GoUp',
 
     // Tabs
     tabs: {
