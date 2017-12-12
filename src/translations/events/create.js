@@ -59,7 +59,7 @@ export const en = {
 }
 
 export const pt = {
-    title: 'Adicionar novo momento',
+    title: 'Novo momento',
     form: {
         event_name: 'Nome do momento',
         event_description: 'Descrição do momento',
