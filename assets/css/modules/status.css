@@ -27,3 +27,27 @@
     font-size: 13px;
     font-weight: 400;
 }
+
+/* SVG */
+.circle {
+    stroke-width: 3;
+    animation: percent 3s forwards;
+}
+
+.circle-one {
+    stroke: #29F39F;
+    fill: #FF4B89;
+    stroke-dasharray: 190;
+}
+
+/* KEY FRAMES */
+
+@keyframes percent {
+    from {
+        stroke-dashoffset: -190;
+
+    }
+    to {
+        stroke-dashoffset: -380;
+    }
+}

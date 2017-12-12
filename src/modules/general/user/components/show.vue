@@ -21,9 +21,13 @@
                     <!--<p class="text-center m-b-0 m-t-20" v-show="!interactions.is_loading">
                         {{ user.city.name }} - {{ user.city.state }}
                     </p>-->
+                    <svg width="70" height="70" viewBox="0 0 70 70">
+                        <circle class="circle circle-one" r="30" cx="35" cy="35"></circle>
+                    </svg>
 
                     <!-- User Badge -->
                     <div class="status" data-toggle="modal" data-target="#modal-badges">
+
                         <!-- Circle -->
                         <span class="circle-profile primary xl icon">
                             <img class="icon-img" src="../../../../assets/icons/status/rock-and-roll.svg" alt="">
