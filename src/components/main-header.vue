@@ -5,88 +5,111 @@
 
                 <!-- Header Type === Back -->
                 <div v-if="type === 'back'">
-                    <img
-                        v-if="title !== 'settings'"
-                        class="left-icon icon-img"
-                        :class="{'bounce' : interactions.bounce == 'back' }"
-                        src="../assets/icons/header/left-arrow.svg"
-                        @click="back()"
-                        style="left: 0"
-                    >
-                    <div class="logo full text-center f-success f-18">
-                        {{ title }}
+
+                    <div class="row">
+                        <div class="col-md-3 col-xs-3 text-left">
+                            <img
+                                v-if="title !== 'settings'"
+                                class="icon-header"
+                                :class="{'bounce' : interactions.bounce == 'back' }"
+                                src="../assets/icons/header/left-arrow.svg"
+                                @click="back()"
+                                style="left: 0"
+                            >
+                            
+                        </div>
+
+                        <div class="col-md-6 col-xs-6 text-center">
+                            <div class="f-success f-18 m-t-25">
+                                {{ title }}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- Header Type === Back -->
 
                 <!-- Header Type === Main -->
                 <div v-if="type === 'main'">
-                    <!-- LEFT -->
-                    <div>
-                        <img
-                            v-if="title !== 'settings'"
-                            class="left-icon icon-img"
-                            :class="{'bounce' : interactions.bounce == 'profile' }"
-                            src="../assets/icons/header/profile_white.svg"
-                            @click="redirectTo('general.user.settings', 'profile')"
-                        >
-                        <img
-                            v-if="title === 'settings'"
-                            class="left-icon icon-img"
-                            :class="{'bounce' : interactions.bounce == 'profile' }"
-                            src="../assets/icons/header/profile_pink.svg"
-                            @click="redirectTo('general.user.settings', 'profile')"
-                        >
-                    </div>
-                    <!-- / LEFT -->
 
-                    <!-- CENTER -->
-                    <div>
-                        <div class="logo cursor-pointer" @click="redirectTo('general.explorer', 'explorer')" :class="{'bounce' : interactions.bounce == 'explorer'}">
-                            <img
-                                class="icon-img"
-                                v-if="title === 'home' && !categorySelected"
-                                src="../assets/icons/header/hand_pink.svg"
-                            >
-                            <img
-                                class="icon-img"
-                                v-if="title !== 'home' && !categorySelected"
-                                src="../assets/icons/header/hand_white.svg"
-                            >
-                            <img
-                                class="icon-img"
-                                v-if="categorySelected"
-                                :src="categorySelected.photo_url"
-                            >
+                    <div class="row">
+
+                        <div class="col-md-3 col-xs-3 text-left">
+                            <!-- LEFT -->
+                            <div>
+                                <img
+                                    v-if="title !== 'settings'"
+                                    class="icon-header"
+                                    :class="{'bounce' : interactions.bounce == 'profile' }"
+                                    src="../assets/icons/header/profile_white.svg"
+                                    @click="redirectTo('general.user.settings', 'profile')"
+                                >
+                                <img
+                                    v-if="title === 'settings'"
+                                    class="icon-header"
+                                    :class="{'bounce' : interactions.bounce == 'profile' }"
+                                    src="../assets/icons/header/profile_pink.svg"
+                                    @click="redirectTo('general.user.settings', 'profile')"
+                                >
+                            </div>
+                            <!-- / LEFT -->
+                            
                         </div>
-                    </div>
-                    <!-- / CENTER -->
 
-                    <!-- RIGHT -->
-                    <div @click="redirectTo('general.events.list', 'ranking')" >
-                        <img
-                            v-if="title !== 'ranking' && !rankingCategorySelected"
-                            class="right-icon icon-img"
-                            :class="{'bounce' : interactions.bounce == 'ranking' }"
-                            src="../assets/icons/header/star_white.svg"
-                        >
-                        <img
-                            v-if="title === 'ranking' && !rankingCategorySelected"
-                            class="right-icon icon-img"
-                            :class="{'bounce' : interactions.bounce == 'ranking' }"
-                            src="../assets/icons/header/star_pink.svg"
-                        >
-                        <img
-                            class="right-icon icon-img"
-                            :class="{'bounce' : interactions.bounce == 'ranking' }"
-                            v-if="rankingCategorySelected"
-                            :src="rankingCategorySelected.photo_url"
-                            style="height: 50px"
-                        >
+                        <div class="col-md-6 col-xs-6 text-center">
+                            <!-- CENTER -->
+                            <div>
+                                <div class="" @click="redirectTo('general.explorer', 'explorer')" :class="{'bounce' : interactions.bounce == 'explorer'}">
+                                    <img
+                                        class="icon-header icon-header-lg"
+                                        v-if="title === 'home' && !categorySelected"
+                                        src="../assets/icons/header/hand_pink.svg"
+                                    >
+                                    <img
+                                        class="icon-header icon-header-lg"
+                                        v-if="title !== 'home' && !categorySelected"
+                                        src="../assets/icons/header/hand_white.svg"
+                                    >
+                                    <img
+                                        class="icon-header icon-header-lg"
+                                        v-if="categorySelected"
+                                        :src="categorySelected.photo_url"
+                                    >
+                                </div>
+                            </div>
+                            <!-- / CENTER -->
+                        </div>
+
+                        <div class="col-md-3 col-xs-3 text-right">
+                            <!-- RIGHT -->
+                            <div @click="redirectTo('general.events.list', 'ranking')" >
+                                <img
+                                    v-if="title !== 'ranking' && !rankingCategorySelected"
+                                    class="icon-header"
+                                    :class="{'bounce' : interactions.bounce == 'ranking' }"
+                                    src="../assets/icons/header/star_white.svg"
+                                >
+                                <img
+                                    v-if="title === 'ranking' && !rankingCategorySelected"
+                                    class="icon-header"
+                                    :class="{'bounce' : interactions.bounce == 'ranking' }"
+                                    src="../assets/icons/header/star_pink.svg"
+                                >
+                                <img
+                                    class="icon-header"
+                                    :class="{'bounce' : interactions.bounce == 'ranking' }"
+                                    v-if="rankingCategorySelected"
+                                    :src="rankingCategorySelected.photo_url"
+                                >
+                            </div>
+                            <!-- / RIGHT -->
+                        </div>
+
                     </div>
-                    <!-- / RIGHT -->
+
+
                 </div>
                 <!-- / Header Type === Main -->
+
             </div>
         </nav>
     </div>
@@ -211,21 +234,31 @@
 </script>
 
 <style scoped>
+    
+    .main{
+        -webkit-backface-visibility: hidden;
+    }
+    
+    .icon-header{
+        margin: 22px 1px;
+        width: auto; 
+        height: 35px;
+        cursor: pointer;
+    }
+
+    .icon-header-lg{
+        margin: 15px 1px;
+        width: auto; 
+        height: 50px;
+        cursor: pointer;
+    }
 
     .left-icon{
-        width: 65px;
-        position: absolute;
-        cursor: pointer;
         left: 10px;
-        top: 0;
     }
 
     .right-icon{
-        width: 65px;
-        position: absolute;
         right: 10px;
-        top: 0;
-        cursor: pointer;
     }
 
     .navbar {
@@ -235,15 +268,8 @@
         z-index: 20 !important;
     }
 
-    .container-fluid { position: relative; }
-
-    .logo {
-        width: 120px; margin: 0px auto; padding: 0px 10px 5px 10px;
-    }
-
-    .logo.full { width: 100%; padding: 28px 50px; }
-
     .container-fluid{
+        position: relative;
         height: 80px;
     }
 

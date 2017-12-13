@@ -137,8 +137,10 @@
                             <div class="row m-t-20 m-b-20">
                                 <div class="col-sm-12 text-center">
 
+                                    <label class="f-700 f-primary">{{ translations.form.categories }}</label>
+
                                     <button class="btn btn-primary" data-toggle="modal" data-target="#modal-select-type">
-                                        {{ translations.form.categories }}
+                                        {{ translations.form.categories_button }}
                                     </button>
 
                                     <div class="category-row m-t-30" v-show="event.categories.length">
