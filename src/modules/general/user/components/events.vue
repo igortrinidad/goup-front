@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="first-container">
 
         <main-header
             :title="translations.title"
@@ -8,10 +8,10 @@
         ></main-header>
 
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
-            <div class="main first-container">
+            <div class="main">
 
                 <div class="container">
-                    <div infinite-wrapper>
+                    <div class="row" infinite-wrapper>
                         <div class="col-sm-12" v-for="(event, indexEvents) in events">
 
                             <div class="card p-0">
@@ -39,7 +39,7 @@
                                 <div class="card-footer p-10">
                                     <div class="row">
                                         <div class="col-xs-8" style="opacity: .8;">
-                                            <small class="m-l-10">
+                                            <small class="">
                                                 <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
                                                 <span v-show="event.value === 0">{{ translations.free }}</span>
                                             </small>
@@ -50,9 +50,10 @@
                                             </small>
                                         </div>
                                     </div>
-
+                                </div>
+                                <div class="card-footer p-10">
                                     <div class="text-center m-t-10">
-                                        <router-link class="btn btn-primary small transparent" tag="button"
+                                        <router-link class="btn btn-xs btn-primary small transparent" tag="button"
                                                      :to="{name: 'general.events.edit', params:{id: event.id}}">
                                             {{translations.buttons.edit}}
                                         </router-link>
