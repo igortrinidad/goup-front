@@ -121,26 +121,27 @@
                         </div>
                         <!-- /Event Informations -->
 
-
                         <!-- Categories -->
                         <div class="border-inside-card default m-b-20">
                             <div class="row m-t-20 m-b-20">
                                 <div class="col-sm-12 text-center">
 
-                                    <label class="f-700 f-primary">{{ translations.form.categories }}</label>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-select-type">
+                                        {{ translations.form.categories }}
+                                    </button>
 
-                                    <p>{{translations.form.categories_max}}</p>
-
-                                    <div class="category-row">
+                                    <div class="category-row m-t-30" v-show="event.categories.length">
                                         <button
                                             class="btn btn-default btn-sm m-r-5"
-                                            :class="{'btn-primary' : event.categories.indexOf(category.id) > -1}"
                                             v-for="(category, $index) in getCategories"
+                                            v-if="event.categories.indexOf(category.id) > -1"
                                             @click.prevent="toggleCategory(category.id)"
                                         >
-                                            {{ category[`name_${language}`]}}
+                                            {{ language === 'pt' ? category.name_pt : category.name_en }}
+                                            <i class="ion-close-round m-l-5"></i>
                                         </button>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -249,7 +250,6 @@
                                 <span>{{ translations.form.upload_image }}</span>
                             </div>
 
-
                             <div class="row">
                                 <div class="col-md-3" v-if="interactions.showPhotoPlaceholder">
                                     <div class="card-placeholder placeholder-effect"></div>
@@ -292,24 +292,74 @@
 
                 </div>
 
-                <vue-picker ref="dowpicker" :title="translations.form.day_of_week" :cancel-txt="translations.cancel"
-                            :confirm-txt="translations.confirm"
-                            :data="[weekdays]" @select="selectDow" @cancel="cancelDow">
+                <!-- VUE Picker -->
+                <vue-picker
+                    ref="dowpicker"
+                    :title="translations.form.day_of_week"
+                    :cancel-txt="translations.cancel"
+                    :confirm-txt="translations.confirm"
+                    :data="[weekdays]"
+                    @select="selectDow"
+                    @cancel="cancelDow"
+                />
 
-                </vue-picker>
+                <vue-picker
+                    ref="monthlypicker"
+                    :title="translations.form.monthly"
+                    :cancel-txt="translations.cancel"
+                    :confirm-txt="translations.confirm"
+                    :data="[monthWeeks, weekdays]"
+                    @select="selectMonthly"
+                    @cancel="cancelMonthly"
+                />
 
-                <vue-picker ref="monthlypicker" :title="translations.form.monthly" :cancel-txt="translations.cancel"
-                            :confirm-txt="translations.confirm"
-                            :data="[monthWeeks, weekdays]" @select="selectMonthly" @cancel="cancelMonthly">
+                <vue-picker
+                    ref="datepicker"
+                    :title="translations.form.event_date"
+                    :cancel-txt="translations.cancel"
+                    :confirm-txt="translations.confirm"
+                    :data="[monthDays, months, years]"
+                    :selected-index.sync="dateSelectedIndex"
+                    @select="selectDate"
+                    @cancel="cancelDate"
+                    @change="changeDate"
+                />
+                <!-- /VUE Picker -->
 
-                </vue-picker>
+                <!-- MODAL SELECT TYPES -->
+                <div id="modal-select-type" class="modal we-fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">{{ translations.form.categories_max }}</h3>
+                            </div>
+                            <!-- Modal Body -->
+                            <div class="modal-body">
 
-                <vue-picker ref="datepicker" :title="translations.form.event_date" :cancel-txt="translations.cancel"
-                            :confirm-txt="translations.confirm"
-                            :data="[monthDays, months, years]" :selected-index.sync="dateSelectedIndex" @select="selectDate" @cancel="cancelDate" @change="changeDate">
+                                <div class="col-row">
+                                    <div class="col" v-for="category in getCategories">
+                                        <div class="card-cat text-center"
+                                            @click.prevent="toggleCategory(category.id)"
+                                            :class="{
+                                                'bounce': event.categories.indexOf(category.id) > -1
+                                            }">
+                                            <div class="p-10">
+                                                <img :src="category.photo_url" width="60%">
+                                                <p class="f-default m-t-10">{{category['name_' + language]}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                </vue-picker>
-
+                            </div>
+                            <!-- / Modal Body -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">{{ translations.close }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- / MODAL SELECT TYPES -->
             </div>
         </transition>
 
@@ -924,5 +974,37 @@
 
     .picker--choose h4{
         text-align: center
+    }
+
+    /* Categories */
+    .col-row {
+        width: 100%;
+        column-count: 2;
+        column-gap: 0;
+
+    }
+    .col {
+        width: 100%;
+        display: inline-block;
+        padding: 5px;
+    }
+    .card-cat-col{
+        padding-right: 10px;
+        padding-left: 10px;
+        margin-top: 20px;
+    }
+
+    .card-cat{
+        background-color: #FFFFFF;
+        border-radius: 15px;
+        cursor: pointer;
+    }
+
+    .card-cat.bounce:before {
+        content: '';
+        position: absolute;
+        top: 5px; left: 5px; right: 5px; bottom: 5px;
+        border: 2px solid #FF4B89;
+        border-radius: 15px;
     }
 </style>

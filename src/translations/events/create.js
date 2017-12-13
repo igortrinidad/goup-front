@@ -12,7 +12,7 @@ export const en = {
         event_time: 'Moment time',
         value_uninformed: 'Ticket value uninformed',
         event_value: "Ticket value",
-        categories: `Moment's types`,
+        categories: `Select Moment's types`,
         categories_max: 'Select up to three types of moments',
         categories_max_warning: 'You must select at most three types of moments',
         subcategories: 'One or more subcategories',
@@ -48,6 +48,7 @@ export const en = {
     cancel: 'Cancel',
     submit: 'Register moment',
     success: 'New moment added successfully',
+    close: 'Close',
 
     monthWeeks:{
         first: 'First week',
@@ -72,7 +73,7 @@ export const pt = {
         event_time: 'Horário',
         value_uninformed: 'Valor do ingresso não informado',
         event_value: 'Valor do ingresso',
-        categories: 'Tipos de momento',
+        categories: 'Selecione os tipos de momento',
         categories_max: 'Selecione até três tipos de momento',
         categories_max_warning: 'Você deve selecionar no máximo três tipos de momentos',
         add_new_tag: 'Adicionar tag',
@@ -107,6 +108,7 @@ export const pt = {
     cancel: 'Cancelar',
     submit: 'Cadastrar momento',
     success: 'Novo momento adicionado com sucesso.',
+    close: 'Fechar',
 
     monthWeeks:{
         first: 'Primeira semana',
