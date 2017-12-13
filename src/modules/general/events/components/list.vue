@@ -510,7 +510,7 @@
     }
 
     .img-cat {
-        width: auto; height: 85px;
+        width: auto; height: 70px;
         display: block;
         margin: 0 auto;
     }

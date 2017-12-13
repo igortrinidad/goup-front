@@ -245,7 +245,7 @@
     .logo .cat-img {
         display: block;
         width: auto; height: 50px;
-        margin: 17px auto 0 auto;
+        margin: 15px auto 0 auto;
     }
 
     .container-fluid{
