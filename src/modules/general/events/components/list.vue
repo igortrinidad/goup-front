@@ -16,7 +16,7 @@
                 <!-- CATEGORIAS -->
                 <div class="main" v-show="!interactions.finished_loading_category && !$route.query.category_id">
 
-                    
+
                     <div class="container">
                         <p class="f-16 f-300 text-center m-t-10">{{translations.title_category}}</p>
 
@@ -28,7 +28,7 @@
                                     @click="selectCategory(categoryAll)"
                                     :class="{'bounce' : currentCategory == categoryAll}">
                                     <div class="p-10">
-                                        <img src="../../../../assets/icons/header/star_pink.svg" width="60%">
+                                        <img src="../../../../assets/icons/header/star_pink.svg" class="img-cat">
                                         <p class="f-default m-t-10">{{categoryAll['name_' + language]}}</p>
                                     </div>
                                 </div>
@@ -42,7 +42,7 @@
                                         'bounce' : currentCategory && currentCategory == category
                                     }">
                                     <div class="p-10">
-                                        <img :src="category.photo_url" width="60%">
+                                        <img :src="category.photo_url" class="img-cat">
                                         <p class="f-default m-t-10">{{category['name_' + language]}}</p>
                                     </div>
                                 </div>
@@ -508,4 +508,11 @@
         border-radius: 15px;
         cursor: pointer;
     }
+
+    .img-cat {
+        width: auto; height: 85px;
+        display: block;
+        margin: 0 auto;
+    }
+
 </style>
