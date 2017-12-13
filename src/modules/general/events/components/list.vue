@@ -16,9 +16,11 @@
                 <!-- CATEGORIAS -->
                 <div class="main" v-show="!interactions.finished_loading_category && !$route.query.category_id">
 
-                    <p class="f-16 f-300 text-center m-t-10">{{translations.title_category}}</p>
-                    <!-- CATEGORIES -->
+                    
                     <div class="container">
+                        <p class="f-16 f-300 text-center m-t-10">{{translations.title_category}}</p>
+
+                        <!-- CATEGORIES -->
                         <div class="col-row">
                             <!-- ALL -->
                             <div class="col">
