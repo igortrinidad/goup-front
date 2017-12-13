@@ -790,7 +790,6 @@
         background-color: #FFFFFF;
         border-radius: 15px;
         cursor: pointer;
-
     }
 
     .badge-city {
