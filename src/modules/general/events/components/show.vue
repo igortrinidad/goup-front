@@ -43,12 +43,16 @@
                     <div class="m-b-30" v-if="!interactions.eventNotFound && event.id">
 
                         <!-- Place Name, Description, City And State -->
-                        <div class="text-center">
-                            <h3 class="m-t-30 f-success">{{ event.name }}</h3>
 
+                        <h3 class="m-t-30 f-success text-center">{{ event.name }}</h3>
+
+                        <div class="card-frame-rounded text-center m-t-20">
                             <p>{{ event.description }}</p>
+                        </div>
 
-                            <p>{{translations.categories_title}}</p>
+                        <div class="text-center m-t-20">
+
+                            <p class="f-300">{{translations.categories_title}}</p>
                             <div class="col-row">
 
                                 <div class="col" v-for="category in event.categories">
