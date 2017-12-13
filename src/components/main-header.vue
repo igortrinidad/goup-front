@@ -6,7 +6,7 @@
                 <!-- Header Type === Back -->
                 <div v-if="type === 'back'">
 
-                    <img 
+                    <img
                             v-if="title !== 'settings'"
                             class="left-icon"
                             :class="{'bounce' : interactions.bounce == 'back' }"
@@ -23,71 +23,66 @@
                 <div v-if="type === 'main'">
                     <!-- LEFT -->
                     <div>
-
-                        <img 
+                        <img
                             v-if="title !== 'settings'"
                             class="left-icon"
                             :class="{'bounce' : interactions.bounce == 'profile' }"
                             src="../assets/icons/header/profile_white.svg"
                             @click="redirectTo('general.user.settings', 'profile')"
                         >
-
-                        <img 
+                        <img
                             v-if="title === 'settings'"
                             class="left-icon"
                             :class="{'bounce' : interactions.bounce == 'profile' }"
                             src="../assets/icons/header/profile_pink.svg"
                             @click="redirectTo('general.user.settings', 'profile')"
                         >
-
                     </div>
                     <!-- / LEFT -->
 
                     <!-- CENTER -->
                     <div>
                         <div class="logo cursor-pointer" @click="redirectTo('general.explorer', 'explorer')" :class="{'bounce' : interactions.bounce == 'explorer'}">
-                            <img 
-                                v-if="title === 'home' && !categorySelected" 
-                                src="../assets/icons/header/hand_pink.svg" 
-                                style="width: 90px; margin-top: -8px; margin-left: 5px;">
-                            <img 
-                                v-if="title !== 'home' && !categorySelected" 
-                                src="../assets/icons/header/hand_white.svg" 
-                                style="width: 90px; margin-top: -8px; margin-left: 5px;">
-
-                            <img 
-                                class="m-l-25 m-t-15 text-center" 
-                                v-if="categorySelected" 
-                                :src="categorySelected.photo_url" 
-                                style="height: 50px">
+                            <img
+                                v-if="title === 'home' && !categorySelected"
+                                src="../assets/icons/header/hand_pink.svg"
+                                style="width: 90px; margin-top: -8px; margin-left: 5px;"
+                            >
+                            <img
+                                v-if="title !== 'home' && !categorySelected"
+                                src="../assets/icons/header/hand_white.svg"
+                                style="width: 90px; margin-top: -8px; margin-left: 5px;"
+                            >
+                            <img
+                                class="cat-img text-center"
+                                v-if="categorySelected"
+                                :src="categorySelected.photo_url"
+                            >
                         </div>
                     </div>
                     <!-- / CENTER -->
 
                     <!-- RIGHT -->
                     <div @click="redirectTo('general.events.list', 'ranking')" >
-
-                        <img 
+                        <img
                             v-if="title !== 'ranking' && !rankingCategorySelected"
                             class="right-icon"
                             :class="{'bounce' : interactions.bounce == 'ranking' }"
                             src="../assets/icons/header/star_white.svg"
-                           
                         >
-
-                        <img 
+                        <img
                             v-if="title === 'ranking' && !rankingCategorySelected"
                             class="right-icon"
                             :class="{'bounce' : interactions.bounce == 'ranking' }"
                             src="../assets/icons/header/star_pink.svg"
                         >
-
-                        <img 
-                            class="right-icon m-t-5" 
+                        <img
+                            class="right-icon m-t-5"
                             :class="{'bounce' : interactions.bounce == 'ranking' }"
-                            v-if="rankingCategorySelected" 
-                            :src="rankingCategorySelected.photo_url" 
-                            style="height: 50px">
+                            v-if="rankingCategorySelected"
+                            :src="rankingCategorySelected.photo_url"
+                            style="height: 50px"
+                        >
                     </div>
                     <!-- / RIGHT -->
                 </div>
@@ -151,7 +146,7 @@
                 that.bounceImg('explorer');
             });
             bus.$on('category-cleaned', () => this.categorySelected = null);
-            
+
             bus.$on('ranking-category-cleaned', () => this.rankingCategorySelected = null);
 
             bus.$on('ranking-category-selected', function(category){
@@ -175,7 +170,7 @@
 
             redirectTo: function(target, bounce){
                 let that = this
-                
+
                 if(bounce == 'explorer'){
                     that.refreshExplorer();
                 }
@@ -192,13 +187,13 @@
 
             bounceImg: function(type){
                 let that = this
-            
+
                 that.interactions.bounce = type;
 
                 setTimeout(function() {
                     that.interactions.bounce = null;
                 }, 400);
-                
+
             },
 
             refreshExplorer: function(){
@@ -252,6 +247,12 @@
     }
 
     .logo.full { width: 100%; padding: 32px 50px; }
+
+    .logo .cat-img {
+        display: block;
+        width: auto; height: 50px;
+        margin: 17px auto 0 auto;
+    }
 
     .circle-profile {
         position: absolute;
