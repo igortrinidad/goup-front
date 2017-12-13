@@ -9,6 +9,7 @@ export const en = {
         monthly: 'Every month at',
         event_date: `Moment's date`,
         time_uninformed: 'Time uninformed',
+        date_uninformed: 'Date uninformed',
         event_time: 'Moment time',
         value_uninformed: 'Uninformed value',
         event_value: "Value starts at",
@@ -55,7 +56,8 @@ export const en = {
         third: 'Third week',
         fourthy: 'Fourthy week',
         fifth: 'Fifth week',
-    }
+    },
+    daily: 'Daily'
 }
 
 export const pt = {
@@ -69,6 +71,7 @@ export const pt = {
         monthly: 'Todo mês em',
         event_date: 'Data do momento',
         time_uninformed: 'Horário não informado',
+        date_uninformed: 'Data não informada',
         event_time: 'Horário',
         value_uninformed: 'Valor não informado',
         event_value: 'Valor começa em',
@@ -114,5 +117,6 @@ export const pt = {
         third: 'Terceira semana',
         fourthy: 'Quarta semana',
         fifth: 'Quinta semana',
-    }
+    },
+    daily: 'Diariamente'
 }

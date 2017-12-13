@@ -46,7 +46,16 @@
                             <div class="form-group">
                                 <label class="f-700 f-primary">{{ translations.form.recurrency_type }}</label>
 
-                                <ul class="list-group list-rounded m-t-10 m-0 text-left">
+                                <span class="cursor-pointer" @click="handleDateUninformed">
+                                        <i :class="{
+                                            'f-20': true,
+                                            'ion-ios-circle-filled': event.date_uninformed ,
+                                            'ion-ios-circle-outline': !event.date_uninformed
+                                        }"></i>
+                                        {{translations.form.date_uninformed}}
+                                 </span>
+
+                                <ul class="list-group list-rounded m-t-10 m-0 text-left" v-if="!event.date_uninformed">
                                     <li
                                         class="list-group-item transparent"
                                         :class="{ 'active': currentRecurrencyType === recurrency_type }"
@@ -74,7 +83,7 @@
                                 <p v-if="recurrencyTypeSelected != ''"><strong>{{recurrencyTypeSelected}}</strong></p>
                             </div>
 
-                            <div class="form-group" v-if="currentRecurrencyType">
+                            <div class="form-group">
                                 <label class="f-700 f-primary" for="event-time">{{ translations.form.event_time }}</label>
 
                                 <span class="cursor-pointer" @click="event.time_uninformed = !event.time_uninformed ">
@@ -282,7 +291,7 @@
                                 type="button"
                                 class="btn btn-primary btn-block transparent"
                                 @click="updateEvent()"
-                                :disabled="!event.name || !event.description || !event.categories.length || !event.recurrency_type  || !event.google_place_id || !event.photos.length"
+                                :disabled="!event.name || !event.description || !event.categories.length || !event.date_uninformed && !event.recurrency_type  || !event.google_place_id || !event.photos.length"
                             >
                                 {{ translations.submit }}
                             </button>
@@ -457,6 +466,10 @@
             },
 
             handleRecurrencyTypeSelected(){
+
+                if(this.event.recurrency_type == 'daily'){
+                    return this.translations.daily
+                }
 
                 if(this.event.recurrency_type == 'weekly'){
                     return this.weekdays[this.event.recurrency_info].text
@@ -745,6 +758,14 @@
                 this.currentRecurrencyType = recurrency_type
                 this.event.recurrency_type = recurrency_type.value
 
+                if(recurrency_type.value != 'daily'){
+                    this.recurrencyTypeSelected = null
+                }
+
+                if(recurrency_type.value == 'daily'){
+                    this.recurrencyTypeSelected = this.translations.daily
+                }
+
                 if(recurrency_type.value == 'weekly'){
                     this.$refs.dowpicker.show();
                 }
@@ -875,6 +896,16 @@
                 this.monthDays = daysInMonth
 
 
+            },
+
+            handleDateUninformed(){
+                this.event.date_uninformed = !this.event.date_uninformed
+
+                if(!this.event.date_uninformed){
+                    this.event.recurrency_type = null
+                    this.event.recurrency_info = null
+                    this.currentRecurrencyType = null
+                }
             }
 
         }
