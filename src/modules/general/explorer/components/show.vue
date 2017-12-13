@@ -26,7 +26,7 @@
                                     'bounce' : currentCategory && currentCategory == category
                                 }">
                                 <div class="p-10">
-                                    <img :src="category.photo_url" width="60%">
+                                    <img :src="category.photo_url" class="icon-img icon-img-l m-t-5">
                                     <p class="f-default m-t-10">{{category['name_' + language]}}</p>
                                 </div>
                             </div>

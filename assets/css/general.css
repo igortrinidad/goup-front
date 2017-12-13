@@ -16,8 +16,12 @@ html, body {
 
 .icon-img{
     display: block;
-    width: auto; height: 45px;
-    margin: 17px auto 0 auto;
+    width: auto; height: 40px;
+    margin: 21px auto 0 auto;
+}
+
+.icon-img.icon-img-l{
+    width: auto; height: 60px;
 }
 
 /* Ranking */

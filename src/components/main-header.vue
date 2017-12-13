@@ -7,10 +7,11 @@
                 <div v-if="type === 'back'">
                     <img
                         v-if="title !== 'settings'"
-                        class="left-icon"
+                        class="left-icon icon-img"
                         :class="{'bounce' : interactions.bounce == 'back' }"
                         src="../assets/icons/header/left-arrow.svg"
                         @click="back()"
+                        style="left: 0"
                     >
                     <div class="logo full text-center f-success f-18">
                         {{ title }}
@@ -240,14 +241,10 @@
         width: 120px; margin: 0px auto; padding: 0px 10px 5px 10px;
     }
 
-    .logo.full { width: 100%; padding: 32px 50px; }
+    .logo.full { width: 100%; padding: 28px 50px; }
 
     .container-fluid{
         height: 80px;
-    }
-
-    .logo .icon-img {
-        height: 50px;
     }
 
 </style>

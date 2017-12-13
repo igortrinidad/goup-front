@@ -28,7 +28,7 @@
                                     @click="selectCategory(categoryAll)"
                                     :class="{'bounce' : currentCategory == categoryAll}">
                                     <div class="p-10">
-                                        <img src="../../../../assets/icons/header/star_pink.svg" class="icon-img m-t-5">
+                                        <img src="../../../../assets/icons/header/star_pink.svg" class="icon-img icon-img-l m-t-5">
                                         <p class="f-default m-t-10">{{categoryAll['name_' + language]}}</p>
                                     </div>
                                 </div>
@@ -42,7 +42,7 @@
                                         'bounce' : currentCategory && currentCategory == category
                                     }">
                                     <div class="p-10">
-                                        <img :src="category.photo_url" class="icon-img m-t-5">
+                                        <img :src="category.photo_url" class="icon-img icon-img-l m-t-5">
                                         <p class="f-default m-t-10">{{category['name_' + language]}}</p>
                                     </div>
                                 </div>
