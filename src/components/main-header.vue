@@ -24,14 +24,14 @@
                     <div>
                         <img
                             v-if="title !== 'settings'"
-                            class="left-icon"
+                            class="left-icon icon-img"
                             :class="{'bounce' : interactions.bounce == 'profile' }"
                             src="../assets/icons/header/profile_white.svg"
                             @click="redirectTo('general.user.settings', 'profile')"
                         >
                         <img
                             v-if="title === 'settings'"
-                            class="left-icon"
+                            class="left-icon icon-img"
                             :class="{'bounce' : interactions.bounce == 'profile' }"
                             src="../assets/icons/header/profile_pink.svg"
                             @click="redirectTo('general.user.settings', 'profile')"
@@ -43,17 +43,17 @@
                     <div>
                         <div class="logo cursor-pointer" @click="redirectTo('general.explorer', 'explorer')" :class="{'bounce' : interactions.bounce == 'explorer'}">
                             <img
+                                class="icon-img"
                                 v-if="title === 'home' && !categorySelected"
                                 src="../assets/icons/header/hand_pink.svg"
-                                style="width: 90px; margin-top: -8px; margin-left: 5px;"
                             >
                             <img
+                                class="icon-img"
                                 v-if="title !== 'home' && !categorySelected"
                                 src="../assets/icons/header/hand_white.svg"
-                                style="width: 90px; margin-top: -8px; margin-left: 5px;"
                             >
                             <img
-                                class="cat-img text-center"
+                                class="icon-img"
                                 v-if="categorySelected"
                                 :src="categorySelected.photo_url"
                             >
@@ -65,18 +65,18 @@
                     <div @click="redirectTo('general.events.list', 'ranking')" >
                         <img
                             v-if="title !== 'ranking' && !rankingCategorySelected"
-                            class="right-icon"
+                            class="right-icon icon-img"
                             :class="{'bounce' : interactions.bounce == 'ranking' }"
                             src="../assets/icons/header/star_white.svg"
                         >
                         <img
                             v-if="title === 'ranking' && !rankingCategorySelected"
-                            class="right-icon"
+                            class="right-icon icon-img"
                             :class="{'bounce' : interactions.bounce == 'ranking' }"
                             src="../assets/icons/header/star_pink.svg"
                         >
                         <img
-                            class="right-icon m-t-5"
+                            class="right-icon icon-img"
                             :class="{'bounce' : interactions.bounce == 'ranking' }"
                             v-if="rankingCategorySelected"
                             :src="rankingCategorySelected.photo_url"
@@ -215,15 +215,15 @@
         width: 65px;
         position: absolute;
         cursor: pointer;
-        left: 4px;
-        top: 10px;
+        left: 10px;
+        top: 0;
     }
 
     .right-icon{
         width: 65px;
         position: absolute;
-        right: 4px;
-        top: 10px;
+        right: 10px;
+        top: 0;
         cursor: pointer;
     }
 
@@ -242,14 +242,12 @@
 
     .logo.full { width: 100%; padding: 32px 50px; }
 
-    .logo .cat-img {
-        display: block;
-        width: auto; height: 50px;
-        margin: 15px auto 0 auto;
-    }
-
     .container-fluid{
         height: 80px;
+    }
+
+    .logo .icon-img {
+        height: 50px;
     }
 
 </style>
