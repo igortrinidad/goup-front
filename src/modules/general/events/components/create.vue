@@ -958,7 +958,7 @@
 
 </style>
 
-<style>
+<style scoped>
     /*override picker styles*/
     .picker--choose .confirm {
         color: #561F9F !important;
