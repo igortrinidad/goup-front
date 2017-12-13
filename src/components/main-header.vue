@@ -228,11 +228,6 @@
         cursor: pointer;
     }
 
-    .active-header svg path, .active-header svg text{
-        color: red !important;
-    }
-
-
     .navbar {
         margin-bottom: 0;
         background-color: #561F9F;
@@ -252,28 +247,6 @@
         display: block;
         width: auto; height: 50px;
         margin: 17px auto 0 auto;
-    }
-
-    .circle-profile {
-        position: absolute;
-        top: 55%;
-        margin-top: -22px;
-        color: rgba(255, 255, 255, .8);
-        border: 2px solid rgba(255, 255, 255, .8);
-    }
-
-    .circle-profile.left { left: 10px; }
-    .circle-profile.right { right: 10px; }
-
-    .circle-profile.active {
-        color: rgba(236, 63, 129, .8);
-        border-color: rgba(236, 63, 129, .8);
-    }
-
-    .circle-profile i{
-        display: block;
-        width: 100%;
-        text-align: center;
     }
 
     .container-fluid{
