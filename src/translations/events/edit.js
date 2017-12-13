@@ -49,6 +49,7 @@ export const en = {
     cancel: 'Cancel',
     submit: 'Update event',
     success: 'New event updated successfully',
+    close: 'Close',
 
     monthWeeks:{
         first: 'First week',
@@ -110,6 +111,7 @@ export const pt = {
     cancel: 'Cancelar',
     submit: 'Atualizar evento',
     success: 'Evento atualizado com sucesso.',
+    close: 'Fechar',
 
     monthWeeks:{
         first: 'Primeira semana',

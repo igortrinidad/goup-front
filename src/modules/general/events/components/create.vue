@@ -979,26 +979,6 @@
         display: none;
     }
 
-</style>
-
-<style scoped>
-    /*override picker styles*/
-    .picker--choose .confirm {
-        color: #561F9F !important;
-        text-align: right;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .picker--choose .cancel {
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .picker--choose h4{
-        text-align: center
-    }
-
     /* Categories */
     .col-row {
         width: 100%;
@@ -1029,6 +1009,26 @@
         top: 5px; left: 5px; right: 5px; bottom: 5px;
         border: 2px solid #29F39F;
         border-radius: 15px;
+    }
+
+</style>
+
+<style>
+    /*override picker styles*/
+    .picker--choose .confirm {
+        color: #561F9F !important;
+        text-align: right;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .picker--choose .cancel {
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .picker--choose h4{
+        text-align: center
     }
 </style>
 <style>
