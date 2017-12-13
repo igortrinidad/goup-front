@@ -5,14 +5,13 @@
 
                 <!-- Header Type === Back -->
                 <div v-if="type === 'back'">
-
                     <img
-                            v-if="title !== 'settings'"
-                            class="left-icon"
-                            :class="{'bounce' : interactions.bounce == 'back' }"
-                            src="../assets/icons/header/left-arrow.svg"
-                            @click="back()"
-                        >
+                        v-if="title !== 'settings'"
+                        class="left-icon"
+                        :class="{'bounce' : interactions.bounce == 'back' }"
+                        src="../assets/icons/header/left-arrow.svg"
+                        @click="back()"
+                    >
                     <div class="logo full text-center f-success f-18">
                         {{ title }}
                     </div>
