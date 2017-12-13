@@ -10,19 +10,11 @@ export const en = {
         event_date: `Moment's date`,
         time_uninformed: 'Time uninformed',
         event_time: 'Moment time',
-<<<<<<< HEAD
         value_uninformed: 'Uninformed value',
         event_value: "Value starts at",
         categories: `Moment types`,
         categories_max: 'Select up to three types of Moments',
         categories_max_warning: 'You must select at most three types of Moments',
-=======
-        value_uninformed: 'Ticket value uninformed',
-        event_value: "Ticket value",
-        categories: `Select Moment's types`,
-        categories_max: 'Select up to three types of moments',
-        categories_max_warning: 'You must select at most three types of moments',
->>>>>>> 9b6a9433bdf5d45b4dc0b87eb9da2ddd79cc3c8a
         subcategories: 'One or more subcategories',
         add_new_tag: 'Add tag',
         subcategory_already_exists: 'Subcategory already exists',
@@ -54,14 +46,9 @@ export const en = {
     no: 'No',
     confirm: 'Confirm',
     cancel: 'Cancel',
-<<<<<<< HEAD
     submit: 'Register Moment',
     success: 'New Moment added successfully',
-=======
-    submit: 'Register moment',
-    success: 'New moment added successfully',
     close: 'Close',
->>>>>>> 9b6a9433bdf5d45b4dc0b87eb9da2ddd79cc3c8a
 
     monthWeeks:{
         first: 'First week',
@@ -84,19 +71,11 @@ export const pt = {
         event_date: 'Data do Momento',
         time_uninformed: 'Horário não informado',
         event_time: 'Horário',
-<<<<<<< HEAD
         value_uninformed: 'Valor não informado',
         event_value: 'Valor começa em',
         categories: 'Tipos de Momento',
         categories_max: 'Selecione até três tipos de Momento',
         categories_max_warning: 'Você deve selecionar no máximo três tipos de Momentos',
-=======
-        value_uninformed: 'Valor do ingresso não informado',
-        event_value: 'Valor do ingresso',
-        categories: 'Selecione os tipos de momento',
-        categories_max: 'Selecione até três tipos de momento',
-        categories_max_warning: 'Você deve selecionar no máximo três tipos de momentos',
->>>>>>> 9b6a9433bdf5d45b4dc0b87eb9da2ddd79cc3c8a
         add_new_tag: 'Adicionar tag',
         subcategory_already_exists: 'Subcategoria já existe',
         tags: 'Informe algumas tags que definem o Momento',
@@ -127,14 +106,9 @@ export const pt = {
     no: 'Não',
     confirm: 'Confirmar',
     cancel: 'Cancelar',
-<<<<<<< HEAD
     submit: 'Cadastrar Momento',
     success: 'Novo Momento adicionado com sucesso.',
-=======
-    submit: 'Cadastrar momento',
-    success: 'Novo momento adicionado com sucesso.',
     close: 'Fechar',
->>>>>>> 9b6a9433bdf5d45b4dc0b87eb9da2ddd79cc3c8a
 
     monthWeeks:{
         first: 'Primeira semana',
