@@ -343,7 +343,7 @@
                                 <h3 class="modal-title">{{ translations.form.categories_max }}</h3>
                             </div>
                             <!-- Modal Body -->
-                            <div class="modal-body">
+                            <div class="modal-body p-10">
 
                                 <div class="col-row">
                                     <div class="col" v-for="category in getCategories">
@@ -352,9 +352,9 @@
                                             :class="{
                                                 'bounce': event.categories.indexOf(category.id) > -1
                                             }">
-                                            <div class="p-10">
+                                            <div class="p-5">
                                                 <img :src="category.photo_url" width="60%">
-                                                <p class="f-default m-t-10">{{category['name_' + language]}}</p>
+                                                <p class="f-default f-12 m-t-10">{{category['name_' + language]}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -982,7 +982,7 @@
     /* Categories */
     .col-row {
         width: 100%;
-        column-count: 2;
+        column-count: 3;
         column-gap: 0;
 
     }
