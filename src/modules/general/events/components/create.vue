@@ -1004,7 +1004,7 @@
         content: '';
         position: absolute;
         top: 5px; left: 5px; right: 5px; bottom: 5px;
-        border: 2px solid #FF4B89;
+        border: 2px solid #29F39F;
         border-radius: 15px;
     }
 </style>
