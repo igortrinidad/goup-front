@@ -26,7 +26,7 @@
                         </svg>
                         <!-- Circle -->
                         <span class="icon">
-                            <img class="icon-img" src="../../../../assets/icons/status/rock-and-roll.svg" alt="">
+                            <img class="icon-img m-t-0" src="../../../../assets/icons/status/rock-and-roll.svg" alt="">
                         </span>
                         <button type="button" class="btn btn-primary btn-block">
                             Rock Star
@@ -80,7 +80,7 @@
                                         </svg>
                                         <!-- Circle -->
                                         <span class="icon">
-                                            <img class="icon-img" src="../../../../assets/icons/status/rock-and-roll.svg" alt="">
+                                            <img class="icon-img m-t-0" src="../../../../assets/icons/status/rock-and-roll.svg" alt="">
                                         </span>
                                         <button type="button" class="btn btn-primary btn-block">
                                             Rock Star
@@ -95,7 +95,7 @@
                                         </svg>
                                         <!-- Circle -->
                                         <span class="icon">
-                                            <img class="icon-img" src="../../../../assets/icons/status/dj.svg" alt="">
+                                            <img class="icon-img m-t-0" src="../../../../assets/icons/status/dj.svg" alt="">
                                         </span>
                                         <button type="button" class="btn btn-success btn-block">
                                             Baladeiro
@@ -110,7 +110,7 @@
                                         </svg>
                                         <!-- Circle -->
                                         <span class="icon">
-                                            <img class="icon-img" src="../../../../assets/icons/status/005-home.svg" alt="">
+                                            <img class="icon-img m-t-0" src="../../../../assets/icons/status/005-home.svg" alt="">
                                         </span>
                                         <button type="button" class="btn btn-secondary btn-block">
                                             Família
@@ -125,7 +125,7 @@
                                         </svg>
                                         <!-- Circle -->
                                         <span class="icon">
-                                            <img class="icon-img" src="../../../../assets/icons/status/pacman.svg" alt="">
+                                            <img class="icon-img m-t-0" src="../../../../assets/icons/status/pacman.svg" alt="">
                                         </span>
                                         <button type="button" class="btn btn-info btn-block">
                                             Gamer
