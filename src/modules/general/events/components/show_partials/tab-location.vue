@@ -74,7 +74,7 @@
                     enabled: false,
                     zoom: 16,
                     autocomplete: '',
-                    icon: 'https://s3.amazonaws.com/isaudavel-assets/img/MAP+ICON-02.png',
+                    icon: 'https://s3.amazonaws.com/goup-assets/img/map_icon.svg',
                     options: {
                         scrollwheel: false,
                         styles: [
