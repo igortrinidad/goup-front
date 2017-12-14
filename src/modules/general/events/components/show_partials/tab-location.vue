@@ -17,9 +17,7 @@
                 </div>
 
                 <div class="m-t-20">
-                    <a class="btn btn-primary" :href="`geo:${ event.place.geometry.location.lat },${ event.place.geometry.location.lng }`">
-                        {{ translations.open_maps }}
-                    </a>
+                    <button class="btn btn-primary" @click="openMapsExternally()">{{ translations.open_maps }}</button>
                 </div>
 
                 <div class="row m-t-30">
@@ -96,7 +94,7 @@
         },
 
         computed: {
-            ...mapGetters(['language']),
+            ...mapGetters(['language', 'checkIOS', 'getUserLastGeoLocation']),
 
             'translations': function() {
 
@@ -116,9 +114,15 @@
             openMapsExternally: function(){
                 let that = this
 
-                var url = `https://www.google.com/maps/place/?q=place_id:${this.event.place.place_id}`;
+                var url = `https://www.google.com/maps/dir/?api=1&origin=` + 
+                that.getUserLastGeoLocation.lat + ',' +
+                that.getUserLastGeoLocation.lng +
+                '&destination=' + encodeURI(that.event.place.name) + 
+                '&destination_place_id=' + that.event.place.place_id +
+                '&travelmode=driving';
 
                 window.open(url, '_system');
+
             },
         }
     }
