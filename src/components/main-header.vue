@@ -19,7 +19,7 @@
                         </div>
 
                         <div class="col-md-6 col-xs-6 text-center">
-                            <div class="f-success f-17 m-t-30">
+                            <div class="f-success t-overflow f-16 m-t-30">
                                 {{ title }}
                             </div>
                         </div>

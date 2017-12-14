@@ -236,7 +236,7 @@
                         <!-- /Place Informations -->
 
                         <!-- Photos -->
-                        <div class="form-group border-inside-card default">
+                        <div class="form-group border-inside-card default m-t-20">
 
                             <label class="f-700 f-primary" for="subcategory">{{ translations.form.photos }}</label>
 
@@ -247,7 +247,6 @@
                                             <i class="ion-ios-camera-outline"></i>
                                             <span>{{ translations.form.takePicture }}</span>
                                         </div>
-
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="new-image m-t-30 m-b-30 cursor-pointer" @click="getCameraRoll()">
@@ -975,6 +974,7 @@
     .img-responsive.rounded {
         border-radius: 20px;
     }
+
     new-image {
         position: absolute;
         top: 0; left: 0; bottom: 0; right: 0;

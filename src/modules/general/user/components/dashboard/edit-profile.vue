@@ -10,32 +10,29 @@
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main container">
 
-                <!-- Photos -->
-                <div class="p-relative">
-                    <div class="swiper-container swiper-gallery" ref="galleryPhotos">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="new-image">
-                                    <i class="ion-plus-round"></i>
-                                    <span>{{ translations.upload_image }}</span>
-                                </div>
-                            </div>
-                            <div
-                                class="swiper-slide"
-                                v-for="(photo, index) in user.photos"
-                                :style="{ backgroundImage: `url(${ photo.photo_url })` }"
-                                :key="index"
-                            >
+                <div class="row" v-if="isMobile">
+                    <div class="col-sm-12">
+                        <div class="col-xs-6">
+                            <div class="new-image m-b-30 cursor-pointer" @click="getPicture()">
+                                <i class="ion-ios-camera-outline"></i>
+                                <span>{{ translations.takePicture }}</span>
                             </div>
                         </div>
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-scrollbar"></div>
+                        <div class="col-xs-6">
+                            <div class="new-image m-b-30 cursor-pointer" @click="getCameraRoll()">
+                                <i class="ion-ios-film-outline"></i>
+                                <span>{{ translations.openGalery }}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- / Photos -->
 
-                <div class="container m-t-30 text-center">
+                <div class="new-image m-b-30 cursor-pointer" @click="showPhotoUploader = true"  v-if="!isMobile">
+                    <i class="ion-plus-round"></i>
+                    <span>{{ translations.upload_image }}</span>
+                </div>
+
+                <div class="container text-center">
 
                     <p class=" f-22 f-400">{{ translations.account.title }}</p>
                     <div class="form-group">
@@ -81,6 +78,12 @@
             </div>
         </transition>
 
+        <photo-uploader
+            :isvisible.sync="showPhotoUploader"
+            :send-action="storeImage"
+            @close-photo-uploader-modal="handleUploaderVisibility"
+        ></photo-uploader>
+
     </div>
 </template>
 
@@ -88,6 +91,7 @@
     import mainHeader from '@/components/main-header'
 
     import User from '@/models/User'
+    import photoUploader from '@/components/photo-uploader.vue'
     import * as translations from '@/translations/user/components/edit-profile'
     import {mapGetters, mapActions} from 'vuex'
 
@@ -96,10 +100,13 @@
 
         components: {
             mainHeader,
+            photoUploader,
         },
 
         data () {
             return {
+                isMobile: false,
+                showPhotoUploader: false,
                 interactions: {
                     changePassword: false,
                 },
@@ -126,6 +133,10 @@
         },
 
         mounted(){
+            if(window.cordova){
+                this.isMobile = true
+            }
+
             this.getUser()
         },
 
@@ -181,7 +192,122 @@
                 this.user.password = ''
                 this.user.password_confirmation = ''
                 this.interactions.changePassword = false
-            }
+            },
+
+            handleUploaderVisibility(visibility){
+                let that = this
+                that.showPhotoUploader = visibility
+            },
+
+            //Get from device camera
+            getPicture: function () {
+                let that = this
+
+                navigator.camera.getPicture(onSuccess, onFail, {
+                    quality: 50,
+                    destinationType: Camera.DestinationType.FILE_URI
+                });
+
+                function onSuccess(imageURI) {
+
+                    that.storeImageMobile(imageURI);
+
+                }
+
+                function onFail(message) {
+                    alert('Failed because: ' + message);
+                }
+            },
+
+            //Camera roll
+            getCameraRoll: function(){
+                let that = this
+
+                navigator.camera.getPicture(function cameraSuccess(imageURI) {
+
+                        that.storeImageMobile(imageURI);
+
+                    },
+                    function (message) {
+                        errorNotify('', message)
+                    },
+                    {
+                        quality: 50,
+                        destinationType: navigator.camera.DestinationType.FILE_URI,
+                        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+                    }
+                )
+            },
+
+            storeImageMobile(imageURI) {
+                let that = this
+
+                var win = function (response) {
+
+                    let api_response = JSON.parse(response.response)
+
+                    if(!that.event.photos.length){
+                        api_response.photo.is_cover = true
+                    }
+
+                    that.event.photos.push(api_response.photo)
+                    that.interactions.showPhotoPlaceholder = fasle
+                    successNotify('', 'Imagem enviada com sucesso')
+
+                }
+
+                var fail = function (error) {
+
+                    that.interactions.showPhotoPlaceholder = false
+                    errorNotify('', 'Houve um erro ao enviar a imagem')
+                    console.log(error);
+                }
+
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                options.fileName = "myphoto.jpg";
+                options.mimeType = "image/jpeg";
+                options.headers = {'Authorization': that.AuthToken};
+
+                var params = new Object();
+
+                params.event_id = that.event.id;
+
+                options.params = params;
+                var ft = new FileTransfer();
+
+                that.interactions.showPhotoPlaceholder = true
+
+                ft.upload(imageURI, encodeURI(`${apiUrl}/event/photo/upload`), win, fail, options);
+            },
+
+            storeImage: function(imageData){
+
+                let that = this
+
+                that.interactions.showPhotoPlaceholder = true
+
+                let formData = new FormData();
+                formData.append('event_id', that.event.id)
+                formData.append('file', imageData.file)
+
+                that.$http.post('event/photo/upload', formData , {headers: {'Content-Type': 'multipart/form-data'}})
+                    .then(function (response) {
+
+                        if(!that.event.photos.length){
+                            response.data.photo.is_cover = true
+                        }
+
+                        that.event.photos.push(response.data.photo)
+
+                        that.interactions.showPhotoPlaceholder = false
+
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                        that.interactions.showPhotoPlaceholder = false
+                    });
+            },
         }
     }
 </script>
@@ -196,13 +322,11 @@
 
     /* New Image */
     .new-image {
-        position: absolute;
-        top: 0; left: 0; bottom: 0; right: 0;
-        width: 100%; height: 100%;
+        width: 100%;
         justify-content: center;
         text-align: center;
-        padding-top: 80px;
-        border-bottom: 2px solid #FF4B89
+        border-bottom: 2px solid #FF4B89;
+        padding: 30px 0;
     }
 
     .new-image i {

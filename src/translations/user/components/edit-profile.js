@@ -4,6 +4,8 @@ export const en = {
     save: 'Save settings',
     save_success: 'Profile updated',
     logout: 'Logout',
+    takePicture: 'Take a picture',
+    openGalery: 'Open camera roll',
 
     // Language Section
     language: {
@@ -39,6 +41,8 @@ export const pt = {
     save: 'Salvar configurações',
     save_success: 'Configurações atualizadas.',
     logout: 'Fazer logout',
+    takePicture: 'Tirar foto',
+    openGalery: 'Abrir galeria',
 
     // Language Section
     language: {

@@ -152,7 +152,7 @@
                                 </router-link>
                             </div>
 
-                            <infinite-loading ref="infiniteLoading" @infinite="getEvents" force-use-infinite-wrapper="true">
+                            <infinite-loading ref="infiniteLoading" @infinite="getEvents" force-use-infinite-wrapper="true" :distance="50">
                                 <span slot="no-more">
                                      <span class="f-700 text-white" v-if="events.length">{{translations.load_complete}}</span>
                                 </span>
@@ -199,6 +199,11 @@
     import bus from '@/utils/event-bus';
 
     import categoryAllPhoto from '../../../../assets/icons/header/star_pink.svg'
+    import axios from 'axios'
+
+    var CancelToken = axios.CancelToken;
+    var cancelCurrentRequest;
+
 
     export default {
         name: 'general-events-list',
@@ -278,10 +283,8 @@
                 that.currentCategory = null;
                 that.interactions.finished_loading_category = false;
                 that.interactions.is_loading = false;
+                cancelCurrentRequest()
             });
-
-
-
         },
 
         destroyed: function() {
@@ -296,6 +299,9 @@
             ...mapActions(['setLoading']),
 
             resetBeforeChange(){
+
+                cancelCurrentRequest()
+
                 this.events = []
                 this.nextPage = 1
                 this.nextSet = 0
@@ -321,24 +327,28 @@
                     city_id: that.currentCity.id,
                     page: that.nextPage,
                     next_set: that.nextSet,
+                }, {
+                    cancelToken: new CancelToken(function executor(cancel) {
+                        cancelCurrentRequest = cancel;
+                    })
                 })
                     .then(function (response) {
 
                         that.interactions.is_loading = false;
 
-                        if(!that.events.length){
+                        if (!that.events.length) {
                             that.events = response.data.events
                             that.pagination = response.data.pagination
-                        }else{
+                        } else {
                             that.events = that.events.concat(response.data.events)
                             that.pagination = response.data.pagination
                         }
 
-                        if(that.pagination.current_page < that.pagination.last_page){
-                            that.nextPage =  that.nextPage + 1
-                            that.nextSet =  that.pagination.to
+                        if (that.pagination.current_page < that.pagination.last_page) {
+                            that.nextPage = that.nextPage + 1
+                            that.nextSet = that.pagination.to
                             $state.loaded()
-                        }else{
+                        } else {
                             $state.loaded()
                             $state.complete()
                         }
