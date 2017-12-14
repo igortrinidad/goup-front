@@ -16,11 +16,10 @@
                                 @click="back()"
                                 style="left: 0"
                             >
-                            
                         </div>
 
                         <div class="col-md-6 col-xs-6 text-center">
-                            <div class="f-success f-18 m-t-25">
+                            <div class="f-success f-17 m-t-30">
                                 {{ title }}
                             </div>
                         </div>
@@ -52,7 +51,7 @@
                                 >
                             </div>
                             <!-- / LEFT -->
-                            
+
                         </div>
 
                         <div class="col-md-6 col-xs-6 text-center">
@@ -234,21 +233,21 @@
 </script>
 
 <style scoped>
-    
+
     .main{
         -webkit-backface-visibility: hidden;
     }
-    
+
     .icon-header{
         margin: 22px 1px;
-        width: auto; 
+        width: auto;
         height: 35px;
         cursor: pointer;
     }
 
     .icon-header-lg{
         margin: 15px 1px;
-        width: auto; 
+        width: auto;
         height: 50px;
         cursor: pointer;
     }
