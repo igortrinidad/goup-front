@@ -209,7 +209,7 @@
                     <div class="row m-t-20">
                         <div class="col-sm-12 text-center">
 
-                            <label class="f-success">{{ translations.nearCities }}</label>
+                            <label class="f-success f-700">{{ translations.nearCities }}</label>
                             <p class="f-info" v-if="!getCities.length">{{ translations.noCity }}</p>
                             <div class="swiper-container" ref="citiesSlider">
                                 <div class="swiper-wrapper">
@@ -230,7 +230,7 @@
                     <div class="row m-t-20">
                         <div class="col-sm-12 text-center">
 
-                            <label class="f-success">{{ translations.title_when }}</label>
+                            <label class="f-success f-700">{{ translations.title_when }}</label>
 
                             <div class="week-row">
                                 <button

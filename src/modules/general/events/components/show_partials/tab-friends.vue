@@ -2,16 +2,19 @@
     <div>
         <div class="m-t-30 text-center">
             <div class="container">
+                <p class="f-info" v-show="!interactions.length">{{ translations.no_interactions }}</p>
 
-                <p class="f-info" v-show="!interactions.length">{{translations.no_interactions}}</p>
-
-                <div v-for="interaction in interactions">
-                    <div
-                        class="picture-circle picture-circle-m border-picture-eletric-blue"
-                        :style="{ backgroundImage: `url(${ interaction.user.avatar })` }"
-                    >
+                <div class="row" v-show="interactions.length">
+                    <div class="col-xs-4 text-center" v-for="interaction in interactions">
+                        <router-link
+                            tag="div"
+                            class="picture-circle picture-circle-s border-picture-eletric-blue"
+                            :style="{ backgroundImage: `url(${ interaction.user.avatar })` }"
+                            :to="{ name: 'general.user.show', params: { user_slug: interaction.user.slug } }"
+                        >
+                        </router-link>
+                        <h4 class="f-12 t-overflow">{{ interaction.user.full_name }}</h4>
                     </div>
-                    <h4 class="text-center t-overflow">{{ interaction.user.full_name }}</h4>
                 </div>
 
                 <div class="row">
