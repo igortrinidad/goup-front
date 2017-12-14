@@ -234,7 +234,7 @@
                         <!-- /Place Informations -->
 
                         <!-- Photos -->
-                        <div class="form-group border-inside-card default">
+                        <div class="form-group border-inside-card default m-t-20">
 
                             <label class="f-700 f-primary" for="subcategory">{{ translations.form.photos }}</label>
 
