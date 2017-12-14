@@ -154,7 +154,7 @@
 
                 <div class="row" v-if="relateds.length">
                     <div class="col-md-12 col-xs-12">
-                        <h3 class="text-center f-success m-t-30">{{ translations.see_more.title }}</h3>
+                        <h3 class="text-center f-success m-t-30 m-b-30">{{ translations.see_more.title }}</h3>
 
                         <card-placeholder v-if="interactions.loading_related"></card-placeholder>
                         <router-link
@@ -164,7 +164,7 @@
                             :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
                             :key="indexEvents"
                         >
-                            <div class="card p-0">
+                            <div class="card m-b-20 p-0">
                                 <!-- Card Header -->
                                 <div
                                     class="card-header cover p-5"
