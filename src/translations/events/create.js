@@ -1,5 +1,5 @@
 export const en = {
-    title: 'Add new moment',
+    title: 'New moment',
     form: {
         event_name: `Moment name`,
         event_description: `Moment description`,
