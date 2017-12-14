@@ -152,9 +152,9 @@
 
                 <!-- See Also -->
 
-                <div class="row">
+                <div class="row" v-if="relateds.length">
                     <div class="col-md-12 col-xs-12">
-                        <h3 class="text-center f-success m-t-30">{{translations.see_more.title}}</h3>
+                        <h3 class="text-center f-success m-t-30">{{ translations.see_more.title }}</h3>
 
                         <card-placeholder v-if="interactions.loading_related"></card-placeholder>
                         <router-link
@@ -179,17 +179,22 @@
                                 <div class="card-body card-padding">
                                     <h4 class="m-b-5">{{ event.name }}</h4>
                                     <div style="opacity: .8;">
-                                        <p class="m-b-5">{{ event.description }}</p>
-                                        <span class="d-block m-0 f-12">
-                                                <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
-                                            </span>
+                                        <p class="m-b-5 t-overflow">{{ event.description }}</p>
+
+                                        <span class="d-block m-t-0 m-b-5 f-12">
+                                            <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
+                                        </span>
+
+                                        <div v-for="category in event.categories">
+                                            <small class="f-700 f-primary">#{{ category.name_en }}</small>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- Card Footer -->
                                 <div class="card-footer p-10">
                                     <div class="row">
                                         <div class="col-xs-8" style="opacity: .8;">
-                                            <small class="p-l-10 m-l-10">
+                                            <small class="">
                                                 <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
                                                 <span v-show="event.value === 0">{{ translations.free }}</span>
                                             </small>
