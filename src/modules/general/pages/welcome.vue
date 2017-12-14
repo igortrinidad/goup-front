@@ -58,18 +58,22 @@
             <div class="m-t-20" v-if="interactions.location_granted">
 
                 <div class="swiper-container swiper-gallery" ref="galleryPhotos">
-                    <div class="swiper-wrapper">
+                    <div class="swiper-wrapper text-center m-b-15">
                         <div class="swiper-slide">
                             <p class="f-14 f-300">{{translations.first_swiper}}</p>
+                            <img class="img" height="220px" src="../../../assets/img/welcome_screens/first.png" />
                         </div>
                         <div class="swiper-slide">
                             <p class="f-14 f-300">{{translations.second_swiper}}</p>
+                            <img class="img" height="220px" src="../../../assets/img/welcome_screens/second.png" />
                         </div>
                         <div class="swiper-slide">
                             <p class="f-14 f-300">{{translations.third_swiper}}</p>
+                            <img class="img" height="220px" src="../../../assets/img/welcome_screens/third.png" />
                         </div>
                         <div class="swiper-slide">
                             <p class="f-14 f-300">{{translations.fourth_swiper}}</p>
+                            <img class="img" height="220px" src="../../../assets/img/welcome_screens/fourth.png" />
                         </div>
                     </div>
                     <div class="swiper-button-prev"></div>
