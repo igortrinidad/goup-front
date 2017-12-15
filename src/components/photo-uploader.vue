@@ -99,6 +99,13 @@
                 img.onload = function () {
                     that.close()
 
+                    //Prevent show image size warning on profile picture
+                    if(that.$route.path === '/settings/edit-profile') {
+                        that.sendAction({file: input.files[0]})
+                        return true
+                    }
+
+
                     if(this.width < 1400){
 
                         that.$swal({

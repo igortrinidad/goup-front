@@ -1,11 +1,12 @@
 export const en = {
     title: 'Edit profile',
-    upload_image: 'Upload a new image',
+    upload_image: 'Change profile picture',
     save: 'Save settings',
     save_success: 'Profile updated',
     logout: 'Logout',
     takePicture: 'Take a picture',
     openGalery: 'Open camera roll',
+    success_avatar: 'Your profile picture was successfully updated.',
 
     // Language Section
     language: {
@@ -37,12 +38,13 @@ export const en = {
 
 export const pt = {
     title: 'Editar perfil',
-    upload_image: 'Faça o upload de uma nova imagem',
+    upload_image: 'Alterar foto do perfil',
     save: 'Salvar configurações',
     save_success: 'Configurações atualizadas.',
     logout: 'Fazer logout',
     takePicture: 'Tirar foto',
     openGalery: 'Abrir galeria',
+    success_avatar: 'Sua foto de perfil foi atualizada com sucesso.',
 
     // Language Section
     language: {

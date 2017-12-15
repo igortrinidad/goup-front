@@ -82,6 +82,12 @@
 
                             <!-- /Share -->
 
+                            <!-- Save moment -->
+                            <button class="btn btn-primary m-t-30" v-if="!event.already_saved" @click.prevent="saveMoment"><i class="ion-android-star-outline"></i> {{ translations.save }}</button>
+                            <button class="btn btn-default m-t-30" v-if="event.already_saved"> <i class="ion-android-done"></i> {{ translations.saved }}</button>
+
+                            <!-- / Save moment -->
+
                             <div class="container m-t-30">
                                 <ul class="list-group list-rounded m-b-0 m-t-10">
                                     <li class="list-group-item">
@@ -152,7 +158,7 @@
 
                 <!-- See Also -->
 
-                <div class="container">
+                <div class="container" v-show="!interactions.is_loading">
                     <div class="">
                         <h3 class="text-center f-success m-t-30 m-b-30">{{ translations.see_more.title }}</h3>
                         <div class="col-row">
@@ -279,7 +285,7 @@
         },
 
         computed: {
-            ...mapGetters(['language']),
+            ...mapGetters(['language', 'AuthToken', 'currentUser']),
 
             'translations': function() {
 
@@ -426,6 +432,21 @@
                     });
 
             },
+
+            saveMoment(){
+                let that = this
+
+                that.$http.post('event/interaction/store', {favorite: true, event_id: that.event.id, user_id: that.currentUser.id})
+                    .then(function (response) {
+
+                        that.event.already_saved = true
+
+                        successNotify('', that.translations.save_success)
+
+                    }).catch(function (error) {
+                    console.log(error)
+                });
+            }
         }
     }
 </script>

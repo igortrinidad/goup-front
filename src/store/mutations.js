@@ -1,5 +1,6 @@
 // https://vuex.vuejs.org/en/mutations.html
 import * as TYPES from './mutation-types'
+import {localStorageSetItem} from '../utils/local'
 
 /* eslint-disable no-param-reassign */
 export default {
@@ -78,7 +79,6 @@ export default {
 
             new_city.categories[event.category_id] =  new_city.categories[event.category_id] +1
 
-
             localStorage.setItem('cities', JSON.stringify(state.cities));
         }
 
@@ -88,4 +88,13 @@ export default {
         }
 
     },
+
+    [TYPES.SET_NEW_USER_AVATAR](state, {rootState, new_avatar_path}) {
+
+        let user = rootState.Auth.user
+
+        user.avatar = new_avatar_path
+
+        localStorageSetItem('user', {user: rootState.Auth.user})
+    }
 }
