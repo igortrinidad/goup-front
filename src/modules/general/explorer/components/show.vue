@@ -8,21 +8,36 @@
             :cursor="false"
         ></main-header>
 
-        <pulse v-if="interactions.is_loading && interactions.finished_loading_category" :icon="'ion-navigate'"/></pulse>
+        <pulse v-if="interactions.is_loading && interactions.finished_loading_category" :icon="'ion-navigate'"/>
+        </pulse>
 
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
 
                 <!-- CATEGORIES -->
-                <div class="container" v-show="!interactions.finished_loading_category && !interactions.is_loading" :class="{'cat-is-selected' : currentCategory}">
+                <div class="container" v-show="!interactions.finished_loading_category && !interactions.is_loading"
+                     :class="{'cat-is-selected' : currentCategory}">
 
                     <p class="f-16 f-300 text-center m-t-10">{{translations.select_category}}</p>
 
                     <div class="col-row">
+                        <!-- ALL -->
+                        <div class="col">
+                            <div class="card-cat text-center"
+                                 @click="selectCategory(categoryAll)"
+                                 :class="{'bounce' : currentCategory == categoryAll}">
+                                <div class="p-10">
+                                    <img src="../../../../assets/icons/header/star_pink.svg" class="icon-img icon-img-l m-t-5">
+                                    <p class="f-default m-t-10">{{categoryAll['name_' + language]}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ALL -->
+
                         <div class="col" v-for="category in getCategories">
                             <div class="card-cat text-center"
-                                @click="selectCategory(category)"
-                                :class="{
+                                 @click="selectCategory(category)"
+                                 :class="{
                                     'bounce' : currentCategory && currentCategory == category
                                 }">
                                 <div class="p-10">
@@ -39,14 +54,16 @@
                 <!-- EXPLORER -->
                 <div class="container" v-if="interactions.finished_loading_category && !interactions.is_loading">
 
-                    <p class="f-info text-center m-b-30 m-t-30" v-show="!events.length && !interactions.is_loading">
+                    <h3 class="text-center f-success">Explorer</h3>
+
+                    <p class="f-info text-center m-b-30 m-t-30" v-show="!events.length && !interactions.is_loading && !interactions.lazy_image">
                         {{ translations.end_list }}
                     </p>
 
-                    <h3 class="text-center f-success">Explorer</h3>
+                    <card-placeholder-explorer  v-show="interactions.lazy_image"></card-placeholder-explorer>
 
                     <!-- Cards -->
-                    <div class="cards m-t-20" v-if="events.length && !interactions.is_loading">
+                    <div class="cards m-t-20" v-if="events.length && !interactions.is_loading && !interactions.lazy_image">
 
                         <!-- FIRST EVENT -->
                         <div id="card-animated" class="card m-0" ref="cardAnimated">
@@ -60,7 +77,6 @@
                                     height: '200px',
                                     borderRadius: '6px 6px 0 0'
                                 }"
-                                v-show="!interactions.lazy_image"
                             >
 
                                 <router-link
@@ -104,8 +120,9 @@
                                             <i class="ion-location m-r-5"></i>{{ handleDistance(events[0].distance) }}
                                         </small>
                                         <small class="divider p-l-10 m-l-10">
-                                            <span v-show="events[0].value > 0">{{ events[0].value | formatCurrency }}</span>
-                                            <span v-show="events[0].value === 0">{{ translations.free }}</span>
+                                            <span v-if="events[0].value_uninformed">{{ translations.uninformed }}</span>
+                                            <span v-show="!events[0].value_uninformed && events[0].value > 0">{{ events[0].value | formatCurrency }}</span>
+                                            <span v-show="!events[0].value_uninformed && events[0].value === 0">{{ translations.free }}</span>
                                         </small>
                                     </div>
                                     <div class="col-xs-4 text-right">
@@ -159,8 +176,9 @@
                                             <i class="ion-location m-r-5"></i>{{ handleDistance(events[1].distance) }}
                                         </small>
                                         <small class="divider p-l-10 m-l-10">
-                                            <span v-show="events[1].value > 0">{{ events[1].value | formatCurrency }}</span>
-                                            <span v-show="events[1].value === 0">{{ translations.free }}</span>
+                                            <span v-if="events[1].value_uninformed">{{ translations.uninformed }}</span>
+                                            <span v-show="!events[1].value_uninformed && events[1].value > 0">{{ events[1].value | formatCurrency }}</span>
+                                            <span v-show="!events[1].value_uninformed && events[1].value === 0">{{ translations.free }}</span>
                                         </small>
                                     </div>
                                     <div class="col-xs-4 text-right">
@@ -187,7 +205,7 @@
                                         <span class="ion-ios-rewind f-default"></span>
                                     </span>
 
-                                    <span class="action xl down"  @click="goDown()">
+                                    <span class="action xl down" @click="goDown()">
                                         <span class="ion-chevron-down f-red "></span>
                                     </span>
 
@@ -217,8 +235,11 @@
                                          v-for="(city, $index) in getCities"
                                          :key="$index"
                                          :class="{'cursor-pointer': currentCity != city, 'label-primary':currentCity == city}">
-                                        <span v-if="currentCity != city">{{city.name}} - {{city.state}}  <span class="badge-city">{{city.categories[currentCategory.id]}}</span></span>
-                                        <span v-if="currentCity == city">{{city.name}} - {{city.state}}  <span class="badge-city">{{events.length}}</span></span>
+                                        <span v-if="currentCity != city">{{city.name}} - {{city.state}}  <span
+                                            class="badge-city">{{city.categories[currentCategory.id]}}</span></span>
+
+                                        <span v-if="currentCity == city">{{city.name}} - {{city.state}}  <span
+                                            class="badge-city">{{events.length}}</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -247,7 +268,9 @@
                     </div>
                     <!--DAYS SELECTEDS-->
 
-                    <button class="btn btn-primary btn-block m-t-30 m-b-30" :disabled="!days_selecteds_to_query.monthly" @click.prevent="getEvents">{{translations.search_button}}</button>
+                    <button class="btn btn-primary btn-block m-t-30 m-b-30" :disabled="!days_selecteds_to_query.monthly"
+                            @click.prevent="getEvents">{{translations.search_button}}
+                    </button>
 
                     <hr>
 
@@ -273,22 +296,27 @@
 
 <script>
     import Hammer from 'hammerjs'
-    import { transition } from 'jquery.transit'
-    import { mapGetters, mapActions } from 'vuex'
+    import {transition} from 'jquery.transit'
+    import {mapGetters, mapActions} from 'vuex'
 
-    import { cleanPlaceModel } from '@/models/Place'
+    import {cleanPlaceModel} from '@/models/Place'
 
     import * as translations from '@/translations/explorer/show'
     import moment from 'moment'
 
     import bus from '@/utils/event-bus';
+    import categoryAllPhoto from '../../../../assets/icons/header/star_pink.svg'
+    import axios from 'axios'
+    var CancelToken = axios.CancelToken;
+    var cancelCurrentRequest;
 
     export default {
         name: 'EXPLORER',
 
         components: {
             mainHeader: require('@/components/main-header.vue'),
-            pulse: require('@/components/pulse.vue')
+            pulse: require('@/components/pulse.vue'),
+            cardPlaceholderExplorer: require('@/components/card-placeholder-explorer.vue'),
         },
 
         data() {
@@ -320,7 +348,12 @@
                     init: moment().format('DD/MM/YYYY'),
                     end: moment().add(3, 'months').format('DD/MM/YYYY'),
                 },
-                initialCitySlide: 0
+                categoryAll: {
+                    id: 'all',
+                    name_en: 'All',
+                    name_pt: 'Todos',
+                    photo_url: categoryAllPhoto
+                }
             }
         },
 
@@ -328,7 +361,7 @@
 
             ...mapGetters(['language', 'isLogged', 'currentUser', 'getUserLastGeoLocation', 'getCities', 'getCategories']),
 
-            'translations': function() {
+            'translations': function () {
 
                 if (this.language === 'en') {
                     return translations.en
@@ -339,13 +372,13 @@
             },
         },
 
-        mounted(){
+        mounted() {
 
             var that = this;
 
             that.currentCity = that.getCities[0];
 
-            if(that.$route.query.category_id){
+            if (that.$route.query.category_id && that.$route.query.category_id != 'all') {
 
                 var index = that.getCategories.indexFromAttr('id', that.$route.query.category_id);
                 that.selectCategory(that.getCategories[index]);
@@ -360,21 +393,24 @@
             }
 
 
-            bus.$on('refresh_explorer', function(){
+            bus.$on('refresh_explorer', function () {
                 that.currentCategory = null;
                 that.interactions.finished_loading_category = false;
                 that.interactions.is_loading = false;
+                if (cancelCurrentRequest) {
+                    cancelCurrentRequest()
+                }
             });
 
             this.initWeek();
 
-            setTimeout(function() {
+            setTimeout(function () {
                 that.checkDaysToQuery();
             }, 100);
 
         },
 
-        destroyed(){
+        destroyed() {
             bus.$off('refresh_explorer');
             bus.$emit('category-cleaned');
         },
@@ -394,12 +430,12 @@
                 if (this.events.length) {
                     setTimeout(() => {
                         that.hammerCards = new Hammer(that.$refs.cardAnimated)
-                        that.hammerCards.get('pan').set({ direction: Hammer.DIRECTION_ALL })
-                        that.hammerCards.on('panleft panright panup pandown tap press', function(ev) {
+                        that.hammerCards.get('pan').set({direction: Hammer.DIRECTION_ALL})
+                        that.hammerCards.on('panleft panright panup pandown tap press', function (ev) {
                             that.animateCurrentCard(ev)
                         })
 
-                        $('#card-animated').bind('touchend', function(ev) {
+                        $('#card-animated').bind('touchend', function (ev) {
                             that.touchend()
                         })
 
@@ -411,28 +447,28 @@
                 let that = this
                 // Não passou da distancia minima para nenhum lado. Volta a posição inicial
                 if (that.top > -75 && that.top < 75 && that.left > -75 && that.left < 75) {
-                    $('#card-animated').transition({ x: 0, y: 0 }, 300)
+                    $('#card-animated').transition({x: 0, y: 0}, 300)
                 } else {
                     // UP
                     if (that.top < -75) {
                         that.action = 'up'
-                        $('#card-animated').transition({ y: -200, opacity: 0 }, 300, () => that.resetPosition())
+                        $('#card-animated').transition({y: -200, opacity: 0}, 300, () => that.resetPosition())
                     }
                     // DOWN
                     if (that.top > 75) {
                         that.action = 'down'
-                        $('#card-animated').transition({ y: 200, opacity: 0 }, 300, () => that.resetPosition())
+                        $('#card-animated').transition({y: 200, opacity: 0}, 300, () => that.resetPosition())
                     }
                     // Skip
                     if (that.left > 75) {
                         that.action = 'save'
-                        $('#card-animated').transition({ x: 300, opacity: 0 }, 300, () => that.resetPosition())
+                        $('#card-animated').transition({x: 300, opacity: 0}, 300, () => that.resetPosition())
 
                     }
                     // Favorite
                     if (that.left < -75) {
                         that.action = 'skip'
-                        $('#card-animated').transition({ x: -300, opacity: 0 }, 300, () => that.resetPosition())
+                        $('#card-animated').transition({x: -300, opacity: 0}, 300, () => that.resetPosition())
                     }
                 }
             },
@@ -441,7 +477,7 @@
 
                 let interaction = _.cloneDeep(this.interactions)
                 interaction.user_id = this.currentUser.id
-                interaction.event_id =  this.events[0].id
+                interaction.event_id = this.events[0].id
 
                 this.handleInteraction(interaction)
 
@@ -458,7 +494,7 @@
 
                 // Remove From Array
                 this.events.splice(0, 1)
-                $(this.$refs.cardAnimated).transition({ x: 0, y: 0, opacity: 1 }, 0)
+                $(this.$refs.cardAnimated).transition({x: 0, y: 0, opacity: 1}, 0)
             },
 
             animateCurrentCard(e) {
@@ -472,7 +508,7 @@
                     that.top = top
                     that.left = left
 
-                    $('#card-animated').transition({ x: left, y: top }, 0)
+                    $('#card-animated').transition({x: left, y: top}, 0)
 
                     if (top > -75 && top < 75 && left > -75 && left < 75) {
                         // Do nothing just reset position
@@ -490,7 +526,7 @@
                             return
                         }
                         // DOWN
-                        if(top > 75) {
+                        if (top > 75) {
                             that.interactions.up = false
                             that.interactions.down = true
                             that.interactions.favorite = false
@@ -520,25 +556,25 @@
             // Button Action UP
             goUp() {
                 this.interactions.up = true
-                $('#card-animated').transition({ x: 0, y: -100, opacity: 0 }, 1000, () => this.resetPosition())
+                $('#card-animated').transition({x: 0, y: -100, opacity: 0}, 1000, () => this.resetPosition())
             },
             // Button Action DOWN
             goDown() {
                 this.interactions.down = true
-                $('#card-animated').transition({ x: 0, y: 100, opacity: 0 }, 1000, () => this.resetPosition())
+                $('#card-animated').transition({x: 0, y: 100, opacity: 0}, 1000, () => this.resetPosition())
             },
             // Button Action FAVORITE
             favorite() {
                 this.interactions.favorite = true
-                $('#card-animated').transition({ x: 100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
+                $('#card-animated').transition({x: 100, y: 0, opacity: 0}, 1000, () => this.resetPosition())
             },
             // Button Action SKIP
             skip() {
                 this.interactions.skip = true
-                $('#card-animated').transition({ x: -100, y: 0, opacity: 0 }, 1000, () => this.resetPosition())
+                $('#card-animated').transition({x: -100, y: 0, opacity: 0}, 1000, () => this.resetPosition())
             },
 
-            handleDistance(distance){
+            handleDistance(distance) {
                 distance = parseFloat(distance);
                 return `${distance.toFixed(2)} km`
             },
@@ -546,11 +582,13 @@
             citiesSwiper() {
                 let that = this
 
+                let currentIndex = JSON.parse(localStorage.getItem('city_index'))
+
                 setTimeout(() => {
                     that.swiperTabs = new Swiper(that.$refs.citiesSlider, {
                         spaceBetween: 0,
                         slidesPerView: 5,
-                        initialSlide: that.initialCitySlide,
+                        initialSlide: currentIndex ? currentIndex : 0,
                         loop: false,
                         centeredSlides: true,
                         slideToClickedSlide: true,
@@ -558,12 +596,16 @@
                         nextButton: '.swiper-button-next',
                         onSlideChangeEnd: swiper => {
 
-                          let city = that.getCities[swiper.realIndex]
+                            localStorage.setItem('city_index', swiper.realIndex)
 
-                          if(that.currentCity.id != city.id){
-                              that.currentCity = city
-                              that.getEvents();
-                          }
+                            let city = that.getCities[swiper.realIndex]
+
+                            if (that.currentCity.id != city.id) {
+                                that.currentCity = city
+                                that.getEvents();
+                            }
+
+
                         },
                         breakpoints: {
                             350: {
@@ -584,6 +626,8 @@
             getEvents() {
                 let that = this
 
+                that.events = []
+
                 that.interactions.lazy_image = true
 
                 that.$http.post('event/explorer/list', {
@@ -593,6 +637,10 @@
                     city_id: that.currentCity ? that.currentCity.id : null,
                     category_id: that.currentCategory.id,
                     filters: that.days_selecteds_to_query
+                }, {
+                    cancelToken: new CancelToken(function executor(cancel) {
+                        cancelCurrentRequest = cancel;
+                    })
                 })
                     .then(function (response) {
 
@@ -601,11 +649,8 @@
                         setTimeout(function () {
                             that.interactions.lazy_image = false
                         }, 200);
+
                         that.mountHammer();
-
-                        let initalSlide = _.findIndex(that.getCities, {id: that.currentCity.id})
-
-                        that.initialCitySlide = initalSlide
 
                         that.citiesSwiper();
 
@@ -625,7 +670,7 @@
                 that.$http.post('event/interaction/store', interaction)
                     .then(function (response) {
 
-                     console.log(response)
+                        console.log(response)
 
                     }).catch(function (error) {
                     console.log(error)
@@ -633,27 +678,30 @@
 
             },
 
-            selectCategory: function(category){
+            selectCategory: function (category) {
                 let that = this
 
                 that.currentCategory = category;
                 bus.$emit('category-selected', category);
 
-                setTimeout(function() {
+                setTimeout(function () {
                     that.interactions.is_loading = true;
                     that.interactions.finished_loading_category = true;
-                    that.$router.push({ query: { category_id: category.id }})
+                    that.$router.push({query: {category_id: category.id}})
                 }, 500);
 
-                setTimeout(function() {
+                setTimeout(function () {
                     that.currentCity = that.getCities[0];
                     that.getEvents();
                 }, 600);
 
+                if(cancelCurrentRequest){
+                    cancelCurrentRequest()
+                }
 
             },
 
-            initWeek: function(){
+            initWeek: function () {
                 let that = this
 
                 for (var m = moment(); m.isBefore(moment().add(6, 'days')); m.add(1, 'days')) {
@@ -665,11 +713,11 @@
                 }
             },
 
-            toggleDay: function(day){
+            toggleDay: function (day) {
                 let that = this
 
 
-                if(!this.days_selecteds.length){
+                if (!this.days_selecteds.length) {
 
                     this.days_selecteds.push(day)
                     this.checkDaysToQuery();
@@ -678,15 +726,15 @@
                 }
 
 
-                this.days_selecteds.forEach( function($day, index, array){
+                this.days_selecteds.forEach(function ($day, index, array) {
 
 
-                    if($day.format('DD') == day.format('DD')){
+                    if ($day.format('DD') == day.format('DD')) {
                         array.splice(index, 1);
                         return
                     }
 
-                    if(array.length == index+1){
+                    if (array.length == index + 1) {
                         array.push(day)
                     }
 
@@ -697,14 +745,14 @@
 
             },
 
-            checkDaysToQuery: function(){
+            checkDaysToQuery: function () {
 
                 var that = this;
 
                 that.days_selecteds_to_query.monthly = [];
                 that.days_selecteds_to_query.weekly = [];
 
-                that.days_selecteds.forEach( function($day){
+                that.days_selecteds.forEach(function ($day) {
 
                     //Adiciona o dia do mês à query
                     that.days_selecteds_to_query.monthly.push(Math.ceil(moment($day).format('DD') / 7) + '-' + moment($day).day());
@@ -732,11 +780,13 @@
         padding: 5px;
     }
 
-    @media(min-width: 900px) {
-        .col-row{ column-count: 3; }
+    @media (min-width: 900px) {
+        .col-row {
+            column-count: 3;
+        }
     }
 
-    .week-row{
+    .week-row {
         overflow-x: scroll;
         white-space: nowrap;
     }
@@ -756,9 +806,11 @@
         left: 0;
     }
 
-    .cards #card-animated{ z-index: 10; }
+    .cards #card-animated {
+        z-index: 10;
+    }
 
-    .fadeInLeft{
+    .fadeInLeft {
         transition: 0.1s;
     }
 
@@ -780,13 +832,13 @@
         z-index: 7;
     }
 
-    .card-cat-col{
+    .card-cat-col {
         padding-right: 10px;
         padding-left: 10px;
         margin-top: 20px;
     }
 
-    .card-cat{
+    .card-cat {
         background-color: #FFFFFF;
         border-radius: 15px;
         cursor: pointer;
@@ -823,7 +875,12 @@
     }
 
     @media (max-width: 360px) {
-        .cards{ height: 260px }
-        .card-placeholder{ height: 260px }
+        .cards {
+            height: 260px
+        }
+
+        .card-placeholder {
+            height: 260px
+        }
     }
 </style>

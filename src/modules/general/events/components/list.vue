@@ -137,8 +137,9 @@
                                                         <i class="ion-location m-r-5"></i>{{ handleDistance(event.distance) }}
                                                     </small>
                                                     <small class="divider p-l-10 m-l-10">
-                                                        <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
-                                                        <span v-show="event.value === 0">{{ translations.free }}</span>
+                                                        <span v-if="event.value_uninformed">{{ translations.uninformed }}</span>
+                                                        <span v-show="!event.value_uninformed && event.value > 0">{{ event.value | formatCurrency }}</span>
+                                                        <span v-show="!event.value_uninformed && event.value === 0">{{ translations.free }}</span>
                                                     </small>
                                                 </div>
                                                 <div class="col-xs-4 text-right">

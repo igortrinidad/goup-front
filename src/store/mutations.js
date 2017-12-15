@@ -50,9 +50,11 @@ export default {
 
     [TYPES.HANDLE_USER_INTERACTION](state, {city_id, category_id}) {
 
-        let category = _.find(state.categories, {id: category_id})
-        category.events_count = category.events_count - 1
-        localStorage.setItem('categories', JSON.stringify(state.categories));
+        if(category_id != 'all'){
+            let category = _.find(state.categories, {id: category_id})
+            category.events_count = category.events_count - 1
+            localStorage.setItem('categories', JSON.stringify(state.categories));
+        }
 
         let city = _.find(state.cities, {id: city_id})
         city.categories[category_id] =  city.categories[category_id] - 1

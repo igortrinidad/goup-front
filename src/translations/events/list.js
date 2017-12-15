@@ -10,6 +10,7 @@ export const en = {
     noCities: 'We dont find any city around you, please enable location on device settings and try again.',
     approximate_distances: 'Approximate distances',
     free: 'Free',
+    uninformed: 'Value not informed',
     add_event_title: "Didn't find the Moment that you looking for? Share with others your suggestion of Moments",
     add_event: 'Add a Moment',
 
@@ -54,6 +55,7 @@ export const pt = {
     noCities: 'Não encontramos nenhuma cidade próxima, por favor habilite a localização nas configurações do dispositivo.',
     approximate_distances: 'Distância aproximada',
     free: 'Gratuito',
+    uninformed: 'Valor não informado',
     add_event_title: "Não encontrou o Momento que estava procurando, compartilhe com as outras pessoas suas sugestões de Momentos",
     add_event: 'Adicione um momento',
     label: {

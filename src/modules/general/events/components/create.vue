@@ -102,6 +102,8 @@
                                     :placeholder="translations.form.event_time"
                                     data-mask="00:00"
                                     v-if="!event.time_uninformed"
+                                    @blur="validateTime"
+                                    ref="event_time"
                                 >
                             </div>
 
@@ -292,7 +294,7 @@
                                 type="button"
                                 class="btn btn-primary btn-block transparent"
                                 @click="storeEvent()"
-                                :disabled="!event.name || !event.description || !event.categories.length || !event.date_uninformed && !event.recurrency_type  || !event.google_place_id || !event.photos.length"
+                                :disabled="!event.name || !event.description || !event.categories.length || !event.date_uninformed && !event.recurrency_type  || !event.google_place_id || !event.photos.length || interactions.invalid_time"
                             >
                                 {{ translations.submit }}
                             </button>
@@ -414,7 +416,8 @@
                 showPhotoUploader: false,
                 interactions: {
                     placeSelected: false,
-                    showPhotoPlaceholder: false
+                    showPhotoPlaceholder: false,
+                    invalid_time: false,
                 },
                 event: cleanEventModel(),
                 categories: [],
@@ -929,6 +932,18 @@
                     this.event.recurrency_info = null
                     this.currentRecurrencyType = null
                 }
+            },
+
+            validateTime(){
+                let timeIsValid = /^([0-1][0-9]|2[0-3]):([0-5][0-9])$/.test(this.event.time);
+
+                if (!timeIsValid) {
+                    warningNotify('', this.translations.validation.time)
+                    this.interactions.invalid_time = true
+                    return false
+                }
+
+                this.interactions.invalid_time = false
             }
 
         }

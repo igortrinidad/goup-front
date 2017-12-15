@@ -16,6 +16,7 @@ export const en = {
     goToLogin: 'Go to login',
     search_button: 'Search',
     free: 'Free',
+    uninformed: 'Value not informed',
 
     modal: {
         up: 'You goup in this event',
@@ -43,6 +44,7 @@ export const pt = {
     goToLogin: 'Ir para login',
     search_button: 'Pesquisar',
     free: 'Gratuito',
+    uninformed: 'Valor não informado',
 
     modal: {
         up: 'Você deu um "goup" para esse evento',

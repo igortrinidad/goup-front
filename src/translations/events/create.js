@@ -59,7 +59,11 @@ export const en = {
         fourthy: 'Fourthy week',
         fifth: 'Fifth week',
     },
-    daily: 'Daily'
+    daily: 'Daily',
+
+    validation:{
+        time: 'Invalid moment time'
+    }
 }
 
 export const pt = {
@@ -122,5 +126,8 @@ export const pt = {
         fourthy: 'Quarta semana',
         fifth: 'Quinta semana',
     },
-    daily: 'Diariamente'
+    daily: 'Diariamente',
+    validation:{
+        time: 'Horário inválido'
+    }
 }
