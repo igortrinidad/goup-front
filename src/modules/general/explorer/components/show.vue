@@ -873,14 +873,4 @@
         border-radius: 10px;
         font-size: 11px;
     }
-
-    @media (max-width: 360px) {
-        .cards {
-            height: 260px
-        }
-
-        .card-placeholder {
-            height: 260px
-        }
-    }
 </style>
