@@ -4,17 +4,47 @@
             <div class="container">
                 <p class="f-info" v-show="!interactions.length">{{ translations.no_interactions }}</p>
 
-                <div class="row" v-show="interactions.length">
-                    <div class="col-xs-4 text-center" v-for="interaction in interactions">
-                        <router-link
-                            tag="div"
-                            class="picture-circle picture-circle-s border-picture-eletric-blue"
-                            :style="{ backgroundImage: `url(${ interaction.user.avatar })` }"
-                            :to="{ name: 'general.user.show', params: { user_slug: interaction.user.slug } }"
-                        >
-                        </router-link>
-                        <h4 class="f-12 t-overflow">{{ interaction.user.full_name }}</h4>
+                <div class="col-row" v-show="interactions.length">
+
+                    <div class="col text-center" v-for="interaction in interactions">
+                        <div class="border-inside-card">
+                            <router-link
+                                tag="div"
+                                class="picture-circle picture-circle-xs border-picture-eletric-blue"
+                                :style="{ backgroundImage: `url(${ interaction.user.avatar })` }"
+                                :to="{ name: 'general.user.show', params: { user_slug: interaction.user.slug } }"
+                            >
+                            </router-link>
+                            <h4 class="f-12 f-primary f-700 m-b-0">{{ interaction.user.full_name }}</h4>
+                        </div>
                     </div>
+
+                    <div class="col text-center" v-for="interaction in interactions">
+                        <div class="border-inside-card">
+                            <router-link
+                                tag="div"
+                                class="picture-circle picture-circle-xs border-picture-eletric-blue"
+                                :style="{ backgroundImage: `url(${ interaction.user.avatar })` }"
+                                :to="{ name: 'general.user.show', params: { user_slug: interaction.user.slug } }"
+                            >
+                            </router-link>
+                            <h4 class="f-12 f-primary f-700 m-b-0">{{ interaction.user.full_name }}</h4>
+                        </div>
+                    </div>
+
+                    <div class="col text-center" v-for="interaction in interactions">
+                        <div class="border-inside-card">
+                            <router-link
+                                tag="div"
+                                class="picture-circle picture-circle-xs border-picture-eletric-blue"
+                                :style="{ backgroundImage: `url(${ interaction.user.avatar })` }"
+                                :to="{ name: 'general.user.show', params: { user_slug: interaction.user.slug } }"
+                            >
+                            </router-link>
+                            <h4 class="f-12 f-primary f-700 m-b-0">{{ interaction.user.full_name }}</h4>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="row">
@@ -111,4 +141,21 @@
         top: 0; left: 0; right: 0; bottom: 0;
     }
 
+    /* Users */
+    .col-row {
+        width: 100%;
+        column-count: 2;
+        column-gap: 0;
+    }
+
+    .col {
+        width: 100%;
+        display: inline-block;
+        padding: 5px;
+        margin: 0;
+    }
+
+    .border-inside-card {
+        border-color: rgba(255, 255, 255, .2)
+    }
 </style>
