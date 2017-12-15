@@ -115,7 +115,7 @@
                             <!-- Card Footer -->
                             <div class="card-footer p-10">
                                 <div class="row">
-                                    <div class="col-xs-8" style="opacity: .8;">
+                                    <div class="col-xs-9 t-overflow" style="opacity: .8; width: 75%;">
                                         <small>
                                             <i class="ion-location m-r-5"></i>{{ handleDistance(events[0].distance) }}
                                         </small>
@@ -125,7 +125,7 @@
                                             <span v-show="!events[0].value_uninformed && events[0].value === 0">{{ translations.free }}</span>
                                         </small>
                                     </div>
-                                    <div class="col-xs-4 text-right">
+                                    <div class="col-xs-3 text-right">
                                         <small class="f-primary">
                                             <i class="ion-ios-star m-r-5"></i>{{ events[0].favorited_count }}
                                         </small>
