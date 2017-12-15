@@ -145,65 +145,136 @@ export const setUserLastGeolocation = ({ commit }) => {
         window.console.log('Localização é anterior à 3 horas. (inválida)');
 
 
-            navigator.geolocation.getCurrentPosition(
-                //Success
-                function(position){
+            if(window.cordova){
 
-                    userLastGeoLocation.lat = position.coords.latitude;
-                    userLastGeoLocation.lng = position.coords.longitude;
-                    userLastGeoLocation.location_granted = true;
-                    userLastGeoLocation.time = moment().format('DD/MM/YYYY HH:mm:ss');
+                document.addEventListener("deviceready", function(){
 
-                    localStorage.setItem('user_last_geo_location', JSON.stringify(userLastGeoLocation));
+                    navigator.geolocation.getCurrentPosition(
+                        //Success
+                        function(position){
 
-                    window.console.log('Achou a localização, retornando dados e salvando na localStorage');
+                            userLastGeoLocation.lat = position.coords.latitude;
+                            userLastGeoLocation.lng = position.coords.longitude;
+                            userLastGeoLocation.location_granted = true;
+                            userLastGeoLocation.time = moment().format('DD/MM/YYYY HH:mm:ss');
 
-                    if (store.getters.isLogged) {
-                        store.dispatch('setCities');
-                    }
-                    store.dispatch('setCategories');
+                            localStorage.setItem('user_last_geo_location', JSON.stringify(userLastGeoLocation));
 
-                    commit(TYPES.SET_USER_LAST_GEOLOCATION, {
-                        userLastGeoLocation
-                    })
+                            window.console.log('Achou a localização, retornando dados e salvando na localStorage');
 
-                },
-                //On Error
-                function(error){
+                            if (store.getters.isLogged) {
+                                store.dispatch('setCities');
+                            }
+                            store.dispatch('setCategories');
 
-                    window.console.log('Não foi possível localizar o usuário, ou o usuário não permitiu.');
+                            commit(TYPES.SET_USER_LAST_GEOLOCATION, {
+                                userLastGeoLocation
+                            })
 
-                    var geolocation_attempts = JSON.parse(localStorage.getItem('geolocation_attempts'));
+                        },
+                        //On Error
+                        function(error){
 
-                    if(!geolocation_attempts){
-                        localStorage.setItem('geolocation_attempts', 1);
-                    } else {
-                        localStorage.setItem('geolocation_attempts', geolocation_attempts++);
-                    }
+                            window.console.log('Não foi possível localizar o usuário, ou o usuário não permitiu.');
 
-                    //Shut user out to enable or check geolocation
-                    if(geolocation_attempts == 10){
+                            var geolocation_attempts = JSON.parse(localStorage.getItem('geolocation_attempts'));
 
-                        userLastGeoLocation = {
-                            location_granted: false,
-                            lat: null,
-                            lng: null,
-                            time: null
+                            if(!geolocation_attempts){
+                                localStorage.setItem('geolocation_attempts', 1);
+                            } else {
+                                localStorage.setItem('geolocation_attempts', geolocation_attempts++);
+                            }
+
+                            //Shut user out to enable or check geolocation
+                            if(geolocation_attempts == 10){
+
+                                userLastGeoLocation = {
+                                    location_granted: false,
+                                    lat: null,
+                                    lng: null,
+                                    time: null
+                                }
+
+                                commit(TYPES.SET_USER_LAST_GEOLOCATION, {
+                                    userLastGeoLocation
+                                })
+
+                                localStorage.setItem('user_last_geo_location', userLastGeoLocation);
+
+                            }
+
+                        },
+                        //options
+                        { enableHighAccuracy: true }
+
+                    );
+
+                }, false);
+
+            } else {
+
+                navigator.geolocation.getCurrentPosition(
+                    //Success
+                    function(position){
+
+                        userLastGeoLocation.lat = position.coords.latitude;
+                        userLastGeoLocation.lng = position.coords.longitude;
+                        userLastGeoLocation.location_granted = true;
+                        userLastGeoLocation.time = moment().format('DD/MM/YYYY HH:mm:ss');
+
+                        localStorage.setItem('user_last_geo_location', JSON.stringify(userLastGeoLocation));
+
+                        window.console.log('Achou a localização, retornando dados e salvando na localStorage');
+
+                        if (store.getters.isLogged) {
+                            store.dispatch('setCities');
                         }
+                        store.dispatch('setCategories');
 
                         commit(TYPES.SET_USER_LAST_GEOLOCATION, {
                             userLastGeoLocation
                         })
 
-                        localStorage.setItem('user_last_geo_location', userLastGeoLocation);
+                    },
+                    //On Error
+                    function(error){
 
-                    }
+                        window.console.log('Não foi possível localizar o usuário, ou o usuário não permitiu.');
 
-                },
-                //options
-                { enableHighAccuracy: true }
+                        var geolocation_attempts = JSON.parse(localStorage.getItem('geolocation_attempts'));
 
-            );
+                        if(!geolocation_attempts){
+                            localStorage.setItem('geolocation_attempts', 1);
+                        } else {
+                            localStorage.setItem('geolocation_attempts', geolocation_attempts++);
+                        }
+
+                        //Shut user out to enable or check geolocation
+                        if(geolocation_attempts == 10){
+
+                            userLastGeoLocation = {
+                                location_granted: false,
+                                lat: null,
+                                lng: null,
+                                time: null
+                            }
+
+                            commit(TYPES.SET_USER_LAST_GEOLOCATION, {
+                                userLastGeoLocation
+                            })
+
+                            localStorage.setItem('user_last_geo_location', userLastGeoLocation);
+
+                        }
+
+                    },
+                    //options
+                    { enableHighAccuracy: true }
+
+                );
+
+            }
+
 
 
     //Se não encontrar, retornará o objeto vazio que será utilizado para direcionar o user para a página welcome: '/'
@@ -237,37 +308,78 @@ export const updateUserGeolocation = ({ commit }) => {
         time: null
     }
 
-    navigator.geolocation.getCurrentPosition(
-        //Success
-        function(position){
-
-            userLastGeoLocation.lat = position.coords.latitude;
-            userLastGeoLocation.lng = position.coords.longitude;
-            userLastGeoLocation.location_granted = true;
-            userLastGeoLocation.time = moment().format('DD/MM/YYYY HH:mm:ss');
-
-            localStorage.setItem('user_last_geo_location', JSON.stringify(userLastGeoLocation));
-
-            commit(TYPES.UPDATE_USER_GEOLOCATION, {
-                userLastGeoLocation
-            })
-
-            window.console.log('Localização atualizada com sucesso');
 
 
-        },
-        //On Error
-        function(error){
+    if(window.cordova){
 
-            window.console.log('Não foi possível localizar o usuário, ou o usuário não permitiu.');
+        document.addEventListener("deviceready", function(){
 
-        },
+                navigator.geolocation.getCurrentPosition(
+                    //Success
+                    function(position){
 
-        //options
-        { enableHighAccuracy: true }
+                        userLastGeoLocation.lat = position.coords.latitude;
+                        userLastGeoLocation.lng = position.coords.longitude;
+                        userLastGeoLocation.location_granted = true;
+                        userLastGeoLocation.time = moment().format('DD/MM/YYYY HH:mm:ss');
 
-    );
+                        localStorage.setItem('user_last_geo_location', JSON.stringify(userLastGeoLocation));
 
+                        commit(TYPES.UPDATE_USER_GEOLOCATION, {
+                            userLastGeoLocation
+                        })
+
+                        window.console.log('Localização atualizada com sucesso');
+
+
+                    },
+                    //On Error
+                    function(error){
+
+                        window.console.log('Não foi possível localizar o usuário, ou o usuário não permitiu.');
+
+                    },
+
+                    //options
+                    { enableHighAccuracy: true }
+
+                );
+
+            }, false);
+
+    } else {
+
+        navigator.geolocation.getCurrentPosition(
+            //Success
+            function(position){
+
+                userLastGeoLocation.lat = position.coords.latitude;
+                userLastGeoLocation.lng = position.coords.longitude;
+                userLastGeoLocation.location_granted = true;
+                userLastGeoLocation.time = moment().format('DD/MM/YYYY HH:mm:ss');
+
+                localStorage.setItem('user_last_geo_location', JSON.stringify(userLastGeoLocation));
+
+                commit(TYPES.UPDATE_USER_GEOLOCATION, {
+                    userLastGeoLocation
+                })
+
+                window.console.log('Localização atualizada com sucesso');
+
+
+            },
+            //On Error
+            function(error){
+
+                window.console.log('Não foi possível localizar o usuário, ou o usuário não permitiu.');
+
+            },
+
+            //options
+            { enableHighAccuracy: true }
+
+        );
+    }
 
 }
 

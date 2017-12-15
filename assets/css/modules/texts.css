@@ -25,3 +25,32 @@ body {
 }
 
 .text-muted { color: #4A5464; }
+
+
+
+.max-lines-2-lines {
+  display: block; /* or inline-block */
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 2.86em;
+  line-height: 1.43em;
+}
+
+.max-lines-3-lines {
+  display: block; /* or inline-block */
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 4.29em;
+  line-height: 1.43em;
+}
+
+.max-lines-4-lines {
+  display: block; /* or inline-block */
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 5.72em;
+  line-height: 1.43em;
+}

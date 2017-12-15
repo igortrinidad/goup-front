@@ -152,10 +152,10 @@
 
                 <!-- See Also -->
 
-                <div class="row">
-                    <div class="col-md-12 col-xs-12">
+                <div class="container">
+                    <div class="">
                         <h3 class="text-center f-success m-t-30 m-b-30">{{ translations.see_more.title }}</h3>
-                        <div class="col-md-12">
+                        <div class="col-row">
                             <router-link
                                 tag="div"
                                 class="col cursor-pointer"
@@ -163,7 +163,7 @@
                                 :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
                                 :key="indexEvents"
                             >
-                                <div class="card m-b-20 p-0">
+                                <div class="card m-b-5 p-0">
                                     <!-- Card Header -->
                                     <div
                                         class="card-header cover p-5"
@@ -463,19 +463,6 @@
 
     .list-rounded .list-group-item span { display: block; margin-top: 10px; }
 
-    .col-row {
-        display: flex;
-        width: 100%;
-        column-count: 4;
-        column-gap: 0;
-        justify-content: center;
-    }
-
-    .col {
-        width: 50%;
-        display: inline-block;
-        padding: 5px;
-    }
 
     .card-cat{
         background-color: #FFFFFF;
