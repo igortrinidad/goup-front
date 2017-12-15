@@ -47,7 +47,7 @@
                         <h3 class="m-t-30 f-success text-center">{{ event.name }}</h3>
 
                         <div class="card-frame-rounded text-center m-t-20">
-                            <p>{{ event.description }}</p>
+                            <p class="m-0">{{ event.description }}</p>
                         </div>
 
                         <div class="text-center m-t-20">
