@@ -9,7 +9,7 @@
 
 
 
-        <pulse v-if="interactions.is_loading" :icon="'ion-ios-reload m-l-5'"/></pulse>
+        <pulse v-show="interactions.is_loading" :icon="'ion-ios-reload m-l-5'"/></pulse>
 
         <transition v-show="!interactions.is_loading" appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
@@ -152,70 +152,76 @@
 
                 <!-- See Also -->
 
-                <div class="row" v-if="relateds.length">
+                <div class="row">
                     <div class="col-md-12 col-xs-12">
                         <h3 class="text-center f-success m-t-30 m-b-30">{{ translations.see_more.title }}</h3>
-
-                        <card-placeholder v-if="interactions.loading_related"></card-placeholder>
-                        <router-link
-                            tag="div"
-                            class="col-sm-12 cursor-pointer"
-                            v-for="(event, indexEvents) in relateds" v-if="!interactions.is_loading"
-                            :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
-                            :key="indexEvents"
-                        >
-                            <div class="card m-b-20 p-0">
-                                <!-- Card Header -->
-                                <div
-                                    class="card-header cover p-5"
-                                    :style="{
+                        <div class="col-md-12">
+                            <router-link
+                                tag="div"
+                                class="col cursor-pointer"
+                                v-for="(event, indexEvents) in relateds"
+                                :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
+                                :key="indexEvents"
+                            >
+                                <div class="card m-b-20 p-0">
+                                    <!-- Card Header -->
+                                    <div
+                                        class="card-header cover p-5"
+                                        :style="{
                                             backgroundImage: `url(${ event.cover })`,
                                             height: '150px',
                                             borderRadius: '6px 6px 0 0'
                                         }"
-                                >
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body card-padding">
-                                    <h4 class="m-b-5">{{ event.name }}</h4>
-                                    <div style="opacity: .8;">
-                                        <p class="m-b-5 t-overflow">{{ event.description }}</p>
-
-                                        <span class="d-block m-t-0 m-b-5 f-12">
+                                    >
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body card-padding">
+                                        <h4 class="m-b-5 t-overflow">{{ event.name }}</h4>
+                                        <div style="opacity: .8;">
+                                            <span class="d-block m-t-0 m-b-5 f-12">
                                             <strong>{{ event.city.name }} - {{ event.city.state }}</strong>
                                         </span>
 
-                                        <div v-for="category in event.categories">
-                                            <small class="f-700 f-primary">#{{ category.name_en }}</small>
+                                            <div v-for="category in event.categories">
+                                                <small class="f-700 f-primary">#{{ category.name_en }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Card Footer -->
+                                    <div class="card-footer p-10">
+                                        <div class="row">
+                                            <div class="col-xs-8" style="opacity: .8;">
+                                                <small class="">
+                                                    <span  class="t-overflow" v-if="event.value_uninformed">{{ translations.uninformed }}</span>
+                                                    <span v-show="!event.value_uninformed && event.value > 0">{{ event.value | formatCurrency }}</span>
+                                                    <span v-show="!event.value_uninformed && event.value === 0">{{ translations.free }}</span>
+                                                </small>
+                                            </div>
+                                            <div class="col-xs-4 text-right">
+                                                <small class="f-primary">
+                                                    <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
+                                                </small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Card Footer -->
-                                <div class="card-footer p-10">
-                                    <div class="row">
-                                        <div class="col-xs-8" style="opacity: .8;">
-                                            <small class="">
-                                                <span v-show="event.value > 0">{{ event.value | formatCurrency }}</span>
-                                                <span v-show="event.value === 0">{{ translations.free }}</span>
-                                            </small>
-                                        </div>
-                                        <div class="col-xs-4 text-right">
-                                            <small class="f-primary">
-                                                <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </router-link>
-
-                        <div class="row">
-                            <div class="col-sm-12" v-show="!interactions.is_loading && relateds.length">
-                                <div class="text-center">
-                                    <pagination :source="pagination" @navigate="getRelateds" :range="6"></pagination>
-                                </div>
-                            </div>
+                            </router-link>
                         </div>
+
+                        <infinite-loading ref="infiniteLoading" @infinite="getRelateds" force-use-infinite-wrapper="true">
+                                <span slot="no-more">
+                                     <span class="f-700 text-white" v-if="relateds.length">{{translations.see_more.load_complete}}</span>
+                                </span>
+
+                            <span slot="no-results"></span>
+
+                            <span slot="spinner" v-if="interactions.loading_related">
+                                    <div class="col">
+                                        <card-placeholder></card-placeholder>
+                                        <card-placeholder></card-placeholder>
+                                    </div>
+                            </span>
+                        </infinite-loading>
                     </div>
                 </div>
                     <!-- / See Also -->
@@ -232,6 +238,7 @@
     import tabFriends from './show_partials/tab-friends.vue'
     import pagination from '@/components/pagination'
     import cardPlaceholder from '@/components/card-placeholder'
+    import InfiniteLoading from 'vue-infinite-loading'
 
 
     import * as translations from '@/translations/events/show'
@@ -247,7 +254,8 @@
             tabFriends,
             pulse: require('@/components/pulse.vue'),
             pagination,
-            cardPlaceholder
+            cardPlaceholder,
+            InfiniteLoading
         },
 
         data () {
@@ -265,7 +273,8 @@
                 pagination: {},
                 recurrencTypes: recurrencTypes(),
                 weekdays: weekdays(),
-                monthWeeks: monthWeeks()
+                monthWeeks: monthWeeks(),
+                relatedNextPage: 1
             }
         },
 
@@ -308,13 +317,17 @@
                 that.interactions.is_loading = true
                 that.event = {}
                 that.getEvent()
-                that.getRelateds()
+
+                that.relateds = []
+                that.relatedNextPage = 1
+                that.$nextTick(() => {
+                    that.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+                });
             }
         },
 
         mounted(){
             this.getEvent()
-            this.getRelateds()
         },
 
         methods: {
@@ -383,16 +396,29 @@
                 window.open(url, '_system', null);
             },
 
-            getRelateds(page) {
+            getRelateds($state) {
                 let that = this
 
-                page = page ? page : 1
-
-                that.$http.get(`event/related/${that.$route.params.event_slug}?page=${page}`)
+                that.$http.get(`event/related/${that.$route.params.event_slug}?page=${that.relatedNextPage}`)
                     .then(function (response) {
-                        that.relateds = response.data.relateds
-                        that.pagination = response.data.pagination
+
                         that.interactions.loading_related = false
+
+                        if (!that.relateds.length) {
+                            that.relateds = response.data.relateds
+                            that.pagination = response.data.pagination
+                        } else {
+                            that.relateds = that.relateds.concat(response.data.relateds)
+                            that.pagination = response.data.pagination
+                        }
+
+                        if (that.pagination.current_page < that.pagination.last_page) {
+                            that.relatedNextPage = that.relatedNextPage + 1
+                            $state.loaded()
+                        } else {
+                            $state.loaded()
+                            $state.complete()
+                        }
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -455,6 +481,10 @@
         background-color: #FFFFFF;
         border-radius: 15px;
         cursor: pointer;
+    }
+
+    .text-white{
+        color: white;
     }
 
 </style>

@@ -14,6 +14,7 @@ export const en = {
     value_uninformed: 'Ticket value uninformed',
     ticket_value: 'Starts at',
     free: 'Free',
+    uninformed: 'Value not informed',
     daily: 'Happens daily',
     weekly: 'Happens every week at',
     monthly: 'Happens every month at',
@@ -56,7 +57,8 @@ export const en = {
 
     //See more section
     see_more: {
-        title: 'See also'
+        title: 'See also',
+        load_complete: 'All related moments are loaded :)'
     }
 }
 
@@ -76,6 +78,7 @@ export const pt = {
     value_uninformed: 'Valor não informado',
     ticket_value: 'A partir de',
     free: 'Grátis',
+    uninformed: 'Valor não informado',
     daily: 'Acontece diariamente',
     weekly: 'Acontece toda semana na',
     monthly: 'Acontece todo mês na',
@@ -118,6 +121,7 @@ export const pt = {
 
     //See more section
     see_more: {
-        title: 'Veja também'
+        title: 'Veja também',
+        load_complete: 'Todos os momentos relacionados foram carregados :)'
     }
 }
