@@ -119,11 +119,6 @@
                                         <small>
                                             <i class="ion-location m-r-5"></i>{{ handleDistance(events[0].distance) }}
                                         </small>
-                                        <small class="divider p-l-10 m-l-10">
-                                            <span v-if="events[0].value_uninformed">{{ translations.uninformed }}</span>
-                                            <span v-show="!events[0].value_uninformed && events[0].value > 0">{{ events[0].value | formatCurrency }}</span>
-                                            <span v-show="!events[0].value_uninformed && events[0].value === 0">{{ translations.free }}</span>
-                                        </small>
                                     </div>
                                     <div class="col-xs-4 text-right">
                                         <small class="f-primary">
@@ -174,11 +169,6 @@
                                     <div class="col-xs-8" style="opacity: .8;">
                                         <small>
                                             <i class="ion-location m-r-5"></i>{{ handleDistance(events[1].distance) }}
-                                        </small>
-                                        <small class="divider p-l-10 m-l-10">
-                                            <span v-if="events[1].value_uninformed">{{ translations.uninformed }}</span>
-                                            <span v-show="!events[1].value_uninformed && events[1].value > 0">{{ events[1].value | formatCurrency }}</span>
-                                            <span v-show="!events[1].value_uninformed && events[1].value === 0">{{ translations.free }}</span>
                                         </small>
                                     </div>
                                     <div class="col-xs-4 text-right">
