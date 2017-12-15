@@ -115,12 +115,12 @@
                             <!-- Card Footer -->
                             <div class="card-footer p-10">
                                 <div class="row">
-                                    <div class="col-xs-8" style="opacity: .8;">
+                                    <div class="col-xs-9 t-overflow" style="opacity: .8; width: 75%;">
                                         <small>
                                             <i class="ion-location m-r-5"></i>{{ handleDistance(events[0].distance) }}
                                         </small>
                                     </div>
-                                    <div class="col-xs-4 text-right">
+                                    <div class="col-xs-3 text-right">
                                         <small class="f-primary">
                                             <i class="ion-ios-star m-r-5"></i>{{ events[0].favorited_count }}
                                         </small>
@@ -862,15 +862,5 @@
         background-color: #ec538b;
         border-radius: 10px;
         font-size: 11px;
-    }
-
-    @media (max-width: 360px) {
-        .cards {
-            height: 260px
-        }
-
-        .card-placeholder {
-            height: 260px
-        }
     }
 </style>
