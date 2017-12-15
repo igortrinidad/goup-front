@@ -21,9 +21,9 @@
                         <p class="f-16 f-300 text-center m-t-10">{{translations.title_category}}</p>
 
                         <!-- CATEGORIES -->
-                        <div class="col-row">
+                        <div class="col-row-categories">
                             <!-- ALL -->
-                            <div class="col">
+                            <div class="col-categories">
                                 <div class="card-cat text-center"
                                     @click="selectCategory(categoryAll)"
                                     :class="{'bounce' : currentCategory == categoryAll}">
@@ -35,7 +35,7 @@
                             </div>
                             <!-- ALL -->
 
-                            <div class="col" v-for="category in getCategories">
+                            <div class="col-categories" v-for="category in getCategories">
                                 <div class="card-cat text-center"
                                     @click="selectCategory(category)"
                                     :class="{
@@ -102,7 +102,7 @@
                                     tag="div"
                                     class="col-sm-12 cursor-pointer"
                                     v-for="(event, indexEvents) in events" v-if="!interactions.is_loading"
-                                    :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
+                                    :to="{ name: 'general.events.show', params: { event_slug: event.slug }, query: {event_id: event.id} }"
                                     :key="indexEvents"
                                 >
                                     <div class="card p-0">
@@ -135,11 +135,6 @@
                                                 <div class="col-xs-8" style="opacity: .8;">
                                                     <small>
                                                         <i class="ion-location m-r-5"></i>{{ handleDistance(event.distance) }}
-                                                    </small>
-                                                    <small class="divider p-l-10 m-l-10">
-                                                        <span v-if="event.value_uninformed">{{ translations.uninformed }}</span>
-                                                        <span v-show="!event.value_uninformed && event.value > 0">{{ event.value | formatCurrency }}</span>
-                                                        <span v-show="!event.value_uninformed && event.value === 0">{{ translations.free }}</span>
                                                     </small>
                                                 </div>
                                                 <div class="col-xs-4 text-right">
@@ -500,18 +495,6 @@
         background-color: #fff;
         border-radius: 10px;
         font-size: 11px;
-    }
-
-    .col-row {
-        width: 100%;
-        column-count: 2;
-        column-gap: 0;
-    }
-
-    .col {
-        width: 100%;
-        display: inline-block;
-        padding: 5px;
     }
 
     .card-cat{

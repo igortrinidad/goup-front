@@ -19,32 +19,6 @@
                         </div>
                     </div>
 
-                    <div class="col text-center" v-for="interaction in interactions">
-                        <div class="border-inside-card">
-                            <router-link
-                                tag="div"
-                                class="picture-circle picture-circle-xs border-picture-eletric-blue"
-                                :style="{ backgroundImage: `url(${ interaction.user.avatar })` }"
-                                :to="{ name: 'general.user.show', params: { user_slug: interaction.user.slug } }"
-                            >
-                            </router-link>
-                            <h4 class="f-12 f-primary f-700 m-b-0">{{ interaction.user.full_name }}</h4>
-                        </div>
-                    </div>
-
-                    <div class="col text-center" v-for="interaction in interactions">
-                        <div class="border-inside-card">
-                            <router-link
-                                tag="div"
-                                class="picture-circle picture-circle-xs border-picture-eletric-blue"
-                                :style="{ backgroundImage: `url(${ interaction.user.avatar })` }"
-                                :to="{ name: 'general.user.show', params: { user_slug: interaction.user.slug } }"
-                            >
-                            </router-link>
-                            <h4 class="f-12 f-primary f-700 m-b-0">{{ interaction.user.full_name }}</h4>
-                        </div>
-                    </div>
-
                 </div>
 
                 <div class="row">
@@ -114,7 +88,7 @@
                 let that = this
                 page = page ? page : 1
 
-                that.$http.get(`event/interactions/${that.$route.params.event_slug}?page=${page}`)
+                that.$http.get(`event/interactions/${that.$route.query.event_id}?page=${page}`)
                     .then(function (response) {
                         that.interactions = response.data.interactions
                         that.pagination = response.data.pagination

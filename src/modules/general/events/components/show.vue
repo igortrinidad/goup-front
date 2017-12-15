@@ -53,9 +53,9 @@
                         <div class="text-center m-t-20">
 
                             <p class="f-300">{{translations.categories_title}}</p>
-                            <div class="col-row">
+                            <div class="col-row-categories">
 
-                                <div class="col" v-for="category in event.categories">
+                                <div class="col-categories" v-for="category in event.categories">
                                     <div class="card-cat text-center"
                                         @click="selectCategory(category)"
                                         :class="{
@@ -152,13 +152,13 @@
 
                 <!-- See Also -->
 
-                <div class="container">
+                <div class="container" v-if="!interactions.is_loading">
                     <div class="">
                         <h3 class="text-center f-success m-t-30 m-b-30">{{ translations.see_more.title }}</h3>
-                        <div class="col-row">
+                        <div class="col-row-horizontal-direction">
                             <router-link
                                 tag="div"
-                                class="col cursor-pointer"
+                                class="col-horizontal-direction-50 cursor-pointer"
                                 v-for="(event, indexEvents) in relateds"
                                 :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
                                 :key="indexEvents"

@@ -20,9 +20,9 @@
 
                     <p class="f-16 f-300 text-center m-t-10">{{translations.select_category}}</p>
 
-                    <div class="col-row">
+                    <div class="col-row-categories">
                         <!-- ALL -->
-                        <div class="col">
+                        <div class="col-categories">
                             <div class="card-cat text-center"
                                  @click="selectCategory(categoryAll)"
                                  :class="{'bounce' : currentCategory == categoryAll}">
@@ -34,7 +34,7 @@
                         </div>
                         <!-- ALL -->
 
-                        <div class="col" v-for="category in getCategories">
+                        <div class="col-categories" v-for="category in getCategories">
                             <div class="card-cat text-center"
                                  @click="selectCategory(category)"
                                  :class="{
@@ -149,7 +149,7 @@
                                     tag="span"
                                     class="icon-information ion-ios-information f-success cursor-pointer"
                                     v-if="events[1].slug"
-                                    :to="{ name: 'general.events.show', params: { event_slug: events[1].slug } }"
+                                    :to="{ name: 'general.events.show', params: { event_slug: events[1].slug }, query: {event_id: events[0].id} }"
                                 >
                                 </router-link>
 
@@ -192,7 +192,7 @@
 
                                 <div v-if="events.length && isLogged || interactions.is_loading">
                                     <span class="action skip" @click="skip()">
-                                        <span class="ion-ios-rewind f-default"></span>
+                                        <span class="ion-loop f-default"></span>
                                     </span>
 
                                     <span class="action xl down" @click="goDown()">
@@ -757,24 +757,6 @@
 </script>
 
 <style scoped>
-    .col-row {
-        width: 100%;
-        column-count: 2;
-        column-gap: 0;
-
-    }
-
-    .col {
-        width: 100%;
-        display: inline-block;
-        padding: 5px;
-    }
-
-    @media (min-width: 900px) {
-        .col-row {
-            column-count: 3;
-        }
-    }
 
     .week-row {
         overflow-x: scroll;
