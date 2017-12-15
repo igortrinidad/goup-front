@@ -16,6 +16,32 @@
                     <span>{{ event.place.formatted_address }}</span>
                 </div>
 
+                <div class="m-t-10">
+
+                    <p class="f-14 f-700 m-b-5" v-if="!event.place.opening_hours">
+                        {{translations.open_hours_not_found}}
+                    </p>
+
+                    <div v-if="event.place.opening_hours">
+                        <p class="f-14 f-700 m-b-5">
+                            {{translations.open_now_title}}
+                        </p>
+                        <button class="btn btn-sm btn-danger" v-if="!event.place.opening_hours.open_now">{{translations.open_now_result_no}}</button>
+                        <button class="btn btn-sm btn-secondary" v-if="event.place.opening_hours.open_now">{{translations.open_now_result_yes}}</button>
+
+                        <p class="f-14 f-700 m-t-10">
+                            {{translations.open_hours}}
+                        </p>
+
+                        <div class="" v-for="(dow, indexPeriod) in event.place.opening_hours.weekday_text">
+                            {{dow}}
+                        </div>
+                        
+                    </div>
+
+
+                </div>
+
                 <div class="m-t-20">
                     <button class="btn btn-primary" @click="openMapsExternally()">{{ translations.open_maps }}</button>
                 </div>
@@ -50,6 +76,7 @@
 
 <script>
     import { mapGetters } from 'vuex'
+    import moment from 'moment';
 
     import * as translations from '@/translations/events/show'
 
@@ -69,6 +96,7 @@
         data () {
             return {
                 placeholder: true,
+                current_day_of_week: moment().day(),
                 map: {
                     mapPlaces: [],
                     enabled: false,
@@ -104,10 +132,13 @@
                 if (this.language === 'pt') {
                     return translations.pt
                 }
-            }
+            },
+
         },
 
         mounted(){
+            var that = this
+            //setTimeout(function() {that.checkOpeningHours()}, 3000);
         },
 
         methods: {
@@ -124,6 +155,35 @@
                 window.open(url, '_system');
 
             },
+
+
+            checkOpeningHours: function(){
+                let that = this
+
+                that.openingHours = [];
+
+                for (var m = moment(); m.isBefore(moment().add(6, 'days')); m.add(1, 'days')) {
+
+                    that.openingHours.push(
+                        {
+                            dow: m.day(), 
+                            period: null 
+                        }
+                    );
+
+                }
+
+                that.event.place.opening_hours.periods.forEach( function(period){
+
+                    console.log(that.openingHours)
+                    console.log(period);
+                    var index = that.openingHours.findFromAttr('dow', period.open.day)
+
+                    console.log(index);
+                    that.openingHours[index].period = JSON.parse(JSON.stringify(period));
+                })
+
+            },
         }
     }
 </script>
@@ -134,5 +194,13 @@
         overflow: hidden !important;
         position: relative;
         z-index: 10;
+    }
+
+    .btn-open-now-closed{
+        background-color: red;
+    }
+
+    .btn-open-now-open{
+        background-color: green;
     }
 </style>

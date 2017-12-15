@@ -22,6 +22,11 @@ export const en = {
     open_maps: 'Open maps',
     share_msg: `I've found `,
     app: 'in GoUp App',
+    open_now_title: 'Open now (Google):',
+    open_now_result_no: 'No',
+    open_now_result_yes: 'Yes',
+    open_hours: 'Opening hours (Google)',
+    open_hours_not_found: 'Sorry, we cant find the open hours in Google of this place',
 
     // Tabs
     tabs: {
@@ -79,6 +84,11 @@ export const pt = {
     open_maps: 'Abrir mapa',
     share_msg: `Encontrei: `,
     app: 'no App GoUp',
+    open_now_title: 'Aberto agora (Google):',
+    open_now_result_no: 'Não',
+    open_now_result_yes: 'Sim',
+    open_hours: 'Horários (Google)',
+    open_hours_not_found: 'Desculpe, não conseguimos localizar o horário de funcionamento deste lugar no Google',
 
     // Tabs
     tabs: {

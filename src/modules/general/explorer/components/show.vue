@@ -91,7 +91,7 @@
 
                             <!-- Card Body -->
                             <div class="card-body card-padding">
-                                <h4 class="m-b-5">{{ events[0].name }}</h4>
+                                <h4 class="m-b-5 t-overflow">{{ events[0].name }}</h4>
                                 <div style="opacity: .8;">
                                     <p class="m-b-5 t-overflow">{{ events[0].description }}</p>
                                 </div>
@@ -146,7 +146,7 @@
 
                             <!-- Card Body -->
                             <div class="card-body card-padding">
-                                <h4 class="m-b-5">{{ events[1].name }}</h4>
+                                <h4 class="m-b-5 t-overflow">{{ events[1].name }}</h4>
                                 <div style="opacity: .8;">
                                     <p class="m-b-5 t-overflow">{{ events[1].description }}</p>
                                 </div>
