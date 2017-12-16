@@ -1,7 +1,9 @@
 <template>
     <div>
         <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container-fluid">
+
+            <span class="iphone-x-padding-top"></span>
+            <div class="container-header-fluid">
 
                 <!-- Header Type === Back -->
                 <div v-if="type === 'back'">
@@ -152,7 +154,9 @@
                 },
                 sideMenuStatus: false,
                 categorySelected: null,
-                rankingCategorySelected: null
+                rankingCategorySelected: null,
+                clientWidth: 0,
+                clientHeight: 0
             }
         },
         computed: {
@@ -176,6 +180,9 @@
                 that.bounceImg('ranking');
             });
 
+            that.clientWidth = document.documentElement.clientWidth;
+            that.clientHeight = document.documentElement.clientHeight;
+
         },
 
         destroyed: function(){
@@ -187,7 +194,7 @@
         methods:{
             back: function(){
                 this.bounceImg('back');
-                window.history.back()
+                this.action();
             },
 
             redirectTo: function(target, bounce){
@@ -238,6 +245,18 @@
         -webkit-backface-visibility: hidden;
     }
 
+    .iphone-x-padding-top{
+        display: none;
+        width: 100%;
+        height: 22px;
+    }
+
+    @media (min-width: 373px) and (max-width: 377px) and (min-height: 810px) and (max-height: 814px){
+        .iphone-x-padding-top{
+            display: block;
+        }
+    }
+
     .icon-header{
         margin: 22px 1px;
         width: auto;
@@ -267,7 +286,7 @@
         z-index: 20 !important;
     }
 
-    .container-fluid{
+    .container-header-fluid{
         position: relative;
         height: 80px;
     }

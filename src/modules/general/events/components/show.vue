@@ -4,6 +4,7 @@
         <main-header
             :title="!interactions.is_loading ? event.name : translations.loading"
             :type="'back'"
+            :action="goToList"
             :cursor="false"
         ></main-header>
 
@@ -11,7 +12,7 @@
 
         <pulse v-show="interactions.is_loading" :icon="'ion-ios-reload m-l-5'"/></pulse>
 
-        <transition v-show="!interactions.is_loading" appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+        <transition v-if="!interactions.is_loading" appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="main">
 
                 <!-- Photos -->
@@ -143,9 +144,9 @@
                         <div class="m-t-30">
                             <div class="">
                                 <!-- Tab Location -->
-                                <tab-location :event="event" v-show="currentTab === 0"></tab-location>
+                                <tab-location :event="event" v-if="currentTab === 0"></tab-location>
                                 <!-- Tab Friends -->
-                                <tab-friends  v-show="currentTab === 1"></tab-friends>
+                                <tab-friends  v-if="currentTab === 1"></tab-friends>
                             </div>
                         </div>
                         <!-- / Tab Content -->
@@ -161,12 +162,10 @@
                     <div class="">
                         <h3 class="text-center f-success m-t-30 m-b-30">{{ translations.see_more.title }}</h3>
                         <div class="col-row-horizontal-direction">
-                            <router-link
-                                tag="div"
+                            <div
                                 class="col-horizontal-direction-50 cursor-pointer"
                                 v-for="(event, indexEvents) in relateds"
-                                :to="{ name: 'general.events.show', params: { event_slug: event.slug } }"
-                                :key="indexEvents"
+                                @click="goToEventRelated(event)"
                             >
                                 <div class="card m-b-5 p-0">
                                     <!-- Card Header -->
@@ -210,7 +209,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </router-link>
+                            </div>
                         </div>
 
 
@@ -352,6 +351,30 @@
         },
 
         methods: {
+
+            goToList: function(){
+                let that = this
+            
+                that.$router.push({name: 'general.events.list'});
+            },
+
+            goToEventRelated: function(event){
+                let that = this
+            
+                that.interactions.is_loading = true;
+                
+                that.$router.push(
+                    { name: 'general.events.show', params: { event_slug: event.slug }, query: {event_id: event.id} }
+                );
+
+                setTimeout(function(){
+                    that.getEvent();
+                    that.relateds = [];
+                    that.infiniteLoadingRelated.complete = false;
+                    that.infiniteLoadingRelated.nextPage = 1;
+                    that.getRelateds();
+                },100);
+            },
 
             initSwiperTabs() {
                 let that = this

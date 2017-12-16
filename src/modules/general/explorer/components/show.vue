@@ -30,7 +30,7 @@
                                  @click="selectCategory(categoryAll)"
                                  :class="{'bounce' : currentCategory == categoryAll}">
                                 <div class="p-10">
-                                    <img src="../../../../assets/icons/header/star_pink.svg" class="icon-img icon-img-l m-t-5">
+                                    <img src="../../../../assets/icons/categories/magician.svg" class="icon-img icon-img-l m-t-5">
                                     <p class="f-default m-t-10">{{categoryAll['name_' + language]}}</p>
                                 </div>
                             </div>
@@ -57,14 +57,14 @@
                 <!-- EXPLORER -->
                 <div class="container" v-if="interactions.finished_loading_category && !interactions.is_loading">
 
-                    <p class="f-info text-center m-b-30 m-t-30" v-show="!events.length && !interactions.is_loading && !interactions.lazy_image">
+                    <p class="f-info text-center m-b-30 m-t-30" v-show="!events.length && !interactions.is_loading && !interactions.place_holder_is_loading">
                         {{ translations.end_list }}
                     </p>
 
-                    <card-placeholder-explorer class="m-t-20" v-show="interactions.lazy_image"></card-placeholder-explorer>
+                    <card-placeholder-explorer class="m-t-20" v-show="interactions.place_holder_is_loading"></card-placeholder-explorer>
 
                     <!-- Cards -->
-                    <div class="cards m-t-20" v-if="events.length && !interactions.is_loading && !interactions.lazy_image">
+                    <div class="cards m-t-20" v-if="events.length && !interactions.is_loading && !interactions.place_holder_is_loading">
 
                         <!-- FIRST EVENT -->
                         <div id="card-animated" class="card m-0" ref="cardAnimated">
@@ -143,7 +143,7 @@
                                     height: '200px',
                                     borderRadius: '6px 6px 0 0'
                                 }"
-                                v-show="!interactions.lazy_image"
+                                v-show="!interactions.place_holder_is_loading"
                             >
 
                                 <router-link
@@ -296,7 +296,7 @@
     import moment from 'moment'
 
     import bus from '@/utils/event-bus';
-    import categoryAllPhoto from '../../../../assets/icons/header/star_pink.svg'
+    import categoryAllPhoto from '../../../../assets/icons/categories/magician.svg'
     import axios from 'axios'
     var CancelToken = axios.CancelToken;
     var cancelCurrentRequest;
@@ -320,7 +320,7 @@
                     is_loading: false,
                     finished_loading_category: false,
                     action: 'up',
-                    lazy_image: true
+                    place_holder_is_loading: true
                 },
                 starting: true,
                 placeholder: true,
@@ -341,8 +341,8 @@
                 },
                 categoryAll: {
                     id: 'all',
-                    name_en: 'All',
-                    name_pt: 'Todos',
+                    name_en: 'Surprise-me',
+                    name_pt: 'Surpresa',
                     photo_url: categoryAllPhoto
                 }
             }
@@ -388,15 +388,18 @@
                 that.currentCategory = null;
                 that.interactions.finished_loading_category = false;
                 that.interactions.is_loading = false;
-                if (cancelCurrentRequest) {
+
+                if (typeof cancelCurrentRequest === "function") {
                     cancelCurrentRequest()
                 }
+
             });
 
             this.initWeek();
 
             setTimeout(function () {
                 that.checkDaysToQuery();
+                that.getEvents();
             }, 100);
 
         },
@@ -430,7 +433,7 @@
                             that.touchend()
                         })
 
-                    }, 200)
+                    }, 400)
                 }
             },
 
@@ -619,7 +622,7 @@
 
                 that.events = []
 
-                that.interactions.lazy_image = true
+                that.interactions.place_holder_is_loading = true
 
                 that.$http.post('event/explorer/list', {
                     language: that.language,
@@ -629,16 +632,16 @@
                     category_id: that.currentCategory.id,
                     filters: that.days_selecteds_to_query
                 }, {
-                    cancelToken: new CancelToken(function executor(cancel) {
-                        cancelCurrentRequest = cancel;
+                        cancelToken: new CancelToken(function executor(cancel) {
+                            cancelCurrentRequest = cancel;
+                        })
                     })
-                })
                     .then(function (response) {
 
                         that.events = response.data.events
                         that.interactions.is_loading = false;
                         setTimeout(function () {
-                            that.interactions.lazy_image = false
+                            that.interactions.place_holder_is_loading = false
                         }, 200);
 
                         that.mountHammer();
@@ -646,10 +649,11 @@
                         that.citiesSwiper();
 
 
-                    }).catch(function (error) {
-                    console.log(error)
-                    that.interactions.is_loading = false;
-                });
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                        that.interactions.is_loading = false;
+                    });
 
             },
 
@@ -686,7 +690,7 @@
                     that.getEvents();
                 }, 600);
 
-                if(cancelCurrentRequest){
+                if (typeof cancelCurrentRequest === "function") {
                     cancelCurrentRequest()
                 }
 

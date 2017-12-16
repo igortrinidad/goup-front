@@ -1,0 +1,11 @@
+<key>NSCameraUsageDescription</key>
+<string>Nós precisamos de acessar suas fotos para você alterar seu perfil e cadastrar sugestões de momentos</string>
+
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+<string>Nós precisamos da sua localização para encontrar os Momentos ideiais próximos à você.</string>
+
+<key>NSLocationUsageDescription</key>
+<string>Nós precisamos da sua localização para encontrar os Momentos ideiais próximos à você.</string>
+
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>Nós precisamos da sua localização para encontrar os Momentos ideiais próximos à você.</string>

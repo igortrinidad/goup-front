@@ -116,7 +116,8 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
 }
 .navbar-fixed-top {
-    top: 0;
+    /* THIS IS NECESSARY ON IPHONE X SCREEN */
+    top: 0px;
     border-width: 0 0 1px;
 }
 
@@ -136,7 +137,8 @@
         box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
     }
     .navbar-fixed-top {
-        top: 0;
+        /* THIS IS NECESSARY ON IPHONE X SCREEN */
+        top: 0px;
         border-width: 0 0 1px;
     }
     .navbar-collapse.collapse {

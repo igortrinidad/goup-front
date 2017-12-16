@@ -11,10 +11,12 @@
 
         <transition appear mode="in-out" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft" v-if="!interactions.is_loading">
 
-            <div class="">
+            <div class="main">
+
+                <h3 class="text-center f-success">Trending</h3>
 
                 <!-- CATEGORIAS -->
-                <div class="main" v-show="!interactions.finished_loading_category && !$route.query.category_id">
+                <div class="" v-show="!interactions.finished_loading_category && !$route.query.category_id">
 
 
                     <div class="container">
@@ -28,7 +30,7 @@
                                     @click="selectCategory(categoryAll)"
                                     :class="{'bounce' : currentCategory == categoryAll}">
                                     <div class="p-10">
-                                        <img src="../../../../assets/icons/header/star_pink.svg" class="icon-img icon-img-l m-t-5">
+                                        <img src="../../../../assets/icons/categories/magician.svg" class="icon-img icon-img-l m-t-5">
                                         <p class="f-default m-t-10">{{categoryAll['name_' + language]}}</p>
                                     </div>
                                 </div>
@@ -52,7 +54,7 @@
                 </div>
                 <!-- CATEGORIAS -->
 
-                <div class="main" v-if="interactions.finished_loading_category">
+                <div class="" v-if="interactions.finished_loading_category">
 
                     <div class="text-center">
                         <p class="f-16 f-300 text-center m-t-10">{{translations.before_category_type}}</p>
@@ -91,13 +93,14 @@
 
                     <div class="container">
                         <div class="row m-t-30">
+
+                            <!-- IF NO EVENTS -->
                             <div class="col-sm-12 text-center">
-                                <p class="f-info" v-if="!events.length && !interactions.is_loading">{{translations.noEvents}}</p>
+                                <p class="f-info" v-if="!events.length && !infiniteLoadingEvents.is_loading">{{translations.noEvents}}</p>
                             </div>
 
-                            <!-- Events -->
-
-                            <div infinite-wrapper>
+                            <!-- EVENTS LIST -->
+                            <div>
                                 <router-link
                                     tag="div"
                                     class="col-sm-12 cursor-pointer"
@@ -191,7 +194,7 @@
 
     import bus from '@/utils/event-bus';
 
-    import categoryAllPhoto from '../../../../assets/icons/header/star_pink.svg'
+    import categoryAllPhoto from '../../../../assets/icons/categories/magician.svg'
     import axios from 'axios'
 
     var CancelToken = axios.CancelToken;
@@ -228,8 +231,8 @@
                 processStyle: {backgroundColor: "#48C3D1"},
                 tooltipStyle: {backgroundColor: "#48C3D1", borderColor: "#48C3D1"},
                 categoryAll: {
-                    name_en: 'All',
-                    name_pt: 'Todos',
+                    name_en: 'Surprise-me',
+                    name_pt: 'Surpresa',
                     photo_url: categoryAllPhoto
                 },
                 infiniteLoadingEvents: {
@@ -333,12 +336,15 @@
 
             resetBeforeChange(){
 
+                this.infiniteLoadingEvents.complete = false;
                 this.infiniteLoadingEvents.nextPage = 1;
                 this.infiniteLoadingEvents.nextSet = 0;
+                this.events = [];
 
                 if (typeof cancelCurrentRequest === "function") {
                     cancelCurrentRequest()
                 }
+                this.getEvents();
 
             },
 

@@ -10,7 +10,7 @@
                         <div class="border-inside-card">
                             <router-link
                                 tag="div"
-                                class="picture-circle picture-circle-xs border-picture-eletric-blue"
+                                class="picture-circle picture-circle-xs border-picture-eletric-blue cursor-pointer"
                                 :style="{ backgroundImage: `url(${ interaction.user.avatar })` }"
                                 :to="{ name: 'general.user.show', params: { user_slug: interaction.user.slug } }"
                             >

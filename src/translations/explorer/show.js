@@ -37,7 +37,7 @@ export const pt = {
     favorite: 'Salvar',
     saved: 'Salvo',
     filter: 'Filtro',
-    nearCities: 'Explorando opções em',
+    nearCities: 'Explorando diversões em',
     noCity: 'Não encontramos nenhuma cidade próxima, por favor habilite a localização nas configurações do dispositivo.',
     title_when: 'Quando',
     makeLogin: 'Faça login para interagir com os eventos',

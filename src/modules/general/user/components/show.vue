@@ -19,7 +19,7 @@
                     </div>
 
                     <!-- User Badge -->
-                    <!-- <div class="medal" data-toggle="modal" data-target="#modal-badges">
+                    <div class="medal" data-toggle="modal" data-target="#modal-badges">
                         <svg class="svg-circle-container" viewBox="0 0 70 70">
                             <circle class="circle primary" :class="progress.progressLevel()" r="30" cx="35" cy="35">
                             </circle>
@@ -31,7 +31,7 @@
                             Rock Star
                             <i class="level">{{ translations.level }} 4</i>
                         </button>
-                    </div> -->
+                    </div>
                     <!-- User Badger -->
 
                     <!-- Tabs -->
