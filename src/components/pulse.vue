@@ -47,7 +47,7 @@
         animation: pulse 2s infinite;
         position: absolute;
         left: calc(50% - 30px);
-        top: calc(50% - 30px);
+        top: calc(50% + 30px);
         margin-top: -20px;
         padding: 0;
     }

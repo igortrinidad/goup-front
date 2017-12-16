@@ -76,7 +76,7 @@
                                         :key="$index"
                                         :class="{
                                             'label-default': currentCity && currentCity.id !== city.id,
-                                            'label-primary':  currentCity && currentCity.id === city.id
+                                            'label-success':  currentCity && currentCity.id === city.id
                                         }"
                                     >
                                         <span>
@@ -148,18 +148,17 @@
                                 </router-link>
                             </div>
 
-                            <infinite-loading ref="infiniteLoading" @infinite="getEvents" force-use-infinite-wrapper="true" :distance="50">
-                                <span slot="no-more">
-                                     <span class="f-700 text-white" v-if="events.length">{{translations.load_complete}}</span>
-                                </span>
 
-                                <span slot="no-results"></span>
+                            <div class="" v-if="infiniteLoadingEvents.is_loading">
+                                <card-placeholder></card-placeholder>
+                            </div>
 
-                                <span slot="spinner" v-if="interactions.is_loading">
-                                     <card-placeholder></card-placeholder>
-                                </span>
-                            </infinite-loading>
-                            <!-- /Events -->
+                            <div class="text-center m-t-20">
+                                <button @click="resetCategory(true)" class="btn btn-primary" v-if="infiniteLoadingEvents.complete">
+                                    {{translations.change_category_button}}
+                                </button>
+                            </div>
+
 
                             <div class="col-sm-12">
 
@@ -190,8 +189,6 @@
 
     import vueSlider from 'vue-slider-component'
 
-    import InfiniteLoading from 'vue-infinite-loading'
-
     import bus from '@/utils/event-bus';
 
     import categoryAllPhoto from '../../../../assets/icons/header/star_pink.svg'
@@ -208,7 +205,6 @@
             mainHeader: require('@/components/main-header.vue'),
             cardPlaceholder: require('@/components/card-placeholder.vue'),
             pulse: require('@/components/pulse.vue'),
-            InfiniteLoading,
             vueSlider,
         },
 
@@ -235,6 +231,13 @@
                     name_en: 'All',
                     name_pt: 'Todos',
                     photo_url: categoryAllPhoto
+                },
+                infiniteLoadingEvents: {
+                    nextPage: 1,
+                    nextSet: 0,
+                    complete: false,
+                    is_loading: true,
+                    first_load: true,
                 }
             }
         },
@@ -266,21 +269,30 @@
             }
 
             if (localStorage.getItem('current_scroll')) {
-                console.log(JSON.parse(localStorage.getItem('current_scroll')));
                 $(window).animate({ scrollTop: JSON.parse(localStorage.getItem('current_scroll')) }, 300);
             }
 
             $(window).scroll(() => {
                 let scroll = $(window).scrollTop();
                 localStorage.setItem('current_scroll', scroll)
+
+                if(!that.infiniteLoadingEvents.is_loading && !that.infiniteLoadingEvents.complete || that.infiniteLoadingEvents.first_load){
+
+                    //Se chegar no final
+                    if($(window).scrollTop() + $(window).height() > $(document).height() - 200) {
+
+                        that.getEvents();
+
+                    }
+
+                }
+
             })
 
             bus.$on('refresh-ranking', function(){
-                that.currentCategory = null;
-                that.interactions.finished_loading_category = false;
-                that.interactions.is_loading = false;
-                cancelCurrentRequest()
+                that.resetCategory();
             });
+            
         },
 
         destroyed: function() {
@@ -294,17 +306,40 @@
         methods: {
             ...mapActions(['setLoading']),
 
+            resetCategory: function(refresh_query = false){
+                let that = this
+
+                that.currentCategory = null;
+
+                if(refresh_query){
+                    that.$router.push({name: 'general.events.list'});
+                }
+
+                that.interactions.finished_loading_category = false;
+                that.interactions.is_loading = false;
+                that.infiniteLoadingEvents.nextPage = 1;
+                that.infiniteLoadingEvents.nextSet = 0;
+                that.infiniteLoadingEvents.complete = false;
+
+                bus.$emit('ranking-category-cleaned');
+
+                if (typeof cancelCurrentRequest === "function") {
+                    cancelCurrentRequest()
+                }
+
+                
+                
+            },
+
             resetBeforeChange(){
 
-                cancelCurrentRequest()
+                this.infiniteLoadingEvents.nextPage = 1;
+                this.infiniteLoadingEvents.nextSet = 0;
 
-                this.events = []
-                this.nextPage = 1
-                this.nextSet = 0
+                if (typeof cancelCurrentRequest === "function") {
+                    cancelCurrentRequest()
+                }
 
-                this.$nextTick(() => {
-                    this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
-                });
             },
 
             changeCurrentCategory(category) {
@@ -312,8 +347,15 @@
                 this.resetBeforeChange()
             },
 
-            getEvents($state) {
+            getEvents() {
                 let that = this
+
+                if(!that.currentCategory){
+                    return
+                }
+
+                that.infiniteLoadingEvents.is_loading = true;
+                that.infiniteLoadingEvents.first_load = false;
 
                 that.$http.post(`event/rank/list`, {
                     language: that.language,
@@ -321,8 +363,8 @@
                     lat: that.getUserLastGeoLocation.lat,
                     lng: that.getUserLastGeoLocation.lng,
                     city_id: that.currentCity.id,
-                    page: that.nextPage,
-                    next_set: that.nextSet,
+                    page: that.infiniteLoadingEvents.nextPage,
+                    next_set: that.infiniteLoadingEvents.nextSet,
                 }, {
                     cancelToken: new CancelToken(function executor(cancel) {
                         cancelCurrentRequest = cancel;
@@ -330,7 +372,7 @@
                 })
                     .then(function (response) {
 
-                        that.interactions.is_loading = false;
+                        that.infiniteLoadingEvents.is_loading = false;
 
                         if (!that.events.length) {
                             that.events = response.data.events
@@ -341,12 +383,10 @@
                         }
 
                         if (that.pagination.current_page < that.pagination.last_page) {
-                            that.nextPage = that.nextPage + 1
-                            that.nextSet = that.pagination.to
-                            $state.loaded()
+                            that.infiniteLoadingEvents.nextPage = that.infiniteLoadingEvents.nextPage + 1
+                            that.infiniteLoadingEvents.nextSet = that.pagination.to
                         } else {
-                            $state.loaded()
-                            $state.complete()
+                            that.infiniteLoadingEvents.complete = true;
                         }
 
 
@@ -429,6 +469,7 @@
                     that.interactions.finished_loading_category = true;
                     that.interactions.is_loading = false;
                     that.$router.push({ query: { category_id: category.id }})
+                    that.getEvents();
                 }, 500);
 
                 setTimeout(function() {
@@ -438,10 +479,8 @@
                 bus.$emit('ranking-category-selected', category);
 
                 that.events = []
-                this.nextPage = 1
-                this.nextSet = 0
-
-
+                that.infiniteLoadingEvents.nextPage = 1
+                that.infiniteLoadingEvents.nextSet = 0
 
             },
         }

@@ -11,6 +11,8 @@ export const en = {
     event_not_found: 'Unfortunately we could not find this event now',
     call: 'Call now',
     share: 'Share with your friends',
+    save: 'Save this moment',
+    saved: 'You saved this moment',
     value_uninformed: 'Ticket value uninformed',
     ticket_value: 'Starts at',
     free: 'Free',
@@ -28,6 +30,8 @@ export const en = {
     open_now_result_yes: 'Yes',
     open_hours: 'Opening hours (Google)',
     open_hours_not_found: 'Sorry, we cant find the open hours in Google of this place',
+    save_success: 'Moment successfully added to your favorites',
+    back_to_category: 'Back to ranking',
 
     // Tabs
     tabs: {
@@ -75,6 +79,8 @@ export const pt = {
     event_not_found: 'Infelizmente não conseguimos encontrar esse evento agora',
     call: 'Ligue agora',
     share: 'Compartilhe com seus amigos',
+    save: 'Salvar este momento',
+    saved: 'Você salvou este momento',
     value_uninformed: 'Valor não informado',
     ticket_value: 'A partir de',
     free: 'Grátis',
@@ -92,6 +98,8 @@ export const pt = {
     open_now_result_yes: 'Sim',
     open_hours: 'Horários (Google)',
     open_hours_not_found: 'Desculpe, não conseguimos localizar o horário de funcionamento deste lugar no Google',
+    save_success: 'Momento adicionado aos seus favoritos com sucesso.',
+    back_to_category: 'Voltar para ranking',
 
     // Tabs
     tabs: {

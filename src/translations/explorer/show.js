@@ -9,7 +9,7 @@ export const en = {
     favorite: 'Save',
     saved: 'Saved',
     filter: 'Filter',
-    nearCities: 'Nearby Cities',
+    nearCities: 'Exploring in',
     noCity: 'We didnt find any city around you, please enable location on device settings and try again.',
     title_when: 'When',
     makeLogin: 'Sign in to interact with events',
@@ -27,7 +27,7 @@ export const en = {
 }
 
 export const pt = {
-    select_category: 'Encontre seu próximo bom Momento',
+    select_category: 'Explore novas diversões',
     end_list: 'Nenhum Momento nas proximidades',
     add_event: 'Adicione um Momento',
     add_event_title: "Não encontrou o Momento que estava procurando? Compartilhe com as outras pessoas suas sugestões de Momentos",
@@ -37,7 +37,7 @@ export const pt = {
     favorite: 'Salvar',
     saved: 'Salvo',
     filter: 'Filtro',
-    nearCities: 'Cidades próximas',
+    nearCities: 'Explorando opções em',
     noCity: 'Não encontramos nenhuma cidade próxima, por favor habilite a localização nas configurações do dispositivo.',
     title_when: 'Quando',
     makeLogin: 'Faça login para interagir com os eventos',

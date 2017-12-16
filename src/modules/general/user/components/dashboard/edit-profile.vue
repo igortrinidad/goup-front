@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="new-image m-b-30 cursor-pointer" @click="showPhotoUploader = true"  v-if="!isMobile">
-                    <i class="ion-plus-round"></i>
+                    <i class="ion-ios-camera-outline"></i>
                     <span>{{ translations.upload_image }}</span>
                 </div>
 
@@ -94,6 +94,7 @@
     import photoUploader from '@/components/photo-uploader.vue'
     import * as translations from '@/translations/user/components/edit-profile'
     import {mapGetters, mapActions} from 'vuex'
+    import {apiUrl} from '@/config/'
 
     export default {
         name: 'general-user-settings-edit-profile',
@@ -119,7 +120,7 @@
         },
 
         computed: {
-            ...mapGetters(['language']),
+            ...mapGetters(['language', 'currentUser', 'AuthToken']),
 
             'translations': function() {
 
@@ -141,7 +142,7 @@
         },
 
         methods: {
-            ...mapActions(['authSetUser']),
+            ...mapActions(['authSetUser', 'setNewUserAvatar', 'setLoading']),
 
             saveSettings() {
 
@@ -246,19 +247,17 @@
 
                     let api_response = JSON.parse(response.response)
 
-                    if(!that.event.photos.length){
-                        api_response.photo.is_cover = true
-                    }
+                    that.setNewUserAvatar(api_response.photo.photo_url)
 
-                    that.event.photos.push(api_response.photo)
-                    that.interactions.showPhotoPlaceholder = fasle
-                    successNotify('', 'Imagem enviada com sucesso')
+                    that.setLoading({is_loading: false, message: ''})
+
+                    successNotify('', that.translations.success_avatar)
 
                 }
 
                 var fail = function (error) {
 
-                    that.interactions.showPhotoPlaceholder = false
+                    that.setLoading({is_loading: false, message: ''})
                     errorNotify('', 'Houve um erro ao enviar a imagem')
                     console.log(error);
                 }
@@ -271,41 +270,43 @@
 
                 var params = new Object();
 
-                params.event_id = that.event.id;
+                params.user_id = that.user.id;
+                params.new_avatar = true;
+                params.is_profile = true;
 
                 options.params = params;
                 var ft = new FileTransfer();
 
-                that.interactions.showPhotoPlaceholder = true
+                that.setLoading({is_loading: true, message: ''})
 
-                ft.upload(imageURI, encodeURI(`${apiUrl}/event/photo/upload`), win, fail, options);
+                ft.upload(imageURI, encodeURI(`${apiUrl}/user/photo/upload`), win, fail, options);
             },
 
             storeImage: function(imageData){
 
                 let that = this
 
-                that.interactions.showPhotoPlaceholder = true
+                that.setLoading({is_loading: true, message: ''})
 
                 let formData = new FormData();
-                formData.append('event_id', that.event.id)
+                formData.append('user_id', that.user.id)
+                formData.append('new_avatar', true)
+                formData.append('is_profile', true)
                 formData.append('file', imageData.file)
 
-                that.$http.post('event/photo/upload', formData , {headers: {'Content-Type': 'multipart/form-data'}})
+                that.$http.post('user/photo/upload', formData , {headers: {'Content-Type': 'multipart/form-data'}})
                     .then(function (response) {
 
-                        if(!that.event.photos.length){
-                            response.data.photo.is_cover = true
-                        }
+                        that.setNewUserAvatar(response.data.photo.photo_url)
 
-                        that.event.photos.push(response.data.photo)
+                        that.setLoading({is_loading: false, message: ''})
 
-                        that.interactions.showPhotoPlaceholder = false
+                        successNotify('', that.translations.success_avatar)
 
                     })
                     .catch(function (error) {
                         console.log(error)
-                        that.interactions.showPhotoPlaceholder = false
+                        that.setLoading({is_loading: false, message: ''})
                     });
             },
         }

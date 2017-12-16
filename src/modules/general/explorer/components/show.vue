@@ -12,7 +12,10 @@
         </pulse>
 
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+
             <div class="main">
+
+                <h3 class="text-center f-success">Explorer</h3>
 
                 <!-- CATEGORIES -->
                 <div class="container" v-show="!interactions.finished_loading_category && !interactions.is_loading"
@@ -54,13 +57,11 @@
                 <!-- EXPLORER -->
                 <div class="container" v-if="interactions.finished_loading_category && !interactions.is_loading">
 
-                    <h3 class="text-center f-success">Explorer</h3>
-
                     <p class="f-info text-center m-b-30 m-t-30" v-show="!events.length && !interactions.is_loading && !interactions.lazy_image">
                         {{ translations.end_list }}
                     </p>
 
-                    <card-placeholder-explorer  v-show="interactions.lazy_image"></card-placeholder-explorer>
+                    <card-placeholder-explorer class="m-t-20" v-show="interactions.lazy_image"></card-placeholder-explorer>
 
                     <!-- Cards -->
                     <div class="cards m-t-20" v-if="events.length && !interactions.is_loading && !interactions.lazy_image">
@@ -217,14 +218,14 @@
                     <div class="row m-t-20">
                         <div class="col-sm-12 text-center">
 
-                            <label class="f-success f-700">{{ translations.nearCities }}</label>
+                            <label class=" f-700">{{ translations.nearCities }}</label>
                             <p class="f-info" v-if="!getCities.length">{{ translations.noCity }}</p>
                             <div class="swiper-container" ref="citiesSlider">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide label transparent m-5 cursor-pointer"
                                          v-for="(city, $index) in getCities"
                                          :key="$index"
-                                         :class="{'cursor-pointer': currentCity != city, 'label-primary':currentCity == city}">
+                                         :class="{'cursor-pointer': currentCity != city, 'label-success':currentCity == city}">
                                         <span v-if="currentCity != city">{{city.name}} - {{city.state}}  <span
                                             class="badge-city">{{city.categories[currentCategory.id]}}</span></span>
 
@@ -241,7 +242,7 @@
                     <div class="row m-t-20">
                         <div class="col-sm-12 text-center">
 
-                            <label class="f-success f-700">{{ translations.title_when }}</label>
+                            <label class=" f-700">{{ translations.title_when }}</label>
 
                             <div class="week-row">
                                 <button

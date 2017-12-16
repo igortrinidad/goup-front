@@ -82,6 +82,12 @@
 
                             <!-- /Share -->
 
+                            <!-- Save moment -->
+                            <button class="btn btn-primary m-t-30" v-if="!event.already_saved" @click.prevent="saveMoment"><i class="ion-android-star-outline"></i> {{ translations.save }}</button>
+                            <button class="btn btn-default m-t-30" v-if="event.already_saved"> <i class="ion-android-done"></i> {{ translations.saved }}</button>
+
+                            <!-- / Save moment -->
+
                             <div class="container m-t-30">
                                 <ul class="list-group list-rounded m-b-0 m-t-10">
                                     <li class="list-group-item">
@@ -151,7 +157,6 @@
                 <!-- / Place Content -->
 
                 <!-- See Also -->
-
                 <div class="container" v-if="!interactions.is_loading">
                     <div class="">
                         <h3 class="text-center f-success m-t-30 m-b-30">{{ translations.see_more.title }}</h3>
@@ -208,20 +213,19 @@
                             </router-link>
                         </div>
 
-                        <infinite-loading ref="infiniteLoading" @infinite="getRelateds" force-use-infinite-wrapper="true">
-                                <span slot="no-more">
-                                     <span class="f-700 text-white" v-if="relateds.length">{{translations.see_more.load_complete}}</span>
-                                </span>
 
-                            <span slot="no-results"></span>
+                        <span slot="spinner" v-if="infiniteLoadingRelated.is_loading">
+                            <div class="col-row-horizontal-direction">
+                                <card-placeholder class="col-horizontal-direction-50"></card-placeholder>
+                            </div>
+                        </span>
 
-                            <span slot="spinner" v-if="interactions.loading_related">
-                                    <div class="col">
-                                        <card-placeholder></card-placeholder>
-                                        <card-placeholder></card-placeholder>
-                                    </div>
-                            </span>
-                        </infinite-loading>
+                        <div class="text-center m-t-20">
+                            <button @click="back()" class="btn btn-primary" v-if="infiniteLoadingRelated.complete">
+                                {{translations.back_to_category}}
+                            </button>
+                        </div>
+
                     </div>
                 </div>
                     <!-- / See Also -->
@@ -274,12 +278,18 @@
                 recurrencTypes: recurrencTypes(),
                 weekdays: weekdays(),
                 monthWeeks: monthWeeks(),
-                relatedNextPage: 1
+                relatedNextPage: 1,
+                infiniteLoadingRelated: {
+                    nextPage: 1,
+                    complete: false,
+                    is_loading: true,
+                    first_load: true,
+                }
             }
         },
 
         computed: {
-            ...mapGetters(['language']),
+            ...mapGetters(['language', 'AuthToken', 'currentUser']),
 
             'translations': function() {
 
@@ -311,23 +321,34 @@
             }
         },
 
-        watch:{
-            '$route.params.event_slug'() {
-                let that = this
-                that.interactions.is_loading = true
-                that.event = {}
-                that.getEvent()
+        mounted(){
 
-                that.relateds = []
-                that.relatedNextPage = 1
-                that.$nextTick(() => {
-                    that.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
-                });
-            }
+            var that = this;
+
+            this.getEvent();
+
+
+            //Infinite custom  
+            $(window).scroll(function(){
+
+                if(!that.infiniteLoadingRelated.is_loading && !that.infiniteLoadingRelated.complete || that.infiniteLoadingRelated.first_load){
+
+                    //Se chegar no final
+                    if($(window).scrollTop() + $(window).height() > $(document).height() - 200) {
+
+                        that.getRelateds();
+
+                    }
+
+                }
+            });
+
         },
 
-        mounted(){
-            this.getEvent()
+        destroyed: function(){
+            let that = this
+        
+            $(window).off('scroll');
         },
 
         methods: {
@@ -396,13 +417,17 @@
                 window.open(url, '_system', null);
             },
 
-            getRelateds($state) {
+            getRelateds() {
                 let that = this
 
-                that.$http.get(`event/related/${that.$route.params.event_slug}?page=${that.relatedNextPage}`)
+
+                that.infiniteLoadingRelated.is_loading = true;
+                that.infiniteLoadingRelated.first_load = false;
+
+                that.$http.get(`event/related/${that.$route.params.event_slug}?page=${that.infiniteLoadingRelated.nextPage}`)
                     .then(function (response) {
 
-                        that.interactions.loading_related = false
+                        that.infiniteLoadingRelated.is_loading = false
 
                         if (!that.relateds.length) {
                             that.relateds = response.data.relateds
@@ -413,18 +438,35 @@
                         }
 
                         if (that.pagination.current_page < that.pagination.last_page) {
-                            that.relatedNextPage = that.relatedNextPage + 1
-                            $state.loaded()
+                            that.infiniteLoadingRelated.nextPage = that.infiniteLoadingRelated.nextPage + 1
                         } else {
-                            $state.loaded()
-                            $state.complete()
+                            that.infiniteLoadingRelated.complete = true;
                         }
                     })
                     .catch(function (error) {
                         console.log(error)
-                        that.interactions.loading_related = false
+                        that.infiniteLoadingRelated.is_loading = false
                     });
 
+            },
+
+            saveMoment(){
+                let that = this
+
+                that.$http.post('event/interaction/store', {favorite: true, event_id: that.event.id, user_id: that.currentUser.id})
+                    .then(function (response) {
+
+                        that.event.already_saved = true
+
+                        successNotify('', that.translations.save_success)
+
+                    }).catch(function (error) {
+                    console.log(error)
+                });
+            },
+
+            back: function(){
+                window.history.back();
             },
         }
     }
@@ -472,6 +514,14 @@
 
     .text-white{
         color: white;
+    }
+
+    .col-row-categories{
+        column-count: 1;
+    }
+
+    .col-categories{
+        width: 33%;
     }
 
 </style>

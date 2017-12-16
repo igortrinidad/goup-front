@@ -296,7 +296,7 @@ export const setUserLastGeolocation = ({ commit }) => {
         })
     }
 
-    
+
 }
 
 export const updateUserGeolocation = ({ commit }) => {
@@ -423,6 +423,15 @@ export const addNewEvent = ({ commit }, event ) => {
     commit(TYPES.ADD_NEW_EVENT, event)
 }
 
+export const setNewUserAvatar = ({ commit, rootState }, new_avatar_path) => {
+
+    /**
+     * Commit the mutations
+     */
+    commit(TYPES.SET_NEW_USER_AVATAR, {
+        rootState, new_avatar_path
+    })
+}
 
 
 
