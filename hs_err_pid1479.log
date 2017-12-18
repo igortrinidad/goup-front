@@ -1,0 +1,133 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGBUS (0xa) at pc=0x000000010cac8cd3, pid=1479, tid=0x0000000000002e03
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_152-b16) (build 1.8.0_152-b16)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.152-b16 mixed mode bsd-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.dylib+0x4c8cd3]  ParallelCompactData::calc_new_pointer(HeapWord*)+0x1d
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f9f7581f800):  VMThread [stack: 0x0000700001b57000,0x0000700001c57000] [id=11779]
+
+siginfo: si_signo: 10 (SIGBUS), si_code: 2 (BUS_ADRERR), si_addr: 0x00000001130a5078
+
+Registers:
+RAX=0x0000000000a0000f, RBX=0x000000010edf1a68, RCX=0x000000010e0a5000, RDX=0x0000000000000000
+RSP=0x0000700001c565e0, RBP=0x0000700001c56600, RSI=0x0000010740191938, RDI=0x000000010cef6740
+R8 =0x0000000000000006, R9 =0x000000000001399f, R10=0x00000000004e67c0, R11=0x000000011d3b2000
+R12=0x0000010740191938, R13=0x0000000000000000, R14=0x000000010edf16d0, R15=0x000000010edf1a68
+RIP=0x000000010cac8cd3, EFLAGS=0x0000000000010206, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x0000700001c565e0)
+0x0000700001c565e0:   000000010edf1a68 0000010740191938
+0x0000700001c565f0:   000000010edf16d0 000000010edf1a68
+0x0000700001c56600:   0000700001c56620 000000010cac590a
+0x0000700001c56610:   000000010edf16d0 000000010cef6660
+0x0000700001c56620:   0000700001c566f0 000000010ca6d0a8
+0x0000700001c56630:   0000000000000000 000000010edf1838
+0x0000700001c56640:   000000010edf1838 000000010edf16d0
+0x0000700001c56650:   000000010edf1a5c 000000010edf0060
+0x0000700001c56660:   000000010edf182c 000000010e00ffff
+0x0000700001c56670:   000000010edf1840 000000010edf1840
+0x0000700001c56680:   000000010edf19c0 000000010edf1840
+0x0000700001c56690:   000000010edf19c0 000000010edf1a68
+0x0000700001c566a0:   000000010cedb580 0000000000000000
+0x0000700001c566b0:   000000010edf1440 000000010edf1468
+0x0000700001c566c0:   000000010cedb640 000000010edf16d0
+0x0000700001c566d0:   0000000000000017 0000000000000000
+0x0000700001c566e0:   0000700001c56740 0000700001c56901
+0x0000700001c566f0:   0000700001c56710 000000010c8ed7d9
+0x0000700001c56700:   0000700001c56740 000000010edf16d0
+0x0000700001c56710:   0000700001c56730 000000010c79e2e1
+0x0000700001c56720:   0000700001c56798 000000010cef6660
+0x0000700001c56730:   0000700001c567d0 000000010cac6adf
+0x0000700001c56740:   000000010ced58c0 000000010cef6700
+0x0000700001c56750:   000000010cef6660 000000010cac7a01
+0x0000700001c56760:   000000010ced5940 000000010cef6700
+0x0000700001c56770:   000000010cef6660 000000010ced5960
+0x0000700001c56780:   000000010cc17b00 000000010cef6660
+0x0000700001c56790:   000000010cef6901 000000010cc17af4
+0x0000700001c567a0:   00000337939c0100 000000010cef6900
+0x0000700001c567b0:   00001966932f50ff 00000337939ebf03
+0x0000700001c567c0:   00007f9f73d11320 00007f9f73e0a390
+0x0000700001c567d0:   0000700001c56ac0 000000010cac85c0 
+
+Instructions: (pc=0x000000010cac8cd3)
+0x000000010cac8cb3:   5d c3 90 55 48 89 e5 41 57 41 56 41 54 53 48 89
+0x000000010cac8cc3:   f0 48 2b 07 48 c1 e8 13 48 8d 04 80 48 8b 4f 18
+0x000000010cac8cd3:   48 8b 1c c1 8b 54 c1 18 41 b8 ff ff ff 07 44 23
+0x000000010cac8ce3:   44 c1 1c 49 01 d0 49 81 f8 00 00 01 00 49 89 f6 
+
+Register to memory mapping:
+
+RAX=0x0000000000a0000f is an unknown value
+RBX=0x000000010edf1a68 is at entry_point+552 in (nmethod*)0x000000010edf16d0
+RCX=0x000000010e0a5000 is an unknown value
+RDX=0x0000000000000000 is an unknown value
+RSP=0x0000700001c565e0 is an unknown value
+RBP=0x0000700001c56600 is an unknown value
+RSI=0x0000010740191938 is an unknown value
+RDI=0x000000010cef6740: _ZN17PSParallelCompact13_summary_dataE+0 in /Library/Java/JavaVirtualMachines/jdk1.8.0_152.jdk/Contents/Home/jre/lib/server/libjvm.dylib at 0x000000010c600000
+R8 =0x0000000000000006 is an unknown value
+R9 =0x000000000001399f is an unknown value
+R10=0x00000000004e67c0 is an unknown value
+R11=0x000000011d3b2000 is an unknown value
+R12=0x0000010740191938 is an unknown value
+R13=0x0000000000000000 is an unknown value
+R14=0x000000010edf16d0 is at entry_point+-368 in (nmethod*)0x000000010edf16d0
+R15=0x000000010edf1a68 is at entry_point+552 in (nmethod*)0x000000010edf16d0
+
+
+Stack: [0x0000700001b57000,0x0000700001c57000],  sp=0x0000700001c565e0,  free space=1021k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.dylib+0x4c8cd3]  ParallelCompactData::calc_new_pointer(HeapWord*)+0x1d
+V  [libjvm.dylib+0x4c590a]  PSParallelCompact::AdjustPointerClosure::do_oop(oopDesc**)+0x20
+V  [libjvm.dylib+0x46d0a8]  nmethod::oops_do(OopClosure*, bool)+0x112
+V  [libjvm.dylib+0x2ed7d9]  CodeBlobToOopClosure::do_nmethod(nmethod*)+0x1b
+V  [libjvm.dylib+0x19e2e1]  CodeCache::blobs_do(CodeBlobClosure*)+0x3f
+V  [libjvm.dylib+0x4c6adf]  PSParallelCompact::adjust_roots()+0x111
+V  [libjvm.dylib+0x4c85c0]  PSParallelCompact::invoke_no_policy(bool)+0x458
+V  [libjvm.dylib+0x4ccba4]  PSScavenge::invoke()+0xd6
+V  [libjvm.dylib+0x49f929]  ParallelScavengeHeap::failed_mem_allocate(unsigned long)+0x27
+V  [libjvm.dylib+0x5b5510]  VM_ParallelGCFailedAllocation::doit()+0x4a
+V  [libjvm.dylib+0x5bbda5]  VM_Operation::evaluate()+0x4f
+V  [libjvm.dylib+0x5ba33d]  VMThread::evaluate_operation(VM_Operation*)+0xdf
+V  [libjvm.dylib+0x5ba78a]  VMThread::loop()+0x328
+V  [libjvm.dylib+0x5ba0a9]  VMThread::run()+0x79
+V  [libjvm.dylib+0x48d542]  java_start(Thread*)+0xf6
+C  [libsystem_pthread.dylib+0x36c1]  _pthread_body+0x154
+C  [libsystem_pthread.dylib+0x356d]  _pthread_body+0x0
+C  [libsystem_pthread.dylib+0x2c5d]  thread_start+0xd
+
+VM_Operation (0x0000700002a7d2b8): ParallelGCFailedAllocation, mode: safepoint, requested by thread 0x00007f9f772d0800
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00007f9f79058000 JavaThread "Unknown thread" [_thread_blocked, id=24075, stack(0x00007000036d3000,0x00007000037d3000)]
+  0x00007f9f74de2800 JavaThread "Unknown thread" [_thread_blocked, id=24583, stack(0x00007000035d0000,0x00007000036d0000)]
+  0x00007f9f7aafb800 JavaThread "Unknown thread" [_thread_blocked, id=23319, stack(0x00007000034cd000,0x00007000035cd000)]
+  0x00007f9f75955000 JavaThread "Unknown thread" [_thread_blocked, id=40503, stack(0x00007000033ca000,0x00007000034ca000)]
+  0x00007f9f7b663800 JavaThread "Unknown thread" [_thread_blocked, id=41275, stack(0x0000700003096000,0x0000700003196000)]
+  0x00007f9f78fe0000 JavaThread "Unknown thread" [_thread_blocked, id=22839, stack(0x0000700002f93000,0x0000700003093000)]
+  0x00007f9f78870000 JavaThread "Unknown thread" [_thread_blocked, id=3891, stack(0x00007000014bf000,0x00007000014e7000)]
+  0x00007f9f77429000 JavaThread "Unknown thread" [_thread_blocked, id=41011, stack(0x0000700002e90000,0x0000700002f90000)]
+  0x00007f9f791a6000 JavaThread "Unknown thread" [_thread_blocked, id=22071, stack(0x0000700002d8d000,0x0000700002e8d000)]
+  0x00007f9f7ac24800 JavaThread "Unknown thread" [_thread_blocked, id=21815, stack(0x0000700002b87000,0x0000700002c87000)]
+  0x00007f9f77425800 JavaThread "Unknown thread" [_thread_blocked, id=17207, stack(0x0000700002a84000,0x0000700002b84000)]
+  0x00007f9f772d0800 JavaThread "Unknown thread" [_thread_blocked, id=43059, stack(0x0000700002981000,0x0000700002a81000)]
+  0x00007f9f79b4e800 JavaThread "Unknown thread" [_thread_blocked, id=16435, stack(0x000070000287e000,0x000070000297e000)]
+  0x00007f9f796c7000 JavaThread "Unknown thread" [_thread_in_native, id=41775, stack(0x000070000277b000,0x000070000287b000)]
+  0x00007f9f7b439000 JavaThread "Unknown thread" [_thread_blocked, id=16159, stack(0x0000700002678000,0x0000700002778000)]
+  0x00007f9f7acd5800 

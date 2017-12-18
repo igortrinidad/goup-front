@@ -7,12 +7,12 @@ export default{
     name: '',
     slug: '',
     description: '',
-    date_uninformed: false,
+    date_uninformed: true,
     recurrency_type: null,
     recurrency_info: null,
-    time_uninformed: false,
+    time_uninformed: true,
     time: null,
-    value_uninformed: false,
+    value_uninformed: true,
     value: 0,
     whatsapp: '',
     website: '',
@@ -32,7 +32,8 @@ export default{
     place:{},
     created_by: {},
     tags:[],
-    photos:[]
+    photos:[],
+    google_photos_selected:[]
 }
 export function cleanEventModel() {
     return {
@@ -43,12 +44,12 @@ export function cleanEventModel() {
         name: '',
         slug: '',
         description: '',
-        date_uninformed: false,
+        date_uninformed: true,
         recurrency_type: null,
         recurrency_info: null,
-        time_uninformed: false,
+        time_uninformed: true,
         time: null,
-        value_uninformed: false,
+        value_uninformed: true,
         value: 0,
         whatsapp: '',
         website: '',
@@ -68,7 +69,8 @@ export function cleanEventModel() {
         place:{},
         created_by: {},
         tags:[],
-        photos:[]
+        photos:[],
+        google_photos_selected:[]
 
     }
 }

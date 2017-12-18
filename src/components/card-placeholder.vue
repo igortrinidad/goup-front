@@ -34,39 +34,13 @@ export default {
 .card-placeholder {
     height: 100%;
     overflow: hidden !important;
-}
-
-.full { width: 100% !important; }
-
-.effect {
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-    animation-iteration-count: infinite;
-    animation-name: placeHolderShimmer;
-    animation-timing-function: linear;
     background-color: #f6f7f8;
     background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
     background-size: 800px 104px;
 }
 
-@keyframes placeHolderShimmer {
-    0% {
-        background-position: -468px 0
-    }
-    100% {
-        background-position: 468px 0
-    }
-}
+.full { width: 100% !important; }
 
-.text-placeholder {
-    border-radius: 4px;
-    position: relative;
-    display: inline-block;
-}
-
-.t-overflow {
-    text-overflow: clip !important;
-}
 
 .invisible {
     opacity: 0;

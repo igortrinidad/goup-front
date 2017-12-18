@@ -31,7 +31,7 @@
                 <div v-if="interactions.loginWithEmail">
                     <form class="m-t-30 text-center" >
                         <div class="form-group">
-                            <input type="text" class="form-control" :placeholder="translations.inputEmail" v-model="login.email">
+                            <input type="email" class="form-control" :placeholder="translations.inputEmail" v-model="login.email">
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control" :placeholder="translations.inputPassword" v-model="login.password" @keyup.enter="makeLogin">
@@ -39,7 +39,7 @@
 
                         <button type="button" class="btn btn-block btn-primary" :disabled="!login.email || !login.password" @click.prevent="makeLogin()">{{ translations.login }}</button>
 
-                        <button type="button" class="btn btn-block btn-facebook m-t-10" @click.prevent="facebookLogin()">
+                        <button type="button" class="btn btn-block btn-facebook m-t-20" @click.prevent="facebookLogin()">
                             <i class="ion-social-facebook m-r-10"></i>{{ translations.loginFacebook }}
                         </button>
                     </form>

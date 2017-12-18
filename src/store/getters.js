@@ -25,6 +25,16 @@ export const language = (state) => {
 
 export const getUserLastGeoLocation = (state) => {
 
+    if(!state.user_last_geolocation.lat){
+
+        var user_from_localstorage = JSON.parse(localStorage.getItem('user_last_geo_location'));
+
+        if(user_from_localstorage){
+            return user_from_localstorage;
+        }
+
+    }
+    
     return state.user_last_geolocation;
 
 }

@@ -279,7 +279,7 @@
                 let scroll = $(window).scrollTop();
                 localStorage.setItem('current_scroll', scroll)
 
-                if(!that.infiniteLoadingEvents.is_loading && !that.infiniteLoadingEvents.complete || that.infiniteLoadingEvents.first_load){
+                if(!that.infiniteLoadingEvents.is_loading && !that.infiniteLoadingEvents.complete && that.currentCategory){
 
                     //Se chegar no final
                     if($(window).scrollTop() + $(window).height() > $(document).height() - 200) {
@@ -331,7 +331,6 @@
                 }
 
                 
-                
             },
 
             resetBeforeChange(){
@@ -344,13 +343,7 @@
                 if (typeof cancelCurrentRequest === "function") {
                     cancelCurrentRequest()
                 }
-                this.getEvents();
 
-            },
-
-            changeCurrentCategory(category) {
-                this.currentCategory = category
-                this.resetBeforeChange()
             },
 
             getEvents() {
@@ -394,8 +387,6 @@
                         } else {
                             that.infiniteLoadingEvents.complete = true;
                         }
-
-
 
                     }).catch(function (error) {
                    console.log(error)

@@ -25,33 +25,38 @@
 .actions {
     width: 100%;
     text-align: center;
-    margin-top: 0;
+    margin-top: -20px;
     cursor: pointer;
 }
 
 .actions .action {
-    width: 45px; height: 45px;
-    background: #fff;
     border-radius: 50%;
     display: inline-flex;
     margin: 0 5px;
     align-items: center;
     justify-content: center;
+    vertical-align: middle;
     font-size: 20px;
     box-shadow: 0px 0px 25px rgba(0, 0, 0, .5);
-    border: 2px solid;
+    padding: 5px;
 }
 
-.actions .action.up { border-color: rgba(95, 190, 113, 1); }
-.actions .action.down { border-color: rgba(254, 0, 34, 1); }
-.actions .action.skip { border-color: rgba(56, 57, 56, 1); }
-.actions .action.favorite { border-color: rgba(255, 75, 137, 1); }
-
-.actions .action.xl {
-    width: 50px; height: 50px;
-    font-size: 24px;
+.action-small{
+    width: 44px;
 }
 
-.actions .action span {
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
+.action-large{
+    width: 62px;
 }
+
+@media (max-width: 325px){
+    .action-small{
+        width: 32px;
+    }
+
+    .action-large{
+        width: 44px;
+    }
+}
+
+

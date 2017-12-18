@@ -117,7 +117,6 @@
 </template>
 
 <script>
-    import PrimaryMenu from '@/components/primary-menu.vue'
     import { mapGetters } from 'vuex'
     import bus from '@/utils/event-bus'
 
@@ -144,9 +143,6 @@
                 default: false
             }
         },
-        components: {
-            PrimaryMenu
-        },
         data(){
             return {
                 interactions: {
@@ -154,9 +150,7 @@
                 },
                 sideMenuStatus: false,
                 categorySelected: null,
-                rankingCategorySelected: null,
-                clientWidth: 0,
-                clientHeight: 0
+                rankingCategorySelected: null
             }
         },
         computed: {
@@ -179,9 +173,6 @@
                 that.rankingCategorySelected = category;
                 that.bounceImg('ranking');
             });
-
-            that.clientWidth = document.documentElement.clientWidth;
-            that.clientHeight = document.documentElement.clientHeight;
 
         },
 

@@ -61,7 +61,7 @@
                         {{ translations.end_list }}
                     </p>
 
-                    <card-placeholder-explorer class="m-t-20" v-show="interactions.place_holder_is_loading"></card-placeholder-explorer>
+                    <card-placeholder-explorer class="m-t-20 m-b-30" v-show="interactions.place_holder_is_loading"></card-placeholder-explorer>
 
                     <!-- Cards -->
                     <div class="cards m-t-20" v-if="events.length && !interactions.is_loading && !interactions.place_holder_is_loading">
@@ -72,19 +72,15 @@
 
                             <div
                                 id="card-lazy-image"
-                                class="card-header cover"
-                                :style="{
-                                    backgroundImage: `url(${ events[0].cover })`,
-                                    height: '200px',
-                                    borderRadius: '6px 6px 0 0'
-                                }"
+                                class="card-header cover explorer-image"
+                                :style="{ backgroundImage: `url(${ events[0].cover })`}"
                             >
 
                                 <router-link
                                     tag="span"
                                     class="icon-information ion-ios-information f-success cursor-pointer"
                                     v-if="events[0].slug"
-                                    :to="{ name: 'general.events.show', params: { event_slug: events[0].slug } }"
+                                    :to="{ name: 'general.events.show', params: { event_slug: events[0].slug }, query: {event_id: events[0].id} }"
                                 >
                                 </router-link>
 
@@ -108,7 +104,7 @@
 
                             <!-- Card Body -->
                             <div class="card-body card-padding">
-                                <h4 class="m-b-5 t-overflow">{{ events[0].name }}</h4>
+                                <h4 class="m-b-5 t-overflow" style="margin-top: 9px">{{ events[0].name }}</h4>
                                 <div style="opacity: .8;">
                                     <p class="m-b-5 t-overflow">{{ events[0].description }}</p>
                                 </div>
@@ -137,29 +133,19 @@
                             <!-- Card Header -->
                             <div
                                 id="card-lazy-image"
-                                class="card-header cover"
-                                :style="{
-                                    backgroundImage: `url(${ events[1].cover })`,
-                                    height: '200px',
-                                    borderRadius: '6px 6px 0 0'
-                                }"
+                                class="card-header cover explorer-image"
+                                :style="{ backgroundImage: `url(${ events[1].cover })` }"
                                 v-show="!interactions.place_holder_is_loading"
                             >
 
-                                <router-link
-                                    tag="span"
-                                    class="icon-information ion-ios-information f-success cursor-pointer"
-                                    v-if="events[1].slug"
-                                    :to="{ name: 'general.events.show', params: { event_slug: events[1].slug }, query: {event_id: events[0].id} }"
-                                >
-                                </router-link>
+                                <span class="icon-information ion-ios-information f-success cursor-pointer"></span>
 
                             </div>
                             <!-- / Card Header -->
 
                             <!-- Card Body -->
                             <div class="card-body card-padding">
-                                <h4 class="m-b-5 t-overflow">{{ events[1].name }}</h4>
+                                <h4 class="m-b-5 t-overflow" style="margin-top: 23px">{{ events[1].name }}</h4>
                                 <div style="opacity: .8;">
                                     <p class="m-b-5 t-overflow">{{ events[1].description }}</p>
                                 </div>
@@ -187,30 +173,26 @@
                     <!-- Cards -->
 
                     <!-- Actions -->
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="actions">
+                    <div class="actions">
 
-                                <div v-if="events.length && isLogged || interactions.is_loading">
-                                    <span class="action skip" @click="skip()">
-                                        <span class="ion-loop f-default"></span>
-                                    </span>
+                        <div v-if="events.length && isLogged || interactions.is_loading">
+                            <span class="action" @click="skip()" :class="{'bounce' : interactions.skip }">
+                                <img class="action-small" src="../../../../assets/icons/explorer_actions/refresh-2.svg"/>
+                            </span>
 
-                                    <span class="action xl down" @click="goDown()">
-                                        <span class="ion-chevron-down f-red "></span>
-                                    </span>
+                            <span class="action" @click="goDown()" :class="{'bounce' : interactions.down }">
+                                 <img class="action-large" src="../../../../assets/icons/explorer_actions/dislike.svg"/>
+                            </span>
 
-                                    <span class="action xl up" @click="goUp()">
-                                        <span class="ion-chevron-up f-green"></span>
-                                    </span>
+                            <span class="action" @click="goUp()" :class="{'bounce' : interactions.up }">
+                                 <img  class="action-large"src="../../../../assets/icons/explorer_actions/like.svg"/>
+                            </span>
 
-                                    <span class="action favorite" @click="favorite()">
-                                        <span class="ion-ios-star f-primary"></span>
-                                    </span>
-                                </div>
-
-                            </div>
+                            <span class="action" @click="favorite()" :class="{'bounce' : interactions.favorite }">
+                                 <img  class="action-small"src="../../../../assets/icons/explorer_actions/star_pink.svg"/>
+                            </span>
                         </div>
+
                     </div>
                     <!-- / Actions -->
 
@@ -222,7 +204,7 @@
                             <p class="f-info" v-if="!getCities.length">{{ translations.noCity }}</p>
                             <div class="swiper-container" ref="citiesSlider">
                                 <div class="swiper-wrapper">
-                                    <div class="swiper-slide label transparent m-5 cursor-pointer"
+                                    <div class="swiper-label-to-fix swiper-slide label transparent m-5 cursor-pointer"
                                          v-for="(city, $index) in getCities"
                                          :key="$index"
                                          :class="{'cursor-pointer': currentCity != city, 'label-success':currentCity == city}">
@@ -399,8 +381,9 @@
 
             setTimeout(function () {
                 that.checkDaysToQuery();
-                that.getEvents();
             }, 100);
+
+            that.citiesSwiper();
 
         },
 
@@ -421,7 +404,7 @@
                     that.hammerCards = false
                 }
 
-                if (this.events.length) {
+                if (that.events.length && that.currentCategory) {
                     setTimeout(() => {
                         that.hammerCards = new Hammer(that.$refs.cardAnimated)
                         that.hammerCards.get('pan').set({direction: Hammer.DIRECTION_ALL})
@@ -596,9 +579,7 @@
 
                             if (that.currentCity.id != city.id) {
                                 that.currentCity = city
-                                that.getEvents();
                             }
-
 
                         },
                         breakpoints: {
@@ -617,12 +598,13 @@
                 }, 100)
             },
 
-            getEvents() {
+            getEvents(first_load = true, events_in_list = []) {
                 let that = this
 
-                that.events = []
-
-                that.interactions.place_holder_is_loading = true
+                if(first_load){
+                    that.events = []
+                    that.interactions.place_holder_is_loading = true
+                }
 
                 that.$http.post('event/explorer/list', {
                     language: that.language,
@@ -630,7 +612,8 @@
                     lng: that.getUserLastGeoLocation.lng,
                     city_id: that.currentCity ? that.currentCity.id : null,
                     category_id: that.currentCategory.id,
-                    filters: that.days_selecteds_to_query
+                    filters: that.days_selecteds_to_query,
+                    events_in_list: events_in_list
                 }, {
                         cancelToken: new CancelToken(function executor(cancel) {
                             cancelCurrentRequest = cancel;
@@ -638,15 +621,27 @@
                     })
                     .then(function (response) {
 
-                        that.events = response.data.events
-                        that.interactions.is_loading = false;
-                        setTimeout(function () {
-                            that.interactions.place_holder_is_loading = false
-                        }, 200);
+                        if(first_load){
 
-                        that.mountHammer();
+                            setTimeout(function () {
 
-                        that.citiesSwiper();
+                                that.events = response.data.events;
+                                that.interactions.is_loading = false;
+                                that.interactions.place_holder_is_loading = false
+
+                            }, 100);
+
+                            setTimeout(function() {
+
+                                that.mountHammer();
+                                that.citiesSwiper();
+
+                            }, 450);
+
+                        } else {
+
+                            Array.prototype.push.apply(that.events, response.data.events);
+                        }
 
 
                     })
@@ -662,10 +657,14 @@
 
                 that.handleUserInteraction({city_id: that.currentCity.id, category_id: that.currentCategory.id})
 
+                var events_in_list = that.events.map(a => a.id);
+
                 that.$http.post('event/interaction/store', interaction)
                     .then(function (response) {
 
-                        console.log(response)
+                        if(that.events.length <= 2){
+                            that.getEvents(false, events_in_list);
+                        }
 
                     }).catch(function (error) {
                     console.log(error)
@@ -774,13 +773,51 @@
 
     .cards {
         position: relative;
-        height: 388px;
+        height: 378px;
     }
 
     .card {
         position: absolute;
         width: 100%;
         left: 0;
+    }
+
+    .explorer-image{
+        height: 200px !important;
+        border-radius: 6px 6px 0 0;
+    }
+
+    @media (max-width: 325px){
+        .explorer-image{
+            height: 150px !important;
+        }
+
+        .cards {
+            position: relative;
+            height: 328px;
+        }
+    }
+
+    @media (min-width: 768px){
+        .explorer-image{
+            height: 350px !important;
+        }
+
+        .cards {
+            position: relative;
+            height: 528px;
+        }
+    }
+
+    @media (min-width: 893px){
+        .explorer-image{
+            height: 350px !important;
+        }
+
+        .cards {
+            position: relative;
+            height: 548px;
+        }
     }
 
     .cards #card-animated {
@@ -849,5 +886,9 @@
         background-color: #ec538b;
         border-radius: 10px;
         font-size: 11px;
+    }
+
+    .swiper-label-to-fix{
+        width: 33%;
     }
 </style>

@@ -128,7 +128,7 @@ export const setUserLastGeolocation = ({ commit }) => {
     //Se a localização for encontrada na localstorage e for válida (menor que 3 horas) retorna a localização
     if(window.checkUserLastLocation() == 'is_valid'){
 
-        window.console.log('Localização encontrada na localStorage e é anterior a 3 horas. (válida)');
+        window.console.log('Localização encontrada na localStorage tem menos de 3 horas. (válida)');
 
         if (store.getters.isLogged) {
             store.dispatch('setCities');
@@ -142,7 +142,7 @@ export const setUserLastGeolocation = ({ commit }) => {
     if(window.checkUserLastLocation() == 'is_invalid'){
 
 
-        window.console.log('Localização é anterior à 3 horas. (inválida)');
+        window.console.log('Localização tem mais de 3 horas. (inválida)');
 
 
             if(window.cordova){

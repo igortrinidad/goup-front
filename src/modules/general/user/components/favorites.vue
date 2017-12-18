@@ -15,15 +15,18 @@
                         <div class="col-sm-12" v-for="(favorite, indexEvents) in favorites">
                             <div class="card p-0">
                                 <!-- Card Header -->
-                                <div
-                                    class="card-header cover p-5"
+
+                                <router-link
+                                    tag="div"
+                                    class="card-header cover p-5 cursor-pointer"
                                     :style="{
                                         backgroundImage: `url(${ favorite.event.cover })`,
                                         height: '150px',
                                         borderRadius: '6px 6px 0 0'
                                     }"
+                                    :to="{ name: 'general.events.show', params: { event_slug: favorite.event.slug }, query: {event_id: favorite.event.id} }"
                                 >
-                                </div>
+                                </router-link>
                                 <!-- Card Body -->
                                 <div class="card-body card-padding">
                                     <h4 class="m-b-5">{{ favorite.event.name }}</h4>

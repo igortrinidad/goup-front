@@ -120,12 +120,15 @@
                                         {{translations.form.value_uninformed}}
                                  </span>
 
-                                <vue-numeric type="tel" id="event-value" class="form-control m-t-10"
-                                             :currency="language == 'en'? '$': 'R$'" :min="0"
-                                             :separator="language == 'en'? ',': '.'" :precision="2"
-                                             v-model="event.value"
-                                             :placeholder="translations.form.event_value"
-                                             v-if="!event.value_uninformed"
+                                <vue-numeric 
+                                    type="tel" 
+                                    id="event-value" 
+                                    class="form-control m-t-10"
+                                     :currency="language == 'en'? '$': 'R$'" :min="0"
+                                     :separator="language == 'en'? ',': '.'" :precision="2"
+                                     v-model="event.value"
+                                     :placeholder="translations.form.event_value"
+                                     v-if="!event.value_uninformed"
                                 ></vue-numeric>
                             </div>
 
@@ -139,7 +142,7 @@
 
                                     <label class="f-700 f-primary">{{ translations.form.categories }}</label>
 
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-select-type">
+                                    <button class="btn btn-primary" @click.prevent="openModalCategories()">
                                         {{ translations.form.categories_button }}
                                     </button>
 
@@ -240,6 +243,8 @@
 
                             <label class="f-700 f-primary" for="subcategory">{{ translations.form.photos }}</label>
 
+                            <p class="" for="subcategory">{{ translations.form.photos_subtitle }}</p>
+
                             <div class="row" v-if="isMobile">
                                 <div class="col-sm-12">
                                     <div class="col-sm-6">
@@ -264,13 +269,16 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-3" v-if="interactions.showPhotoPlaceholder">
-                                    <div class="card-placeholder placeholder-effect"></div>
+                                <div class="col-md-3 col-xs-6" v-if="interactions.showPhotoPlaceholder">
+                                    <div class="card-placeholder placeholder-effect">
+                                        <p class="f-default m-t-30" style="vertical-align: middle;">Loading</p>
+                                    </div>
                                 </div>
                                 <p class="f-300" v-if="!event.photos.length">{{translations.form.photo_cover_warning}}</p>
 
+                                <!-- USER PHOTOS -->
                                 <div class="col-md-3 col-sm-6" v-for="photo in event.photos">
-                                    <span class="cursor-pointer" @click="setAsCover(photo.id)">
+                                    <span class="cursor-pointer" @click="setAsCover(photo)">
                                         <i :class="{
                                             'f-20': true,
                                             'ion-ios-circle-filled': photo.is_cover,
@@ -283,10 +291,54 @@
 
                                     <span class="label label-primary small cursor-pointer" @click.prevent="removeImage(photo.id)">{{translations.form.removeImage}}</span>
                                 </div>
+
+                                <!-- GOOGLE PHOTOS -->
+                                <div class="col-md-3 col-sm-6" v-for="photo in event.google_photos_selected">
+                                    <span class="cursor-pointer" @click="setAsCover(photo)">
+                                        <i :class="{
+                                            'f-20': true,
+                                            'ion-ios-circle-filled': photo.is_cover,
+                                            'ion-ios-circle-outline': !photo.is_cover
+                                        }"></i>
+                                        {{translations.form.setAsCover}}
+                                    </span>
+
+                                    <img  class="img-responsive thumbnail m-b-5" :src="photo.photo_url">
+
+                                    <span class="label label-primary small cursor-pointer" @click.prevent="tooglePhotoFromGoogle(photo)">{{translations.form.removeImage}}</span>
+                                </div>
                             </div>
 
                         </div>
                         <!-- / Photos -->
+
+                        <!-- Google Photos -->
+                        <div class="form-group border-inside-card default m-t-20">
+
+                            <label class="f-700 f-primary" for="subcategory">{{ translations.form.google_photos_title }}</label>
+
+                            <div class="col-row-categories">
+                                <div class="col" v-for="photo in google_photos">
+                                    <img  class="img-responsive thumbnail m-b-5" :src="photo.photo_url">
+                                    <p>{{translations.photo_quality.title}} {{translations.photo_quality[photo.quality]}}</p>
+                                    
+                                    <button class="btn btn-primary btn-sm" @click="tooglePhotoFromGoogle(photo)">{{ translations.form.google_photos_select_photo }}</button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" v-if="interactions.google_photos_select_photo">
+                                    <div class="card-placeholder placeholder-effect">
+                                        <p class="f-default m-t-30" style="vertical-align: middle;">Loading</p>
+                                    </div>
+                                </div>
+                                <p class="f-300" v-if="!google_photos.length">{{translations.form.google_photos_empty}}</p>
+                            </div>
+
+                        </div>
+                        <!-- / Google Photos -->
+
+
 
                         <div class="form-group m-t-20">
 
@@ -294,7 +346,7 @@
                                 type="button"
                                 class="btn btn-primary btn-block transparent"
                                 @click="storeEvent()"
-                                :disabled="!event.name || !event.description || !event.categories.length || !event.date_uninformed && !event.recurrency_type  || !event.google_place_id || !event.photos.length || interactions.invalid_time"
+                                :disabled="!event.name || !event.description || !event.categories.length || !event.date_uninformed && !event.recurrency_type  || !event.google_place_id || interactions.invalid_time || checkIfHasSomePhoto()"
                             >
                                 {{ translations.submit }}
                             </button>
@@ -421,7 +473,7 @@
                 },
                 event: cleanEventModel(),
                 categories: [],
-
+                google_photos: [],
                 not_valid: [],
                 currentRecurrencyType: '',
                 newTag: {
@@ -572,6 +624,8 @@
             setPlaceAdress(place) {
                 let that = this
 
+                that.google_photos = [];
+
                 if (place.geometry !== undefined) {
 
                     that.interactions.placeSelected = true;
@@ -583,6 +637,31 @@
                     that.event.lat = place.geometry.location.lat()
                     that.event.lng = place.geometry.location.lng()
 
+                    place.photos.forEach( function(photo){
+
+                        var x = photo.width;
+                        switch(true) {
+                            case (x < 600):
+                                var quality = 'low';
+                                break;
+                            case (x > 601 && x < 1200):
+                                var quality = 'medium';
+                                break;
+                            default:
+                                var quality = 'high';
+                        }
+
+                        that.google_photos.push(
+                            {
+                                id: photo.getUrl({'maxWidth': 1000, 'maxHeight': 1000}),
+                                is_cover: false,
+                                event_id: that.event.id,
+                                photo_url: photo.getUrl({'maxWidth': 1000, 'maxHeight': 1000}),
+                                quality: quality
+                            }
+                        );
+                    });
+                    
                     place.address_components.map((current) =>{
                         current.types.map((type) => {
                             if(type == 'administrative_area_level_1'){
@@ -625,6 +704,8 @@
 
             storeEvent() {
                 let that = this
+
+                this.checkAtLeastOneCover();
 
                 that.$http.post('event/store', that.event)
                     .then(function (response) {
@@ -754,13 +835,21 @@
                     });
             },
 
-             setAsCover(photo_id){
+             setAsCover(photoObj){
                 let that = this
 
                 that.event.photos.map((photo) => {
                     photo.is_cover = false
 
-                    if(photo.id == photo_id ){
+                    if(photo.id == photoObj.id ){
+                        photo.is_cover = true
+                    }
+                });
+
+                that.event.google_photos_selected.map((photo) => {
+                    photo.is_cover = false
+
+                    if(photo.id == photoObj.id ){
                         photo.is_cover = true
                     }
                 })
@@ -769,12 +858,15 @@
             removeImage(photo_id){
                 let that = this
 
+
                 that.$http.get(`event/photo/destroy/${photo_id}`)
                     .then(function (response) {
 
                         that.event.photos = that.event.photos.filter(function (photo) {
                             return photo.id != photo_id;
                         });
+
+                        that.checkAtLeastOneCover();
 
                         successNotify('', 'Imagem removida com sucesso')
                     })
@@ -944,7 +1036,64 @@
                 }
 
                 this.interactions.invalid_time = false
-            }
+            },
+
+            openModalCategories: function(){
+                $('#modal-select-type').modal('show');
+            },
+
+            tooglePhotoFromGoogle: function(photo){
+                let that = this
+            
+                var index = that.event.google_photos_selected.indexOf(photo)
+                if(index > -1){
+                    that.event.google_photos_selected.splice(index, 1)
+                    that.google_photos.push(photo)
+                } else {
+                    that.event.google_photos_selected.push(photo);
+
+                    var index = that.google_photos.indexOf(photo)
+                    that.google_photos.splice(index,1);
+                }
+
+                that.checkAtLeastOneCover();
+                
+            },
+
+            checkIfHasSomePhoto: function(){
+                
+                if(!this.event.photos) {
+                    return true
+                }
+
+                if(!this.event.google_photos_selected) {
+                    return true
+                }
+
+                return false
+                
+            },
+
+            checkAtLeastOneCover: function(){
+                
+                if(this.event.photos.length){
+                    var photosHasCover = this.event.photos.checkFromAttr('is_cover', true); 
+                }
+
+                 if(this.event.google_photos_selected.length){
+                    var googlePhotosHasCover = this.event.google_photos_selected.checkFromAttr('is_cover', true); 
+                }
+
+                if(!photosHasCover && !googlePhotosHasCover){
+
+                    if(this.event.photos.length){
+                        this.event.photos[0].is_cover = true;
+                        return
+                    }
+
+                    this.event.google_photos_selected[0].is_cover = true;
+                }
+            },
 
         }
     }

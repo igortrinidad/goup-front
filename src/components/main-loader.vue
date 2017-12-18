@@ -43,7 +43,8 @@
         width: 100%;
         height: 100%;
         z-index: 100000;
-        background-color: rgba(86, 31, 159, .6)
+       background-color: rgba(0, 0, 0, .9) !important;
+       opacity: 1 !important;
     }
 
     .loading-box {

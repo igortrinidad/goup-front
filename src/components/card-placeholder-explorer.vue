@@ -20,9 +20,6 @@
                             <small>
                                 <div class="effect text-placeholder" style="width: 15%; height: 15px;"></div>
                             </small>
-                            <small class="divider p-l-10 m-l-10">
-                                <div class="effect text-placeholder" style="width: 25%; height: 15px;"></div>
-                            </small>
                         </div>
                         <div class="col-xs-4 text-right">
                             <small class="f-primary">
@@ -67,23 +64,9 @@ export default {
 .full { width: 100% !important; }
 
 .effect {
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-    animation-iteration-count: infinite;
-    animation-name: placeHolderShimmer;
-    animation-timing-function: linear;
     background-color: #f6f7f8;
     background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
     background-size: 800px 104px;
-}
-
-@keyframes placeHolderShimmer {
-    0% {
-        background-position: -468px 0
-    }
-    100% {
-        background-position: 468px 0
-    }
 }
 
 .text-placeholder {
