@@ -6,7 +6,7 @@
               class="card"
               v-for="(favorite, favoriteIndex) in favorites"
               :key="favoriteIndex"
-              :to="{ name: 'general.events.show', params: { event_slug: favorite.event.slug } }"
+              :to="{ name: 'events.show', params: { event_slug: favorite.event.slug } }"
           >
               <!-- Card Header -->
               <div
@@ -70,7 +70,7 @@
 
 
     export default {
-        name: 'general-user-show-tab-favorites',
+        name: 'user-show-tab-favorites',
 
         props: {
 

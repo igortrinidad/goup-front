@@ -30,25 +30,25 @@ const SignupSuccess = (resolve) => {
 
 export default [
     {
-        name: 'general.auth.login',
+        name: 'auth.login',
         path: '/login',
         component: Login,
         meta: { requiresAuth: false, preventsLogged: true },
     },
     {
-        name: 'general.auth.signup',
+        name: 'auth.signup',
         path: '/cadastro',
         component: Signup,
         meta: { requiresAuth: false, preventsLogged: true },
     },
     {
-        name: 'general.auth.logout',
+        name: 'auth.logout',
         path: '/logout',
         component: Logout,
         meta: { requiresAuth: true},
     },
     {
-        name: 'general.auth.signup.success',
+        name: 'auth.signup.success',
         path: '/cadastro/sucesso',
         component: SignupSuccess,
         meta: { requiresAuth: false},

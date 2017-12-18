@@ -35,25 +35,25 @@ export default [
         meta: {requiresAuth: false},
         children: [
             {
-                name: 'general.events.create',
+                name: 'events.create',
                 path: '/create',
                 component: Create,
                 meta: {requiresAuth: true}
             },
             {
-                name: 'general.events.list',
+                name: 'events.list',
                 path: '/ranking',
                 component: List,
                 meta: {requiresAuth: true}
             },
             {
-                name: 'general.events.edit',
+                name: 'events.edit',
                 path: '/event/edit/:id',
                 component: Edit,
                 meta: {requiresAuth: true}
             },
             {
-                name: 'general.events.show',
+                name: 'events.show',
                 path: '/event/:event_slug',
                 component: Show,
                 meta: {requiresAuth: true}

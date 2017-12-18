@@ -61,7 +61,7 @@
             <div class="container text-center">
                 <div class="m-t-30">
                     <p class="f-13 f-300">{{ translations.alreadySigned }}</p>
-                    <router-link :to="{name: 'general.auth.login'}" class="btn btn-primary" tag="button">{{ translations.loginHere }}</router-link>
+                    <router-link :to="{name: 'auth.login'}" class="btn btn-primary" tag="button">{{ translations.loginHere }}</router-link>
                 </div>
 
                 <!-- TERMS AND PRIVACY -->

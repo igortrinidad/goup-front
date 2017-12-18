@@ -50,7 +50,7 @@
     import {mapGetters} from 'vuex'
 
     export default {
-        name: 'general-user-settings-about',
+        name: 'user-settings-about',
 
         components: {
             mainHeader,

@@ -190,7 +190,7 @@
     import {recurrencTypes, weekdays, monthWeeks} from '@/models/RecurrencyTypes'
 
     export default {
-        name: 'general-events-show',
+        name: 'events-show',
 
         components: {
             mainHeader,
@@ -288,7 +288,7 @@
             goToList: function(){
                 let that = this
 
-                that.$router.push({name: 'general.events.list'});
+                that.$router.push({name: 'events.list'});
             },
 
             initSwiperTabs() {
@@ -344,7 +344,7 @@
                 that.currentCategory = category;
 
                 setTimeout( function(){
-                    that.$router.push({name: 'general.events.list', query: {category_id: category.id}});
+                    that.$router.push({name: 'events.list', query: {category_id: category.id}});
                 }, 300)
             },
 

@@ -12,7 +12,7 @@
                                 tag="div"
                                 class="picture-circle picture-circle-xs border-picture-eletric-blue cursor-pointer"
                                 :style="{ backgroundImage: `url(${ interaction.user.avatar })` }"
-                                :to="{ name: 'general.user.show', params: { user_slug: interaction.user.slug } }"
+                                :to="{ name: 'user.show', params: { user_slug: interaction.user.slug } }"
                             >
                             </router-link>
                             <h4 class="f-12 f-primary f-700 m-b-0">{{ interaction.user.full_name }}</h4>

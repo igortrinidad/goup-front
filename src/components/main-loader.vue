@@ -1,7 +1,9 @@
 <template>
     <div class="loading-wrapper" v-if="loader.is_loading">
         <div class="loading-box">
-            <img class="loader" src="../assets/logos/LOGOS-07.png" alt="" width="150">
+
+            <dots />
+
             <div v-if="loader.message !=''">
                 <h3>{{loader.message}}</h3>
             </div>
@@ -14,10 +16,12 @@
 
 <script>
     import {mapGetters} from 'vuex'
+    import dots from './dots'
 
     export default{
         name: 'main-loader',
         components: {
+            dots
         },
         data(){
             return {}

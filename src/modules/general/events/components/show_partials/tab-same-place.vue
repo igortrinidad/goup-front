@@ -126,7 +126,7 @@
             var that = this;
             this.getEventsSamePlace();
 
-            //Infinite custom  
+            //Infinite custom
             $(window).scroll(function(){
 
                 if(!that.infiniteLoadingEventsSamePlace.is_loading && !that.infiniteLoadingEventsSamePlace.complete || that.infiniteLoadingEventsSamePlace.first_load){
@@ -186,9 +186,9 @@
                 var that = this;
 
                 bus.$emit('go-to-event-related');
-                
+
                 that.$router.push(
-                    { name: 'general.events.show', params: { event_slug: event.slug }, query: {event_id: event.id} }
+                    { name: 'events.show', params: { event_slug: event.slug }, query: {event_id: event.id} }
                 );
 
                 that.relateds = [];

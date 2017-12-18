@@ -163,7 +163,7 @@
     import bus from '@/utils/event-bus';
 
     export default {
-        name: 'general-user-show',
+        name: 'user-show',
 
         components: {
             mainHeader,

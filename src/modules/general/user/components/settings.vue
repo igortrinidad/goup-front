@@ -35,7 +35,7 @@
                         tag="div"
                         class="picture-circle picture-circle-xxl border-picture-eletric-blue"
                         :style="{ backgroundImage: `url(${ currentUser.avatar })` }"
-                        :to="{ name: 'general.user.show', params: { user_slug: currentUser.slug } }"
+                        :to="{ name: 'user.show', params: { user_slug: currentUser.slug } }"
                     >
                     </router-link>
 
@@ -43,37 +43,37 @@
 
                     <div class="row m-t-30 text-center">
                         <div class="col-xs-12 m-t-10">
-                            <router-link :to="{ name: 'general.user.settings.edit' }" tag="button" class="btn btn-primary btn-block">
+                            <router-link :to="{ name: 'user.settings.edit' }" tag="button" class="btn btn-primary btn-block">
                                 <i class="ion-edit m-r-5"></i> {{ translations.buttons.edit }}
                             </router-link>
                         </div>
 
                         <div class="col-xs-12 m-t-20">
-                            <router-link :to="{ name: 'general.events.create' }" tag="button" class="btn btn-primary btn-block">
+                            <router-link :to="{ name: 'events.create' }" tag="button" class="btn btn-primary btn-block">
                                 <i class="ion-plus-round m-r-5"></i> {{ translations.buttons.add_new_event }}
                             </router-link>
                         </div>
 
                         <div class="col-xs-12 m-t-20">
-                            <router-link :to="{ name: 'general.user.events' }" tag="button" class="btn btn-primary btn-block">
+                            <router-link :to="{ name: 'user.events' }" tag="button" class="btn btn-primary btn-block">
                                 <i class="ion-ios-list-outline m-r-5"></i> {{ translations.buttons.my_events }}
                             </router-link>
                         </div>
 
                         <div class="col-xs-12 m-t-20">
-                            <router-link :to="{ name: 'general.user.favorites' }" tag="button" class="btn btn-primary btn-block">
+                            <router-link :to="{ name: 'user.favorites' }" tag="button" class="btn btn-primary btn-block">
                                 <i class="ion-android-star-outline m-r-5"></i> {{ translations.buttons.my_favorites }}
                             </router-link>
                         </div>
 
                         <div class="col-xs-12 m-t-20">
-                            <router-link :to="{ name: 'general.user.settings.about' }" tag="button" class="btn btn-primary btn-block">
+                            <router-link :to="{ name: 'user.settings.about' }" tag="button" class="btn btn-primary btn-block">
                                 <i class="ion-help-circled m-r-5"></i> {{ translations.buttons.about }}
                             </router-link>
                         </div>
 
                         <div class="col-xs-12 m-t-20">
-                            <router-link :to="{ name: 'general.auth.logout' }" tag="button" class="btn btn-primary btn-block">
+                            <router-link :to="{ name: 'auth.logout' }" tag="button" class="btn btn-primary btn-block">
                                 <i class="ion-log-out rotate-180 m-r-5"></i> {{ translations.buttons.logout }}
                             </router-link>
                         </div>
@@ -138,8 +138,8 @@
                 }, 300);
 
                 this.setLanguage(language);
-                
-                
+
+
             },
         }
     }

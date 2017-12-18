@@ -1,10 +1,10 @@
 export const en = {
     title: 'Edit moment',
     form: {
-        event_name: `Moment's name`,
-        event_description: `Moment's description`,
-        recurrency_type: `Recurrency type`,
-        selected_recurrency_type: `Recurrency selected`,
+        event_name: `Moment name`,
+        event_description: `Moment description`,
+        recurrency_type: `When this Moment happens`,
+        selected_recurrency_type: `Date selected`,
         day_of_week: 'Weekly at',
         monthly: 'Every month at',
         event_date: `Moment's date`,
@@ -20,14 +20,18 @@ export const en = {
         subcategories: 'One or more subcategories',
         add_new_tag: 'Add tag',
         subcategory_already_exists: 'Subcategory already exists',
-        tags: `Inform some tags to define the moment`,
+        tags: `Inform some tags to define the Moment`,
         place_name: `Place's name`,
         phone: `Place's phone`,
         address: `Address`,
         google_select: `Select a place from Google`,
-        photos: `Photos to promote the moment`,
+        photos: `Photos`,
+        photos_subtitle: 'Share photos of this Moment of select from Google below (if exists)',
+        google_photos_title: `Photos of this place on Google`,
+        google_photos_empty: `Ops! We didnt find any photos of this place on Google, its actually exist? oO`,
+        google_photos_select_photo: `Select photo`,
         upload_image: 'Upload a image',
-        photo_cover_warning: 'You must submit at least one photo to register an moment.',
+        photo_cover_warning: 'Select at least one photo to register an Moment.',
         required: 'The field is required',
         best_day_type: `Place's best day is weekly or specific?`,
         best_day: `Place's best day`,
@@ -48,10 +52,15 @@ export const en = {
     no: 'No',
     confirm: 'Confirm',
     cancel: 'Cancel',
-    submit: 'Update event',
-    success: 'New event updated successfully',
+    submit: 'Update Moment',
+    success: 'Moment successfully updated',
     close: 'Close',
-
+    photo_quality: {
+        title: 'Quality',
+        low: 'Low',
+        medium: 'Good',
+        high: 'Excelent',
+    },
     monthWeeks:{
         first: 'First week',
         second: 'Second week',
@@ -59,21 +68,25 @@ export const en = {
         fourthy: 'Fourthy week',
         fifth: 'Fifth week',
     },
-    daily: 'Daily'
+    daily: 'Daily',
+
+    validation:{
+        time: 'Invalid moment time'
+    }
 }
 
 export const pt = {
-    title: 'Editar momento',
+    title: 'Editar Momento',
     form: {
-        event_name: 'Nome do momento',
-        event_description: 'Descrição do momento',
-        recurrency_type: `Recorrência do momento`,
-        selected_recurrency_type: `Recorrência selecionada`,
+        event_name: 'Nome deste Momento',
+        event_description: 'Descrição deste Momento',
+        recurrency_type: `Este Momento acontece quando?`,
+        selected_recurrency_type: `Data selecionada`,
         day_of_week: 'Semanalmente na',
         monthly: 'Todo mês em',
-        event_date: 'Data do momento',
-        time_uninformed: 'Horário não informado',
+        event_date: 'Data do Momento',
         date_uninformed: 'Data não informada',
+        time_uninformed: 'Horário não informado',
         event_time: 'Horário',
         value_uninformed: 'Valor não informado',
         event_value: 'Valor começa em',
@@ -83,14 +96,18 @@ export const pt = {
         categories_max_warning: 'Você deve selecionar no máximo três recomendações para este Momento',
         add_new_tag: 'Adicionar tag',
         subcategory_already_exists: 'Subcategoria já existe',
-        tags: 'Informe algumas tags que definem o momento',
+        tags: 'Informe algumas tags que definem o Momento',
         place_name:'Nome do local',
         phone: 'Telefone do local',
         address: 'Endereço',
         google_select: 'Selecione um local do Google',
-        photos: 'Fotos para divulgação do momento',
+        photos: 'Fotos',
+        photos_subtitle: 'Compartilhe fotos deste Momento ou selecione fotos do Google abaixo',
+        google_photos_title: `Fotos encontradas no Google`,
+        google_photos_empty: `Ops! Não encontramos fotos deste local no Google, ele realmente exite? oO`,
+        google_photos_select_photo: `Selecionar foto`,
         upload_image: 'Enviar uma imagem',
-        photo_cover_warning: 'É necessário enviar ao menos uma foto para cadastrar um momento.',
+        photo_cover_warning: 'Selecione ao menos uma foto para cadastrar um Momento.',
         required: 'O campo é obrigatório',
         best_day_type: `O melhor dia é semanal ou um dia específico?`,
         best_day: `Melhor dia do local`,
@@ -111,10 +128,15 @@ export const pt = {
     no: 'Não',
     confirm: 'Confirmar',
     cancel: 'Cancelar',
-    submit: 'Atualizar evento',
-    success: 'Evento atualizado com sucesso.',
+    submit: 'Atualizar momento',
+    success: 'Momento atualizado com sucesso.',
     close: 'Fechar',
-
+    photo_quality: {
+        title: 'Qualidade',
+        low: 'Baixa',
+        medium: 'Boa',
+        high: 'Excelente',
+    },
     monthWeeks:{
         first: 'Primeira semana',
         second: 'Segunda semana',
@@ -122,5 +144,8 @@ export const pt = {
         fourthy: 'Quarta semana',
         fifth: 'Quinta semana',
     },
-    daily: 'Diariamente'
+    daily: 'Diariamente',
+    validation:{
+        time: 'Horário inválido'
+    }
 }

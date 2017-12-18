@@ -80,7 +80,7 @@
                                     tag="span"
                                     class="icon-information ion-ios-information f-success cursor-pointer"
                                     v-if="events[0].slug"
-                                    :to="{ name: 'general.events.show', params: { event_slug: events[0].slug }, query: {event_id: events[0].id} }"
+                                    :to="{ name: 'events.show', params: { event_slug: events[0].slug }, query: {event_id: events[0].id} }"
                                 >
                                 </router-link>
 
@@ -250,7 +250,7 @@
                     <p class="f-14 f-300 text-center">{{translations.add_event_title}}</p>
 
                     <router-link
-                        :to="{name: 'general.events.create'}"
+                        :to="{name: 'events.create'}"
                         class="btn btn-primary btn-block"
                         v-if="!interactions.is_loading"
                     >
@@ -352,11 +352,11 @@
 
             var currentCityIndex = JSON.parse(localStorage.getItem('city_index'));
 
-            if(currentCityIndex > -1){
+            if(!currentCityIndex){
+                that.currentCity = that.getCities[0];
+            } else {
                 that.currentCityIndex = currentCityIndex;
                 that.currentCity = that.getCities[currentCityIndex];
-            } else {
-                that.currentCity = that.getCities[0];
             }
 
 
@@ -694,7 +694,7 @@
             selectCategory: function (category) {
                 let that = this
 
-                
+
                 that.currentCategory = category;
                 bus.$emit('category-selected', category);
 

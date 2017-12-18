@@ -54,7 +54,7 @@
                                 <div class="card-footer p-10">
                                     <div class="text-center m-t-10">
                                         <router-link class="btn btn-primary small transparent" tag="button"
-                                                     :to="{name: 'general.events.edit', params:{id: event.id}}">
+                                                     :to="{name: 'events.edit', params:{id: event.id}}">
                                             {{translations.buttons.edit}}
                                         </router-link>
                                     </div>

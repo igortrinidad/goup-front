@@ -29,8 +29,8 @@ export default [
         component: appLayout,
         meta: {requiresAuth: false},
         children: [
-            ...explorer,
             ...auth,
+            ...explorer,
             ...user,
             ...events,
             ...secret,
