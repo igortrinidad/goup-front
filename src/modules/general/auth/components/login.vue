@@ -137,10 +137,12 @@
                 that.setLoading({ is_loading: true, message: '' })
                 that.$http.post('/auth/login', that.login)
                     .then(function (response) {
-                        this.setLoading({ is_loading: false, message: '' })
+
+                        that.setLoading({ is_loading: false, message: '' })
                         that.authSetToken(response.data.token)
                         that.authSetUser(response.data.user)
                         that.$router.push(that.handleRedirect())
+                        
                     })
                     .catch(function (error) {
                         console.log(error)
