@@ -239,6 +239,7 @@
                     return translations.pt
                 }
             },
+
             handleRecurrencyType(){
 
                 if(this.event.recurrency_type == 'weekly'){
@@ -286,11 +287,9 @@
 
             goToList: function(){
                 let that = this
-            
+
                 that.$router.push({name: 'general.events.list'});
             },
-
-
 
             initSwiperTabs() {
                 let that = this

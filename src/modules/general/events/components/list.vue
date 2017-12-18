@@ -138,7 +138,7 @@
                                                 </div>
                                                 <div class="col-xs-4 text-right">
                                                     <small class="f-primary">
-                                                        <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
+                                                        <i class="ion-ios-star m-r-5"></i>{{ event.favorites }}
                                                     </small>
                                                 </div>
                                             </div>
@@ -299,7 +299,7 @@
             bus.$on('refresh-ranking', function(){
                 that.resetCategory();
             });
-            
+
         },
 
         destroyed: function() {
@@ -334,7 +334,7 @@
                     cancelCurrentRequest()
                 }
 
-                
+
             },
 
             resetBeforeChange(){
