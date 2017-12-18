@@ -11,7 +11,8 @@
         <pulse v-if="interactions.is_loading && interactions.finished_loading_category" :icon="'ion-navigate'"/>
         </pulse>
 
-        <modal-loader />
+        <!-- <modal-loader /> -->
+        <main-loader />
 
         <transition appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 
@@ -292,6 +293,7 @@
             mainHeader: require('@/components/main-header.vue'),
             pulse: require('@/components/pulse.vue'),
             modalLoader: require('@/components/modal-loader.vue'),
+            mainLoader: require('@/components/main-loader.vue'),
             cardPlaceholderExplorer: require('@/components/card-placeholder-explorer.vue'),
         },
 
