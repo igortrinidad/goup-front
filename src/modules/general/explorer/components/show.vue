@@ -119,7 +119,7 @@
                                     </div>
                                     <div class="col-xs-3 text-right">
                                         <small class="f-primary">
-                                            <i class="ion-ios-star m-r-5"></i>{{ events[0].favorited_count }}
+                                            <i class="ion-ios-star m-r-5"></i>{{ events[0].favorites }}
                                         </small>
                                     </div>
                                 </div>
@@ -160,7 +160,7 @@
                                     </div>
                                     <div class="col-xs-4 text-right">
                                         <small class="f-primary">
-                                            <i class="ion-ios-star m-r-5"></i>{{ events[1].favorited_count }}
+                                            <i class="ion-ios-star m-r-5"></i>{{ events[1].favorites }}
                                         </small>
                                     </div>
                                 </div>

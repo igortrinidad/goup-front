@@ -203,7 +203,7 @@
                                             </div>
                                             <div class="col-xs-4 text-right">
                                                 <small class="f-primary">
-                                                    <i class="ion-ios-star m-r-5"></i>{{ event.favorited_count }}
+                                                    <i class="ion-ios-star m-r-5"></i>{{ event.favorites }}
                                                 </small>
                                             </div>
                                         </div>
@@ -327,7 +327,7 @@
             this.getEvent();
 
 
-            //Infinite custom  
+            //Infinite custom
             $(window).scroll(function(){
 
                 if(!that.infiniteLoadingRelated.is_loading && !that.infiniteLoadingRelated.complete || that.infiniteLoadingRelated.first_load){
@@ -346,7 +346,7 @@
 
         destroyed: function(){
             let that = this
-        
+
             $(window).off('scroll');
         },
 
@@ -354,15 +354,15 @@
 
             goToList: function(){
                 let that = this
-            
+
                 that.$router.push({name: 'general.events.list'});
             },
 
             goToEventRelated: function(event){
                 let that = this
-            
+
                 that.interactions.is_loading = true;
-                
+
                 that.$router.push(
                     { name: 'general.events.show', params: { event_slug: event.slug }, query: {event_id: event.id} }
                 );
