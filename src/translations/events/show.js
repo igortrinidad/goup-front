@@ -37,6 +37,7 @@ export const en = {
     tabs: {
         comments: 'Comments',
         location: 'Location',
+        same_place: 'In this place',
         friends: 'Who liked',
         users: 'More users'
     },
@@ -63,6 +64,12 @@ export const en = {
     see_more: {
         title: 'See also',
         load_complete: 'All related moments are loaded :)'
+    },
+
+    //Same place tab
+    events_same_place: {
+        subtitle: 'See more Moments in this place',
+        window_back: 'Back',
     }
 }
 
@@ -105,6 +112,7 @@ export const pt = {
     tabs: {
         comments: 'Comentários',
         location: 'Localização',
+        same_place: 'Neste local',
         friends: 'Quem curtiu',
         users: 'Mais usuários'
     },
@@ -131,5 +139,11 @@ export const pt = {
     see_more: {
         title: 'Veja também',
         load_complete: 'Todos os momentos relacionados foram carregados :)'
+    },
+
+    //Same place tab
+    events_same_place: {
+        subtitle: 'Veja mais Momentos neste local',
+        window_back: 'Voltar',
     }
 }

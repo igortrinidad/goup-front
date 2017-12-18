@@ -97,7 +97,7 @@
     import * as translations from '@/translations/events/show'
 
     export default {
-        name: 'general-places-show-tab-comments',
+        name: 'tab-comments',
 
         components: {
 

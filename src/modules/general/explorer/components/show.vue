@@ -72,7 +72,7 @@
 
                             <div
                                 id="card-lazy-image"
-                                class="card-header cover explorer-image"
+                                class="card-header cover event-cover-image"
                                 :style="{ backgroundImage: `url(${ events[0].cover })`}"
                             >
 
@@ -133,7 +133,7 @@
                             <!-- Card Header -->
                             <div
                                 id="card-lazy-image"
-                                class="card-header cover explorer-image"
+                                class="card-header cover event-cover-image"
                                 :style="{ backgroundImage: `url(${ events[1].cover })` }"
                                 v-show="!interactions.place_holder_is_loading"
                             >
@@ -311,6 +311,7 @@
                 top: 0,
                 left: 0,
                 currentCity: null,
+                currentCityIndex: 0,
                 currentCategory: null,
                 current_week: [],
                 days_selecteds: [],
@@ -349,7 +350,15 @@
 
             var that = this;
 
-            that.currentCity = that.getCities[0];
+            var currentCityIndex = JSON.parse(localStorage.getItem('city_index'));
+
+            if(currentCityIndex > -1){
+                that.currentCityIndex = currentCityIndex;
+                that.currentCity = that.getCities[currentCityIndex];
+            } else {
+                that.currentCity = that.getCities[0];
+            }
+
 
             if (that.$route.query.category_id && that.$route.query.category_id != 'all') {
 
@@ -382,8 +391,6 @@
             setTimeout(function () {
                 that.checkDaysToQuery();
             }, 100);
-
-            that.citiesSwiper();
 
         },
 
@@ -559,27 +566,26 @@
             citiesSwiper() {
                 let that = this
 
-                let currentIndex = JSON.parse(localStorage.getItem('city_index'))
-
                 setTimeout(() => {
                     that.swiperTabs = new Swiper(that.$refs.citiesSlider, {
                         spaceBetween: 0,
                         slidesPerView: 5,
-                        initialSlide: currentIndex ? currentIndex : 0,
+                        initialSlide: that.currentCityIndex,
                         loop: false,
                         centeredSlides: true,
                         slideToClickedSlide: true,
                         prevButton: '.swiper-button-prev',
                         nextButton: '.swiper-button-next',
+                        onInit: swiper => {
+                            that.resetBeforeChange();
+                        },
                         onSlideChangeEnd: swiper => {
 
+                            that.currentCity = that.getCities[swiper.realIndex]
+                            that.currentCityIndex = swiper.realIndex
                             localStorage.setItem('city_index', swiper.realIndex)
 
-                            let city = that.getCities[swiper.realIndex]
-
-                            if (that.currentCity.id != city.id) {
-                                that.currentCity = city
-                            }
+                            that.resetBeforeChange();
 
                         },
                         breakpoints: {
@@ -594,6 +600,7 @@
                             },
                         }
                     })
+
 
                 }, 100)
             },
@@ -634,7 +641,6 @@
                             setTimeout(function() {
 
                                 that.mountHammer();
-                                that.citiesSwiper();
 
                             }, 450);
 
@@ -649,6 +655,19 @@
                         console.log(error)
                         that.interactions.is_loading = false;
                     });
+
+            },
+
+            resetBeforeChange(){
+
+                this.events = [];
+
+
+                if (typeof cancelCurrentRequest === "function") {
+                    cancelCurrentRequest()
+                }
+
+                this.getEvents();
 
             },
 
@@ -675,18 +694,18 @@
             selectCategory: function (category) {
                 let that = this
 
+                
                 that.currentCategory = category;
                 bus.$emit('category-selected', category);
 
                 setTimeout(function () {
-                    that.interactions.is_loading = true;
+                    that.interactions.is_loading = false;
                     that.interactions.finished_loading_category = true;
                     that.$router.push({query: {category_id: category.id}})
                 }, 500);
 
                 setTimeout(function () {
-                    that.currentCity = that.getCities[0];
-                    that.getEvents();
+                    that.citiesSwiper();
                 }, 600);
 
                 if (typeof cancelCurrentRequest === "function") {
@@ -771,53 +790,10 @@
         display: none;
     }
 
-    .cards {
-        position: relative;
-        height: 378px;
-    }
-
     .card {
         position: absolute;
         width: 100%;
         left: 0;
-    }
-
-    .explorer-image{
-        height: 200px !important;
-        border-radius: 6px 6px 0 0;
-    }
-
-    @media (max-width: 325px){
-        .explorer-image{
-            height: 150px !important;
-        }
-
-        .cards {
-            position: relative;
-            height: 328px;
-        }
-    }
-
-    @media (min-width: 768px){
-        .explorer-image{
-            height: 350px !important;
-        }
-
-        .cards {
-            position: relative;
-            height: 528px;
-        }
-    }
-
-    @media (min-width: 893px){
-        .explorer-image{
-            height: 350px !important;
-        }
-
-        .cards {
-            position: relative;
-            height: 548px;
-        }
     }
 
     .cards #card-animated {

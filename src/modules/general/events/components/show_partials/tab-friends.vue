@@ -43,7 +43,7 @@
     import * as translations from '@/translations/events/show'
     import pagination from '@/components/pagination'
     export default {
-        name: 'general-places-show-tab-friends',
+        name: 'tab-friends',
 
         components: {
             pagination

@@ -110,13 +110,9 @@
                                 >
                                     <div class="card p-0">
                                         <!-- Card Header -->
-                                        <div
-                                            class="card-header cover p-5"
-                                            :style="{
-                                            backgroundImage: `url(${ event.cover })`,
-                                            height: '150px',
-                                            borderRadius: '6px 6px 0 0'
-                                        }"
+                                        <div 
+                                            class="card-header cover event-cover-image p-5" 
+                                            :style="{backgroundImage: `url(${ event.cover })`}"
                                         >
                                             <span class="event-ranking">
                                                 {{ event.rank_position }}º
@@ -227,6 +223,7 @@
                 nextSet: 0,
                 currentCategory: null,
                 currentCity: null,
+                currentCityIndex: 0,
                 radius: 100,
                 processStyle: {backgroundColor: "#48C3D1"},
                 tooltipStyle: {backgroundColor: "#48C3D1", borderColor: "#48C3D1"},
@@ -263,7 +260,14 @@
 
             var that = this;
 
-            that.currentCity = that.getCities[0];
+            var currentCityIndex = JSON.parse(localStorage.getItem('city_index'));
+
+            if(currentCityIndex > -1){
+                that.currentCityIndex = currentCityIndex;
+                that.currentCity = that.getCities[currentCityIndex];
+            } else {
+                that.currentCity = that.getCities[0];
+            }
 
             if(that.$route.query.category_id){
                 var index = that.getCategories.indexFromAttr('id', that.$route.query.category_id);
@@ -344,6 +348,8 @@
                     cancelCurrentRequest()
                 }
 
+                this.getEvents();
+
             },
 
             getEvents() {
@@ -423,20 +429,23 @@
                 let that = this
 
                 setTimeout(() => {
-                    let currentIndex = JSON.parse(localStorage.getItem('city_index'))
-
+                    
                     that.swiperTabs = new Swiper(that.$refs.citiesSlider, {
                         spaceBetween: 0,
                         slidesPerView: 5,
-                        initialSlide: currentIndex ? currentIndex : 0,
+                        initialSlide: that.currentCityIndex,
                         loop: false,
                         centeredSlides: true,
                         slideToClickedSlide: true,
                         prevButton: '.swiper-button-prev',
                         nextButton: '.swiper-button-next',
+                        onInit: swiper => {
+                            that.resetBeforeChange();
+                        },
                         onSlideChangeEnd: swiper => {
 
                             that.currentCity = that.getCities[swiper.realIndex]
+                            that.currentCityIndex = swiper.realIndex
                             localStorage.setItem('city_index', swiper.realIndex)
 
                             that.resetBeforeChange()
@@ -466,7 +475,6 @@
                     that.interactions.finished_loading_category = true;
                     that.interactions.is_loading = false;
                     that.$router.push({ query: { category_id: category.id }})
-                    that.getEvents();
                 }, 500);
 
                 setTimeout(function() {
