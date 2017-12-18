@@ -24,7 +24,7 @@
                                         height: '150px',
                                         borderRadius: '6px 6px 0 0'
                                     }"
-                                    :to="{ name: 'general.events.show', params: { event_slug: favorite.event.slug }, query: {event_id: favorite.event.id} }"
+                                    :to="{ name: 'events.show', params: { event_slug: favorite.event.slug }, query: {event_id: favorite.event.id} }"
                                 >
                                 </router-link>
                                 <!-- Card Body -->

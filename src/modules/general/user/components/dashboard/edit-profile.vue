@@ -97,7 +97,7 @@
     import {apiUrl} from '@/config/'
 
     export default {
-        name: 'general-user-settings-edit-profile',
+        name: 'user-settings-edit-profile',
 
         components: {
             mainHeader,

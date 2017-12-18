@@ -5,7 +5,7 @@
             class="card"
             v-for="(interaction, interactionIndex) in user_interactions"
             :key="interactionIndex"
-            :to="{ name: 'general.events.show', params: { event_slug: interaction.event.slug } }"
+            :to="{ name: 'events.show', params: { event_slug: interaction.event.slug } }"
         >
             <!-- Card Header -->
             <div
@@ -61,7 +61,7 @@
 
 
     export default {
-        name: 'general-user-show-tab-interactions',
+        name: 'user-show-tab-interactions',
 
         props: {
 

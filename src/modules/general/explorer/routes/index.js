@@ -17,7 +17,7 @@ export default [
         meta: {requiresAuth: true},
         children: [
             {
-                name: 'general.explorer',
+                name: 'explorer.show',
                 path: '',
                 component: Show,
                 meta: {requiresAuth: true}

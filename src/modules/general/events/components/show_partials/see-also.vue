@@ -116,7 +116,7 @@
         mounted(){
             var that = this;
 
-            //Infinite custom  
+            //Infinite custom
             $(window).scroll(function(){
 
                 if(!that.infiniteLoadingRelated.is_loading && !that.infiniteLoadingRelated.complete || that.infiniteLoadingRelated.first_load){
@@ -173,11 +173,11 @@
 
             goToEventRelated: function(event){
                 let that = this
-            
+
                 bus.$emit('go-to-event-related');
 
                 that.$router.push(
-                    { name: 'general.events.show', params: { event_slug: event.slug }, query: {event_id: event.id} }
+                    { name: 'events.show', params: { event_slug: event.slug }, query: {event_id: event.id} }
                 );
 
                 that.relateds = [];

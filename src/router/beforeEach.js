@@ -7,17 +7,6 @@ const needAuth = (auth, token) => auth !== undefined && auth && isEmpty(token)
 const preventsLogged = prevents => prevents === true
 
 const beforeEach = (to, from, next) => {
-    
-    var checkUserLastLocation = window.checkUserLastLocation();
-
-    if(!checkUserLastLocation && to.path != '/'){
-        next('/')
-    }
-
-    if(checkUserLastLocation == 'is_invalid' && to.path != '/' ){
-        next('/')
-    }
-
 
     let token = store.state.Auth.token
     const auth = to.meta.requiresAuth
@@ -78,9 +67,9 @@ const beforeEach = (to, from, next) => {
      * login.
      */
     if (needAuth(auth, token)) {
-        next({name: 'general.auth.login'})
-    }
 
+        next({name: to.name})
+    }
     $('html, body').stop().animate({ scrollTop: 0 }, 500, 'easeInOutExpo');
 
 

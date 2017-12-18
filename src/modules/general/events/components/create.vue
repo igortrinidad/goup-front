@@ -120,9 +120,9 @@
                                         {{translations.form.value_uninformed}}
                                  </span>
 
-                                <vue-numeric 
-                                    type="tel" 
-                                    id="event-value" 
+                                <vue-numeric
+                                    type="tel"
+                                    id="event-value"
                                     class="form-control m-t-10"
                                      :currency="language == 'en'? '$': 'R$'" :min="0"
                                      :separator="language == 'en'? ',': '.'" :precision="2"
@@ -321,8 +321,8 @@
                                 <div class="col" v-for="photo in google_photos">
                                     <img  class="img-responsive thumbnail m-b-5" :src="photo.photo_url">
                                     <p>{{translations.photo_quality.title}} {{translations.photo_quality[photo.quality]}}</p>
-                                    
-                                    <button class="btn btn-primary btn-sm" @click="tooglePhotoFromGoogle(photo)">{{ translations.form.google_photos_select_photo }}</button>
+
+                                    <button class="btn btn-primary btn-sm" @click.prevent="tooglePhotoFromGoogle(photo)">{{ translations.form.google_photos_select_photo }}</button>
                                 </div>
                             </div>
 
@@ -453,7 +453,7 @@
     import vuePicker from 'vue-bspicker'
 
     export default {
-        name: 'general-events-create',
+        name: 'events-create',
 
         components: {
             mainHeader,
@@ -661,7 +661,7 @@
                             }
                         );
                     });
-                    
+
                     place.address_components.map((current) =>{
                         current.types.map((type) => {
                             if(type == 'administrative_area_level_1'){
@@ -1044,7 +1044,7 @@
 
             tooglePhotoFromGoogle: function(photo){
                 let that = this
-            
+
                 var index = that.event.google_photos_selected.indexOf(photo)
                 if(index > -1){
                     that.event.google_photos_selected.splice(index, 1)
@@ -1057,11 +1057,11 @@
                 }
 
                 that.checkAtLeastOneCover();
-                
+
             },
 
             checkIfHasSomePhoto: function(){
-                
+
                 if(!this.event.photos) {
                     return true
                 }
@@ -1071,17 +1071,17 @@
                 }
 
                 return false
-                
+
             },
 
             checkAtLeastOneCover: function(){
-                
+
                 if(this.event.photos.length){
-                    var photosHasCover = this.event.photos.checkFromAttr('is_cover', true); 
+                    var photosHasCover = this.event.photos.checkFromAttr('is_cover', true);
                 }
 
                  if(this.event.google_photos_selected.length){
-                    var googlePhotosHasCover = this.event.google_photos_selected.checkFromAttr('is_cover', true); 
+                    var googlePhotosHasCover = this.event.google_photos_selected.checkFromAttr('is_cover', true);
                 }
 
                 if(!photosHasCover && !googlePhotosHasCover){
@@ -1179,24 +1179,6 @@
 
 </style>
 
-<style>
-    /*override picker styles*/
-    .picker--choose .confirm {
-        color: #561F9F !important;
-        text-align: right;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .picker--choose .cancel {
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .picker--choose h4{
-        text-align: center
-    }
-</style>
 <style>
     /*override picker styles*/
     .picker--choose .confirm {

@@ -42,14 +42,14 @@
                                     class="icon-header"
                                     :class="{'bounce' : interactions.bounce == 'profile' }"
                                     src="../assets/icons/header/profile_white.svg"
-                                    @click="redirectTo('general.user.settings', 'profile')"
+                                    @click="redirectTo('user.settings', 'profile')"
                                 >
                                 <img
                                     v-if="title === 'settings'"
                                     class="icon-header"
                                     :class="{'bounce' : interactions.bounce == 'profile' }"
                                     src="../assets/icons/header/profile_pink.svg"
-                                    @click="redirectTo('general.user.settings', 'profile')"
+                                    @click="redirectTo('user.settings', 'profile')"
                                 >
                             </div>
                             <!-- / LEFT -->
@@ -59,7 +59,7 @@
                         <div class="col-md-6 col-xs-6 text-center">
                             <!-- CENTER -->
                             <div>
-                                <div class="" @click="redirectTo('general.explorer', 'explorer')" :class="{'bounce' : interactions.bounce == 'explorer'}">
+                                <div class="" @click="redirectTo('explorer.show', 'explorer')" :class="{'bounce' : interactions.bounce == 'explorer'}">
                                     <img
                                         class="icon-header icon-header-lg"
                                         v-if="title === 'home' && !categorySelected"
@@ -82,7 +82,7 @@
 
                         <div class="col-md-3 col-xs-3 text-right">
                             <!-- RIGHT -->
-                            <div @click="redirectTo('general.events.list', 'ranking')" >
+                            <div @click="redirectTo('events.list', 'ranking')" >
                                 <img
                                     v-if="title !== 'ranking' && !rankingCategorySelected"
                                     class="icon-header"

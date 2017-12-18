@@ -105,13 +105,13 @@
                                     tag="div"
                                     class="col-sm-12 cursor-pointer"
                                     v-for="(event, indexEvents) in events" v-if="!interactions.is_loading"
-                                    :to="{ name: 'general.events.show', params: { event_slug: event.slug }, query: {event_id: event.id} }"
+                                    :to="{ name: 'events.show', params: { event_slug: event.slug }}"
                                     :key="indexEvents"
                                 >
                                     <div class="card p-0">
                                         <!-- Card Header -->
-                                        <div 
-                                            class="card-header cover event-cover-image p-5" 
+                                        <div
+                                            class="card-header cover event-cover-image p-5"
                                             :style="{backgroundImage: `url(${ event.cover })`}"
                                         >
                                             <span class="event-ranking">
@@ -163,7 +163,7 @@
 
                                 <p class="f-14 f-300 text-center m-t-20">{{translations.add_event_title}}</p>
 
-                                <router-link :to="{name: 'general.events.create'}" class="btn btn-primary btn-block m-t-20">{{translations.add_event}}</router-link>
+                                <router-link :to="{name: 'events.create'}" class="btn btn-primary btn-block m-t-20">{{translations.add_event}}</router-link>
                             </div>
 
                         </div>
@@ -198,7 +198,7 @@
 
 
     export default {
-        name: 'general-events-list',
+        name: 'events-list',
 
         components: {
             mainHeader: require('@/components/main-header.vue'),
@@ -319,7 +319,7 @@
                 that.currentCategory = null;
 
                 if(refresh_query){
-                    that.$router.push({name: 'general.events.list'});
+                    that.$router.push({name: 'events.list'});
                 }
 
                 that.interactions.finished_loading_category = false;
@@ -429,7 +429,7 @@
                 let that = this
 
                 setTimeout(() => {
-                    
+
                     that.swiperTabs = new Swiper(that.$refs.citiesSlider, {
                         spaceBetween: 0,
                         slidesPerView: 5,
