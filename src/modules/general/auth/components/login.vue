@@ -128,7 +128,7 @@
                 openFB.init({appId: facebookClientId, tokenStore: localStorage});
             }
 
-            this.setLoading({ is_loading: true, message: '' })
+            // this.setLoading({ is_loading: true, message: '' })
         },
 
         methods: {
