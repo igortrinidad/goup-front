@@ -134,7 +134,7 @@
 
             makeLogin(){
                 let that = this
-                this.setLoading({ is_loading: true, message: '' })
+                that.setLoading({ is_loading: true, message: '' })
                 that.$http.post('/auth/login', that.login)
                     .then(function (response) {
                         this.setLoading({ is_loading: false, message: '' })
@@ -165,12 +165,12 @@
              */
             facebookLogin(){
                 let that = this
-                this.setLoading({ is_loading: true, message: '' })
+                that.setLoading({ is_loading: true, message: '' })
                 if(window.cordova){
                     openFB.login(
                         function(response) {
                             if(response.status === 'connected') {
-                                this.setLoading({ is_loading: false, message: '' })
+                                that.setLoading({ is_loading: false, message: '' })
                                 that.statusChangeCallback(response)
                             } else {
 
@@ -186,7 +186,7 @@
                 if(!window.cordova){
                     FB.login(function(response) {
                         that.statusChangeCallback(response)
-                        this.setLoading({ is_loading: false, message: '' })
+                        that.setLoading({ is_loading: false, message: '' })
                     }, {scope: 'public_profile,email'});
                 }
             },
