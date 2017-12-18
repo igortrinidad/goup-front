@@ -51,8 +51,8 @@
             <div class="container text-center">
                 <div class="m-t-20">
                     <small class="f-300">
-                        <router-link 
-                            :to="{name: 'landing.reset-pass', params: {usertype: 'user'}}" 
+                        <router-link
+                            :to="{name: 'landing.reset-pass', params: {usertype: 'user'}}"
                             class="btn btn-info btn-xs">
                             {{ translations.forgotPassword }}
                         </router-link>
@@ -79,7 +79,7 @@
                 </span>
                 <!-- TERMS AND PRIVACY -->
             </div>
-            
+
         </div>
 
 
@@ -130,13 +130,14 @@
         },
 
         methods: {
-            ...mapActions(['authSetToken', 'authSetUser']),
+            ...mapActions(['authSetToken', 'authSetUser', 'setLoading']),
 
             makeLogin(){
                 let that = this
-
+                this.setLoading({ is_loading: true, message: '' })
                 that.$http.post('/auth/login', that.login)
                     .then(function (response) {
+                        this.setLoading({ is_loading: false, message: '' })
                         that.authSetToken(response.data.token)
                         that.authSetUser(response.data.user)
                         that.$router.push(that.handleRedirect())
@@ -164,13 +165,12 @@
              */
             facebookLogin(){
                 let that = this
-
-
-
+                this.setLoading({ is_loading: true, message: '' })
                 if(window.cordova){
                     openFB.login(
                         function(response) {
                             if(response.status === 'connected') {
+                                this.setLoading({ is_loading: false, message: '' })
                                 that.statusChangeCallback(response)
                             } else {
 
@@ -186,6 +186,7 @@
                 if(!window.cordova){
                     FB.login(function(response) {
                         that.statusChangeCallback(response)
+                        this.setLoading({ is_loading: false, message: '' })
                     }, {scope: 'public_profile,email'});
                 }
             },

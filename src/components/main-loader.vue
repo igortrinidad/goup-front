@@ -1,101 +1,106 @@
-<template lang="html">
-    <div id="modal-loader" class="modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-          </div>
-          <div class="modal-body">
-            <span class="pulse">
-                <i class="ion-load-a"></i>
-            </span>
-
-            <p class="pulse-msg f-14 f-300">
-                {{ language === 'pt' ? 'Carregando' : 'Loading' }}
-            </p>
-          </div>
+<template>
+    <div class="loading-wrapper" v-if="loader.is_loading">
+        <div class="loading-box">
+            <img class="loader" src="../assets/logos/LOGOS-07.png" alt="" width="150">
+            <div v-if="loader.message !=''">
+                <h3>{{loader.message}}</h3>
+            </div>
+            <div v-if="!loader.message">
+                <h3 class="f-300 f-14 f-primary" style="color: #fff; margin-top:0px; ">{{language == 'en' ? 'Loading': 'Carregando'}}</h3>
+            </div>
         </div>
-      </div>
     </div>
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import {mapGetters} from 'vuex'
 
-    export default {
-        name: 'modal-loader',
-        data() {
-            return {
-
-            }
+    export default{
+        name: 'main-loader',
+        components: {
         },
+        data(){
+            return {}
+        },
+        mounted(){
 
+        },
         computed: {
             ...mapGetters(['loader', 'language']),
         },
-
-        mounted() {
-            $('#modal-loader').modal('show')
-        },
-
-        methods: {
-
-        }
     }
 </script>
 
-<style scoped>
+<style>
 
-.modal-body {
-    height: calc(100% - 50px);
-}
+    /*
+    Loader
+     */
+    .loading-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 100000;
+       background-color: rgba(0, 0, 0, .9) !important;
+       opacity: 1 !important;
+    }
 
-.pulse {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    width: 60px; height: 60px;
-    font-size: 50px;
-    cursor: pointer;
-    animation: pulse 3s infinite;
-    position: absolute;
-    left: calc(50% - 30px);
-    top: calc(50% - 50px);
-    padding: 0;
-}
+    .loading-box {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 
-.pulse i {
-    position: relative;
-    animation: rotate 1s infinite linear;
-}
+    .loader{
+        width: 159px;
+        text-align: center;
+    }
 
-.pulse-msg {
-    position: absolute;
-    width: 100%;
-    top: calc(50% + 30px);
-    left: 0; right: 0;
-}
+    @-webkit-keyframes blink {
+        0% {
+            opacity:1;
+        }
+        50% {
+            opacity:0.4;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+    @-moz-keyframes blink {
+        0% {
+            opacity:1;
+        }
+        50% {
+            opacity:0.4;
+        }
+        100% {
+            opacity:1;
+        }
+    }
+    .loader {
+        -webkit-transition: all 1s ease-in-out;
+        -moz-transition: all 1s ease-in-out;
+        -o-transition: all 1s ease-in-out;
+        -ms-transition: all 1s ease-in-out;
+        transition: all 1s ease-in-out;
 
-/* Animate */
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(86, 31, 159, 0.5);
-    color: rgba(86, 31, 159, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 8px rgba(86, 31, 159, 0);
-    color: rgba(86, 31, 159, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(86, 31, 159, 0);
-    color: rgba(86, 31, 159, 0);
-  }
-}
+        -webkit-animation-direction: normal;
+        -webkit-animation-duration: 2s;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-name: blink;
+        -webkit-animation-timing-function: ease-in-out;
 
-@keyframes rotate {
-    from { transform: rotate(0deg) }
-    to { transform: rotate(360deg) }
-}
-
+        -moz-animation-direction: normal;
+        -moz-animation-duration: 2s;
+        -moz-animation-iteration-count: infinite;
+        -moz-animation-name: blink;
+        -moz-animation-timing-function: ease-in-out;
+    }
 
 </style>
