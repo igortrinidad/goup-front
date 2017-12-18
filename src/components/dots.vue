@@ -83,6 +83,7 @@
                     that.bounce('#circle3', 60)
                     that.bounce('#circle4', 100)
 
+                    that.changeColors()
 
                     console.log(that.colorIndex);
                     if (that.colorIndex < 2) {
@@ -120,10 +121,16 @@
                     }
                 })
 
+            },
+
+            changeColors() {
+                let that = this
+                const styler = svg(document.querySelector('#circle3'))
+
                 setTimeout(function () {
                     tween({
-                        from: that.colors.center[that.colorIndex],
-                        to: that.colors.center[that.colorIndex],
+                        from: '#9B65DE',
+                        to: '#14D790',
                         duration: 300
                     }).start(styler.set('fill'))
 
