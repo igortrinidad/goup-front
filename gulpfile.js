@@ -27,11 +27,11 @@ elixir(function(mix) {
 	], './static/build/css/vendor.css');
 
 	mix.scripts([
-		'./node_modules/jquery/dist/jquery.js',
+        './node_modules/jquery/dist/jquery.js',
 		'./assets/flatly/js/bootstrap.js',
         './node_modules/izitoast/dist/js/iziToast.js',
         './node_modules/jquery.easing/jquery.easing.js',
-        './node_modules/jquery-mask-plugin/dist/jquery.mask.js',
+        './node_modules/snapsvg/dist/jquery.mask.js',
 		'./src/utils/notifications.js',
         './assets/js/hammer-time.js',
 
