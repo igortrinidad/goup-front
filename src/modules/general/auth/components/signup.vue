@@ -38,7 +38,7 @@
                             <input type="text" class="form-control" :placeholder="translations.placeholders.last_name" v-model="user.last_name">
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" :placeholder="translations.placeholders.email" v-model="user.email" id="signup-email">
+                            <input type="email" class="form-control" :placeholder="translations.placeholders.email" v-model="user.email" id="signup-email" @blur="validateEmail()">
                         </div>
                         <div class="form-group">
                             <input type="tel" class="form-control" :placeholder="translations.placeholders.bday" v-model="user.bday"  data-mask="00/00/0000">
@@ -135,6 +135,17 @@
 
             validateForm(){
                 return !this.user.name || !this.user.last_name || !this.user.email || !this.user.password
+            },
+
+            validateEmail() {
+                const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+                if (!re.test(this.user.email)) {
+                    warningNotify('', this.translations.validations.email.invalid)
+                    this.user.email = ''
+                } else {
+                    console.log('valid');
+                }
             },
 
 
