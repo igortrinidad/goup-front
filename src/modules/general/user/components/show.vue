@@ -229,24 +229,38 @@
                 let that = this
 
                 setTimeout(() => {
-                    that.swiperTabs = new Swiper(that.$refs.tabs, {
+                    var swiperTabs = new Swiper(that.$refs.tabs, {
+                        init: true,
                         initialSlide: 0,
                         slidesPerView: 2,
                         spaceBetween: 5,
                         centeredSlides: true,
                         slideActiveClass: 'active',
                         slideToClickedSlide: true,
-                        onSlideChangeEnd: swiper => {
-                            that.currentTab = swiper.realIndex
+                        on: {
+                            init: function () {
+                                that.currentTab = this.realIndex
 
-                            if( that.currentTab === 1){
-                                bus.$emit('load-created')
-                            }
+                                if( that.currentTab === 1){
+                                    bus.$emit('load-created')
+                                }
 
-                            if( that.currentTab === 2){
-                                bus.$emit('load-favorite')
-                            }
-                        },
+                                if( that.currentTab === 2){
+                                    bus.$emit('load-favorite')
+                                }
+                            },
+                            slideChangeTransitionEnd: function () {
+                                that.currentTab = this.realIndex
+
+                                if( that.currentTab === 1){
+                                    bus.$emit('load-created')
+                                }
+
+                                if( that.currentTab === 2){
+                                    bus.$emit('load-favorite')
+                                }
+                            },
+                        }
                     })
                 }, 200);
             },
