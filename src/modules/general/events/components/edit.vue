@@ -4,6 +4,7 @@
         <main-header
             :title="translations.title"
             :type="'back'"
+            :action="headerAction"
             :cursor="false"
         ></main-header>
 
@@ -793,7 +794,7 @@
                 that.$http.post('event/update', that.event)
                     .then(function (response) {
                         successNotify('', that.translations.success)
-                        that.$router.push({path: '/events'})
+                        that.$router.push({name: 'user.events'});
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -1174,6 +1175,10 @@
 
                     this.event.google_photos_selected[0].is_cover = true;
                 }
+            },
+
+            headerAction: function(){
+                this.$router.push({name: 'user.settings'});
             },
 
         }

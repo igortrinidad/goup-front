@@ -4,6 +4,7 @@
         <main-header
             :title="translations.title"
             :type="'back'"
+            :action="headerAction"
             :cursor="false"
         ></main-header>
 
@@ -151,7 +152,11 @@
                     .catch(function (error) {
                         console.log(error)
                     });
-            }
+            },
+
+            headerAction: function(){
+                this.$router.push({name: 'user.settings'});
+            },
 
         }
     }

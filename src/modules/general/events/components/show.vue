@@ -284,9 +284,7 @@
         methods: {
 
             goToList: function(){
-                let that = this
-
-                that.$router.push({name: 'events.list'});
+                this.$router.push({name: 'explorer.show'});
             },
 
             initSwiperTabs() {

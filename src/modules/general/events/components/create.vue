@@ -4,6 +4,7 @@
         <main-header
             :title="translations.title"
             :type="'back'"
+            :action="headerAction"
             :cursor="false"
         ></main-header>
 
@@ -712,7 +713,7 @@
                         that.addNewEvent(response.data.event)
                         that.event = cleanEventModel()
                         successNotify('', that.translations.success)
-                        that.$router.push({path: '/ranking'})
+                        that.$router.push({name: 'user.events'});
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -1093,6 +1094,10 @@
 
                     this.event.google_photos_selected[0].is_cover = true;
                 }
+            },
+
+            headerAction: function(){
+                this.$router.push({name: 'user.settings'});
             },
 
         }
