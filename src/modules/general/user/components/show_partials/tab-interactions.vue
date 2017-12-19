@@ -1,55 +1,57 @@
 <template>
-    <div class="cards" infinite-wrapper>
-        <router-link
-            tag="div"
-            class="card"
-            v-for="(interaction, interactionIndex) in user_interactions"
-            :key="interactionIndex"
-            :to="{ name: 'events.show', params: { event_slug: interaction.event.slug } }"
-        >
-            <!-- Card Header -->
-            <div
-                class="card-header cover p-5"
-                :style="{
-                    backgroundImage: `url(${ interaction.event.cover })`,
-                    height: '150px',
-                    borderRadius: '6px 6px 0 0'
-                }"
+    <div class="transition slow">
+        <div class="cards" infinite-wrapper>
+            <router-link
+                tag="div"
+                class="card"
+                v-for="(interaction, interactionIndex) in user_interactions"
+                :key="interactionIndex"
+                :to="{ name: 'events.show', params: { event_slug: interaction.event.slug } }"
             >
-                <span class="event-ranking">
-                    <i class="ion-ios-rewind" v-if="interaction.skip"></i>
-                    <i class="ion-chevron-down" v-if="interaction.down"></i>
-                    <i class="ion-chevron-up"  v-if="interaction.up"></i>
-                    <i class="ion-ios-star" v-if="interaction.favorite"></i>
-                </span>
-            </div>
-            <!-- Card Body -->
-            <div class="card-body card-padding">
-                <h4 class="m-b-5">{{ interaction.event.name }}</h4>
-                <div style="opacity: .8;">
-                    <p class="m-b-5">{{ interaction.event.description }}</p>
-                    <span class="d-block m-0 f-12">
-                        <strong>{{ interaction.event.city.name }} - {{ interaction.event.city.state }}</strong>
+                <!-- Card Header -->
+                <div
+                    class="card-header cover p-5"
+                    :style="{
+                        backgroundImage: `url(${ interaction.event.cover })`,
+                        height: '150px',
+                        borderRadius: '6px 6px 0 0'
+                    }"
+                >
+                    <span class="event-ranking">
+                        <i class="ion-ios-rewind" v-if="interaction.skip"></i>
+                        <i class="ion-chevron-down" v-if="interaction.down"></i>
+                        <i class="ion-chevron-up"  v-if="interaction.up"></i>
+                        <i class="ion-ios-star" v-if="interaction.favorite"></i>
                     </span>
                 </div>
-            </div>
-            <!-- Card Footer -->
-            <div class="card-footer p-5">
-                <div class="row">
-                    <div class="col-xs-8" style="opacity: .8;">
-                        <small class="p-l-10 m-l-10">
-                            <span v-show="interaction.event.value > 0">{{ interaction.event.value | formatCurrency }}</span>
-                            <span v-show="interaction.event.value === 0">{{ translations.free }}</span>
-                        </small>
-                    </div>
-                    <div class="col-xs-4 text-right">
-                        <small class="f-primary">
-                            <i class="ion-ios-star m-r-5"></i>{{ interaction.event.favorites }}
-                        </small>
+                <!-- Card Body -->
+                <div class="card-body card-padding">
+                    <h4 class="m-b-5">{{ interaction.event.name }}</h4>
+                    <div style="opacity: .8;">
+                        <p class="m-b-5">{{ interaction.event.description }}</p>
+                        <span class="d-block m-0 f-12">
+                            <strong>{{ interaction.event.city.name }} - {{ interaction.event.city.state }}</strong>
+                        </span>
                     </div>
                 </div>
-            </div>
-        </router-link>
+                <!-- Card Footer -->
+                <div class="card-footer p-5">
+                    <div class="row">
+                        <div class="col-xs-8" style="opacity: .8;">
+                            <small class="p-l-10 m-l-10">
+                                <span v-show="interaction.event.value > 0">{{ interaction.event.value | formatCurrency }}</span>
+                                <span v-show="interaction.event.value === 0">{{ translations.free }}</span>
+                            </small>
+                        </div>
+                        <div class="col-xs-4 text-right">
+                            <small class="f-primary">
+                                <i class="ion-ios-star m-r-5"></i>{{ interaction.event.favorites }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </router-link>
+        </div>
     </div>
 </template>
 

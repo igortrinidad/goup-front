@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="transition slow">
       <div class="cards" infinite-wrapper>
           <router-link
               tag="div"
