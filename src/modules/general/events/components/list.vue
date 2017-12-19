@@ -74,6 +74,7 @@
                                 <div class="swiper-wrapper">
                                     <div
                                         class="swiper-slide label transparent m-5 cursor-pointer"
+                                        style="width: 200px;"
                                         v-for="(city, $index) in getCities"
                                         :key="$index"
                                         :class="{
@@ -96,8 +97,14 @@
 
                             <!-- IF NO EVENTS -->
                             <div class="col-sm-12 text-center">
-                                <p class="f-info" v-if="!events.length && !infiniteLoadingEvents.is_loading">{{translations.noEvents}}</p>
+                                <div class="no-event-card m-t-20" v-if="!events.length && !infiniteLoadingEvents.is_loading">
+                                    <img src="../../../../assets/icons/ghost.svg" />
+                                    <p class="f-info m-t-20" >
+                                        {{translations.noEvents}}
+                                    </p>
+                                </div>
                             </div>
+
 
                             <!-- EVENTS LIST -->
                             <div>
@@ -195,7 +202,6 @@
 
     var CancelToken = axios.CancelToken;
     var cancelCurrentRequest;
-
 
     export default {
         name: 'events-list',
@@ -395,7 +401,7 @@
                         }
 
                     }).catch(function (error) {
-                   console.log(error)
+                        //console.log(error.response)
                 });
 
             },
@@ -430,7 +436,8 @@
 
                 setTimeout(() => {
 
-                    that.swiperTabs = new Swiper(that.$refs.citiesSlider, {
+                    var swiperTabs = new Swiper(that.$refs.citiesSlider, {
+                        init: true,
                         spaceBetween: 0,
                         slidesPerView: 5,
                         initialSlide: that.currentCityIndex,
@@ -439,16 +446,16 @@
                         slideToClickedSlide: true,
                         prevButton: '.swiper-button-prev',
                         nextButton: '.swiper-button-next',
-                        onInit: swiper => {
-                            that.resetBeforeChange();
-                        },
-                        onSlideChangeEnd: swiper => {
-
-                            that.currentCity = that.getCities[swiper.realIndex]
-                            that.currentCityIndex = swiper.realIndex
-                            localStorage.setItem('city_index', swiper.realIndex)
-
-                            that.resetBeforeChange()
+                        on: {
+                            init: function () {
+                                that.resetBeforeChange(); 
+                            },
+                            slideChangeTransitionEnd: function () {
+                                that.currentCity = that.getCities[this.realIndex]
+                                that.currentCityIndex = this.realIndex
+                                localStorage.setItem('city_index', this.realIndex)
+                                that.resetBeforeChange()
+                            },
                         },
                         breakpoints: {
                             350: {
@@ -475,11 +482,11 @@
                     that.interactions.finished_loading_category = true;
                     that.interactions.is_loading = false;
                     that.$router.push({ query: { category_id: category.id }})
-                }, 500);
+                }, 300);
 
                 setTimeout(function() {
                     that.citiesSwiper();
-                }, 1000);
+                }, 600);
 
                 bus.$emit('ranking-category-selected', category);
 
@@ -551,6 +558,19 @@
         width: auto; height: 70px;
         display: block;
         margin: 0 auto;
+    }
+
+    .no-event-card{
+        padding: 15px;
+        text-align: center;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, .4);
+        margin-bottom: 50px;
+    }
+
+    .no-event-card img {
+        height: 144px;
+        margin-top: 5px;
     }
 
 </style>

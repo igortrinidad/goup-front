@@ -57,9 +57,14 @@
                 <!-- EXPLORER -->
                 <div class="container" v-if="interactions.finished_loading_category && !interactions.is_loading">
 
-                    <p class="f-info text-center m-b-30 m-t-30" v-show="!events.length && !interactions.is_loading && !interactions.place_holder_is_loading">
-                        {{ translations.end_list }}
-                    </p>
+                    
+
+                    <div class="no-event-card m-t-20" v-show="!events.length && !interactions.is_loading && !interactions.place_holder_is_loading">
+                        <img src="../../../../assets/icons/ghost.svg" />
+                        <p class="f-info m-t-20" >
+                            {{ translations.end_list }}
+                        </p>
+                    </div>
 
                     <card-placeholder-explorer class="m-t-20 m-b-30" v-show="interactions.place_holder_is_loading"></card-placeholder-explorer>
 
@@ -207,10 +212,10 @@
                                     <div class="swiper-label-to-fix swiper-slide label transparent m-5 cursor-pointer"
                                          v-for="(city, $index) in getCities"
                                          :key="$index"
-                                         :class="{'cursor-pointer': currentCity != city, 'label-success':currentCity == city}">
-                                        <span v-if="currentCity != city">{{city.name}} - {{city.state}}  <span
-                                            class="badge-city">{{city.categories[currentCategory.id]}}</span></span>
-
+                                         :class="{'cursor-pointer': currentCity != city, 'label-success': currentCity == city}">
+                                        <span v-if="currentCity != city">
+                                            {{city.name}} - {{city.state}}
+                                        </span>
                                         <span v-if="currentCity == city">{{city.name}} - {{city.state}}  <span
                                             class="badge-city">{{events.length}}</span></span>
                                     </div>
@@ -379,6 +384,7 @@
                 that.currentCategory = null;
                 that.interactions.finished_loading_category = false;
                 that.interactions.is_loading = false;
+                that.interactions.place_holder_is_loading = true;
 
                 if (typeof cancelCurrentRequest === "function") {
                     cancelCurrentRequest()
@@ -567,7 +573,7 @@
                 let that = this
 
                 setTimeout(() => {
-                    that.swiperTabs = new Swiper(that.$refs.citiesSlider, {
+                    var swiperTabs = new Swiper(that.$refs.citiesSlider, {
                         spaceBetween: 0,
                         slidesPerView: 5,
                         initialSlide: that.currentCityIndex,
@@ -576,17 +582,16 @@
                         slideToClickedSlide: true,
                         prevButton: '.swiper-button-prev',
                         nextButton: '.swiper-button-next',
-                        onInit: swiper => {
-                            that.resetBeforeChange();
-                        },
-                        onSlideChangeEnd: swiper => {
-
-                            that.currentCity = that.getCities[swiper.realIndex]
-                            that.currentCityIndex = swiper.realIndex
-                            localStorage.setItem('city_index', swiper.realIndex)
-
-                            that.resetBeforeChange();
-
+                        on: {
+                            init: function () {
+                                that.resetBeforeChange(); 
+                            },
+                            slideChangeTransitionEnd: function () {
+                                that.currentCity = that.getCities[this.realIndex]
+                                that.currentCityIndex = this.realIndex
+                                localStorage.setItem('city_index', this.realIndex)
+                                that.resetBeforeChange();
+                            }   
                         },
                         breakpoints: {
                             350: {
@@ -652,7 +657,7 @@
 
                     })
                     .catch(function (error) {
-                        console.log(error)
+                        //console.log(error.response)
                         that.interactions.is_loading = false;
                     });
 
@@ -866,5 +871,18 @@
 
     .swiper-label-to-fix{
         width: 33%;
+    }
+
+    .no-event-card{
+        padding: 15px;
+        text-align: center;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, .4);
+        margin-bottom: 50px;
+    }
+
+    .no-event-card img {
+        height: 144px;
+        margin-top: 5px;
     }
 </style>

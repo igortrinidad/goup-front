@@ -1,6 +1,6 @@
 export const en = {
     select_category: 'Find your next great Moment',
-    end_list: 'No Moments nearby',
+    end_list: 'No Moment found near you, search in another Moment type or nearby cities.',
     add_event: 'Add a Moment',
     add_event_title: "Didn't find the Moment that you looking for? Share with others your suggestion of Moments",
     up: 'Go Up',
@@ -28,7 +28,7 @@ export const en = {
 
 export const pt = {
     select_category: 'Explore novas diversões',
-    end_list: 'Nenhum Momento nas proximidades',
+    end_list: 'Não encontramos nenhum Momento próximo a você, procure outros tipos de Momento ou cidades próximas',
     add_event: 'Adicione um Momento',
     add_event_title: "Não encontrou o Momento que estava procurando? Compartilhe com as outras pessoas suas sugestões de Momentos",
     up: 'Go Up',

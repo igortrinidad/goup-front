@@ -23,6 +23,7 @@ elixir(function(mix) {
         './assets/bootstrap-checkbox/bootstrap-checkbox.css',
         './node_modules/izitoast/dist/css/iziToast.css',
         './node_modules/vue-multiselect/dist/vue-multiselect.min.css',
+        './node_modules/swiper/dist/css/swiper.css',
 
 	], './static/build/css/vendor.css');
 
@@ -31,9 +32,10 @@ elixir(function(mix) {
 		'./assets/flatly/js/bootstrap.js',
         './node_modules/izitoast/dist/js/iziToast.js',
         './node_modules/jquery.easing/jquery.easing.js',
-        './node_modules/snapsvg/dist/jquery.mask.js',
+        './node_modules/jquery-mask-plugin/dist/jquery.mask.js',
 		'./src/utils/notifications.js',
         './assets/js/hammer-time.js',
+        './node_modules/swiper/dist/js/swiper.js',
 
 	], './static/build/js/vendor.js');
 

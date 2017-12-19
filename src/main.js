@@ -13,7 +13,6 @@ import global_functions from './utils/global_functions'
 import global_filters from './utils/global_filters'
 import {changeConsole, logErroRequest} from './utils/log_errors'
 import moment from 'moment'
-import VueAwesomeSwiper from 'vue-awesome-swiper'
 
 import {initFcmPushNotifications} from './utils/push-notifications'
 initFcmPushNotifications()
@@ -53,9 +52,6 @@ require('moment/locale/pt-br')
 
 
     Vue.use(require('vue-moment'), {moment});
-
-
-    Vue.use(VueAwesomeSwiper)
 
     // Router
     Vue.router = router
