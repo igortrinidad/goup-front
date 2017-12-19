@@ -92,6 +92,31 @@
                     </div>
                     <!--Cities-->
 
+                    <!--Filters-->
+                    <div class="row m-t-10">
+                        <div class="col-sm-12 text-center">
+                            <label class="f-700">{{ translations.trending_visualization }}</label>
+
+                            <div class="swiper-container" ref="filtersSwiper">
+                                <div class="swiper-wrapper">
+                                    <div
+                                        class="swiper-slide transparent m-5 cursor-pointer"
+                                        style="width: 200px;"
+                                        v-for="(filter, $filterIndex) in timeFilters"
+                                        :key="$filterIndex">
+                                        <span class="btn btn-sm"  :class="{
+                                            'btn-default': currentFilter && currentFilter !== filter,
+                                            'btn-primary':  currentCity && currentFilter === filter
+                                        }">
+                                            {{filter[`name_${language}`]}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Filters-->
+
                     <div class="container">
                         <div class="row m-t-30">
 
@@ -112,7 +137,7 @@
                                     tag="div"
                                     class="col-sm-12 cursor-pointer"
                                     v-for="(event, indexEvents) in events" v-if="!interactions.is_loading"
-                                    :to="{ name: 'events.show', params: { event_slug: event.slug }}"
+                                    :to="{ name: 'events.show', params: { event_slug: event.slug }, query: { event_id: event.id }}"
                                     :key="indexEvents"
                                 >
                                     <div class="card p-0">
@@ -244,7 +269,17 @@
                     complete: false,
                     is_loading: true,
                     first_load: true,
-                }
+                },
+                timeFilters:[
+                    {name_en:'General', name_pt: 'Geral', value: 'general'},
+                    {name_en:'Today', name_pt: 'Hoje', value: 'Today'},
+                    {name_en:'Week', name_pt: 'Esta semana', value: 'This week'},
+                    {name_en:'Month', name_pt: 'Este mês', value: 'This month'},
+                    {name_en:'This Year', name_pt: 'Este ano', value: 'Thisyear'},
+
+                ],
+                currentFilter: null,
+                currentFilterIndex: 0
             }
         },
 
@@ -267,12 +302,20 @@
             var that = this;
 
             var currentCityIndex = JSON.parse(localStorage.getItem('city_index'));
+            var currentFilterIndex = JSON.parse(localStorage.getItem('filter_index'));
 
             if(currentCityIndex > -1){
                 that.currentCityIndex = currentCityIndex;
                 that.currentCity = that.getCities[currentCityIndex];
             } else {
                 that.currentCity = that.getCities[0];
+            }
+
+            if(currentFilterIndex > -1){
+                that.currentFilterIndex = currentFilterIndex;
+                that.currentFilter = that.timeFilters[currentFilterIndex]
+            } else {
+                that.currentFilter = that.timeFilters[0]
             }
 
             if(that.$route.query.category_id){
@@ -376,6 +419,7 @@
                     city_id: that.currentCity.id,
                     page: that.infiniteLoadingEvents.nextPage,
                     next_set: that.infiniteLoadingEvents.nextSet,
+                    filter: that.currentFilter.value ?  that.currentFilter.value : 'general'
                 }, {
                     cancelToken: new CancelToken(function executor(cancel) {
                         cancelCurrentRequest = cancel;
@@ -448,7 +492,7 @@
                         nextButton: '.swiper-button-next',
                         on: {
                             init: function () {
-                                that.resetBeforeChange(); 
+                                that.resetBeforeChange();
                             },
                             slideChangeTransitionEnd: function () {
                                 that.currentCity = that.getCities[this.realIndex]
@@ -486,6 +530,7 @@
 
                 setTimeout(function() {
                     that.citiesSwiper();
+                    that.filtersSwiper()
                 }, 600);
 
                 bus.$emit('ranking-category-selected', category);
@@ -494,6 +539,49 @@
                 that.infiniteLoadingEvents.nextPage = 1
                 that.infiniteLoadingEvents.nextSet = 0
 
+            },
+
+            filtersSwiper() {
+                let that = this
+
+                setTimeout(() => {
+
+                    var swiperTabs = new Swiper(that.$refs.filtersSwiper, {
+                        init: true,
+                        spaceBetween: 0,
+                        slidesPerView: 5,
+                        initialSlide: that.currentFilterIndex,
+                        loop: false,
+                        centeredSlides: true,
+                        slideToClickedSlide: true,
+                        prevButton: '.swiper-button-prev',
+                        nextButton: '.swiper-button-next',
+                        on: {
+                            init: function () {
+                                that.resetBeforeChange();
+                            },
+                            slideChangeTransitionEnd: function () {
+
+                                that.currentFilter = that.timeFilters[this.realIndex]
+                                that.currentFilterIndex = this.realIndex
+                                localStorage.setItem('filter_index', this.realIndex)
+                                that.resetBeforeChange()
+                            },
+                        },
+                        breakpoints: {
+                            350: {
+                                slidesPerView: 3,
+                            },
+                            480: {
+                                slidesPerView: 3,
+                            },
+                            768: {
+                                slidesPerView: 3,
+                            },
+                        }
+                    })
+
+                }, 100)
             },
         }
     }
