@@ -146,7 +146,7 @@
                         <div class="m-t-30">
                             <div class="">
                                 <!-- Tab Location -->
-                                <tab-location :event="event" v-if="currentTab === 0"></tab-location>
+                                <tab-location :transition="currentTab === 0 ? 'transition' : 'fadeout'" :event="event"></tab-location>
 
                                 <!-- Tab Events -->
                                 <tab-events-same-place :transition="currentTab === 1 ? 'transition' : 'fadeout'"></tab-events-same-place>
