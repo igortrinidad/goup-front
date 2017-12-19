@@ -1,13 +1,4 @@
 /* List  Rounded */
-.list-rounded .list-group-item:first-child {
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
-}
-
-.list-rounded .list-group-item:last-child {
-    border-bottom-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-}
 
 .list-rounded .list-group-item {
     background: transparent;

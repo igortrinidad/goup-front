@@ -319,10 +319,8 @@
 
                             <div class="col-row-categories">
                                 <div class="col" v-for="photo in google_photos">
-                                    <img  class="img-responsive thumbnail m-b-5" :src="photo.photo_url">
+                                    <img  class="img-responsive thumbnail m-b-5" :src="photo.photo_url" @click.prevent="tooglePhotoFromGoogle(photo)">
                                     <p>{{translations.photo_quality.title}} {{translations.photo_quality[photo.quality]}}</p>
-
-                                    <button class="btn btn-primary btn-sm" @click.prevent="tooglePhotoFromGoogle(photo)">{{ translations.form.google_photos_select_photo }}</button>
                                 </div>
                             </div>
 
@@ -332,7 +330,9 @@
                                         <p class="f-default m-t-30" style="vertical-align: middle;">Loading</p>
                                     </div>
                                 </div>
-                                <p class="f-300" v-if="!google_photos.length">{{translations.form.google_photos_empty}}</p>
+                                <div class="col-md-12" v-if="!google_photos.length">
+                                    <p class="f-300" >{{translations.form.google_photos_empty}}</p>
+                                </div>
                             </div>
 
                         </div>
