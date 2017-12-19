@@ -52,28 +52,32 @@
                 >
             </div>
 
-            <img src="../../../assets/logos/LOGOS-02.png"style="width: 130px">
+            <img src="../../../assets/logos/LOGOS-02.png"style="width: 110px">
 
             <!-- SE A LOCALIZAÇÃO ESTIVER DISPONÍVEL -->
-            <div class="m-t-20" v-if="interactions.location_granted">
+            <div class="m-t-30" v-if="interactions.location_granted">
 
                 <div class="swiper-container swiper-gallery" ref="galleryPhotos">
-                    <div class="swiper-wrapper text-center m-b-15">
+                    <div class="swiper-wrapper text-center m-b-20">
                         <div class="swiper-slide">
                             <p class="f-14 f-300">{{translations.first_swiper}}</p>
-                            <img class="img" height="220px" src="../../../assets/img/welcome_screens/first.png" />
+                            <img class="img" height="220px" src="../../../assets/img/welcome_screens/welcome_screens-01.png" />
                         </div>
                         <div class="swiper-slide">
                             <p class="f-14 f-300">{{translations.second_swiper}}</p>
-                            <img class="img" height="220px" src="../../../assets/img/welcome_screens/second.png" />
+                            <img class="img" height="220px" src="../../../assets/img/welcome_screens/welcome_screens-02.png" />
                         </div>
                         <div class="swiper-slide">
                             <p class="f-14 f-300">{{translations.third_swiper}}</p>
-                            <img class="img" height="220px" src="../../../assets/img/welcome_screens/third.png" />
+                            <img class="img" height="220px" src="../../../assets/img/welcome_screens/welcome_screens-03.png" />
                         </div>
                         <div class="swiper-slide">
                             <p class="f-14 f-300">{{translations.fourth_swiper}}</p>
-                            <img class="img" height="220px" src="../../../assets/img/welcome_screens/fourth.png" />
+                            <img class="img" height="220px" src="../../../assets/img/welcome_screens/welcome_screens-04.png" />
+                        </div>
+                        <div class="swiper-slide">
+                            <p class="f-14 f-300">{{translations.fifth_swiper}}</p>
+                            <img class="img" height="220px" src="../../../assets/img/welcome_screens/welcome_screens-05.png" />
                         </div>
                     </div>
                     <div class="swiper-button-prev"></div>
@@ -258,12 +262,15 @@
                 let that = this
 
                 setTimeout(() => {
-                    that.swiperGalleryPhotos = new Swiper(that.$refs.galleryPhotos, {
+                    var swiperWelcome = new Swiper(that.$refs.galleryPhotos, {
                         spaceBetween: 0,
                         slidesPerView: 1,
                         nextButton: '.swiper-button-next',
                         prevButton: '.swiper-button-prev',
-                        pagination: '.swiper-pagination',
+                        pagination: {
+                            el: '.swiper-pagination',
+                            type: 'bullets',
+                        },
                     })
                 }, 400);
             },
