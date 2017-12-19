@@ -32,30 +32,31 @@ export default [
     {
         path: 'event',
         component: Main,
+        meta: {requiresAuth: false},
         children: [
             {
                 name: 'events.create',
                 path: '/create',
                 component: Create,
-                meta: {requiresAuth: true}
+                meta: {requiresAuth: true},
             },
             {
                 name: 'events.list',
                 path: '/ranking',
                 component: List,
-                meta: {requiresAuth: true}
+                meta: {requiresAuth: true},
             },
             {
                 name: 'events.edit',
                 path: '/edit/:id',
                 component: Edit,
-                meta: {requiresAuth: true}
+                meta: {requiresAuth: true},
             },
             {
                 name: 'events.show',
                 path: '/:event_slug',
                 component: Show,
-                meta: {requiresAuth: true}
+                meta: {requiresAuth: false},
             },
         ]
     }

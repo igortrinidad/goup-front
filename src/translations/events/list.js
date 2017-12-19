@@ -41,7 +41,8 @@ export const en = {
         }
     },
 
-    load_complete: 'All moments are loaded :)'
+    load_complete: 'All moments are loaded :)',
+    trending_visualization: 'View trending of'
 }
 
 export const pt = {
@@ -85,6 +86,7 @@ export const pt = {
             },
         },
 
-        load_complete: 'Todos os momentos foram carregados :)'
-    }
+        load_complete: 'Todos os momentos foram carregados :)',
+    },
+    trending_visualization: 'Visualizar trending'
 }

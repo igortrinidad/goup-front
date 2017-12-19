@@ -6,7 +6,7 @@
               class="card"
               v-for="(event, indexEvents) in events"
               :key="indexEvents"
-              :to="{ name: 'events.show', params: { event_slug: event.slug } }"
+              :to="{ name: 'events.show', params: { event_slug: event.slug }, query: {event_id: event.id} }"
           >
               <!-- Card Header -->
               <div
