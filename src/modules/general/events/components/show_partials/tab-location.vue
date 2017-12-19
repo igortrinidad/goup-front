@@ -33,10 +33,12 @@
                             {{translations.open_hours}}
                         </p>
 
-                        <div class="" v-for="(dow, indexPeriod) in event.place.opening_hours.weekday_text">
-                            {{dow}}
-                        </div>
-                        
+                        <ul class="list-group">
+                            <li class="list-group-item f-14" v-for="(dow, indexPeriod) in event.place.opening_hours.weekday_text">
+                                {{ dow }}
+                            </li>
+                        </ul>
+
                     </div>
 
 
@@ -145,10 +147,10 @@
             openMapsExternally: function(){
                 let that = this
 
-                var url = `https://www.google.com/maps/dir/?api=1&origin=` + 
+                var url = `https://www.google.com/maps/dir/?api=1&origin=` +
                 that.getUserLastGeoLocation.lat + ',' +
                 that.getUserLastGeoLocation.lng +
-                '&destination=' + encodeURI(that.event.place.name) + 
+                '&destination=' + encodeURI(that.event.place.name) +
                 '&destination_place_id=' + that.event.place.place_id +
                 '&travelmode=driving';
 
@@ -166,8 +168,8 @@
 
                     that.openingHours.push(
                         {
-                            dow: m.day(), 
-                            period: null 
+                            dow: m.day(),
+                            period: null
                         }
                     );
 
