@@ -61,18 +61,18 @@
 
                 <div class="m-t-20">
                     <p class="f-13 f-300">{{ translations.signup }}</p>
-                    <router-link :to="{name: 'general.auth.signup'}" class="f-primary btn btn-primary">{{ translations.getStart }}</router-link>
+                    <router-link :to="{name: 'auth.signup'}" class="f-primary btn btn-primary">{{ translations.getStart }}</router-link>
                 </div>
 
                 <!-- TERMS AND PRIVACY -->
                 <span>
                     <p class="f-13 f-300 m-t-20">
                         {{translations.terms.first}}
-                        <router-link :to="{name: 'general.terms'}">
+                        <router-link :to="{name: 'landing.terms'}">
                             {{translations.terms.terms_button}}
                         </router-link>
                         {{translations.terms.and}}
-                        <router-link :to="{name: 'general.privacy'}">
+                        <router-link :to="{name: 'landing.privacy'}">
                             {{translations.terms.privacy_button}}
                         </router-link>
                     </p>
@@ -128,7 +128,7 @@
                 openFB.init({appId: facebookClientId, tokenStore: localStorage});
             }
 
-            // this.setLoading({ is_loading: true, message: '' })
+            //this.setLoading({ is_loading: true, message: '' })
         },
 
         methods: {
@@ -144,6 +144,7 @@
                         that.authSetToken(response.data.token)
                         that.authSetUser(response.data.user)
                         that.$router.push(that.handleRedirect())
+                        successNotify('', 'Login efetuado com sucesso.')
                         
                     })
                     .catch(function (error) {
@@ -174,12 +175,12 @@
                     openFB.login(
                         function(response) {
                             if(response.status === 'connected') {
-                                that.setLoading({ is_loading: false, message: '' })
                                 that.statusChangeCallback(response)
                             } else {
 
                                 alert('Facebook login failed: ' + response.error);
                                 window.clearAndMaintain();
+                                that.setLoading({ is_loading: false, message: '' })
                                 if(window.cordova){
                                     window.cookies.clear();
                                 }
@@ -218,7 +219,7 @@
                             response.access_token = accessToken;
                             response.role = 'user';
 
-                            that.socialLogin(response)
+                            that.socialLogin(response);
                         },
                         error: that.errorHandler
                     })
@@ -240,17 +241,16 @@
                 localStorage.setItem('provider', 'facebook')
 
 
-
                 that.$http.post('/auth/social_login', response)
                     .then(function (response) {
 
                         that.authSetToken(response.data.access_token) // this is a Vuex action
                         that.authSetUser(response.data.user) // this is a Vuex action
 
-
                         successNotify('', 'Login efetuado com sucesso.')
 
                         that.$router.push(that.handleRedirect(response.data.user.id))
+                        that.setLoading({ is_loading: false, message: '' })
 
                     })
                     .catch(function (error) {

@@ -1,148 +1,126 @@
 <template lang="html">
-    <svg width="260" height="150" viewBox="0 0 260 150">
-        <!-- First -->
-        <circle
-            r="7"
-            cy="80"
-            cx="50"
-            id="circle1"
-            style="opacity:1;fill:#29F39F;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.13007832;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-        />
-        <!-- Second -->
-        <circle
-            r="7"
-            cy="80"
-            cx="80"
-            id="circle2"
-            style="opacity:1;fill:#8BF3FB;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.13007832;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-        />
-        <!-- Third -->
-        <circle
-            r="7"
-            cy="80"
-            cx="110"
-            id="circle3"
-            style="opacity:1;fill:#FF4B89;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.13007832;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-        />
-        <!-- Fourth -->
-        <circle
-            r="7"
-            cy="80"
-            cx="140"
-            id="circle4"
-            style="opacity:1;fill:#FF4B89;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.13007832;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-        />
-        <!-- Fifth -->
-        <circle
-            r="7"
-            cy="80"
-            cx="170"
-            id="circle5"
-            style="opacity:1;fill:#8BF3FB;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.13007832;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-        />
-        <!-- Sixth -->
-        <circle
-            r="7"
-            cy="80"
-            cx="200"
-            id="circle6"
-            style="opacity:1;fill:#29F39F;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.13007832;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-        />
-    </svg>
+
+    <div class="">
+        <div aria-busy="true" aria-label="Loading" role="progressbar" class="container-dots" >
+          <div class="swing">
+            <div class="swing-l"></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div class="swing-r"></div>
+          </div>
+         </div>
+    </div>
+
 </template>
 
 <script>
-    import { tween, svg, easing, valueTypes } from 'popmotion';
 
-    const { color } = valueTypes
-
-    console.log(easing);
     export default {
         name: 'dots',
         data() {
             return {
-                colors: {
-                    rotating: [ '#FF4B89', '#29F39F', '#8BF3FB' ],
-                    center: [ 'rgb(255, 75, 137)', 'rgb(41, 243, 159)', 'rgb(139, 243, 251)' ],
-                    others: [ '#FF4B89', '#29F39F', '#8BF3FB' ]
-                },
-                colorIndex: 0
             }
         },
 
         mounted() {
-            this.animateDots()
         },
 
         methods: {
-            animateDots() {
-                let that = this
-
-                setInterval(() => {
-
-                    that.bounce('#circle3', 60)
-                    that.bounce('#circle4', 100)
-
-                    that.changeColors()
-
-                    console.log(that.colorIndex);
-                    if (that.colorIndex < 2) {
-                        that.colorIndex++
-                    } else {
-                        that.colorIndex = 0
-                    }
-
-                }, 1500);
-            },
-
-            bounce(el, value) {
-                let that = this
-
-                const styler = svg(document.querySelector(el))
-
-                tween({
-                    from: 80,
-                    to: value,
-                    duration: 300,
-                    ease: easing.backOut
-                })
-                .start({
-                    update:(v) => {
-                        styler.set({
-                            cy: v
-                        })
-                    },
-                    complete: function() {
-                        tween({
-                            from: value,
-                            to: 80,
-                            duration: 300,
-                        }).start(styler.set('cy'))
-                    }
-                })
-
-            },
-
-            changeColors() {
-                let that = this
-                const styler = svg(document.querySelector('#circle3'))
-
-                setTimeout(function () {
-                    tween({
-                        from: '#9B65DE',
-                        to: '#14D790',
-                        duration: 300
-                    }).start(styler.set('fill'))
-
-                }, 300);
-            },
-
-            rotate(el) {
-            }
         }
     }
 </script>
 
 <style scoped>
+
+.container-dots {
+  left: 50%;
+  margin: auto -50px;
+  position: absolute;
+  top: 50%;
+}
+.swing div {
+  border-radius: 50%;
+  float: left;
+  height: 1em;
+  width: 1em;
+}
+.swing div:nth-of-type(1) {
+  background-color: #E11831;
+}
+.swing div:nth-of-type(2) {
+  background-color: #FD8D32;
+}
+.swing div:nth-of-type(3) {
+  background-color: #FDD94B;
+}
+.swing div:nth-of-type(4) {
+  background-color: #00D343;
+}
+.swing div:nth-of-type(5) {
+  background-color: #582499;
+}
+.swing div:nth-of-type(6) {
+  background-color: #FFFFFF;
+}
+.swing div:nth-of-type(7) {
+  background-color: #008CC6;
+}
+
+
+@-webkit-keyframes ball-l {
+  0%, 50% {
+    -webkit-transform: rotate(0) translateX(0);
+    transform: rotate(0) translateX(0);
+  }
+  100% {
+    -webkit-transform: rotate(50deg) translateX(-2.5em);
+    transform: rotate(50deg) translateX(-2.5em);
+  }
+}
+@keyframes ball-l {
+  0%, 50% {
+    -webkit-transform: rotate(0) translate(0);
+    transform: rotate(0) translateX(0);
+  }
+  100% {
+    -webkit-transform: rotate(50deg) translateX(-2.5em);
+    transform: rotate(50deg) translateX(-2.5em);
+  }
+}
+@-webkit-keyframes ball-r {
+  0% {
+    -webkit-transform: rotate(-50deg) translateX(2.5em);
+    transform: rotate(-50deg) translateX(2.5em);
+  }
+  50%,
+  100% {
+    -webkit-transform: rotate(0) translateX(0);
+    transform: rotate(0) translateX(0);
+  }
+}
+@keyframes ball-r {
+  0% {
+    -webkit-transform: rotate(-50deg) translateX(2.5em);
+    transform: rotate(-50deg) translateX(2.5em);
+  }
+  50%,
+  100% {
+    -webkit-transform: rotate(0) translateX(0);
+    transform: rotate(0) translateX(0)
+  }
+}
+
+
+.swing-l {
+  -webkit-animation: ball-l .445s ease-in-out infinite alternate;
+  animation: ball-l .445s ease-in-out infinite alternate;
+}
+.swing-r {
+  -webkit-animation: ball-r .445s ease-in-out infinite alternate;
+  animation: ball-r .445s ease-in-out infinite alternate;
+}
 
 </style>

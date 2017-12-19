@@ -68,11 +68,11 @@
                 <span>
                     <p class="f-13 f-300 m-t-20">
                         {{translations.terms.first}}
-                        <router-link :to="{name: 'general.terms'}">
+                        <router-link :to="{name: 'landing.terms'}">
                             {{translations.terms.terms_button}}
                         </router-link>
                         {{translations.terms.and}}
-                        <router-link :to="{name: 'general.privacy'}">
+                        <router-link :to="{name: 'landing.privacy'}">
                             {{translations.terms.privacy_button}}
                         </router-link>
                     </p>
@@ -131,7 +131,7 @@
         },
 
         methods: {
-            ...mapActions(['authSetToken', 'authSetUser']),
+            ...mapActions(['authSetToken', 'authSetUser', 'setLoading']),
 
             validateForm(){
                 return !this.user.name || !this.user.last_name || !this.user.email || !this.user.password
@@ -141,9 +141,13 @@
             signup(){
                 let that = this
 
+                that.setLoading({ is_loading: true, message: '' })
+
                 that.$http.post('/auth/signup', that.user)
                     .then(function (response) {
                         if(response.data.status == 422){
+
+                            that.setLoading({ is_loading: false, message: '' })
 
                             that.$swal({
                                 title: 'Atenção',
@@ -162,8 +166,10 @@
                             })
 
                         } else {
+                            that.setLoading({ is_loading: false, message: '' })
                             successNotify('', 'Cadastro realizado com sucesso.')
-                            that.$router.push({name: 'general.auth.signup.success'})
+                            that.$router.push({name: 'auth.signup.success'})
+
                         }
                     })
                     .catch(function (error) {
@@ -190,6 +196,8 @@
             facebookLogin(){
                 let that = this
 
+                that.setLoading({ is_loading: true, message: '' })
+
                 if(window.cordova){
                     openFB.login(
                         function(response) {
@@ -197,6 +205,7 @@
                                 that.statusChangeCallback(response)
                             } else {
 
+                                that.setLoading({ is_loading: false, message: '' })
                                 alert('Facebook login failed: ' + response.error);
                                 window.clearAndMaintain();
                                 if(window.cordova){
@@ -209,6 +218,7 @@
                 if(!window.cordova){
                     FB.login(function(response) {
                         that.statusChangeCallback(response)
+                        that.setLoading({ is_loading: false, message: '' })
                     }, {scope: 'public_profile,email'});
                 }
             },
@@ -235,7 +245,6 @@
                             response.photo_url = 'https://graph.facebook.com/' + response.id + '/picture?type=normal';
                             response.access_token = accessToken;
                             response.role = 'user';
-
                             that.socialLogin(response)
                         },
                         error: that.errorHandler
@@ -260,16 +269,15 @@
                 that.$http.post('/auth/social_login', response)
                     .then(function (response) {
 
+                        that.setLoading({ is_loading: false, message: '' })
                         that.authSetToken(response.data.access_token) // this is a Vuex action
                         that.authSetUser(response.data.user) // this is a Vuex action
-
-
                         successNotify('', 'Cadastro efetuado com sucesso.')
-
-                        that.$router.push({name: 'general.auth.signup.success'})
+                        that.$router.push({name: 'auth.signup.success'})
 
                     })
                     .catch(function (error) {
+                        that.setLoading({ is_loading: false, message: '' })
                         errorNotify('Ops!', 'Erro ao efetuar login.')
                         window.clearAndMaintain();
                         if(window.cordova){
@@ -280,6 +288,7 @@
 
             errorHandler(error) {
 
+                that.setLoading({ is_loading: false, message: '' })
                 errorNotify('', error.message);
                 window.clearAndMaintain();
                 if(window.cordova){

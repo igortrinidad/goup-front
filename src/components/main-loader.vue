@@ -1,16 +1,8 @@
 <template>
     <div class="loading-wrapper" v-if="loader.is_loading">
-        <div class="loading-box">
-
-            <dots />
-
-            <div v-if="loader.message !=''">
-                <h3>{{loader.message}}</h3>
-            </div>
-            <div v-if="!loader.message">
-                <h3 class="f-300 f-14 f-primary" style="color: #fff; margin-top:0px; ">{{language == 'en' ? 'Loading': 'Carregando'}}</h3>
-            </div>
-        </div>
+            
+        <dots></dots>
+        
     </div>
 </template>
 

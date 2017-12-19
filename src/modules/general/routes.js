@@ -59,7 +59,7 @@ export default [
                 meta: { requiresAuth: false }
             },
             {
-                name: 'general.privacy',
+                name: 'landing.privacy',
                 path: '/privacidade',
                 component: Privacy,
                 meta: { requiresAuth: false }
@@ -71,7 +71,7 @@ export default [
                 meta: { requiresAuth: false }
             },
             {
-                name: 'general.terms',
+                name: 'landing.terms',
                 path: '/termos-de-uso',
                 component: Terms,
                 meta: { requiresAuth: false }

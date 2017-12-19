@@ -31,6 +31,7 @@
       dur="1.5s"
       repeatCount="indefinite"
       calcMode="spline"
+      flip="Infinity"
       keySplines="0.3 0 0.2 1; 0.3 0 0.2 1"
       values="0; -30; 0"
 		  />
@@ -44,6 +45,7 @@
       dur="1.5s"
       repeatCount="indefinite"
       calcMode="spline"
+      flip="Infinity"
       keySplines="0.3 0 0.2 1; 0.3 0 0.2 1"
       values="0; -30; 0"
 		  />
