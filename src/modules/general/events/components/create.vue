@@ -287,7 +287,7 @@
                                         {{translations.form.setAsCover}}
                                     </span>
 
-                                    <img  class="img-responsive thumbnail m-b-5" :src="photo.photo_url">
+                                    <img  class="img-responsive thumbnail m-t-10 m-b-10" :src="photo.photo_url">
 
                                     <span class="label label-primary small cursor-pointer" @click.prevent="removeImage(photo.id)">{{translations.form.removeImage}}</span>
                                 </div>
@@ -303,7 +303,7 @@
                                         {{translations.form.setAsCover}}
                                     </span>
 
-                                    <img  class="img-responsive thumbnail m-b-5" :src="photo.photo_url">
+                                    <img  class="img-responsive thumbnail m-t-10 m-b-10" :src="photo.photo_url">
 
                                     <span class="label label-primary small cursor-pointer" @click.prevent="tooglePhotoFromGoogle(photo)">{{translations.form.removeImage}}</span>
                                 </div>
@@ -1148,8 +1148,13 @@
     .vertical-row { margin: 0 -5px; }
     .photo-google { display: inline-block; margin: 0 5px; }
     .photo-google .thumbnail {
+        display: inline-block;
+    }
+
+    .thumbnail {
         height: 100px;
         width: auto;
+        margin: 0 auto;
     }
 
     /* Categories */
