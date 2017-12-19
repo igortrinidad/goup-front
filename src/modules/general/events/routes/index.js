@@ -30,33 +30,29 @@ const Edit = (resolve) => {
 
 export default [
     {
-        path: 'user',
+        path: 'event',
         component: Main,
-        meta: {requiresAuth: false},
+        meta: {requiresAuth: true},
         children: [
             {
                 name: 'events.create',
                 path: '/create',
                 component: Create,
-                meta: {requiresAuth: true}
             },
             {
                 name: 'events.list',
                 path: '/ranking',
                 component: List,
-                meta: {requiresAuth: true}
             },
             {
                 name: 'events.edit',
-                path: '/event/edit/:id',
+                path: '/edit/:id',
                 component: Edit,
-                meta: {requiresAuth: true}
             },
             {
                 name: 'events.show',
-                path: '/event/:event_slug',
+                path: '/:event_slug',
                 component: Show,
-                meta: {requiresAuth: true}
             },
         ]
     }
