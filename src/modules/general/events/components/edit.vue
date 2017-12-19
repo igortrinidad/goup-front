@@ -317,12 +317,10 @@
 
                             <label class="f-700 f-primary" for="subcategory">{{ translations.form.google_photos_title }}</label>
 
-                            <div class="col-row-categories">
-                                <div class="col" v-for="photo in google_photos">
-                                    <img  class="img-responsive thumbnail m-b-5" :src="photo.photo_url">
-                                    <p>{{translations.photo_quality.title}} {{translations.photo_quality[photo.quality]}}</p>
-
-                                    <button class="btn btn-primary btn-sm" @click.prevent="tooglePhotoFromGoogle(photo)">{{ translations.form.google_photos_select_photo }}</button>
+                            <div class="vertical-row">
+                                <div class="photo-google text-center" v-for="photo in google_photos">
+                                    <img  class="img-responsive thumbnail m-b-5" :src="photo.photo_url" @click.prevent="tooglePhotoFromGoogle(photo)">
+                                    <p class="f-12">{{translations.photo_quality.title}} {{translations.photo_quality[photo.quality]}}</p>
                                 </div>
                             </div>
 
@@ -332,7 +330,9 @@
                                         <p class="f-default m-t-30" style="vertical-align: middle;">Loading</p>
                                     </div>
                                 </div>
-                                <p class="f-300" v-if="!google_photos.length">{{translations.form.google_photos_empty}}</p>
+                                <div class="col-md-12" v-if="!google_photos.length">
+                                    <p class="f-300" >{{translations.form.google_photos_empty}}</p>
+                                </div>
                             </div>
 
                         </div>
@@ -1256,6 +1256,13 @@
         top: 5px; left: 5px; right: 5px; bottom: 5px;
         border: 2px solid #29F39F;
         border-radius: 15px;
+    }
+
+    .vertical-row { margin: 0 -5px; }
+    .photo-google { display: inline-block; margin: 0 5px; }
+    .photo-google .thumbnail {
+        height: 100px;
+        width: auto;
     }
 
 </style>
