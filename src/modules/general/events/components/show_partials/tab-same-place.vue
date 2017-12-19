@@ -1,5 +1,5 @@
 <template>
-    <div class="transition">
+    <div id="tab-same-place" :class="transition">
         <div class="m-t-30">
             <div class="">
                 <!-- Events in same place -->
@@ -89,6 +89,10 @@
         props: {
             event: {
                 type: Object
+            },
+            transition: {
+                type: String,
+                default: 'transition'
             }
         },
 
@@ -122,7 +126,8 @@
 
         mounted(){
             var that = this;
-            this.getEventsSamePlace();
+
+            that.getEventsSamePlace();
 
             //Infinite custom
             $(window).scroll(function(){
@@ -138,6 +143,17 @@
 
                 }
             });
+        },
+
+        watch: {
+            'transition': function(value) {
+                let that = this
+                if (that.transition === 'fadeout') {
+                    setTimeout(() => $('#tab-same-place').css({ display: 'none' }), 300);
+                } else {
+                    setTimeout(() => $('#tab-same-place').css({ display: 'block' }), 300);
+                }
+            }
         },
 
         destroyed: function(){

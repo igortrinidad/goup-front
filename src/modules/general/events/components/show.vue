@@ -149,10 +149,10 @@
                                 <tab-location :event="event" v-if="currentTab === 0"></tab-location>
 
                                 <!-- Tab Events -->
-                                <tab-events-same-place :event="event" v-if="currentTab === 1"></tab-events-same-place>
+                                <tab-events-same-place :transition="currentTab === 1 ? 'transition' : 'fadeout'"></tab-events-same-place>
 
                                 <!-- Tab Friends -->
-                                <tab-friends v-if="currentTab === 2"></tab-friends>
+                                <tab-friends :transition="currentTab === 2 ? 'transition' : 'fadeout'"></tab-friends>
                             </div>
                         </div>
                         <!-- / Tab Content -->

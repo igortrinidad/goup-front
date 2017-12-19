@@ -1,5 +1,5 @@
 <template>
-    <div class="transition">
+    <div id="tab-friends" :class="transition">
         <div class="m-t-30 text-center">
             <div class="container">
                 <p class="f-info" v-show="!interactions.length">{{ translations.no_interactions }}</p>
@@ -50,6 +50,10 @@
         },
 
         props: {
+            transition: {
+                type: String,
+                default: 'transition'
+            }
         },
 
         data () {
@@ -77,7 +81,21 @@
         },
 
         mounted(){
-            this.getInteractions()
+            let that = this
+
+            that.getInteractions()
+            console.log(that.transition);
+        },
+
+        watch: {
+            'transition': function(value) {
+                let that = this
+                if (that.transition === 'fadeout') {
+                    setTimeout(() => $('#tab-friends').css({ display: 'none' }), 300);
+                } else {
+                    setTimeout(() => $('#tab-friends').css({ display: 'block' }), 300);
+                }
+            }
         },
 
         methods: {

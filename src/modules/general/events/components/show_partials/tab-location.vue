@@ -1,5 +1,5 @@
 <template>
-    <div class="card transition">
+    <div id="tab-location" class="card" :class="transition">
         <div class="card-body card-padding">
             <div class="m-t-30 text-center">
 
@@ -92,6 +92,10 @@
             event: {
                 type: Object,
                 required: true
+            },
+            transition: {
+                type: String,
+                default: 'transition'
             }
         },
 
@@ -141,6 +145,17 @@
         mounted(){
             var that = this
             //setTimeout(function() {that.checkOpeningHours()}, 3000);
+        },
+
+        watch: {
+            'transition': function(value) {
+                let that = this
+                if (that.transition === 'fadeout') {
+                    setTimeout(() => $('#tab-location').css({ display: 'none' }), 300);
+                } else {
+                    setTimeout(() => $('#tab-location').css({ display: 'block' }), 300);
+                }
+            }
         },
 
         methods: {

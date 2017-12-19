@@ -1,7 +1,6 @@
 /* KeyFrames for Actions Modal */
-
 .transition {
-    animation: fadeIn .7s ease forwards;
+    animation: fadeIn 1s ease forwards;
 }
 
 .fadeout {
