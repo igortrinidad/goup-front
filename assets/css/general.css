@@ -24,6 +24,13 @@ html, body {
     width: auto; height: 60px;
 }
 
+/* Vertial Row */
+
+.vertical-row {
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
 /* Ranking */
 .event-ranking {
     position: absolute;

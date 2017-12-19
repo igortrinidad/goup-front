@@ -317,10 +317,10 @@
 
                             <label class="f-700 f-primary" for="subcategory">{{ translations.form.google_photos_title }}</label>
 
-                            <div class="col-row-categories">
-                                <div class="col" v-for="photo in google_photos">
+                            <div class="vertical-row">
+                                <div class="photo-google text-center" v-for="photo in google_photos">
                                     <img  class="img-responsive thumbnail m-b-5" :src="photo.photo_url" @click.prevent="tooglePhotoFromGoogle(photo)">
-                                    <p>{{translations.photo_quality.title}} {{translations.photo_quality[photo.quality]}}</p>
+                                    <p class="f-12">{{translations.photo_quality.title}} {{translations.photo_quality[photo.quality]}}</p>
                                 </div>
                             </div>
 
@@ -1143,6 +1143,13 @@
 
     ::-webkit-scrollbar {
         display: none;
+    }
+
+    .vertical-row { margin: 0 -5px; }
+    .photo-google { display: inline-block; margin: 0 5px; }
+    .photo-google .thumbnail {
+        height: 100px;
+        width: auto;
     }
 
     /* Categories */
