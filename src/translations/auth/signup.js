@@ -16,6 +16,7 @@ export const en = {
     validations: {
         email:{
             message: 'We locate an account with your e-mail, would you like to go to login or change your email address? If you want to change the account e-mail, the data you have will not be linked.',
+            invalid: 'Please enter a valid email address',
             buttons:{
                 toLogin: 'Go to login',
                 changeEmail: 'Change e-mail',
@@ -48,6 +49,7 @@ export const pt = {
     validations: {
         email:{
             message: 'Localizamos um cadastro com o seu email, você gostaria de ir para o login ou alterar seu email de cadastro? Se desejar alterar o email de cadastro, os dados que você possui não serão vinculados.',
+            invalid: 'Por favor insira um e-mail válido',
             buttons:{
                 toLogin: 'Ir para o login',
                 changeEmail: 'Alterar e-mail',

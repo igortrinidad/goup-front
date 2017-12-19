@@ -68,7 +68,7 @@ const beforeEach = (to, from, next) => {
      */
     if (needAuth(auth, token)) {
 
-        next({name: to.name})
+        next()
     }
     $('html, body').stop().animate({ scrollTop: 0 }, 500, 'easeInOutExpo');
 
