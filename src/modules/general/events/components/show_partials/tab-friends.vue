@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="transition">
         <div class="m-t-30 text-center">
             <div class="container">
                 <p class="f-info" v-show="!interactions.length">{{ translations.no_interactions }}</p>

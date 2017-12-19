@@ -286,7 +286,7 @@
                 }, 300);
 
                 this.setLanguage(language);
-                
+
             },
 
         }

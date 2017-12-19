@@ -8,8 +8,6 @@
             :cursor="false"
         ></main-header>
 
-
-
         <pulse v-show="interactions.is_loading" :icon="'ion-ios-reload m-l-5'"/></pulse>
 
         <transition v-if="!interactions.is_loading" appear mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
@@ -322,9 +320,14 @@
                         init: true,
                         spaceBetween: 0,
                         slidesPerView: 1,
-                        nextButton: '.swiper-button-next',
-                        prevButton: '.swiper-button-prev',
-                        scrollbar: '.swiper-scrollbar',
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                        scrollbar: {
+                            el: '.swiper-scrollbar',
+                            hide: false,
+                        }
                     })
                 }, 200);
             },
