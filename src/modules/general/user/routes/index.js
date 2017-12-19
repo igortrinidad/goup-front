@@ -45,7 +45,6 @@ export default [
     {
         path: 'user',
         component: Main,
-        meta: {requiresAuth: false},
         children: [
             {
                 name: 'user.settings',
@@ -81,7 +80,7 @@ export default [
                 name: 'user.show',
                 path: ':user_slug',
                 component: Show,
-                meta: {requiresAuth: true}
+                meta: {requiresAuth: false}
             },
         ]
     }
