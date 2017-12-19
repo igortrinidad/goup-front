@@ -152,7 +152,7 @@
                                 <tab-events-same-place :event="event" v-if="currentTab === 1"></tab-events-same-place>
 
                                 <!-- Tab Friends -->
-                                <tab-friends  v-if="currentTab === 2"></tab-friends>
+                                <tab-friends v-if="currentTab === 2"></tab-friends>
                             </div>
                         </div>
                         <!-- / Tab Content -->

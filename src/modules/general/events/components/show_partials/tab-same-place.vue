@@ -1,9 +1,7 @@
 <template>
-    <div>
+    <div class="transition">
         <div class="m-t-30">
             <div class="">
-
-
                 <!-- Events in same place -->
                 <div>
                     <p class="text-center m-b-30">{{ translations.events_same_place.subtitle }}</p>

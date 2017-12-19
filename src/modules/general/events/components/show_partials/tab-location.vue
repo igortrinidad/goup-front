@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card transition">
         <div class="card-body card-padding">
             <div class="m-t-30 text-center">
 
