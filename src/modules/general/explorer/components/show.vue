@@ -625,8 +625,8 @@
                         init: true,
                         spaceBetween: 0,
                         slidesPerView: 3,
-                        initialSlide: 0,
-                        // initialSlide: that.currentCityIndex,
+                        // initialSlide: 0,
+                        initialSlide: that.currentCityIndex,
                         loop: false,
                         centeredSlides: true,
                         slideToClickedSlide: true,
@@ -757,6 +757,10 @@
                     that.interactions.finished_loading_category = true;
                     that.$router.push({query: {category_id: category.id}})
                 }, 500);
+
+                setTimeout(function () {
+                    that.resetBeforeChange();
+                }, 600);
 
                 if (typeof cancelCurrentRequest === "function") {
                     cancelCurrentRequest()
