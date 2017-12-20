@@ -14,6 +14,10 @@ export const en = {
     uninformed: 'Value not informed',
     add_event_title: "Didn't find the Moment that you looking for? Share with others your suggestion of Moments",
     add_event: 'Add a Moment',
+    modal: {
+        title: 'Filters',
+        close: 'Search',
+    },
 
     label: {
         max_range: 'Max Range'
@@ -61,6 +65,10 @@ export const pt = {
     uninformed: 'Valor não informado',
     add_event_title: "Não encontrou o Momento que estava procurando, compartilhe com as outras pessoas suas sugestões de Momentos",
     add_event: 'Adicione um momento',
+    modal: {
+        title: 'Filtros',
+        close: 'Buscar',
+    },
     label: {
         max_range: 'Max Range'
     },

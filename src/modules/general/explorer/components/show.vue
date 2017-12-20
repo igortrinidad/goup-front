@@ -223,106 +223,102 @@
                 </div>
                 <!-- EXPLORER -->
 
-                    <!-- Fixed Button -->
-                    <button type="button" class="btn btn-primary btn-block btn-fixed" @click="openFilter()">
-                        <i class="ion-ios-location m-r-10"></i>
-                        <span v-if="currentCity">{{ currentCity.name }} - {{ currentCity.state }}</span>
-                        <span v-if="!currentCity">{{ translations.filter }}</span>
-                    </button>
+                <!-- Fixed Button -->
+                <button type="button" class="btn btn-primary btn-block btn-fixed" @click="openFilter()">
+                    <i class="ion-ios-location m-r-10"></i>
+                    <span v-if="currentCity">{{ currentCity.name }} - {{ currentCity.state }}</span>
+                    <span v-if="!currentCity">{{ translations.filter }}</span>
+                </button>
 
 
-                    <!-- Modal Filter -->
-                    <div id="modal-filter" class="modal we-fade" tabindex="-1" role="dialog">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h3 class="modal-title">{{ translations.filter }}</h3>
-                                    <div class="border-inside-card m-t-10">
-                                        <h5 class="modal-title">{{ translations.moments_found }} <span class="badge-city">{{ events.length }}</span></h5>
-                                    </div>
-                                </div>
-                                <!-- Modal Body -->
-                                <div class="modal-body">
-                                    <!--Cities-->
-                                    <div class="row">
-                                        <div class="col-sm-12 text-center">
-                                            <label class=" f-700">{{ translations.nearCities }}</label>
-                                            <p class="f-info" v-if="!getCities.length">{{ translations.noCity }}</p>
+                <!-- Modal Filter -->
+                <div id="modal-filter" class="modal we-fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">{{ translations.modal.title }}</h3>
+                            </div>
+                            <!-- Modal Body -->
+                            <div class="modal-body">
+                                <!--Cities-->
+                                <div class="row">
+                                    <div class="col-sm-12 text-center">
 
-                                            <!-- Card Cities -->
-                                            <div class="" ref="citiesSlider">
-                                                <div class="">
-                                                    <div class="btn btn-default cursor-pointer m-t-10 m-r-10"
-                                                         v-for="(city, $index) in getCities"
-                                                         :key="$index"
-                                                         :class="{'btn-primary bounce': currentCity == city}"
-                                                         @click="setCity(city, $index)">
-                                                        <span v-if="currentCity != city">
-                                                            {{city.name}} - {{city.state}}
-                                                        </span>
-                                                        <span v-if="currentCity == city">
-                                                            {{city.name}} - {{city.state}}
-                                                        </span>
-                                                    </div>
-                                                </div>
+                                        <label class=" f-700">{{ translations.nearCities }}</label>
+                                        <p class="f-info" v-if="!getCities.length">{{ translations.noCity }}</p>
+
+                                        <!-- Cities -->
+                                        <div class="">
+                                            <div class="btn btn-default cursor-pointer m-t-10 m-r-10"
+                                                 v-for="(city, $index) in getCities"
+                                                 :key="$index"
+                                                 :class="{'btn-primary bounce': currentCity == city}"
+                                                 @click="setCity(city, $index)">
+                                                <span v-if="currentCity != city">
+                                                    {{city.name}} - {{city.state}}
+                                                </span>
+                                                <span v-if="currentCity == city">
+                                                    {{city.name}} - {{city.state}}
+                                                </span>
                                             </div>
-                                            <!-- Card Citites -->
-
                                         </div>
+                                        <!-- Card Citites -->
+
                                     </div>
-                                    <!--Cities-->
+                                </div>
+                                <!--Cities-->
 
-                                    <!--DAYS SELECTEDS-->
-                                    <div class="row m-t-20">
-                                        <div class="col-sm-12 text-center">
+                                <!--DAYS SELECTEDS-->
+                                <div class="row m-t-30">
+                                    <div class="col-sm-12 text-center">
 
-                                            <label class=" f-700">{{ translations.title_when }}</label>
+                                        <label class=" f-700">{{ translations.title_when }}</label>
 
-                                            <div class="week-row">
-                                                <button
-                                                    class="btn btn-default btn-sm m-r-5"
-                                                    :class="{'btn-primary' : days_selecteds.indexOf(day) > -1}"
-                                                    v-for="(day, $index) in current_week"
-                                                    @click="toggleDay(day)"
-                                                >
-                                                    {{day.format('dddd')}} | {{day.format('DD')}}
-                                                </button>
-                                            </div>
-
+                                        <div class="">
+                                            <button
+                                                class="btn btn-default cursor-pointer m-t-10 m-r-10"
+                                                :class="{'btn-primary bounce' : days_selecteds.indexOf(day) > -1}"
+                                                v-for="(day, $index) in current_week"
+                                                @click="toggleDay(day)"
+                                            >
+                                                {{day.format('dddd')}} | {{day.format('DD')}}
+                                            </button>
                                         </div>
+
                                     </div>
-                                    <!--DAYS SELECTEDS-->
-
                                 </div>
-                                <!-- / Modal Body -->
-                                <div class="modal-footer">
-                                    
-                                </div>
+                                <!--DAYS SELECTEDS-->
 
-                            </div>  
+                            </div>
+                            <!-- / Modal Body -->
+                            <div class="modal-footer">
+                                
+                            </div>
 
-                        </div>
-
-                        <button
-                                v-if="currentCategory"
-                                class=" btn btn-primary btn-block btn-fixed-modal"
-                                :disabled="!days_selecteds_to_query.monthly"
-                                @click.prevent="getEvents"
-                                data-dismiss="modal"
-                            >
-                                {{ translations.modal.close }}
-                            </button>
-
-                            <button
-                                v-if="!currentCategory"
-                                class=" btn btn-primary btn-block btn-fixed-modal"
-                                data-dismiss="modal"
-                            >
-                                {{ translations.modal.close }}
-                            </button>
+                        </div>  
 
                     </div>
-                    <!-- / Modal Filter -->
+
+                    <button
+                            v-if="currentCategory"
+                            class=" btn btn-primary btn-block btn-fixed-modal"
+                            :disabled="!days_selecteds_to_query.monthly"
+                            @click.prevent="getEvents"
+                            data-dismiss="modal"
+                        >
+                            {{ translations.modal.close }}
+                        </button>
+
+                        <button
+                            v-if="!currentCategory"
+                            class=" btn btn-primary btn-block btn-fixed-modal"
+                            data-dismiss="modal"
+                        >
+                            {{ translations.modal.close }}
+                        </button>
+
+                </div>
+                <!-- / Modal Filter -->
 
 
             </div>
@@ -641,49 +637,6 @@
 
             openFilter() {
                 $('#modal-filter').modal('show')
-                //this.citiesSwiper()
-            },
-
-            citiesSwiper() {
-                let that = this
-
-                setTimeout(() => {
-                    var swiperTabs = new Swiper(that.$refs.citiesSlider, {
-                        init: true,
-                        spaceBetween: 0,
-                        slidesPerView: 3,
-                        // initialSlide: 0,
-                        initialSlide: that.currentCityIndex,
-                        loop: false,
-                        centeredSlides: true,
-                        slideToClickedSlide: true,
-                        on: {
-                            init: function () {
-                                that.resetBeforeChange();
-                            },
-                            slideChangeTransitionEnd: function () {
-                                that.currentCity = that.getCities[this.realIndex]
-                                that.currentCityIndex = this.realIndex
-                                localStorage.setItem('city_index', this.realIndex)
-                                that.resetBeforeChange();
-                                console.log('end');
-                            }
-                        },
-                        breakpoints: {
-                            350: {
-                                slidesPerView: 2,
-                            },
-                            480: {
-                                slidesPerView: 2,
-                            },
-                            768: {
-                                slidesPerView: 3,
-                            },
-                        }
-                    })
-
-
-                }, 100)
             },
 
             getEvents(first_load = true, events_in_list = []) {

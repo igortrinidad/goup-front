@@ -22,6 +22,7 @@ export const en = {
     moments_found: 'Moments found',
 
     modal: {
+        title: 'Filters',
         up: 'You goup in this event',
         down: 'You godown in this event',
         save: 'Event marked as favorite',
@@ -53,6 +54,7 @@ export const pt = {
     moments_found: 'Momentos encontrados',
 
     modal: {
+        title: 'Filtros',
         up: 'Você deu um "goup" para esse evento',
         down: 'Você deu um "goup" para esse evento',
         save: 'Evento salvo nos favoritos',

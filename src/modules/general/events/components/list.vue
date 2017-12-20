@@ -59,63 +59,7 @@
                     <div class="text-center">
                         <p class="f-16 f-300 text-center m-t-10">{{translations.before_category_type}}</p>
                         <h3 class="f-success m-t-0">{{currentCategory['name_'+language]}}</h3>
-                        <p class="f-16 f-300 text-center m-t-0">{{translations.after_category_type}}</p>
                     </div>
-
-                    <!--Cities-->
-                    <div class="row m-t-10">
-                        <div class="col-sm-12 text-center">
-
-                            <!-- IF NO CITY -->
-                            <p class="f-info" v-if="!getCities.length">{{translations.noCities}}</p>
-
-                            <!-- CITIES SWIPER -->
-                            <div class="swiper-container" ref="citiesSlider">
-                                <div class="swiper-wrapper">
-                                    <div
-                                        class="swiper-slide label transparent m-5 cursor-pointer"
-                                        style="width: 200px;"
-                                        v-for="(city, $index) in getCities"
-                                        :key="$index"
-                                        :class="{
-                                            'label-default': currentCity && currentCity.id !== city.id,
-                                            'label-success':  currentCity && currentCity.id === city.id
-                                        }"
-                                    >
-                                        <span>
-                                            {{city.name}} - {{city.state}}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Cities-->
-
-                    <!--Filters-->
-                    <div class="row m-t-10">
-                        <div class="col-sm-12 text-center">
-                            <label class="f-700">{{ translations.trending_visualization }}</label>
-
-                            <div class="swiper-container" ref="filtersSwiper">
-                                <div class="swiper-wrapper">
-                                    <div
-                                        class="swiper-slide transparent m-5 cursor-pointer"
-                                        style="width: 200px;"
-                                        v-for="(filter, $filterIndex) in timeFilters"
-                                        :key="$filterIndex">
-                                        <span class="btn btn-sm"  :class="{
-                                            'btn-default': currentFilter && currentFilter !== filter,
-                                            'btn-primary':  currentCity && currentFilter === filter
-                                        }">
-                                            {{filter[`name_${language}`]}}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Filters-->
 
                     <div class="container">
                         <div class="row m-t-30">
@@ -200,12 +144,117 @@
 
                         </div>
                     </div>
+
                 </div>
+
 
             </div>
 
 
         </transition>
+
+                <!-- Fixed Button -->
+                <button type="button" class="btn btn-primary btn-block btn-fixed" @click="openFilter()">
+                    <i class="ion-ios-location m-r-10"></i>
+                    <span v-if="currentCity">{{ currentCity.name }} - {{ currentCity.state }}</span>
+                    <span v-if="!currentCity">{{ translations.filter }}</span>
+                    |
+                    <span>
+                        {{currentFilter[`name_${language}`]}}
+                    </span>
+                </button>
+
+
+                <!-- Modal Filter -->
+                <div id="modal-filter" class="modal we-fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">{{ translations.modal.title }}</h3>
+                            </div>
+                            <!-- Modal Body -->
+                            <div class="modal-body">
+                                <!--Cities-->
+                                <div class="row">
+                                    <div class="col-sm-12 text-center">
+                                        <label class=" f-700">{{ translations.nearCities }}</label>
+                                        <p class="f-info" v-if="!getCities.length">{{ translations.noCity }}</p>
+
+                                        <!-- Card Cities -->
+                                        <div class="" ref="citiesSlider">
+                                            <div class="">
+                                                <div class="btn btn-default cursor-pointer m-t-10 m-r-10"
+                                                     v-for="(city, $index) in getCities"
+                                                     :key="$index"
+                                                     :class="{'btn-primary bounce': currentCity == city}"
+                                                     @click="setCity(city, $index)">
+                                                    <span v-if="currentCity != city">
+                                                        {{city.name}} - {{city.state}}
+                                                    </span>
+                                                    <span v-if="currentCity == city">
+                                                        {{city.name}} - {{city.state}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Card Citites -->
+
+                                    </div>
+                                </div>
+                                <!--Cities-->
+
+                                <!--Filters-->
+                                <div class="row m-t-30">
+                                    <div class="col-sm-12 text-center">
+                                        <label class="f-700">{{ translations.trending_visualization }}</label>
+
+                                        <div class="">
+                                            <div class="">
+                                                <div
+                                                    class="btn btn-default cursor-pointer m-t-10 m-r-10"
+                                                    v-for="(filter, $filterIndex) in timeFilters"
+                                                    :class="{'btn-primary bounce': currentCity && currentFilter == filter}"
+                                                    @click="setFilter(filter, $filterIndex)"
+                                                >
+                                                        {{filter[`name_${language}`]}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Filters-->
+
+                            </div>
+                            <!-- / Modal Body -->
+                            <div class="modal-footer">
+                                
+                            </div>
+
+                        </div>  
+
+                    </div>
+
+                    <button
+                            v-if="currentCategory"
+                            class=" btn btn-primary btn-block btn-fixed-modal"
+                            @click.prevent="resetBeforeChange"
+                            data-dismiss="modal"
+                        >
+                            {{ translations.modal.close }}
+                        </button>
+
+                        <button
+                            v-if="!currentCategory"
+                            class=" btn btn-primary btn-block btn-fixed-modal"
+                            data-dismiss="modal"
+                        >
+                            {{ translations.modal.close }}
+                        </button>
+
+                </div>
+                <!-- / Modal Filter -->
+
+
 
     </div>
 </template>
@@ -271,13 +320,13 @@
                     first_load: true,
                 },
                 timeFilters:[
-                    {name_en:'General', name_pt: 'Geral', value: 'general'},
+                    {name_en:'All time', name_pt: 'Geral', value: 'general'},
                     {name_en:'Today', name_pt: 'Hoje', value: 'today'},
                     {name_en:'This week', name_pt: 'Esta semana', value: 'week'},
                     {name_en:'This month', name_pt: 'Este mês', value: 'month'},
                     {name_en:'This year', name_pt: 'Este ano', value: 'year'}
                 ],
-                currentFilter: null,
+                currentFilter: {name_en:'All time', name_pt: 'Geral', value: 'general'},
                 currentFilterIndex: 0
             }
         },
@@ -303,7 +352,6 @@
             this.$nextTick(function () {
 
                 var currentCityIndex = JSON.parse(localStorage.getItem('city_index'));
-                var currentFilterIndex = JSON.parse(localStorage.getItem('filter_index'));
 
                 if(currentCityIndex > -1){
                     that.currentCityIndex = currentCityIndex;
@@ -318,15 +366,7 @@
                     that.interactions.is_loading = true;
                 }
 
-                if(currentFilterIndex > -1){
-                    that.currentFilterIndex = currentFilterIndex;
-                    that.currentFilter = that.timeFilters[currentFilterIndex]
-                } else {
-                    that.currentFilter = that.timeFilters[0]
-                }
-
             })
-
 
             if (localStorage.getItem('current_scroll')) {
                 $(window).animate({ scrollTop: JSON.parse(localStorage.getItem('current_scroll')) }, 300);
@@ -365,6 +405,28 @@
 
         methods: {
             ...mapActions(['setLoading']),
+
+            setCity: function(city, index){
+                let that = this
+
+                that.currentCity = that.getCities[index]
+                that.currentCityIndex = index
+                localStorage.setItem('city_index', index)
+            
+            },
+
+            setFilter: function(filter, index){
+                let that = this
+            
+                that.currentFilter = that.timeFilters[index]
+                that.currentFilterIndex = index
+                localStorage.setItem('filter_index', index)
+                
+            },
+
+            openFilter() {
+                $('#modal-filter').modal('show')
+            },
 
             resetCategory: function(refresh_query = false){
                 let that = this
@@ -423,7 +485,7 @@
                     city_id: that.currentCity.id,
                     page: that.infiniteLoadingEvents.nextPage,
                     next_set: that.infiniteLoadingEvents.nextSet,
-                    filter: that.currentFilter ?  that.currentFilter.value : 'general'
+                    filter: that.currentFilter
                 }, {
                     cancelToken: new CancelToken(function executor(cancel) {
                         cancelCurrentRequest = cancel;
@@ -478,49 +540,6 @@
                 //this.getEvents()
             },
 
-
-            citiesSwiper() {
-                let that = this
-
-                setTimeout(() => {
-
-                    var swiperTabs = new Swiper(that.$refs.citiesSlider, {
-                        init: true,
-                        spaceBetween: 0,
-                        slidesPerView: 5,
-                        initialSlide: that.currentCityIndex,
-                        loop: false,
-                        centeredSlides: true,
-                        slideToClickedSlide: true,
-                        prevButton: '.swiper-button-prev',
-                        nextButton: '.swiper-button-next',
-                        on: {
-                            init: function () {
-                                that.resetBeforeChange();
-                            },
-                            slideChangeTransitionEnd: function () {
-                                that.currentCity = that.getCities[this.realIndex]
-                                that.currentCityIndex = this.realIndex
-                                localStorage.setItem('city_index', this.realIndex)
-                                that.resetBeforeChange()
-                            },
-                        },
-                        breakpoints: {
-                            350: {
-                                slidesPerView: 2,
-                            },
-                            480: {
-                                slidesPerView: 2,
-                            },
-                            768: {
-                                slidesPerView: 3,
-                            },
-                        }
-                    })
-
-                }, 100)
-            },
-
             selectCategory: function(category){
                 let that = this
 
@@ -532,11 +551,6 @@
                     that.$router.push({ query: { category_id: category.id }})
                 }, 300);
 
-                setTimeout(function() {
-                    that.citiesSwiper();
-                    that.filtersSwiper()
-                }, 600);
-
                 bus.$emit('ranking-category-selected', category);
 
                 that.events = []
@@ -545,53 +559,37 @@
 
             },
 
-            filtersSwiper() {
-                let that = this
-
-                setTimeout(() => {
-
-                    var swiperTabs = new Swiper(that.$refs.filtersSwiper, {
-                        init: true,
-                        spaceBetween: 0,
-                        slidesPerView: 5,
-                        initialSlide: that.currentFilterIndex,
-                        loop: false,
-                        centeredSlides: true,
-                        slideToClickedSlide: true,
-                        prevButton: '.swiper-button-prev',
-                        nextButton: '.swiper-button-next',
-                        on: {
-                            init: function () {
-                                that.resetBeforeChange();
-                            },
-                            slideChangeTransitionEnd: function () {
-
-                                that.currentFilter = that.timeFilters[this.realIndex]
-                                that.currentFilterIndex = this.realIndex
-                                localStorage.setItem('filter_index', this.realIndex)
-                                that.resetBeforeChange()
-                            },
-                        },
-                        breakpoints: {
-                            350: {
-                                slidesPerView: 3,
-                            },
-                            480: {
-                                slidesPerView: 3,
-                            },
-                            768: {
-                                slidesPerView: 3,
-                            },
-                        }
-                    })
-
-                }, 100)
-            },
         }
     }
 </script>
 
 <style scoped>
+
+
+    /* btn fixed */
+    .btn.btn-primary.btn-fixed{
+        position: fixed;
+        left: 0;
+        right: 0;
+        border-radius: 0;
+        bottom: 0;
+        background-color: #FF4B89;
+        color: #fff !important;
+        font-weight: 700;
+        z-index: 100;
+    }
+
+    .btn.btn-primary.btn-fixed-modal{
+        position: fixed;
+        left: 0;
+        right: 0;
+        border-radius: 0;
+        bottom: 0;
+        background-color: #FF4B89;
+        color: #fff !important;
+        font-weight: 700;
+        z-index: 100;
+    }
 
     .modal-footer {
         border-radius: 0;
