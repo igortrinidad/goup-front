@@ -204,7 +204,7 @@
         },
         methods: {
 
-            ...mapActions(['setLoading', 'setUserLastGeolocation', 'setLanguage']),
+            ...mapActions(['setLoading', 'setUserLastGeolocation', 'setLanguage', 'setCities']),
 
             getUserLocation: function(){
                 let that = this
@@ -239,6 +239,8 @@
                         if(that.isLogged){
                             that.$router.push('/explorer');
                         }
+
+                        that.setCities();
 
 
                     },

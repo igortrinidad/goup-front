@@ -25,7 +25,7 @@ export const en = {
         up: 'You goup in this event',
         down: 'You godown in this event',
         save: 'Event marked as favorite',
-        close: 'Close'
+        close: 'Search'
     }
 }
 
@@ -56,6 +56,6 @@ export const pt = {
         up: 'Você deu um "goup" para esse evento',
         down: 'Você deu um "goup" para esse evento',
         save: 'Evento salvo nos favoritos',
-        close: 'Fechar'
+        close: 'Buscar'
     }
 }

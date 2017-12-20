@@ -223,7 +223,7 @@
                 </div>
                 <!-- EXPLORER -->
 
-                                    <!-- Fixed Button -->
+                    <!-- Fixed Button -->
                     <button type="button" class="btn btn-primary btn-block btn-fixed" @click="openFilter()">
                         <i class="ion-ios-location m-r-10"></i>
                         <span v-if="currentCity">{{ currentCity.name }} - {{ currentCity.state }}</span>
@@ -250,12 +250,13 @@
                                             <p class="f-info" v-if="!getCities.length">{{ translations.noCity }}</p>
 
                                             <!-- Card Cities -->
-                                            <div class="swiper-container" ref="citiesSlider">
-                                                <div class="swiper-wrapper">
-                                                    <div class="swiper-slide label transparent m-5 cursor-pointer"
+                                            <div class="" ref="citiesSlider">
+                                                <div class="">
+                                                    <div class="btn btn-default cursor-pointer m-t-10 m-r-10"
                                                          v-for="(city, $index) in getCities"
                                                          :key="$index"
-                                                         :class="{'cursor-pointer': currentCity != city, 'label-success': currentCity == city}">
+                                                         :class="{'btn-primary bounce': currentCity == city}"
+                                                         @click="setCity(city, $index)">
                                                         <span v-if="currentCity != city">
                                                             {{city.name}} - {{city.state}}
                                                         </span>
@@ -295,26 +296,31 @@
                                 </div>
                                 <!-- / Modal Body -->
                                 <div class="modal-footer">
-                                    <button
-                                        v-if="currentCategory"
-                                        class="btn btn-primary btn-block m-t-30 m-b-30"
-                                        :disabled="!days_selecteds_to_query.monthly"
-                                        @click.prevent="getEvents"
-                                        data-dismiss="modal"
-                                    >
-                                        {{ translations.modal.close }}
-                                    </button>
-
-                                    <button
-                                        v-if="!currentCategory"
-                                        class="btn btn-primary btn-block m-t-30 m-b-30"
-                                        data-dismiss="modal"
-                                    >
-                                        {{ translations.modal.close }}
-                                    </button>
+                                    
                                 </div>
-                            </div>
+
+                            </div>  
+
                         </div>
+
+                        <button
+                                v-if="currentCategory"
+                                class=" btn btn-primary btn-block btn-fixed-modal"
+                                :disabled="!days_selecteds_to_query.monthly"
+                                @click.prevent="getEvents"
+                                data-dismiss="modal"
+                            >
+                                {{ translations.modal.close }}
+                            </button>
+
+                            <button
+                                v-if="!currentCategory"
+                                class=" btn btn-primary btn-block btn-fixed-modal"
+                                data-dismiss="modal"
+                            >
+                                {{ translations.modal.close }}
+                            </button>
+
                     </div>
                     <!-- / Modal Filter -->
 
@@ -464,6 +470,15 @@
         methods: {
 
             ...mapActions(['setCities', 'setCategories', 'updateUserGeolocation', 'handleUserInteraction']),
+
+            setCity: function(city, index){
+                let that = this
+
+                that.currentCity = that.getCities[index]
+                that.currentCityIndex = index
+                localStorage.setItem('city_index', index)
+            
+            },
 
             mountHammer() {
                 let that = this
@@ -860,6 +875,18 @@
 
     /* btn fixed */
     .btn.btn-primary.btn-fixed{
+        position: fixed;
+        left: 0;
+        right: 0;
+        border-radius: 0;
+        bottom: 0;
+        background-color: #FF4B89;
+        color: #fff !important;
+        font-weight: 700;
+        z-index: 100;
+    }
+
+    .btn.btn-primary.btn-fixed-modal{
         position: fixed;
         left: 0;
         right: 0;
