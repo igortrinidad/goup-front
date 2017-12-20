@@ -149,7 +149,7 @@
                                 <tab-location :transition="currentTab === 0 ? 'transition' : 'fadeout'" :event="event"></tab-location>
 
                                 <!-- Tab Events -->
-                                <tab-events-same-place :transition="currentTab === 1 ? 'transition' : 'fadeout'"></tab-events-same-place>
+                                <tab-events-same-place :transition="currentTab === 1 ? 'transition' : 'fadeout'" :event="event"></tab-events-same-place>
 
                                 <!-- Tab Friends -->
                                 <tab-friends :transition="currentTab === 2 ? 'transition' : 'fadeout'"></tab-friends>
