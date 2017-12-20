@@ -68,11 +68,11 @@
                 <span>
                     <p class="f-13 f-300 m-t-20">
                         {{translations.terms.first}}
-                        <router-link :to="{name: 'landing.terms'}">
+                        <router-link to="/termos-de-uso">
                             {{translations.terms.terms_button}}
                         </router-link>
                         {{translations.terms.and}}
-                        <router-link :to="{name: 'landing.privacy'}">
+                        <router-link to="/privacidade">
                             {{translations.terms.privacy_button}}
                         </router-link>
                     </p>

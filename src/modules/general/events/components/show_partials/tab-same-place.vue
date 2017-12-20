@@ -1,5 +1,5 @@
 <template>
-    <div id="tab-same-place" :class="transition">
+    <div id="tab-same-place" :class="'transition'">
         <div class="m-t-30">
             <div class="">
                 <!-- Events in same place -->
@@ -49,11 +49,10 @@
                         </div>
                     </div>
 
-
+                    <!-- PLACEHOLDER -->
                     <div class="col-row-horizontal-direction" v-if="infiniteLoadingEventsSamePlace.is_loading">
                         <div class="col-horizontal-direction-50 text-center">
                             <div class="card-placeholder placeholder-effect text-center">
-                                <p class="f-default m-t-30" style="vertical-align: middle;">Loading</p>
                             </div>
                         </div>
                     </div>

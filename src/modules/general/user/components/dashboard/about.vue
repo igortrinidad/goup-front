@@ -25,9 +25,9 @@
                             <hr>
 
                             <p class=" f-22 f-400">{{ translations.legal.title }}</p>
-                            <router-link tag="button" :to="{name: 'general.terms'}" class="btn btn-dark">{{ translations.legal.terms }}</router-link>
+                            <router-link tag="button" to="/termos-de-uso" class="btn btn-dark">{{ translations.legal.terms }}</router-link>
                             <br>
-                            <router-link tag="button" :to="{name: 'general.privacy'}" class="btn btn-dark m-t-10">{{ translations.legal.privacy }}</router-link>
+                            <router-link tag="button" to="/privacidade" class="btn btn-dark m-t-10">{{ translations.legal.privacy }}</router-link>
 
                             <router-link tag="label" class="btn-block text-white" :to="{name: 'secret.categories'}">---</router-link>
 

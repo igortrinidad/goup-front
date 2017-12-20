@@ -7,7 +7,7 @@
                 <div class="col-row" v-show="interactions.length">
 
                     <div class="col text-center" v-for="interaction in interactions">
-                        <div class="border-inside-card">
+                        <div class="border-inside-card" v-if="interaction.user">
                             <router-link
                                 tag="div"
                                 class="picture-circle picture-circle-xs border-picture-eletric-blue cursor-pointer"

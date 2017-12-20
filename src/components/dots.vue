@@ -1,7 +1,7 @@
 <template lang="html">
 
     <div class="">
-        <div aria-busy="true" aria-label="Loading" role="progressbar" class="container-dots" >
+        <div aria-busy="true" aria-label="Loading" role="progressbar" class="container-dots">
           <div class="swing">
             <div class="swing-l"></div>
             <div></div>

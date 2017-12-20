@@ -401,12 +401,7 @@
 
             var currentCityIndex = JSON.parse(localStorage.getItem('city_index'));
 
-            if(!currentCityIndex){
-                that.currentCity = that.getCities[0];
-            } else {
-                that.currentCityIndex = currentCityIndex;
-                that.currentCity = that.getCities[currentCityIndex];
-            }
+
 
 
             if (that.$route.query.category_id && that.$route.query.category_id != 'all') {
@@ -440,7 +435,15 @@
 
             setTimeout(function () {
                 that.checkDaysToQuery();
-            }, 100);
+
+                if(!currentCityIndex){
+                    that.currentCity = that.getCities[0];
+                } else {
+                    that.currentCityIndex = currentCityIndex;
+                    that.currentCity = that.getCities[currentCityIndex];
+                }
+
+            }, 400);
 
         },
 
@@ -858,6 +861,7 @@
         background-color: #FF4B89;
         color: #fff !important;
         font-weight: 700;
+        z-index: 100;
     }
 
     .card {

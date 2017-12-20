@@ -5,10 +5,18 @@
     }
 
     .card-placeholder{
-        height: 288px;
+        height: 280px;
         background-color: #FFF;
         border-radius: 5px;
         margin-top: 20px;
         vertical-align: middle;
         padding-top: 100px;
     }
+
+@media screen and (max-width: 991px) {
+
+    .card-placeholder{
+        height: 244px;
+    }
+
+}

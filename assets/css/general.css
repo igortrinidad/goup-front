@@ -12,6 +12,7 @@ html, body {
     color: #fff;
     background-color: #561F9F;
     background-image: url("https://s3.amazonaws.com/goup-assets/img/pattern-goup-transp.png");
+    background-attachment: fixed;
 }
 
 .icon-img{
