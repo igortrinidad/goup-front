@@ -220,7 +220,9 @@
                         </router-link>
 
                         <button type="button" class="btn btn-primary btn-block btn-fixed" @click="openFilter()">
-                            <i class="ion-navigate m-r-10"></i>{{ currentCity.name }} - {{ currentCity.state }}
+                            <i class="ion-navigate m-r-10"></i>
+                            <span v-if="currentCity">{{ currentCity.name }} - {{ currentCity.state }}</span>
+                            <span v-if="!currentCity">{{ translations.filter }}</span>
                         </button>
                     </div>
 
