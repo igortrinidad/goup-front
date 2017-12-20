@@ -202,10 +202,6 @@
                                 <span class="action" @click="favorite()" :class="{'bounce' : interactions.favorite }">
                                     <img  class="action-small"src="../../../../assets/icons/explorer_actions/star_pink.svg"/>
                                 </span>
-                                <br>
-                                <router-link tag="span" class="action" :to="{name: 'events.create'}">
-                                    <img  class="action-small"src="../../../../assets/icons/explorer_actions/star_pink.svg"/>
-                                </router-link>
                             </div>
 
                         </div>
@@ -222,8 +218,9 @@
                         >
                             {{ translations.add_event }}
                         </router-link>
-                        <button type="button" class="btn btn-primary btn-block btn-fixed" data-toggle="modal" data-target="#modal-filter">
-                            <i class="ion-funnel m-r-10"></i>{{ translations.filter }}
+
+                        <button type="button" class="btn btn-primary btn-block btn-fixed" @click="openFilter()">
+                            <i class="ion-navigate m-r-10"></i>{{ currentCity.name }} - {{ currentCity.state }}
                         </button>
                     </div>
 
@@ -234,12 +231,14 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h3 class="modal-title">{{ translations.filter }}</h3>
+                                    <div class="border-inside-card m-t-10">
+                                        <h5 class="modal-title">{{ translations.moments_found }} <span class="badge-city">{{ events.length }}</span></h5>
+                                    </div>
                                 </div>
                                 <!-- Modal Body -->
                                 <div class="modal-body">
-
                                     <!--Cities-->
-                                    <div class="row m-t-20">
+                                    <div class="row">
                                         <div class="col-sm-12 text-center">
                                             <label class=" f-700">{{ translations.nearCities }}</label>
                                             <p class="f-info" v-if="!getCities.length">{{ translations.noCity }}</p>
@@ -247,15 +246,16 @@
                                             <!-- Card Cities -->
                                             <div class="swiper-container" ref="citiesSlider">
                                                 <div class="swiper-wrapper">
-                                                    <div class="swiper-label-to-fix swiper-slide label transparent m-5 cursor-pointer"
+                                                    <div class="swiper-slide label transparent m-5 cursor-pointer"
                                                          v-for="(city, $index) in getCities"
                                                          :key="$index"
                                                          :class="{'cursor-pointer': currentCity != city, 'label-success': currentCity == city}">
                                                         <span v-if="currentCity != city">
                                                             {{city.name}} - {{city.state}}
                                                         </span>
-                                                        <span v-if="currentCity == city">{{city.name}} - {{city.state}}  <span
-                                                            class="badge-city">{{events.length}}</span></span>
+                                                        <span v-if="currentCity == city">
+                                                            {{city.name}} - {{city.state}}
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -295,7 +295,7 @@
                                         @click.prevent="getEvents"
                                         data-dismiss="modal"
                                     >
-                                        {{ translations.search_button }}
+                                        {{ translations.modal.close }}
                                     </button>
                                 </div>
                             </div>
@@ -610,19 +610,24 @@
                 return `${distance.toFixed(2)} km`
             },
 
+            openFilter() {
+                $('#modal-filter').modal('show')
+                this.citiesSwiper()
+            },
+
             citiesSwiper() {
                 let that = this
 
                 setTimeout(() => {
                     var swiperTabs = new Swiper(that.$refs.citiesSlider, {
+                        init: true,
                         spaceBetween: 0,
-                        slidesPerView: 1,
-                        initialSlide: that.currentCityIndex,
+                        slidesPerView: 3,
+                        initialSlide: 0,
+                        // initialSlide: that.currentCityIndex,
                         loop: false,
                         centeredSlides: true,
                         slideToClickedSlide: true,
-                        prevButton: '.swiper-button-prev',
-                        nextButton: '.swiper-button-next',
                         on: {
                             init: function () {
                                 that.resetBeforeChange();
@@ -632,6 +637,7 @@
                                 that.currentCityIndex = this.realIndex
                                 localStorage.setItem('city_index', this.realIndex)
                                 that.resetBeforeChange();
+                                console.log('end');
                             }
                         },
                         breakpoints: {
@@ -749,10 +755,6 @@
                     that.interactions.finished_loading_category = true;
                     that.$router.push({query: {category_id: category.id}})
                 }, 500);
-
-                setTimeout(function () {
-                    that.citiesSwiper();
-                }, 600);
 
                 if (typeof cancelCurrentRequest === "function") {
                     cancelCurrentRequest()
@@ -896,15 +898,17 @@
     }
 
     .badge-city {
-        display: inline-block;
-        min-width: 10px;
-        padding: 3px 7px;
+        display: inline-flex;
+        width: 25px;
+        height: 21px;
+        padding: 0;
         font-weight: bold;
         color: #ec538b;
         line-height: 1;
         vertical-align: middle;
         white-space: nowrap;
-        text-align: center;
+        align-items: center;
+        justify-content: center;
         background-color: #fff;
         border-radius: 10px;
         font-size: 11px;
@@ -925,8 +929,8 @@
         font-size: 11px;
     }
 
-    .swiper-label-to-fix{
-        width: 33%;
+    .swiper-label-to-fix {
+        padding-right:45px !important
     }
 
     .no-event-card{

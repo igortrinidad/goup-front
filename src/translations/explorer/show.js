@@ -18,6 +18,7 @@ export const en = {
     free: 'Free',
     uninformed: 'Value not informed',
     filter: 'Filter',
+    moments_found: 'Moments found',
 
     modal: {
         up: 'You goup in this event',
@@ -47,6 +48,7 @@ export const pt = {
     free: 'Gratuito',
     uninformed: 'Valor não informado',
     filter: 'Filtro',
+    moments_found: 'Momentos encontrados',
 
     modal: {
         up: 'Você deu um "goup" para esse evento',

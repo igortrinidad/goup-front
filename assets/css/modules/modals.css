@@ -18,6 +18,10 @@
     text-align: center;
 }
 
+.modal .modal-body {
+    padding: 10px;
+}
+
 .modal .modal-title,
 .modal .modal-content {
     color: #FFF;
@@ -39,6 +43,7 @@
    background-color: rgba(0, 0, 0, .9) !important;
    opacity: 1 !important;
 }
+
 
 /* OS KEYFRAMES DAS ANIMAÇÕES ABAIXO ESTÃO EM "css/modules/keyframes.css" */
 
