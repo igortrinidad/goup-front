@@ -399,25 +399,6 @@
 
             var that = this;
 
-            var currentCityIndex = JSON.parse(localStorage.getItem('city_index'));
-
-
-
-
-            if (that.$route.query.category_id && that.$route.query.category_id != 'all') {
-
-                var index = that.getCategories.indexFromAttr('id', that.$route.query.category_id);
-                that.selectCategory(that.getCategories[index]);
-                that.interactions.is_loading = true;
-
-            } else {
-
-                this.setCities();
-                this.setCategories();
-                this.updateUserGeolocation();
-
-            }
-
 
             bus.$on('refresh_explorer', function () {
                 that.currentCategory = null;
@@ -433,8 +414,14 @@
 
             this.initWeek();
 
-            setTimeout(function () {
+
+            this.$nextTick(function () {
+            
                 that.checkDaysToQuery();
+
+                var currentCityIndex = JSON.parse(localStorage.getItem('city_index'));
+
+                console.log('corrente index' + currentCityIndex);
 
                 if(!currentCityIndex){
                     that.currentCity = that.getCities[0];
@@ -443,7 +430,21 @@
                     that.currentCity = that.getCities[currentCityIndex];
                 }
 
-            }, 400);
+                if (that.$route.query.category_id && that.$route.query.category_id != 'all') {
+
+                    var index = that.getCategories.indexFromAttr('id', that.$route.query.category_id);
+                    that.selectCategory(that.getCategories[index]);
+                    that.interactions.is_loading = true;
+
+                } else {
+
+                    that.setCities();
+                    that.setCategories();
+                    that.updateUserGeolocation();
+
+                }
+
+          })
 
         },
 
@@ -751,7 +752,6 @@
 
             selectCategory: function (category) {
                 let that = this
-
 
                 that.currentCategory = category;
                 bus.$emit('category-selected', category);

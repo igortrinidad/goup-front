@@ -33,9 +33,8 @@ export const setLanguage = ({ commit }, language) => {
 export const setCities = ({ commit }) => {
 
 
-    var userLastGeoLocation = JSON.parse(localStorage.getItem('user_last_geo_location'));
 
-    if(!userLastGeoLocation){
+    if( !window.checkUserLastLocation() || window.checkUserLastLocation() == 'is_valid' ){
         return false
     }
 

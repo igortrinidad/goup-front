@@ -41,12 +41,32 @@ export const getUserLastGeoLocation = (state) => {
 
 export const getCities = (state) => {
 
+    if(!state.cities.length){
+
+        var cities = JSON.parse(localStorage.getItem('cities'));
+
+        if(cities){
+            return cities;
+        }
+
+    }
+    
     return state.cities;
 
 }
 
 export const getCategories = (state) => {
 
+    if(!state.categories.length){
+
+        var categories = JSON.parse(localStorage.getItem('categories'));
+
+        if(categories){
+            return categories;
+        }
+
+    }
+    
     return state.categories;
 
 }

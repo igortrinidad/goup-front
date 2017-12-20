@@ -143,21 +143,21 @@
 
 
 .event-cover-image{
-    height: 200px !important;
+    height: 190px !important;
 }
 
 .event-cover-image-half-page{
-    height: 120px !important;
+    height: 110px !important;
 }
 
 .cards {
     position: relative;
-    height: 378px;
+    height: 368px;
 }
 
 @media (max-width: 325px){
     .event-cover-image{
-        height: 150px !important;
+        height: 140px !important;
     }
 
     .event-cover-image-half-page{
@@ -166,36 +166,36 @@
 
     .cards {
         position: relative;
-        height: 318px;
+        height: 308px;
     }
 }
 
 @media (min-width: 768px){
     .event-cover-image{
-        height: 350px !important;
+        height: 340px !important;
     }
 
-    .event-cover-image{
-        height: 200px !important;
+    .event-cover-image-half-page{
+        height: 190px !important;
     }
 
     .cards {
         position: relative;
-        height: 528px;
+        height: 518px;
     }
 }
 
 @media (min-width: 893px){
     .event-cover-image{
-        height: 350px !important;
+        height: 340px !important;
     }
 
     .event-cover-image-half-page{
-        height: 200px !important;
+        height: 190px !important;
     }
 
     .cards {
         position: relative;
-        height: 548px;
+        height: 538px;
     }
 }
