@@ -15,7 +15,7 @@
 
             <div class="main">
 
-                <!-- <h3 class="text-center f-success m-t-10 m-0">Explorer</h3> -->
+                <h3 class="text-center f-success m-t-10 m-0">{{ language === 'en' ? currentCategory.name_en : currentCategory.name_pt }}</h3>
 
                 <!-- CATEGORIES -->
                 <div class="container" v-show="!interactions.finished_loading_category && !interactions.is_loading"
