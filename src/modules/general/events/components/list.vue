@@ -273,10 +273,9 @@
                 timeFilters:[
                     {name_en:'General', name_pt: 'Geral', value: 'general'},
                     {name_en:'Today', name_pt: 'Hoje', value: 'today'},
-                    {name_en:'Week', name_pt: 'Esta semana', value: 'week'},
-                    {name_en:'Month', name_pt: 'Este mês', value: 'month'},
-                    {name_en:'This Year', name_pt: 'Este ano', value: 'year'},
-
+                    {name_en:'This week', name_pt: 'Esta semana', value: 'week'},
+                    {name_en:'This month', name_pt: 'Este mês', value: 'month'},
+                    {name_en:'This year', name_pt: 'Este ano', value: 'year'}
                 ],
                 currentFilter: null,
                 currentFilterIndex: 0
@@ -419,7 +418,7 @@
                     city_id: that.currentCity.id,
                     page: that.infiniteLoadingEvents.nextPage,
                     next_set: that.infiniteLoadingEvents.nextSet,
-                    filter: that.currentFilter.value ?  that.currentFilter.value : 'general'
+                    filter: that.currentFilter ?  that.currentFilter.value : 'general'
                 }, {
                     cancelToken: new CancelToken(function executor(cancel) {
                         cancelCurrentRequest = cancel;
