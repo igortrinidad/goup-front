@@ -64,7 +64,15 @@
                             <p class="f-info m-t-20" >
                                 {{ translations.end_list }}
                             </p>
+
+                            <router-link
+                                :to="{name: 'events.create'}"
+                                class="btn btn-primary m-t-20"
+                            >
+                                {{ translations.add_event }}
+                            </router-link>
                         </div>
+
                     </div>
 
                     <!-- PlaceHolder -->
@@ -209,22 +217,12 @@
                     </div>
                     <!-- /Cards Explorer  -->
 
-                    <div class="text-center">
-                        <router-link
-                            :to="{name: 'events.create'}"
-                            class="btn btn-primary btn-block m-b-10"
-                            style="margin-top: -55px"
-                            v-if="!events.length && !interactions.is_loading && !interactions.place_holder_is_loading"
-                        >
-                            {{ translations.add_event }}
-                        </router-link>
-
-                        <button type="button" class="btn btn-primary btn-block btn-fixed" @click="openFilter()">
-                            <i class="ion-navigate m-r-10"></i>
-                            <span v-if="currentCity">{{ currentCity.name }} - {{ currentCity.state }}</span>
-                            <span v-if="!currentCity">{{ translations.filter }}</span>
-                        </button>
-                    </div>
+                    <!-- Fixed Button -->
+                    <button type="button" class="btn btn-primary btn-block btn-fixed" @click="openFilter()">
+                        <i class="ion-navigate m-r-10"></i>
+                        <span v-if="currentCity">{{ currentCity.name }} - {{ currentCity.state }}</span>
+                        <span v-if="!currentCity">{{ translations.filter }}</span>
+                    </button>
 
 
                     <!-- Modal Filter -->
