@@ -96,7 +96,7 @@
                                         </div>
                                         <!-- Card Body -->
                                         <div class="card-body card-padding">
-                                            <h4 class="m-b-5">{{ event.name }} | Votes: {{event.vote_count}} | {{event.id}}</h4>
+                                            <h4 class="m-b-5">{{ event.name }} | Votos: {{event.vote_count}}</h4>
                                             <div style="opacity: .8;">
                                                 <p class="m-b-5 max-lines-2-lines">{{ event.description }}</p>
                                                 <span class="d-block m-0 f-12">
@@ -135,7 +135,7 @@
                             </div>
 
 
-                            <div class="col-sm-12">
+                            <div class="col-sm-12" style="margin-bottom: 70px;">
 
                                 <p class="f-14 f-300 text-center m-t-20">{{translations.add_event_title}}</p>
 
@@ -485,7 +485,7 @@
                     city_id: that.currentCity.id,
                     page: that.infiniteLoadingEvents.nextPage,
                     next_set: that.infiniteLoadingEvents.nextSet,
-                    filter: that.currentFilter
+                    filter: that.currentFilter.value
                 }, {
                     cancelToken: new CancelToken(function executor(cancel) {
                         cancelCurrentRequest = cancel;
@@ -549,6 +549,7 @@
                     that.interactions.finished_loading_category = true;
                     that.interactions.is_loading = false;
                     that.$router.push({ query: { category_id: category.id }})
+                    that.resetBeforeChange();
                 }, 300);
 
                 bus.$emit('ranking-category-selected', category);
