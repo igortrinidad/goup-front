@@ -220,7 +220,10 @@
                     </div>
                     <!-- /Cards Explorer  -->
 
-                    <!-- Fixed Button -->
+                </div>
+                <!-- EXPLORER -->
+
+                                    <!-- Fixed Button -->
                     <button type="button" class="btn btn-primary btn-block btn-fixed" @click="openFilter()">
                         <i class="ion-navigate m-r-10"></i>
                         <span v-if="currentCity">{{ currentCity.name }} - {{ currentCity.state }}</span>
@@ -293,9 +296,18 @@
                                 <!-- / Modal Body -->
                                 <div class="modal-footer">
                                     <button
+                                        v-if="currentCategory"
                                         class="btn btn-primary btn-block m-t-30 m-b-30"
                                         :disabled="!days_selecteds_to_query.monthly"
                                         @click.prevent="getEvents"
+                                        data-dismiss="modal"
+                                    >
+                                        {{ translations.modal.close }}
+                                    </button>
+
+                                    <button
+                                        v-if="!currentCategory"
+                                        class="btn btn-primary btn-block m-t-30 m-b-30"
                                         data-dismiss="modal"
                                     >
                                         {{ translations.modal.close }}
@@ -306,8 +318,6 @@
                     </div>
                     <!-- / Modal Filter -->
 
-                </div>
-                <!-- EXPLORER -->
 
             </div>
         </transition>
@@ -414,14 +424,11 @@
 
             this.initWeek();
 
-
             this.$nextTick(function () {
             
                 that.checkDaysToQuery();
 
                 var currentCityIndex = JSON.parse(localStorage.getItem('city_index'));
-
-                console.log('corrente index' + currentCityIndex);
 
                 if(!currentCityIndex){
                     that.currentCity = that.getCities[0];
@@ -619,7 +626,7 @@
 
             openFilter() {
                 $('#modal-filter').modal('show')
-                this.citiesSwiper()
+                //this.citiesSwiper()
             },
 
             citiesSwiper() {

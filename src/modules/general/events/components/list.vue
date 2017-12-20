@@ -300,28 +300,33 @@
 
             var that = this;
 
-            var currentCityIndex = JSON.parse(localStorage.getItem('city_index'));
-            var currentFilterIndex = JSON.parse(localStorage.getItem('filter_index'));
+            this.$nextTick(function () {
 
-            if(currentCityIndex > -1){
-                that.currentCityIndex = currentCityIndex;
-                that.currentCity = that.getCities[currentCityIndex];
-            } else {
-                that.currentCity = that.getCities[0];
-            }
+                var currentCityIndex = JSON.parse(localStorage.getItem('city_index'));
+                var currentFilterIndex = JSON.parse(localStorage.getItem('filter_index'));
 
-            if(currentFilterIndex > -1){
-                that.currentFilterIndex = currentFilterIndex;
-                that.currentFilter = that.timeFilters[currentFilterIndex]
-            } else {
-                that.currentFilter = that.timeFilters[0]
-            }
+                if(!currentCityIndex){
+                    that.currentCity = that.getCities[0];
+                } else {
+                    that.currentCityIndex = currentCityIndex;
+                    that.currentCity = that.getCities[currentCityIndex];
+                }
 
-            if(that.$route.query.category_id){
-                var index = that.getCategories.indexFromAttr('id', that.$route.query.category_id);
-                that.selectCategory(that.getCategories[index]);
-                that.interactions.is_loading = true;
-            }
+                if(that.$route.query.category_id){
+                    var index = that.getCategories.indexFromAttr('id', that.$route.query.category_id);
+                    that.selectCategory(that.getCategories[index]);
+                    that.interactions.is_loading = true;
+                }
+
+                if(currentFilterIndex > -1){
+                    that.currentFilterIndex = currentFilterIndex;
+                    that.currentFilter = that.timeFilters[currentFilterIndex]
+                } else {
+                    that.currentFilter = that.timeFilters[0]
+                }
+
+            })
+
 
             if (localStorage.getItem('current_scroll')) {
                 $(window).animate({ scrollTop: JSON.parse(localStorage.getItem('current_scroll')) }, 300);
