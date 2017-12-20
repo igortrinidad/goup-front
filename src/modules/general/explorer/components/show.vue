@@ -15,7 +15,7 @@
 
             <div class="main">
 
-                <h3 class="text-center f-success">Explorer</h3>
+                <!-- <h3 class="text-center f-success m-t-10 m-0">Explorer</h3> -->
 
                 <!-- CATEGORIES -->
                 <div class="container" v-show="!interactions.finished_loading_category && !interactions.is_loading"
@@ -58,7 +58,7 @@
                 <div class="container" v-if="interactions.finished_loading_category && !interactions.is_loading">
 
                     <!-- No Event -->
-                    <div class="height-controller" style="border: 1px solid red;" v-show="!events.length && !interactions.is_loading && !interactions.place_holder_is_loading">
+                    <div class="height-controller" v-show="!events.length && !interactions.is_loading && !interactions.place_holder_is_loading">
                         <div class="no-event-card m-t-20">
                             <img src="../../../../assets/icons/ghost.svg" />
                             <p class="f-info m-t-20" >
@@ -68,12 +68,12 @@
                     </div>
 
                     <!-- PlaceHolder -->
-                    <div class="height-controller" style="border: 1px solid #fff;" v-show="interactions.place_holder_is_loading">
+                    <div class="height-controller" v-show="interactions.place_holder_is_loading">
                         <card-placeholder-explorer class="m-t-20 m-b-30"></card-placeholder-explorer>
                     </div>
 
                     <!-- Cards Explorer -->
-                    <div class="height-controller" style="border: 1px solid green" v-if="events.length && !interactions.is_loading && !interactions.place_holder_is_loading">
+                    <div class="height-controller" v-if="events.length && !interactions.is_loading && !interactions.place_holder_is_loading">
                         <!-- Cards -->
                         <div class="cards m-t-20">
 
@@ -192,16 +192,20 @@
                                 </span>
 
                                 <span class="action" @click="goDown()" :class="{'bounce' : interactions.down }">
-                                     <img class="action-large" src="../../../../assets/icons/explorer_actions/dislike.svg"/>
+                                    <img class="action-large" src="../../../../assets/icons/explorer_actions/dislike.svg"/>
                                 </span>
 
                                 <span class="action" @click="goUp()" :class="{'bounce' : interactions.up }">
-                                     <img  class="action-large"src="../../../../assets/icons/explorer_actions/like.svg"/>
+                                    <img  class="action-large"src="../../../../assets/icons/explorer_actions/like.svg"/>
                                 </span>
 
                                 <span class="action" @click="favorite()" :class="{'bounce' : interactions.favorite }">
-                                     <img  class="action-small"src="../../../../assets/icons/explorer_actions/star_pink.svg"/>
+                                    <img  class="action-small"src="../../../../assets/icons/explorer_actions/star_pink.svg"/>
                                 </span>
+                                <br>
+                                <router-link tag="span" class="action" :to="{name: 'events.create'}">
+                                    <img  class="action-small"src="../../../../assets/icons/explorer_actions/star_pink.svg"/>
+                                </router-link>
                             </div>
 
                         </div>
@@ -209,66 +213,95 @@
                     </div>
                     <!-- /Cards Explorer  -->
 
-                    <!--Cities-->
-                    <div class="row m-t-20">
-                        <div class="col-sm-12 text-center">
+                    <div class="text-center">
+                        <router-link
+                            :to="{name: 'events.create'}"
+                            class="btn btn-primary btn-block m-b-10"
+                            style="margin-top: -55px"
+                            v-if="!events.length && !interactions.is_loading && !interactions.place_holder_is_loading"
+                        >
+                            {{ translations.add_event }}
+                        </router-link>
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-filter">
+                            {{ translations.filter }}
+                        </button>
+                    </div>
 
-                            <label class=" f-700">{{ translations.nearCities }}</label>
-                            <p class="f-info" v-if="!getCities.length">{{ translations.noCity }}</p>
-                            <div class="swiper-container" ref="citiesSlider">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-label-to-fix swiper-slide label transparent m-5 cursor-pointer"
-                                         v-for="(city, $index) in getCities"
-                                         :key="$index"
-                                         :class="{'cursor-pointer': currentCity != city, 'label-success': currentCity == city}">
-                                        <span v-if="currentCity != city">
-                                            {{city.name}} - {{city.state}}
-                                        </span>
-                                        <span v-if="currentCity == city">{{city.name}} - {{city.state}}  <span
-                                            class="badge-city">{{events.length}}</span></span>
+
+                    <!-- Modal Filter -->
+                    <div id="modal-filter" class="modal we-fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">{{ translations.filter }}</h3>
+                                </div>
+                                <!-- Modal Body -->
+                                <div class="modal-body">
+
+                                    <!--Cities-->
+                                    <div class="row m-t-20">
+                                        <div class="col-sm-12 text-center">
+                                            <label class=" f-700">{{ translations.nearCities }}</label>
+                                            <p class="f-info" v-if="!getCities.length">{{ translations.noCity }}</p>
+
+                                            <!-- Card Cities -->
+                                            <div class="swiper-container" ref="citiesSlider">
+                                                <div class="swiper-wrapper">
+                                                    <div class="swiper-label-to-fix swiper-slide label transparent m-5 cursor-pointer"
+                                                         v-for="(city, $index) in getCities"
+                                                         :key="$index"
+                                                         :class="{'cursor-pointer': currentCity != city, 'label-success': currentCity == city}">
+                                                        <span v-if="currentCity != city">
+                                                            {{city.name}} - {{city.state}}
+                                                        </span>
+                                                        <span v-if="currentCity == city">{{city.name}} - {{city.state}}  <span
+                                                            class="badge-city">{{events.length}}</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Card Citites -->
+
+                                        </div>
                                     </div>
+                                    <!--Cities-->
+
+                                    <!--DAYS SELECTEDS-->
+                                    <div class="row m-t-20">
+                                        <div class="col-sm-12 text-center">
+
+                                            <label class=" f-700">{{ translations.title_when }}</label>
+
+                                            <div class="week-row">
+                                                <button
+                                                    class="btn btn-default btn-sm m-r-5"
+                                                    :class="{'btn-primary' : days_selecteds.indexOf(day) > -1}"
+                                                    v-for="(day, $index) in current_week"
+                                                    @click="toggleDay(day)"
+                                                >
+                                                    {{day.format('dddd')}} | {{day.format('DD')}}
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!--DAYS SELECTEDS-->
+
+                                </div>
+                                <!-- / Modal Body -->
+                                <div class="modal-footer">
+                                    <button
+                                        class="btn btn-primary btn-block m-t-30 m-b-30"
+                                        :disabled="!days_selecteds_to_query.monthly"
+                                        @click.prevent="getEvents"
+                                        data-dismiss="modal"
+                                    >
+                                        {{ translations.search_button }}
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--Cities-->
-
-                    <!--DAYS SELECTEDS-->
-                    <div class="row m-t-20">
-                        <div class="col-sm-12 text-center">
-
-                            <label class=" f-700">{{ translations.title_when }}</label>
-
-                            <div class="week-row">
-                                <button
-                                    class="btn btn-default btn-sm m-r-5"
-                                    :class="{'btn-primary' : days_selecteds.indexOf(day) > -1}"
-                                    v-for="(day, $index) in current_week"
-                                    @click="toggleDay(day)"
-                                >
-                                    {{day.format('dddd')}} | {{day.format('DD')}}
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!--DAYS SELECTEDS-->
-
-                    <button class="btn btn-primary btn-block m-t-30 m-b-30" :disabled="!days_selecteds_to_query.monthly"
-                            @click.prevent="getEvents">{{translations.search_button}}
-                    </button>
-
-                    <hr>
-
-                    <p class="f-14 f-300 text-center">{{translations.add_event_title}}</p>
-
-                    <router-link
-                        :to="{name: 'events.create'}"
-                        class="btn btn-primary btn-block"
-                        v-if="!interactions.is_loading"
-                    >
-                        {{translations.add_event}}
-                    </router-link>
+                    <!-- / Modal Filter -->
 
                 </div>
                 <!-- EXPLORER -->
@@ -583,7 +616,7 @@
                 setTimeout(() => {
                     var swiperTabs = new Swiper(that.$refs.citiesSlider, {
                         spaceBetween: 0,
-                        slidesPerView: 5,
+                        slidesPerView: 1,
                         initialSlide: that.currentCityIndex,
                         loop: false,
                         centeredSlides: true,
@@ -804,7 +837,7 @@
     }
 
     /* min */
-    .height-controller { height: calc(100vh - 160px) }
+    .height-controller { height: calc(100vh - 155px); }
 
     .card {
         position: absolute;
@@ -885,7 +918,7 @@
     }
 
     .no-event-card{
-        padding: 15px;
+        padding: 40px;
         text-align: center;
         border-radius: 20px;
         border: 1px solid rgba(255, 255, 255, .4);

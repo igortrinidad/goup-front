@@ -17,6 +17,7 @@ export const en = {
     search_button: 'Search',
     free: 'Free',
     uninformed: 'Value not informed',
+    filter: 'Filter',
 
     modal: {
         up: 'You goup in this event',
@@ -45,6 +46,7 @@ export const pt = {
     search_button: 'Pesquisar',
     free: 'Gratuito',
     uninformed: 'Valor não informado',
+    filter: 'Filtro',
 
     modal: {
         up: 'Você deu um "goup" para esse evento',
