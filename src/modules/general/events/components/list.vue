@@ -272,10 +272,10 @@
                 },
                 timeFilters:[
                     {name_en:'General', name_pt: 'Geral', value: 'general'},
-                    {name_en:'Today', name_pt: 'Hoje', value: 'Today'},
-                    {name_en:'Week', name_pt: 'Esta semana', value: 'This week'},
-                    {name_en:'Month', name_pt: 'Este mês', value: 'This month'},
-                    {name_en:'This Year', name_pt: 'Este ano', value: 'Thisyear'},
+                    {name_en:'Today', name_pt: 'Hoje', value: 'today'},
+                    {name_en:'Week', name_pt: 'Esta semana', value: 'week'},
+                    {name_en:'Month', name_pt: 'Este mês', value: 'month'},
+                    {name_en:'This Year', name_pt: 'Este ano', value: 'year'},
 
                 ],
                 currentFilter: null,

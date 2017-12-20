@@ -124,15 +124,15 @@
                         <div class="m-t-30">
                             <div class="swiper-container tabs text-center" ref="tabs">
                                 <div class="swiper-wrapper">
-                                    <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                    <div class="swiper-slide tab" :class="{'active': false }">
                                         <i class="tab-icon ion-ios-location m-r-5"></i>
                                         {{ translations.tabs.location }}
                                     </div>
-                                    <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                    <div class="swiper-slide tab" :class="{'active': false }">
                                         <i class="tab-icon ion-ios-location m-r-5"></i>
                                         {{ translations.tabs.same_place }}
                                     </div>
-                                    <div :class="{ 'swiper-slide tab': true, 'active': false }">
+                                    <div class="swiper-slide tab" :class="{'active': false }">
                                         <i class="tab-icon ion-ios-people m-r-5"></i>
                                         {{ translations.tabs.friends }}
                                     </div>
@@ -434,6 +434,10 @@
 
     .col-categories{
         width: 33%;
+    }
+
+    .swiper-slide{
+        transition: all 0.3s;
     }
 
 </style>
