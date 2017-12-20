@@ -305,11 +305,11 @@
                 var currentCityIndex = JSON.parse(localStorage.getItem('city_index'));
                 var currentFilterIndex = JSON.parse(localStorage.getItem('filter_index'));
 
-                if(!currentCityIndex){
-                    that.currentCity = that.getCities[0];
-                } else {
+                if(currentCityIndex > -1){
                     that.currentCityIndex = currentCityIndex;
                     that.currentCity = that.getCities[currentCityIndex];
+                } else {
+                    that.currentCity = that.getCities[0];
                 }
 
                 if(that.$route.query.category_id){

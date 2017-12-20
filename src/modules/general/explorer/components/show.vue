@@ -225,7 +225,7 @@
 
                                     <!-- Fixed Button -->
                     <button type="button" class="btn btn-primary btn-block btn-fixed" @click="openFilter()">
-                        <i class="ion-navigate m-r-10"></i>
+                        <i class="ion-ios-location m-r-10"></i>
                         <span v-if="currentCity">{{ currentCity.name }} - {{ currentCity.state }}</span>
                         <span v-if="!currentCity">{{ translations.filter }}</span>
                     </button>
@@ -430,11 +430,11 @@
 
                 var currentCityIndex = JSON.parse(localStorage.getItem('city_index'));
 
-                if(!currentCityIndex){
-                    that.currentCity = that.getCities[0];
-                } else {
+                if(currentCityIndex > -1){
                     that.currentCityIndex = currentCityIndex;
                     that.currentCity = that.getCities[currentCityIndex];
+                } else {
+                    that.currentCity = that.getCities[0];
                 }
 
                 if (that.$route.query.category_id && that.$route.query.category_id != 'all') {
