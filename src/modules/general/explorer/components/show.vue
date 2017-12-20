@@ -15,7 +15,10 @@
 
             <div class="main">
 
-                <h3 class="text-center f-success m-t-10 m-0">{{ language === 'en' ? currentCategory.name_en : currentCategory.name_pt }}</h3>
+                <h3 class="text-center f-success m-t-10 m-0">
+                    <span v-show="!currentCategory">{{ translations.explorer }}</span>
+                    <span v-if="currentCategory">{{ language === 'en' ? currentCategory.name_en : currentCategory.name_pt }}</span>
+                </h3>
 
                 <!-- CATEGORIES -->
                 <div class="container" v-show="!interactions.finished_loading_category && !interactions.is_loading"
@@ -938,7 +941,7 @@
     }
 
     .no-event-card{
-        padding: 40px;
+        padding: 30px;
         text-align: center;
         border-radius: 20px;
         border: 1px solid rgba(255, 255, 255, .4);

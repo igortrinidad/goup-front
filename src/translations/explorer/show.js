@@ -1,4 +1,5 @@
 export const en = {
+    explorer: 'Explorer',
     select_category: 'Find your next great Moment',
     end_list: 'No Moment found near you, search in another Moment type or nearby cities.',
     add_event: 'Add a Moment',
@@ -29,6 +30,7 @@ export const en = {
 }
 
 export const pt = {
+    explorer: 'Explorar',
     select_category: 'Explore novas diversões',
     end_list: 'Não encontramos nenhum Momento próximo a você, procure outros tipos de Momento ou cidades próximas',
     add_event: 'Adicione um Momento',
