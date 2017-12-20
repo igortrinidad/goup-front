@@ -152,7 +152,7 @@
                                         </div>
                                         <!-- Card Body -->
                                         <div class="card-body card-padding">
-                                            <h4 class="m-b-5">{{ event.name }}</h4>
+                                            <h4 class="m-b-5">{{ event.name }} | Votes: {{event.vote_count}} | {{event.id}}</h4>
                                             <div style="opacity: .8;">
                                                 <p class="m-b-5 max-lines-2-lines">{{ event.description }}</p>
                                                 <span class="d-block m-0 f-12">

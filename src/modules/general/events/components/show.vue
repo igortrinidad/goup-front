@@ -146,13 +146,13 @@
                         <div class="m-t-30">
                             <div class="">
                                 <!-- Tab Location -->
-                                <tab-location :transition="currentTab === 0 ? 'transition' : 'fadeout'" :event="event"></tab-location>
+                                <tab-location v-if="currentTab === 0" :event="event"></tab-location>
 
                                 <!-- Tab Events -->
-                                <tab-events-same-place :transition="currentTab === 1 ? 'transition' : 'fadeout'" :event="event"></tab-events-same-place>
+                                <tab-events-same-place v-if="currentTab === 1" :event="event"></tab-events-same-place>
 
                                 <!-- Tab Friends -->
-                                <tab-friends :transition="currentTab === 2 ? 'transition' : 'fadeout'"></tab-friends>
+                                <tab-friends v-if="currentTab === 2"></tab-friends>
                             </div>
                         </div>
                         <!-- / Tab Content -->
