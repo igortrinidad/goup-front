@@ -21,7 +21,7 @@
                 <div class="container" v-show="!interactions.finished_loading_category && !interactions.is_loading"
                      :class="{'cat-is-selected' : currentCategory}">
 
-                    <p class="f-16 f-300 text-center m-t-10">{{translations.select_category}}</p>
+                    <p class="f-16 f-300 text-center m-t-10">{{ translations.select_category }}</p>
 
                     <div class="col-row-categories">
                         <!-- ALL -->
@@ -57,149 +57,157 @@
                 <!-- EXPLORER -->
                 <div class="container" v-if="interactions.finished_loading_category && !interactions.is_loading">
 
-                    
-
-                    <div class="no-event-card m-t-20" v-show="!events.length && !interactions.is_loading && !interactions.place_holder_is_loading">
-                        <img src="../../../../assets/icons/ghost.svg" />
-                        <p class="f-info m-t-20" >
-                            {{ translations.end_list }}
-                        </p>
+                    <!-- No Event -->
+                    <div class="height-controller" style="border: 1px solid red;" v-show="!events.length && !interactions.is_loading && !interactions.place_holder_is_loading">
+                        <div class="no-event-card m-t-20">
+                            <img src="../../../../assets/icons/ghost.svg" />
+                            <p class="f-info m-t-20" >
+                                {{ translations.end_list }}
+                            </p>
+                        </div>
                     </div>
 
-                    <card-placeholder-explorer class="m-t-20 m-b-30" v-show="interactions.place_holder_is_loading"></card-placeholder-explorer>
+                    <!-- PlaceHolder -->
+                    <div class="height-controller" style="border: 1px solid #fff;" v-show="interactions.place_holder_is_loading">
+                        <card-placeholder-explorer class="m-t-20 m-b-30"></card-placeholder-explorer>
+                    </div>
 
-                    <!-- Cards -->
-                    <div class="cards m-t-20" v-if="events.length && !interactions.is_loading && !interactions.place_holder_is_loading">
+                    <!-- Cards Explorer -->
+                    <div class="height-controller" style="border: 1px solid green" v-if="events.length && !interactions.is_loading && !interactions.place_holder_is_loading">
+                        <!-- Cards -->
+                        <div class="cards m-t-20">
 
-                        <!-- FIRST EVENT -->
-                        <div id="card-animated" class="card m-0" ref="cardAnimated">
-                            <!-- Card Header -->
+                            <!-- FIRST EVENT -->
+                            <div id="card-animated" class="card m-0" ref="cardAnimated">
+                                <!-- Card Header -->
 
-                            <div
-                                id="card-lazy-image"
-                                class="card-header cover event-cover-image"
-                                :style="{ backgroundImage: `url(${ events[0].cover })`}"
-                            >
-
-                                <router-link
-                                    tag="span"
-                                    class="icon-information ion-ios-information f-success cursor-pointer"
-                                    v-if="events[0].slug"
-                                    :to="{ name: 'events.show', params: { event_slug: events[0].slug }, query: {event_id: events[0].id} }"
+                                <div
+                                    id="card-lazy-image"
+                                    class="card-header cover event-cover-image"
+                                    :style="{ backgroundImage: `url(${ events[0].cover })`}"
                                 >
-                                </router-link>
 
-                            </div>
-                            <!-- / Card Header -->
+                                    <router-link
+                                        tag="span"
+                                        class="icon-information ion-ios-information f-success cursor-pointer"
+                                        v-if="events[0].slug"
+                                        :to="{ name: 'events.show', params: { event_slug: events[0].slug }, query: {event_id: events[0].id} }"
+                                    >
+                                    </router-link>
 
-                            <!-- Current Action -->
-                            <span class="card-action up" v-show="interactions.up">
-                                {{ translations.up }}
-                            </span>
-                            <span class="card-action down" v-show="interactions.down">
-                                {{ translations.down }}
-                            </span>
-                            <span class="card-action skip" v-show="interactions.skip">
-                                {{ translations.skip }}
-                            </span>
-                            <span class="card-action save" v-show="interactions.favorite">
-                                {{ translations.favorite }}
-                            </span>
-                            <!-- / Current Action -->
-
-                            <!-- Card Body -->
-                            <div class="card-body card-padding">
-                                <h4 class="m-b-5 t-overflow" style="margin-top: 9px">{{ events[0].name }}</h4>
-                                <div style="opacity: .8;">
-                                    <p class="m-b-5 t-overflow">{{ events[0].description }}</p>
                                 </div>
-                            </div>
-                            <!-- Card Footer -->
-                            <div class="card-footer p-10">
-                                <div class="row">
-                                    <div class="col-xs-9 t-overflow" style="opacity: .8; width: 75%;">
-                                        <small>
-                                            <i class="ion-location m-r-5"></i>{{ handleDistance(events[0].distance) }}
-                                        </small>
-                                    </div>
-                                    <div class="col-xs-3 text-right">
-                                        <small class="f-primary">
-                                            <i class="ion-ios-star m-r-5"></i>{{ events[0].favorites }}
-                                        </small>
+                                <!-- / Card Header -->
+
+                                <!-- Current Action -->
+                                <span class="card-action up" v-show="interactions.up">
+                                    {{ translations.up }}
+                                </span>
+                                <span class="card-action down" v-show="interactions.down">
+                                    {{ translations.down }}
+                                </span>
+                                <span class="card-action skip" v-show="interactions.skip">
+                                    {{ translations.skip }}
+                                </span>
+                                <span class="card-action save" v-show="interactions.favorite">
+                                    {{ translations.favorite }}
+                                </span>
+                                <!-- / Current Action -->
+
+                                <!-- Card Body -->
+                                <div class="card-body card-padding">
+                                    <h4 class="m-b-5 t-overflow" style="margin-top: 9px">{{ events[0].name }}</h4>
+                                    <div style="opacity: .8;">
+                                        <p class="m-b-5 t-overflow">{{ events[0].description }}</p>
                                     </div>
                                 </div>
+                                <!-- Card Footer -->
+                                <div class="card-footer p-10">
+                                    <div class="row">
+                                        <div class="col-xs-9 t-overflow" style="opacity: .8; width: 75%;">
+                                            <small>
+                                                <i class="ion-location m-r-5"></i>{{ handleDistance(events[0].distance) }}
+                                            </small>
+                                        </div>
+                                        <div class="col-xs-3 text-right">
+                                            <small class="f-primary">
+                                                <i class="ion-ios-star m-r-5"></i>{{ events[0].favorites }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- / FIRST EVENT -->
+
+                            <!-- SECOND EVENT -->
+                            <div class="card m-0" v-if="events.length > 1">
+                                <!-- Card Header -->
+                                <div
+                                    id="card-lazy-image"
+                                    class="card-header cover event-cover-image"
+                                    :style="{ backgroundImage: `url(${ events[1].cover })` }"
+                                    v-show="!interactions.place_holder_is_loading"
+                                >
+
+                                    <span class="icon-information ion-ios-information f-success cursor-pointer"></span>
+
+                                </div>
+                                <!-- / Card Header -->
+
+                                <!-- Card Body -->
+                                <div class="card-body card-padding">
+                                    <h4 class="m-b-5 t-overflow" style="margin-top: 23px">{{ events[1].name }}</h4>
+                                    <div style="opacity: .8;">
+                                        <p class="m-b-5 t-overflow">{{ events[1].description }}</p>
+                                    </div>
+                                </div>
+                                <!-- Card Footer -->
+                                <div class="card-footer p-10">
+                                    <div class="row">
+                                        <div class="col-xs-8" style="opacity: .8;">
+                                            <small>
+                                                <i class="ion-location m-r-5"></i>{{ handleDistance(events[1].distance) }}
+                                            </small>
+                                        </div>
+                                        <div class="col-xs-4 text-right">
+                                            <small class="f-primary">
+                                                <i class="ion-ios-star m-r-5"></i>{{ events[1].favorites }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- SECOND EVENT -->
+
+                        </div>
+                        <!-- Cards -->
+
+                        <!-- Actions -->
+                        <div class="actions">
+
+                            <div v-if="events.length && isLogged || interactions.is_loading">
+                                <span class="action" @click="skip()" :class="{'bounce' : interactions.skip }">
+                                    <img class="action-small" src="../../../../assets/icons/explorer_actions/refresh-2.svg"/>
+                                </span>
+
+                                <span class="action" @click="goDown()" :class="{'bounce' : interactions.down }">
+                                     <img class="action-large" src="../../../../assets/icons/explorer_actions/dislike.svg"/>
+                                </span>
+
+                                <span class="action" @click="goUp()" :class="{'bounce' : interactions.up }">
+                                     <img  class="action-large"src="../../../../assets/icons/explorer_actions/like.svg"/>
+                                </span>
+
+                                <span class="action" @click="favorite()" :class="{'bounce' : interactions.favorite }">
+                                     <img  class="action-small"src="../../../../assets/icons/explorer_actions/star_pink.svg"/>
+                                </span>
                             </div>
 
                         </div>
-                        <!-- / FIRST EVENT -->
-
-                        <!-- SECOND EVENT -->
-                        <div class="card m-0" v-if="events.length > 1">
-                            <!-- Card Header -->
-                            <div
-                                id="card-lazy-image"
-                                class="card-header cover event-cover-image"
-                                :style="{ backgroundImage: `url(${ events[1].cover })` }"
-                                v-show="!interactions.place_holder_is_loading"
-                            >
-
-                                <span class="icon-information ion-ios-information f-success cursor-pointer"></span>
-
-                            </div>
-                            <!-- / Card Header -->
-
-                            <!-- Card Body -->
-                            <div class="card-body card-padding">
-                                <h4 class="m-b-5 t-overflow" style="margin-top: 23px">{{ events[1].name }}</h4>
-                                <div style="opacity: .8;">
-                                    <p class="m-b-5 t-overflow">{{ events[1].description }}</p>
-                                </div>
-                            </div>
-                            <!-- Card Footer -->
-                            <div class="card-footer p-10">
-                                <div class="row">
-                                    <div class="col-xs-8" style="opacity: .8;">
-                                        <small>
-                                            <i class="ion-location m-r-5"></i>{{ handleDistance(events[1].distance) }}
-                                        </small>
-                                    </div>
-                                    <div class="col-xs-4 text-right">
-                                        <small class="f-primary">
-                                            <i class="ion-ios-star m-r-5"></i>{{ events[1].favorites }}
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- SECOND EVENT -->
-
+                        <!-- / Actions -->
                     </div>
-                    <!-- Cards -->
-
-                    <!-- Actions -->
-                    <div class="actions">
-
-                        <div v-if="events.length && isLogged || interactions.is_loading">
-                            <span class="action" @click="skip()" :class="{'bounce' : interactions.skip }">
-                                <img class="action-small" src="../../../../assets/icons/explorer_actions/refresh-2.svg"/>
-                            </span>
-
-                            <span class="action" @click="goDown()" :class="{'bounce' : interactions.down }">
-                                 <img class="action-large" src="../../../../assets/icons/explorer_actions/dislike.svg"/>
-                            </span>
-
-                            <span class="action" @click="goUp()" :class="{'bounce' : interactions.up }">
-                                 <img  class="action-large"src="../../../../assets/icons/explorer_actions/like.svg"/>
-                            </span>
-
-                            <span class="action" @click="favorite()" :class="{'bounce' : interactions.favorite }">
-                                 <img  class="action-small"src="../../../../assets/icons/explorer_actions/star_pink.svg"/>
-                            </span>
-                        </div>
-
-                    </div>
-                    <!-- / Actions -->
+                    <!-- /Cards Explorer  -->
 
                     <!--Cities-->
                     <div class="row m-t-20">
@@ -584,14 +592,14 @@
                         nextButton: '.swiper-button-next',
                         on: {
                             init: function () {
-                                that.resetBeforeChange(); 
+                                that.resetBeforeChange();
                             },
                             slideChangeTransitionEnd: function () {
                                 that.currentCity = that.getCities[this.realIndex]
                                 that.currentCityIndex = this.realIndex
                                 localStorage.setItem('city_index', this.realIndex)
                                 that.resetBeforeChange();
-                            }   
+                            }
                         },
                         breakpoints: {
                             350: {
@@ -794,6 +802,9 @@
     ::-webkit-scrollbar {
         display: none;
     }
+
+    /* min */
+    .height-controller { height: calc(100vh - 160px) }
 
     .card {
         position: absolute;
