@@ -222,8 +222,8 @@
                         >
                             {{ translations.add_event }}
                         </router-link>
-                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-filter">
-                            {{ translations.filter }}
+                        <button type="button" class="btn btn-primary btn-block btn-fixed" data-toggle="modal" data-target="#modal-filter">
+                            <i class="ion-funnel m-r-10"></i>{{ translations.filter }}
                         </button>
                     </div>
 
@@ -836,8 +836,20 @@
         display: none;
     }
 
-    /* min */
+    /* height controller */
     .height-controller { height: calc(100vh - 155px); }
+
+    /* btn fixed */
+    .btn.btn-primary.btn-fixed{
+        position: fixed;
+        left: 0;
+        right: 0;
+        border-radius: 0;
+        bottom: 0;
+        background-color: #FF4B89;
+        color: #fff !important;
+        font-weight: 700;
+    }
 
     .card {
         position: absolute;
