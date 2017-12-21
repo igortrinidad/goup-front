@@ -223,13 +223,18 @@
                 </div>
                 <!-- EXPLORER -->
 
-                <!-- Fixed Button -->
+                <!-- Fixed Buttons -->
                 <button type="button" class="btn btn-primary btn-block btn-fixed" @click="openFilter()">
                     <i class="ion-ios-location m-r-10"></i>
                     <span v-if="currentCity">{{ currentCity.name }} - {{ currentCity.state }}</span>
                     <span v-if="!currentCity">{{ translations.filter }}</span>
                 </button>
 
+                <button type="button" class="btn btn-primary btn-block btn-fixed btn-fixed-modal" 
+                    @click.prevent="closeFilter()"
+                    v-if="interactions.modalIsOpen">
+                    {{ translations.modal.close }}
+                </button>
 
                 <!-- Modal Filter -->
                 <div id="modal-filter" class="modal we-fade" tabindex="-1" role="dialog">
@@ -299,24 +304,6 @@
 
                     </div>
 
-                    <button
-                            v-if="currentCategory"
-                            class=" btn btn-primary btn-block btn-fixed-modal"
-                            :disabled="!days_selecteds_to_query.monthly"
-                            @click.prevent="getEvents"
-                            data-dismiss="modal"
-                        >
-                            {{ translations.modal.close }}
-                        </button>
-
-                        <button
-                            v-if="!currentCategory"
-                            class=" btn btn-primary btn-block btn-fixed-modal"
-                            data-dismiss="modal"
-                        >
-                            {{ translations.modal.close }}
-                        </button>
-
                 </div>
                 <!-- / Modal Filter -->
 
@@ -363,7 +350,8 @@
                     is_loading: false,
                     finished_loading_category: false,
                     action: 'up',
-                    place_holder_is_loading: true
+                    place_holder_is_loading: true,
+                    modalIsOpen: false
                 },
                 starting: true,
                 placeholder: true,
@@ -636,7 +624,17 @@
             },
 
             openFilter() {
-                $('#modal-filter').modal('show')
+                $('#modal-filter').modal('show');
+                this.interactions.modalIsOpen = true;
+            },
+
+            closeFilter: function(){
+                $('#modal-filter').modal('hide');
+                this.interactions.modalIsOpen = false;
+
+                if(this.currentCategory){
+                    this.getEvents();
+                }
             },
 
             getEvents(first_load = true, events_in_list = []) {
@@ -841,14 +839,7 @@
 
     .btn.btn-primary.btn-fixed-modal{
         position: fixed;
-        left: 0;
-        right: 0;
-        border-radius: 0;
-        bottom: 0;
-        background-color: #FF4B89;
-        color: #fff !important;
-        font-weight: 700;
-        z-index: 100;
+        z-index: 2000;
     }
 
     .card {

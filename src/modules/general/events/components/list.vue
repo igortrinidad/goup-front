@@ -164,6 +164,12 @@
                     </span>
                 </button>
 
+                <button type="button" class="btn btn-primary btn-block btn-fixed btn-fixed-modal" 
+                    @click.prevent="closeFilter()"
+                    v-if="interactions.modalIsOpen">
+                    {{ translations.modal.close }}
+                </button>
+
 
                 <!-- Modal Filter -->
                 <div id="modal-filter" class="modal we-fade" tabindex="-1" role="dialog">
@@ -234,23 +240,6 @@
 
                     </div>
 
-                    <button
-                            v-if="currentCategory"
-                            class=" btn btn-primary btn-block btn-fixed-modal"
-                            @click.prevent="resetBeforeChange"
-                            data-dismiss="modal"
-                        >
-                            {{ translations.modal.close }}
-                        </button>
-
-                        <button
-                            v-if="!currentCategory"
-                            class=" btn btn-primary btn-block btn-fixed-modal"
-                            data-dismiss="modal"
-                        >
-                            {{ translations.modal.close }}
-                        </button>
-
                 </div>
                 <!-- / Modal Filter -->
 
@@ -294,6 +283,7 @@
                     showFilters: false,
                     is_loading: false,
                     finished_loading_category: false,
+                    modalIsOpen: false,
                 },
                 destroyed: false,
                 placeholder: true,
@@ -425,7 +415,16 @@
             },
 
             openFilter() {
-                $('#modal-filter').modal('show')
+                $('#modal-filter').modal('show');
+                this.interactions.modalIsOpen = true;
+            },
+
+            closeFilter: function(){
+                $('#modal-filter').modal('hide');
+                this.interactions.modalIsOpen = false;
+                if(this.currentCategory){
+                    this.resetBeforeChange();
+                }
             },
 
             resetCategory: function(refresh_query = false){
@@ -582,14 +581,7 @@
 
     .btn.btn-primary.btn-fixed-modal{
         position: fixed;
-        left: 0;
-        right: 0;
-        border-radius: 0;
-        bottom: 0;
-        background-color: #FF4B89;
-        color: #fff !important;
-        font-weight: 700;
-        z-index: 100;
+        z-index: 2000;
     }
 
     .modal-footer {
