@@ -180,8 +180,31 @@
                             </div>
                             <!-- Modal Body -->
                             <div class="modal-body">
-                                <!--Cities-->
+
+
+                                <!--Filters-->
                                 <div class="row">
+                                    <div class="col-sm-12 text-center">
+                                        <label class="f-700">{{ translations.trending_visualization }}</label>
+
+                                        <div class="">
+                                            <div class="">
+                                                <div
+                                                    class="btn btn-default cursor-pointer m-t-10 m-r-10"
+                                                    v-for="(filter, $filterIndex) in timeFilters"
+                                                    :class="{'btn-primary bounce': currentCity && currentFilter == filter}"
+                                                    @click="setFilter(filter, $filterIndex)"
+                                                >
+                                                        {{filter[`name_${language}`]}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Filters-->
+
+                                <!--Cities-->
+                                <div class="row m-t-30">
                                     <div class="col-sm-12 text-center">
                                         <label class=" f-700">{{ translations.nearCities }}</label>
                                         <p class="f-info" v-if="!getCities.length">{{ translations.noCity }}</p>
@@ -208,27 +231,6 @@
                                     </div>
                                 </div>
                                 <!--Cities-->
-
-                                <!--Filters-->
-                                <div class="row m-t-30">
-                                    <div class="col-sm-12 text-center">
-                                        <label class="f-700">{{ translations.trending_visualization }}</label>
-
-                                        <div class="">
-                                            <div class="">
-                                                <div
-                                                    class="btn btn-default cursor-pointer m-t-10 m-r-10"
-                                                    v-for="(filter, $filterIndex) in timeFilters"
-                                                    :class="{'btn-primary bounce': currentCity && currentFilter == filter}"
-                                                    @click="setFilter(filter, $filterIndex)"
-                                                >
-                                                        {{filter[`name_${language}`]}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--Filters-->
 
                             </div>
                             <!-- / Modal Body -->
