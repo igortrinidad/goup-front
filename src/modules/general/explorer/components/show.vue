@@ -230,7 +230,7 @@
                     <span v-if="!currentCity">{{ translations.filter }}</span>
                 </button>
 
-                <button type="button" class="btn btn-primary btn-block btn-fixed btn-fixed-modal" 
+                <button type="button" class="btn btn-primary btn-block btn-fixed btn-fixed-modal"
                     @click.prevent="closeFilter()"
                     v-if="interactions.modalIsOpen">
                     {{ translations.modal.close }}
@@ -297,10 +297,10 @@
                             </div>
                             <!-- / Modal Body -->
                             <div class="modal-footer">
-                                
+
                             </div>
 
-                        </div>  
+                        </div>
 
                     </div>
 
@@ -412,18 +412,19 @@
 
             });
 
-            this.initWeek();
+            that.initWeek();
 
-            this.$nextTick(function () {
-            
+            that.$nextTick(() => {
+
                 that.checkDaysToQuery();
 
                 var currentCityIndex = JSON.parse(localStorage.getItem('city_index'));
 
-                if(currentCityIndex > -1){
+                if (currentCityIndex) {
                     that.currentCityIndex = currentCityIndex;
                     that.currentCity = that.getCities[currentCityIndex];
                 } else {
+
                     that.currentCity = that.getCities[0];
                 }
 
@@ -440,8 +441,7 @@
                     that.updateUserGeolocation();
 
                 }
-
-          })
+            })
 
         },
 
@@ -461,7 +461,7 @@
                 that.currentCity = that.getCities[index]
                 that.currentCityIndex = index
                 localStorage.setItem('city_index', index)
-            
+
             },
 
             mountHammer() {
