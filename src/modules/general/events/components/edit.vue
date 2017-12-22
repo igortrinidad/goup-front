@@ -222,19 +222,19 @@
                             </div>
                             <!-- / Address -->
 
-                            <!-- Phone -->
+                            <!-- CITY - STATE-->
                             <div class="form-group">
-                                <label class="f-700 f-primary" for="place-phone">{{ translations.form.phone }}</label>
+                                <label class="f-700 f-primary" for="place-phone">{{ translations.form.city_state }}</label>
                                 <input
                                     type="text"
                                     id="place-phone"
                                     class="form-control"
-                                    :placeholder="translations.form.phone"
-                                    v-model="event.place.phone"
+                                    :placeholder="translations.form.city_state"
+                                    :value="event.city.name + ' - ' + event.city.state"
                                     disabled
                                 >
                             </div>
-                            <!-- / Phone -->
+                            <!-- / CITY - STATE-->
 
                         </div>
                         <!-- /Place Informations -->
@@ -701,30 +701,34 @@
                     that.event.lat = place.geometry.location.lat()
                     that.event.lng = place.geometry.location.lng()
 
-                    place.photos.forEach( function(photo){
+                    if(place.photos){
 
-                        var x = photo.width;
-                        switch(true) {
-                            case (x < 600):
-                                var quality = 'low';
-                                break;
-                            case (x > 601 && x < 1200):
-                                var quality = 'medium';
-                                break;
-                            default:
-                                var quality = 'high';
-                        }
+                        place.photos.forEach( function(photo){
 
-                        that.google_photos.push(
-                            {
-                                id: photo.getUrl({'maxWidth': 1000, 'maxHeight': 1000}),
-                                is_cover: false,
-                                event_id: that.event.id,
-                                photo_url: photo.getUrl({'maxWidth': 1000, 'maxHeight': 1000}),
-                                quality: quality
+                            var x = photo.width;
+                            switch(true) {
+                                case (x < 600):
+                                    var quality = 'low';
+                                    break;
+                                case (x > 601 && x < 1200):
+                                    var quality = 'medium';
+                                    break;
+                                default:
+                                    var quality = 'high';
                             }
-                        );
-                    });
+
+                            that.google_photos.push(
+                                {
+                                    id: photo.getUrl({'maxWidth': 1000, 'maxHeight': 1000}),
+                                    is_cover: false,
+                                    event_id: that.event.id,
+                                    photo_url: photo.getUrl({'maxWidth': 1000, 'maxHeight': 1000}),
+                                    quality: quality
+                                }
+                            );
+                        });
+
+                    }
 
                     place.address_components.map((current) =>{
                         current.types.map((type) => {
