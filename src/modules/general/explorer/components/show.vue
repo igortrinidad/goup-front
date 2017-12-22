@@ -92,6 +92,21 @@
                             <div id="card-animated" class="card m-0" ref="cardAnimated">
                                 <!-- Card Header -->
 
+                                <!-- Current Action -->
+                                <span class="card-action up" v-show="interactions.up">
+                                    {{ translations.up }}
+                                </span>
+                                <span class="card-action down" v-show="interactions.down">
+                                    {{ translations.down }}
+                                </span>
+                                <span class="card-action skip" v-show="interactions.skip">
+                                    {{ translations.skip }}
+                                </span>
+                                <span class="card-action save" v-show="interactions.favorite">
+                                    {{ translations.favorite }}
+                                </span>
+                                <!-- / Current Action -->
+
                                 <div
                                     id="card-lazy-image"
                                     class="card-header cover event-cover-image"
@@ -108,21 +123,6 @@
 
                                 </div>
                                 <!-- / Card Header -->
-
-                                <!-- Current Action -->
-                                <span class="card-action up" v-show="interactions.up">
-                                    {{ translations.up }}
-                                </span>
-                                <span class="card-action down" v-show="interactions.down">
-                                    {{ translations.down }}
-                                </span>
-                                <span class="card-action skip" v-show="interactions.skip">
-                                    {{ translations.skip }}
-                                </span>
-                                <span class="card-action save" v-show="interactions.favorite">
-                                    {{ translations.favorite }}
-                                </span>
-                                <!-- / Current Action -->
 
                                 <!-- Card Body -->
                                 <div class="card-body card-padding">
