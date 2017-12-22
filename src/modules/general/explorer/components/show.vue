@@ -923,7 +923,7 @@
     }
 
     .no-event-card{
-        padding: 30px;
+        padding: 20px;
         text-align: center;
         border-radius: 20px;
         border: 1px solid rgba(255, 255, 255, .4);
