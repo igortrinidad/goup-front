@@ -10,6 +10,8 @@
         <transition appear mode="in-out" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
             <div class="main container">
 
+                <img class="picture-circle picture-circle-xxl border-picture-eletric-blue center-block" :src="currentUser.avatar">
+
                 <div class="row" v-if="isMobile">
                     <div class="col-sm-12">
                         <div class="col-xs-6">

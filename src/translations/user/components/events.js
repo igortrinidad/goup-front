@@ -1,17 +1,23 @@
 export const en = {
-    title: 'My events',
+    title: 'My moments',
     free: 'Free',
+    no_events: 'You have not added any moment.',
     buttons:{
         edit: 'Edit event'
     },
-    load_complete: 'All your events are loaded :)'
+    load_complete: 'All your events are loaded :)',
+
+    add_event: 'Add a moment',
 }
 
 export const pt = {
-    title: 'Meus eventos',
+    title: 'Meus moments',
     free: 'Gratuito',
+    no_events: 'Você ainda não adicionou nenhum momento.',
     buttons:{
         edit: 'Editar evento'
     },
-    load_complete: 'Todos os seus eventos foram carregados'
+    load_complete: 'Todos os seus eventos foram carregados',
+
+    add_moment: 'Adicionar um momento'
 }

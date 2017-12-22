@@ -11,6 +11,9 @@
             <div class="main first-container">
 
                 <div class="container">
+
+                    <p class="text-center m-t-20" v-if="!interactions.is_loading && !favorites.length">{{translations.no_favorites}}</p>
+
                     <div infinite-wrapper>
                         <div class="col-sm-12" v-for="(favorite, indexEvents) in favorites">
                             <div class="card p-0">
@@ -36,6 +39,8 @@
                                             <strong>{{ favorite.event.city.name }} - {{ favorite.event.city.state }}</strong>
                                         </span>
                                     </div>
+
+                                    <button class="btn btn-sm btn-primary m-t-10 btn-block" @click.prevent="removeFavorite(favorite)">{{translations.remove_favorite}}</button>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +84,9 @@
 
         data () {
             return {
-                interactions: {},
+                interactions: {
+                    is_loading: true
+                },
                 favorites: [],
                 pagination: {},
                 nextPage: 1
@@ -107,6 +114,8 @@
             getUserFavorites($state){
                 let that = this
 
+                that.interactions.is_loading = true
+
                 that.$http.get(`user/events/favorites?page=${that.nextPage}`)
                     .then(function (response) {
 
@@ -124,10 +133,43 @@
                         }else{
                             $state.complete()
                         }
+                        that.interactions.is_loading = false
                     })
                     .catch(function (error) {
                         console.log(error)
+                        that.interactions.is_loading = false
                     });
+            },
+
+            removeFavorite(user_favorite){
+                let that = this
+
+                that.$swal({
+                    title: that.translations.alert.title,
+                    text: that.translations.alert.message,
+                    type: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: that.translations.alert.confirm,
+                    confirmButtonColor: '#583694',
+                    cancelButtonText:that.translations.alert.cancel,
+                    cancelButtonColor: '#48C3D1',
+                    reverseButtons: true
+                }).then(function () {
+
+                    that.$http.get(`user/favorite/destroy/${user_favorite.id}`)
+                        .then(function (response) {
+                            that.favorites = that.favorites.filter((favorite) => favorite.id != user_favorite.id)
+                        })
+                        .catch(function (error) {
+                            console.log(error)
+                        });
+
+                }).catch(function () {
+
+                })
+
+
+
             }
 
         }

@@ -12,6 +12,16 @@
             <div class="main">
 
                 <div class="container">
+
+                    <p class="text-center m-t-20" v-if="!interactions.is_loading && !events.length">{{translations.no_events}}</p>
+
+                    <router-link
+                        :to="{name: 'events.create'}"
+                        class="btn btn-primary btn-block m-t-20 m-b-20"
+                    >
+                        {{ translations.add_event }}
+                    </router-link>
+
                     <div class="row" infinite-wrapper>
                         <div class="col-sm-12" v-for="(event, indexEvents) in events">
 
@@ -54,7 +64,7 @@
                                 </div>
                                 <div class="card-footer p-10">
                                     <div class="text-center m-t-10">
-                                        <router-link class="btn btn-primary small transparent" tag="button"
+                                        <router-link class="btn btn-sm btn-primary btn-block" tag="button"
                                                      :to="{name: 'events.edit', params:{id: event.id}}">
                                             {{translations.buttons.edit}}
                                         </router-link>
@@ -103,7 +113,9 @@
 
         data () {
             return {
-                interactions: {},
+                interactions: {
+                    is_loading: true
+                },
                 events: [],
                 pagination: {},
                 nextPage: 1
@@ -130,6 +142,7 @@
         methods: {
             getUserEvents($state){
                 let that = this
+                that.interactions.is_loading = true
 
                 that.$http.get(`user/events/list?page=${that.nextPage}`)
                     .then(function (response) {
@@ -148,9 +161,12 @@
                         }else{
                             $state.complete()
                         }
+                        that.interactions.is_loading = false
                     })
                     .catch(function (error) {
                         console.log(error)
+
+                        that.interactions.is_loading = false
                     });
             },
 
