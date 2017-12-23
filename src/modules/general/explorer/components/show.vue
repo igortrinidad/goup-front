@@ -826,7 +826,7 @@
 
     /* btn fixed */
     .btn.btn-primary.btn-fixed{
-        position: fixed;
+        position: fixed !important;
         left: 0;
         right: 0;
         border-radius: 0;
@@ -838,7 +838,7 @@
     }
 
     .btn.btn-primary.btn-fixed-modal{
-        position: fixed;
+        position: fixed !important;
         z-index: 2000;
     }
 

@@ -6,6 +6,7 @@
 
 .navbar{
   background-color: transparent;
+  transform: translate3d(0,0,0);
 }
 
 .navbar-default .navbar-nav > li {
