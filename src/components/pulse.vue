@@ -60,7 +60,7 @@
     .pulse-msg {
         position: absolute;
         width: 100%;
-        top: calc(50% + 30px);
+        top: calc(50% + 80px);
         left: 0; right: 0;
     }
 
