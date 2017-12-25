@@ -224,13 +224,13 @@
                 <!-- EXPLORER -->
 
                 <!-- Fixed Buttons -->
-                <button type="button" class="btn btn-primary btn-block btn-fixed" @click="openFilter()">
+                <button type="button" class="btn btn-primary btn-block btn-fixed-bottom" @click="openFilter()">
                     <i class="ion-ios-location m-r-10"></i>
                     <span v-if="currentCity">{{ currentCity.name }} - {{ currentCity.state }}</span>
                     <span v-if="!currentCity">{{ translations.filter }}</span>
                 </button>
 
-                <button type="button" class="btn btn-primary btn-block btn-fixed btn-fixed-modal"
+                <button type="button" class="btn btn-primary btn-block btn-fixed-bottom btn-fixed-bottom-modal"
                     @click.prevent="closeFilter()"
                     v-if="interactions.modalIsOpen">
                     {{ translations.modal.close }}
@@ -331,6 +331,8 @@
     var CancelToken = axios.CancelToken;
     var cancelCurrentRequest;
 
+    import { loadProgressBar } from 'axios-progress-bar'
+
     export default {
         name: 'EXPLORER',
 
@@ -399,6 +401,7 @@
 
             var that = this;
 
+            loadProgressBar({ showSpinner: false })
 
             bus.$on('refresh_explorer', function () {
                 that.currentCategory = null;
@@ -824,24 +827,6 @@
     /* height controller */
     .height-controller { height: calc(100vh - 155px); }
 
-    /* btn fixed */
-    .btn.btn-primary.btn-fixed{
-        position: fixed !important;
-        left: 0;
-        right: 0;
-        border-radius: 0;
-        bottom: 0;
-        background-color: #FF4B89;
-        color: #fff !important;
-        font-weight: 700;
-        z-index: 100;
-    }
-
-    .btn.btn-primary.btn-fixed-modal{
-        position: fixed !important;
-        z-index: 2000;
-    }
-
     .card {
         position: absolute;
         width: 100%;
@@ -934,4 +919,5 @@
         height: 144px;
         margin-top: 5px;
     }
+
 </style>

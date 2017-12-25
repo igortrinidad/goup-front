@@ -270,11 +270,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-3 col-xs-6" v-if="interactions.showPhotoPlaceholder">
-                                    <div class="card-placeholder placeholder-effect">
-                                        <p class="f-default m-t-30" style="vertical-align: middle;">Loading</p>
-                                    </div>
-                                </div>
+
                                 <p class="f-300" v-if="!event.photos.length">{{translations.form.photo_cover_warning}}</p>
 
                                 <!-- USER PHOTOS -->
@@ -338,21 +334,6 @@
 
                         </div>
                         <!-- / Google Photos -->
-
-
-
-                        <div class="form-group m-t-20">
-
-                            <button
-                                type="button"
-                                class="btn btn-primary btn-block transparent"
-                                @click="updateEvent()"
-                                :disabled="!event.name || !event.description || !event.categories.length || !event.date_uninformed && !event.recurrency_type  || !event.google_place_id || interactions.invalid_time || checkIfHasSomePhoto()"
-                            >
-                                {{ translations.submit }}
-                            </button>
-
-                        </div>
 
                     </form>
 
@@ -428,6 +409,13 @@
                 <!-- / MODAL SELECT TYPES -->
             </div>
         </transition>
+
+        <button type="button" class="btn btn-primary btn-block btn-fixed-bottom"
+            :disabled="!event.name || !event.description || !event.categories.length || !event.date_uninformed && !event.recurrency_type  || !event.google_place_id || interactions.invalid_time || checkIfHasSomePhoto()"
+             @click="updateEvent()"
+        >
+            {{translations.submit}}
+        </button>
 
         <photo-uploader
             :isvisible.sync="showPhotoUploader"
@@ -822,7 +810,10 @@
 
                 function onSuccess(imageURI) {
 
-                    that.storeImageMobile(imageURI);
+                    that.interactions.showPhotoPlaceholder = true
+                    var blob = dataURItoBlob('data:image/jpeg;base64,' + imageURI);
+
+                    that.storeImage(blob);
 
                 }
 
@@ -837,7 +828,10 @@
 
                 navigator.camera.getPicture(function cameraSuccess(imageURI) {
 
-                        that.storeImageMobile(imageURI);
+                        that.interactions.showPhotoPlaceholder = true
+                        var blob = dataURItoBlob('data:image/jpeg;base64,' + imageURI);
+
+                        that.storeImage(blob);
 
                     },
                     function (message) {
@@ -851,47 +845,6 @@
                 )
             },
 
-            storeImageMobile(imageURI) {
-                let that = this
-
-                var win = function (response) {
-
-                    let api_response = JSON.parse(response.response)
-
-                    if(!that.event.photos.length){
-                        api_response.photo.is_cover = true
-                    }
-
-                    that.event.photos.push(api_response.photo)
-                    that.interactions.showPhotoPlaceholder = fasle
-                    successNotify('', 'Imagem enviada com sucesso')
-
-                }
-
-                var fail = function (error) {
-
-                    that.interactions.showPhotoPlaceholder = false
-                    errorNotify('', 'Houve um erro ao enviar a imagem')
-                    console.log(error);
-                }
-
-                var options = new FileUploadOptions();
-                options.fileKey = "file";
-                options.fileName = "myphoto.jpg";
-                options.mimeType = "image/jpeg";
-                options.headers = {'Authorization': that.AuthToken};
-
-                var params = new Object();
-
-                params.event_id = that.event.id;
-
-                options.params = params;
-                var ft = new FileTransfer();
-
-                that.interactions.showPhotoPlaceholder = true
-
-                ft.upload(imageURI, encodeURI(`${apiUrl}/event/photo/upload`), win, fail, options);
-            },
 
             storeImage: function(imageData){
 
@@ -899,9 +852,13 @@
 
                 that.interactions.showPhotoPlaceholder = true
 
+                if(file.file){
+                    file = file.file
+                }
+
                 let formData = new FormData();
                 formData.append('event_id', that.event.id)
-                formData.append('file', imageData.file)
+                formData.append('file', file)
 
                 that.$http.post('event/photo/upload', formData , {headers: {'Content-Type': 'multipart/form-data'}})
                     .then(function (response) {

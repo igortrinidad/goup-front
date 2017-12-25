@@ -117,6 +117,8 @@
 
     import pulse from '@/components/pulse.vue'
 
+    import { loadProgressBar } from 'axios-progress-bar'
+
     export default {
         name: 'welcome',
         components: {
@@ -145,6 +147,8 @@
         },
         mounted() {
             var that = this;
+
+            loadProgressBar({ showSpinner: false })
 
             var userLastGeoLocation = window.checkUserLastLocation();
 

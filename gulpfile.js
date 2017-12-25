@@ -41,7 +41,6 @@ elixir(function(mix) {
 
     mix.copy([
         '/node_modules/ionicons/fonts',
-        '/node_modules/lightgallery/dist/fonts',
         '/assets/fonts'
     ], './static/build/fonts');
 

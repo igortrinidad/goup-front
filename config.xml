@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="today.goup" version="1.1.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="today.goup" version="1.1.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>GoUp</name>
     <description>
-        The better places for today.
+        Sua próxima diversão!
     </description>
     <author email="contactus@goup.today" href="https://goup.today">
         Criado por We-Planner Soluções Tecnológicas
@@ -32,7 +32,7 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
-    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarBackgroundColor" value="#561F9F" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="DisallowOverscroll" value="true" />
@@ -100,6 +100,11 @@
         <feature name="SocialSharing">
             <param name="ios-package" value="SocialSharing" />
         </feature>
+        <feature name="CDVWKWebViewEngine">
+            <param name="ios-package" value="CDVWKWebViewEngine" />
+        </feature>
+        <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
+        <preference name="AllowBackForwardNavigationGestures" value="true" />
     </platform>
     <engine name="android" spec="^6.3.0" />
     <engine name="ios" spec="~4.5.4" />
@@ -118,4 +123,6 @@
     </plugin>
     <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.2" />
+    <plugin name="cordova-plugin-wkwebview-engine" spec="^1.1.4" />
+    <plugin name="cordova-plugin-wkwebviewxhrfix" spec="git+https://github.com/TheMattRay/cordova-plugin-wkwebviewxhrfix.git" />
 </widget>

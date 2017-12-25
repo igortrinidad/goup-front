@@ -16,7 +16,7 @@
                 <h3 class="text-center f-success">Trending</h3>
 
                 <!-- CATEGORIAS -->
-                <div class="" v-show="!interactions.finished_loading_category && !$route.query.category_id">
+                <div  v-show="!interactions.finished_loading_category && !$route.query.category_id">
 
 
                     <div class="container">
@@ -56,12 +56,13 @@
 
                 <div class="" v-if="interactions.finished_loading_category">
 
-                    <div class="text-center">
-                        <p class="f-16 f-300 text-center m-t-10">{{translations.before_category_type}}</p>
-                        <h3 class="f-success m-t-0">{{currentCategory['name_'+language]}}</h3>
-                    </div>
-
                     <div class="container">
+
+                        <div class="text-center">
+                            <p class="f-16 f-300 text-center m-t-10">{{translations.before_category_type}}</p>
+                            <h3 class="f-success m-t-0">{{currentCategory['name_'+language]}}</h3>
+                        </div>
+
                         <div class="row m-t-30">
 
                             <!-- IF NO EVENTS -->
@@ -154,7 +155,7 @@
         </transition>
 
                 <!-- Fixed Button -->
-                <button type="button" class="btn btn-primary btn-block btn-fixed" @click="openFilter()">
+                <button type="button" class="btn btn-primary btn-block btn-fixed-bottom" @click="openFilter()">
                     <i class="ion-ios-location m-r-10"></i>
                     <span v-if="currentCity">{{ currentCity.name }} - {{ currentCity.state }}</span>
                     <span v-if="!currentCity">{{ translations.filter }}</span>
@@ -164,7 +165,7 @@
                     </span>
                 </button>
 
-                <button type="button" class="btn btn-primary btn-block btn-fixed btn-fixed-modal"
+                <button type="button" class="btn btn-primary btn-block btn-fixed-bottom btn-fixed-bottom-modal"
                     @click.prevent="closeFilter()"
                     v-if="interactions.modalIsOpen">
                     {{ translations.modal.close }}
@@ -567,24 +568,6 @@
 
 <style scoped>
 
-
-    /* btn fixed */
-    .btn.btn-primary.btn-fixed{
-        position: fixed;
-        left: 0;
-        right: 0;
-        border-radius: 0;
-        bottom: 0;
-        background-color: #FF4B89;
-        color: #fff !important;
-        font-weight: 700;
-        z-index: 100;
-    }
-
-    .btn.btn-primary.btn-fixed-modal{
-        position: fixed;
-        z-index: 2000;
-    }
 
     .modal-footer {
         border-radius: 0;

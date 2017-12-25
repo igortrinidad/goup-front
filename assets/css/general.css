@@ -169,3 +169,18 @@ hr {
 
 /* Progress Bar */
 .progress-bar { background: linear-gradient(to left, #6EC058 0%, #88C657 100%); }
+
+
+#nprogress .bar {
+  background: #83F4FA !important;
+  position: fixed;
+  z-index: 1031;
+  top: 78px !important;
+  left: 0;
+  width: 100%;
+  height: 2px;
+}
+
+#nprogress .peg {
+    box-shadow: 0 0 0 #83F4FA, 0 0 0px #83F4FA !important;
+}

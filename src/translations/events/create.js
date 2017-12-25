@@ -53,7 +53,7 @@ export const en = {
     no: 'No',
     confirm: 'Confirm',
     cancel: 'Cancel',
-    submit: 'Register Moment',
+    submit: 'Share this Moment',
     success: 'New Moment added successfully',
     close: 'Close',
     photo_quality: {
@@ -130,7 +130,7 @@ export const pt = {
     no: 'Não',
     confirm: 'Confirmar',
     cancel: 'Cancelar',
-    submit: 'Cadastrar Momento',
+    submit: 'Compartilhar Momento',
     success: 'Novo Momento adicionado com sucesso.',
     close: 'Fechar',
     photo_quality: {

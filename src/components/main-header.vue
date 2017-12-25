@@ -2,7 +2,6 @@
     <div>
         <nav class="navbar navbar-default navbar-fixed-top">
 
-            <span class="iphone-x-padding-top"></span>
             <div class="container-header-fluid">
 
                 <!-- Header Type === Back -->
@@ -234,18 +233,6 @@
 
     .main{
         -webkit-backface-visibility: hidden;
-    }
-
-    .iphone-x-padding-top{
-        display: none;
-        width: 100%;
-        height: 22px;
-    }
-
-    @media (min-width: 373px) and (max-width: 377px) and (min-height: 810px) and (max-height: 814px){
-        .iphone-x-padding-top{
-            display: block;
-        }
     }
 
     .icon-header{

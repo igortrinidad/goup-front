@@ -6,8 +6,7 @@ export const en = {
         edit: 'Edit event'
     },
     load_complete: 'All your events are loaded :)',
-
-    add_event: 'Add a moment',
+    add_event: 'Share a Moment',
 }
 
 export const pt = {
@@ -18,6 +17,5 @@ export const pt = {
         edit: 'Editar evento'
     },
     load_complete: 'Todos os seus eventos foram carregados',
-
-    add_moment: 'Adicionar um momento'
+    add_event: 'Compartilhar um Momento'
 }
